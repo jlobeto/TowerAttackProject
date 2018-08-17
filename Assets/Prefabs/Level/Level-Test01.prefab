@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1491828838988656}
+  m_IsPrefabParent: 1
+--- !u!1 &1491828838988656
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4305466995462742}
+  - component: {fileID: 114851463829160704}
+  m_Layer: 0
+  m_Name: Level-Test01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4305466995462742
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1491828838988656}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.726196, y: 0.1506722, z: -5.8453937}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114851463829160704
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1491828838988656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb00e12254d8f840910e2a24bc339b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelID: test01
+  initialWalkNodes:
+  - {fileID: 0}
+  cameraTransform: {fileID: 0}
+  initialLevelPoints: 100
+  wavesAmount: 1
+  buildSquadTime: 15
+  minionSpawnTime: 1
+  levelGoal: {fileID: 0}
+  levelSkills: 0000000001000000
+  availableMinions:
+  - {fileID: 114417917285907140, guid: 2a29e0e7c89f64f43ac711ab5fc57a1d, type: 2}
