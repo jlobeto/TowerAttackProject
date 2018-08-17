@@ -24,6 +24,7 @@ public class Level : MonoBehaviour
     LevelSkillManager _lvlSkillManager;
 
     int _currentLevelPoints = 0;
+    float time = 2f;
 
     /// <summary>
     /// Used to inform CurrentLevelPoints to user on the GUI.
@@ -37,7 +38,16 @@ public class Level : MonoBehaviour
 	
 	
 	void Update () {
-		
+        if (Input.GetMouseButtonDown(0))
+        {
+            _minionManager.SpawnMinion(MinionType.Runner);
+        }
+
+        time -= Time.deltaTime;
+        if (time < 0)
+        {
+            _minionManager.SetNextMinionFree();
+        }
 	}
 
     void Init()

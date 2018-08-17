@@ -23,6 +23,7 @@ public class Minion : MonoBehaviour
     float _distanceToNextNode = 0.3f;//To change the next node;
 
     public int Id { get { return _id; } }
+    public bool CanWalk { get { return _canWalk; } }
 
     public void InitMinion(WalkNode n)
     {

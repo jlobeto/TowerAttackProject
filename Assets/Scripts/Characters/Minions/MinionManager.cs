@@ -10,6 +10,7 @@ public class MinionManager : MonoBehaviour
     List<Minion> _minions;
     int _deathCount;
     int _successCount;
+    GameObject _allMinions;
 
     public void SpawnMinion(MinionType type)
     {
@@ -39,15 +40,31 @@ public class MinionManager : MonoBehaviour
         }
 
         minion.InitMinion(level.initialWalkNodes[0]);
+        minion.transform.SetParent(_allMinions.transform);
         _minions.Add(minion);
     }
 
+    /// <summary>
+    /// Will release and set minion walk to true. One minion at a time;
+    /// </summary>
+    public void SetNextMinionFree()
+    {
+        var minion = _minions.FirstOrDefault(m => !m.CanWalk);
+        if(minion != null)
+            minion.SetWalk(true);
+    }
+
     void Start () {
-        
+        Init();
 	}
 	
 	void Update () {
 		
 	}
+
+    void Init()
+    {
+        _allMinions = new GameObject("All Minions");
+    }
     
 }
