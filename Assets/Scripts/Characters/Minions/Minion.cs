@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public class Minion : MonoBehaviour
     public int coinValue = 0;
     [Range(0f,1f)]
     public float levelPointsToRecover = 0.75f;
+    public Action OnWalkFinished = delegate { };
 
     int _currentLevel = 1;//Level of the minion, ///TODO manage this when buying an upgrade of lvl;
     WalkNode _nextNode;
@@ -32,6 +34,8 @@ public class Minion : MonoBehaviour
 
     public void SetWalk(bool val)
     {
+        if (_nextNode.isEnd) return;//don't know if this will be here, for testing porpuse must be for the moment.
+
         _canWalk = val;
     }
 
@@ -44,9 +48,16 @@ public class Minion : MonoBehaviour
     protected virtual void Walk()
     {
         var dir = (_nextNode.transform.position - transform.position).normalized;
+        transform.forward = dir;
         transform.position += dir * speed * Time.deltaTime;
         if (Vector3.Distance(transform.position, _nextNode.transform.position) <= _distanceToNextNode)
-            _nextNode = _nextNode.GetNextWalkNode();
+        {
+            if (!_nextNode.isEnd)
+                _nextNode = _nextNode.GetNextWalkNode();
+            else
+                FinishWalk();
+        }
+            
     }
 
     protected void Init()
@@ -54,15 +65,21 @@ public class Minion : MonoBehaviour
         _id = gameObject.GetInstanceID();
     }
 
-    void Start ()
+    protected virtual void Start ()
     {
         Init();
 	}
-	
-	
-	void Update () {
+
+
+    protected virtual void Update () {
         PerformAction();
 	}
 
-    
+    void FinishWalk()
+    {
+        
+        _canWalk = false;
+        Debug.Log(_canWalk);
+        OnWalkFinished();
+    }
 }

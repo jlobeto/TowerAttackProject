@@ -15,16 +15,17 @@ public class Level : MonoBehaviour
     public float buildSquadTime = 15;
     [Tooltip("At wave init")]
     public float minionSpawnTime = 1f;
-    public LevelGoal levelGoal;
+    public LevelGoal.Goal levelGoalType;
     public List<LevelSkillManager.SkillType> levelSkills = new List<LevelSkillManager.SkillType>();
     public List<Minion> availableMinions = new List<Minion>();
 
     TowerManager _towerManager;
     MinionManager _minionManager;
     LevelSkillManager _lvlSkillManager;
+    LevelGoal _levelGoal;
 
     int _currentLevelPoints = 0;
-    float time = 2f;
+    float time = 1f;
 
     /// <summary>
     /// Used to inform CurrentLevelPoints to user on the GUI.
@@ -35,13 +36,16 @@ public class Level : MonoBehaviour
     void Start () {
         Init();
     }
-	
-	
+
+    bool _sarlanga;
 	void Update () {
         if (Input.GetMouseButtonDown(0))
         {
             _minionManager.SpawnMinion(MinionType.Runner);
+            _sarlanga = true;
         }
+
+        if (!_sarlanga) return;
 
         time -= Time.deltaTime;
         if (time < 0)
@@ -60,10 +64,33 @@ public class Level : MonoBehaviour
         _towerManager.level = _lvlSkillManager.level = _minionManager.level = this;
         
         _currentLevelPoints = initialLevelPoints;
-        
-        levelGoal.OnGoalComplete += GoalCompletedHandler;
+
+        InitLevelGoal();
     }
-    
+
+    public void UpdateLevelGoal()
+    {
+        _levelGoal.UpdateGoal(-1);
+    }
+
+    void InitLevelGoal()
+    {
+        var go = new GameObject("LevelGoal");
+        go.transform.SetParent(transform);
+        switch (levelGoalType)
+        {
+            case LevelGoal.Goal.ArriveToEnd:
+                _levelGoal = new ArriveToEndGoal();
+                go.AddComponent(typeof(ArriveToEndGoal));
+                break;
+            default:
+                break;
+        }
+
+        _levelGoal.OnGoalComplete += GoalCompletedHandler;
+    }
+       
+
     void GoalCompletedHandler()
     {
         Debug.Log("----- Level Completed -----");

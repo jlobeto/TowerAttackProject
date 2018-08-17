@@ -7,7 +7,7 @@ public class MinionManager : MonoBehaviour
 {
     public Level level;
 
-    List<Minion> _minions;
+    List<Minion> _minions = new List<Minion>();
     int _deathCount;
     int _successCount;
     GameObject _allMinions;
@@ -41,6 +41,7 @@ public class MinionManager : MonoBehaviour
 
         minion.InitMinion(level.initialWalkNodes[0]);
         minion.transform.SetParent(_allMinions.transform);
+        minion.OnWalkFinished += MinionWalkFinishedHandler;
         _minions.Add(minion);
     }
 
@@ -66,5 +67,10 @@ public class MinionManager : MonoBehaviour
     {
         _allMinions = new GameObject("All Minions");
     }
-    
+
+    void MinionWalkFinishedHandler()
+    {
+        Debug.Log("MinionWalkFinishedHandler");
+        level.UpdateLevelGoal();
+    }
 }
