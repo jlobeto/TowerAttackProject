@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4305466995462742}
   - component: {fileID: 114851463829160704}
+  - component: {fileID: 114505664313504042}
   m_Layer: 0
   m_Name: Level-Test01
   m_TagString: Untagged
@@ -40,6 +41,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114505664313504042
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1491828838988656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 258d0e257f797404fb6fd1900cf68913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goalType: 0
+  lives: 10
 --- !u!114 &114851463829160704
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -59,8 +73,6 @@ MonoBehaviour:
   wavesAmount: 1
   buildSquadTime: 15
   minionSpawnTime: 1
-  levelGoal: {fileID: 114516222334887214, guid: 5b7eaf2227f97494ebf4f663b8fe6ffd,
-    type: 2}
   levelSkills: 0000000001000000
   availableMinions:
   - {fileID: 114417917285907140, guid: 2a29e0e7c89f64f43ac711ab5fc57a1d, type: 2}

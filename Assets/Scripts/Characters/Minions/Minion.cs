@@ -6,7 +6,7 @@ using UnityEngine;
 public class Minion : MonoBehaviour
 {
     public int hp = 50;
-    public CharacterType type = CharacterType.None;
+    public GameObjectTypes type = GameObjectTypes.None;
     public MinionType minionType = MinionType.Runner;
     public float speed = 4;
     public int pointsValue = 15;
@@ -15,7 +15,7 @@ public class Minion : MonoBehaviour
     public int coinValue = 0;
     [Range(0f,1f)]
     public float levelPointsToRecover = 0.75f;
-    public Action OnWalkFinished = delegate { };
+    public Action<Minion> OnWalkFinished = delegate { };
 
     int _currentLevel = 1;//Level of the minion, ///TODO manage this when buying an upgrade of lvl;
     WalkNode _nextNode;
@@ -49,7 +49,7 @@ public class Minion : MonoBehaviour
     {
         var dir = (_nextNode.transform.position - transform.position).normalized;
         transform.forward = dir;
-        transform.position += dir * speed * Time.deltaTime;
+        transform.position += transform.forward * speed * Time.deltaTime;
         if (Vector3.Distance(transform.position, _nextNode.transform.position) <= _distanceToNextNode)
         {
             if (!_nextNode.isEnd)
@@ -57,7 +57,6 @@ public class Minion : MonoBehaviour
             else
                 FinishWalk();
         }
-            
     }
 
     protected void Init()
@@ -77,9 +76,7 @@ public class Minion : MonoBehaviour
 
     void FinishWalk()
     {
-        
         _canWalk = false;
-        Debug.Log(_canWalk);
-        OnWalkFinished();
+        OnWalkFinished(this);
     }
 }

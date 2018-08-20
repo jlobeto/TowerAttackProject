@@ -51,26 +51,33 @@ public class MinionManager : MonoBehaviour
     public void SetNextMinionFree()
     {
         var minion = _minions.FirstOrDefault(m => !m.CanWalk);
-        if(minion != null)
+        if (minion != null)
             minion.SetWalk(true);
     }
 
-    void Start () {
+    void Start() {
         Init();
-	}
-	
-	void Update () {
-		
-	}
+    }
+
+    void Update() {
+
+    }
 
     void Init()
     {
         _allMinions = new GameObject("All Minions");
     }
 
-    void MinionWalkFinishedHandler()
+    void MinionWalkFinishedHandler(Minion m)
     {
-        Debug.Log("MinionWalkFinishedHandler");
+        DestroyMinion(m);
+        _successCount++;
         level.UpdateLevelGoal();
+    }
+
+    void DestroyMinion(Minion m)
+    {
+        _minions.Remove(m);
+        Destroy(m.gameObject);
     }
 }

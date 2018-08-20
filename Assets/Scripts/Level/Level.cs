@@ -15,7 +15,6 @@ public class Level : MonoBehaviour
     public float buildSquadTime = 15;
     [Tooltip("At wave init")]
     public float minionSpawnTime = 1f;
-    public LevelGoal.Goal levelGoalType;
     public List<LevelSkillManager.SkillType> levelSkills = new List<LevelSkillManager.SkillType>();
     public List<Minion> availableMinions = new List<Minion>();
 
@@ -37,19 +36,10 @@ public class Level : MonoBehaviour
         Init();
     }
 
-    bool _sarlanga;
 	void Update () {
         if (Input.GetMouseButtonDown(0))
         {
             _minionManager.SpawnMinion(MinionType.Runner);
-            _sarlanga = true;
-        }
-
-        if (!_sarlanga) return;
-
-        time -= Time.deltaTime;
-        if (time < 0)
-        {
             _minionManager.SetNextMinionFree();
         }
 	}
@@ -75,17 +65,9 @@ public class Level : MonoBehaviour
 
     void InitLevelGoal()
     {
-        var go = new GameObject("LevelGoal");
-        go.transform.SetParent(transform);
-        switch (levelGoalType)
-        {
-            case LevelGoal.Goal.ArriveToEnd:
-                _levelGoal = new ArriveToEndGoal();
-                go.AddComponent(typeof(ArriveToEndGoal));
-                break;
-            default:
-                break;
-        }
+        _levelGoal = GetComponent<LevelGoal>();
+        if (_levelGoal == null)
+            throw new System.Exception("There isn't a LevelGoal object attached to this Level GO.");
 
         _levelGoal.OnGoalComplete += GoalCompletedHandler;
     }
