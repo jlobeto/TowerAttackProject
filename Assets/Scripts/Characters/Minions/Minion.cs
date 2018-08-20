@@ -25,6 +25,7 @@ public class Minion : MonoBehaviour
     int _id;
     bool _canWalk;
     float _distanceToNextNode = 0.3f;//To change the next node;
+    InfoCanvas _infoCanvas;
 
     public int Id { get { return _id; } }
     public bool CanWalk { get { return _canWalk; } }
@@ -44,6 +45,7 @@ public class Minion : MonoBehaviour
     public void GetDamage(float dmg)
     {
         hp -= dmg;
+        _infoCanvas.UpdateLife(hp);
         DeathChecker();
     }
 
@@ -70,6 +72,11 @@ public class Minion : MonoBehaviour
     protected void Init()
     {
         _id = gameObject.GetInstanceID();
+        _infoCanvas = GetComponentInChildren<InfoCanvas>();
+        if (_infoCanvas == null)
+            throw new Exception("InfoCanvas is not set as a child");
+
+        _infoCanvas.Init(hp);
     }
 
     protected virtual void Start ()

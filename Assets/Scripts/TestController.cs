@@ -20,6 +20,7 @@ public class TestController : MonoBehaviour
     {
         GUILayout.BeginVertical();    
         GUILayout.Label("R: reset scene", _guiStyle);
+        GUILayout.Label("Left Click: spawn minion", _guiStyle);
         GUILayout.EndVertical();
     }
 
