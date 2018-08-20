@@ -14,6 +14,7 @@ public class TowerBase : MonoBehaviour
     public float rotationSpeed = 5f;
     public Transform spawnPoint;
     public GameObject toRotate;
+    public bool showGizmoRange;
 
     GameObject _target;
     float _fireRateAux;
@@ -80,6 +81,7 @@ public class TowerBase : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
-        Gizmos.DrawWireSphere(transform.position, fireRange);
+        if(showGizmoRange)
+            Gizmos.DrawWireSphere(transform.position, fireRange);
     }
 }

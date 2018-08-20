@@ -24,7 +24,6 @@ public class Level : MonoBehaviour
     LevelGoal _levelGoal;
 
     int _currentLevelPoints = 0;
-    float time = 1f;
 
     /// <summary>
     /// Used to inform CurrentLevelPoints to user on the GUI.
@@ -36,13 +35,33 @@ public class Level : MonoBehaviour
         Init();
     }
 
-	void Update () {
+	void Update ()
+    {
+        MinionType t = MinionType.Runner;
+        bool pressed = false;
+
         if (Input.GetMouseButtonDown(0))
         {
-            _minionManager.SpawnMinion(MinionType.Runner);
+            pressed = true;
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            pressed = true;
+            t = MinionType.Tank;
+        }
+        else if (Input.GetMouseButtonDown(2))
+        {
+            pressed = true;
+            t = MinionType.Dove;
+        }
+
+        if (pressed)
+        {
+            _minionManager.SpawnMinion(t);
             _minionManager.SetNextMinionFree();
         }
-	}
+        
+    }
 
     void Init()
     {

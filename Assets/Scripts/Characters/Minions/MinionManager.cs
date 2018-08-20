@@ -15,21 +15,35 @@ public class MinionManager : MonoBehaviour
     public void SpawnMinion(MinionType type)
     {
         Minion minion = null;
+        Minion available = null;
         switch (type)
         {
             case MinionType.Runner:
-                var available = level.availableMinions.FirstOrDefault(m => m.GetType() == typeof(Runner));
-                minion = Instantiate<Runner>((Runner)available, level.initialWalkNodes[0].transform.position, Quaternion.identity);
-                break;
             case MinionType.Tank:
+                available = level.availableMinions.FirstOrDefault(m => m.GetType() == typeof(Minion) && m.minionType == type);
+                minion = Instantiate<Minion>(available, level.initialWalkNodes[0].transform.position, Quaternion.identity);
+                break;
+            case MinionType.Dove:
+                available = level.availableMinions.FirstOrDefault(m => m.GetType() == typeof(Dove));
+                minion = Instantiate<Dove>((Dove)available, level.initialWalkNodes[0].transform.position, Quaternion.identity);
+                break;
+            case MinionType.Zeppelin:
+                break;
+            case MinionType.FatTank:
+                break;
+            case MinionType.GoldDigger:
                 break;
             case MinionType.Healer:
-                break;
-            case MinionType.Hero:
                 break;
             case MinionType.Ghost:
                 break;
             case MinionType.WarScreammer:
+                break;
+            case MinionType.Eagle:
+                break;
+            case MinionType.Clown:
+                break;
+            default:
                 break;
         }
 

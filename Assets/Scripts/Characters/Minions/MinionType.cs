@@ -2,8 +2,13 @@
 {
     Runner,
     Tank,
+    Dove,
+    Zeppelin,
+    FatTank,
+    GoldDigger,
     Healer,
-    Hero,
     Ghost,
-    WarScreammer
+    WarScreammer,
+    Eagle,
+    Clown
 }

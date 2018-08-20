@@ -19,25 +19,26 @@ public class Minion : MonoBehaviour
     public Action<Minion> OnWalkFinished = delegate { };
     public Action<Minion> OnDeath = delegate { };
 
+    protected WalkNode pNextNode;
+    protected InfoCanvas pInfoCanvas;
+    protected float pDistanceToNextNode = 0.3f;//To change the next node;
+
     int _currentLevel = 1;//Level of the minion, ///TODO manage this when buying an upgrade of lvl;
-    WalkNode _nextNode;
     int _spawnOrder;
     int _id;
     bool _canWalk;
-    float _distanceToNextNode = 0.3f;//To change the next node;
-    InfoCanvas _infoCanvas;
 
     public int Id { get { return _id; } }
     public bool CanWalk { get { return _canWalk; } }
 
     public void InitMinion(WalkNode n)
     {
-        _nextNode = n.GetNextWalkNode();
+        pNextNode = n.GetNextWalkNode();
     }
 
     public void SetWalk(bool val)
     {
-        if (_nextNode.isEnd) return;//don't know if this will be here, for testing porpuse must be for the moment.
+        if (pNextNode.isEnd) return;//don't know if this will be here, for testing porpuse must be for the moment.
 
         _canWalk = val;
     }
@@ -45,7 +46,7 @@ public class Minion : MonoBehaviour
     public void GetDamage(float dmg)
     {
         hp -= dmg;
-        _infoCanvas.UpdateLife(hp);
+        pInfoCanvas.UpdateLife(hp);
         DeathChecker();
     }
 
@@ -57,13 +58,13 @@ public class Minion : MonoBehaviour
 
     protected virtual void Walk()
     {
-        var dir = (_nextNode.transform.position - transform.position).normalized;
+        var dir = (pNextNode.transform.position - transform.position).normalized;
         transform.forward = dir;
         transform.position += transform.forward * speed * Time.deltaTime;
-        if (Vector3.Distance(transform.position, _nextNode.transform.position) <= _distanceToNextNode)
+        if (Vector3.Distance(transform.position, pNextNode.transform.position) <= pDistanceToNextNode)
         {
-            if (!_nextNode.isEnd)
-                _nextNode = _nextNode.GetNextWalkNode();
+            if (!pNextNode.isEnd)
+                pNextNode = pNextNode.GetNextWalkNode();
             else
                 FinishWalk();
         }
@@ -72,11 +73,11 @@ public class Minion : MonoBehaviour
     protected void Init()
     {
         _id = gameObject.GetInstanceID();
-        _infoCanvas = GetComponentInChildren<InfoCanvas>();
-        if (_infoCanvas == null)
+        pInfoCanvas = GetComponentInChildren<InfoCanvas>();
+        if (pInfoCanvas == null)
             throw new Exception("InfoCanvas is not set as a child");
 
-        _infoCanvas.Init(hp);
+        pInfoCanvas.Init(hp);
     }
 
     protected virtual void Start ()
@@ -89,15 +90,17 @@ public class Minion : MonoBehaviour
         PerformAction();
 	}
 
+    protected void FinishWalk()
+    {
+        _canWalk = false;
+        OnWalkFinished(this);
+    }
+
     void DeathChecker()
     {
         if (hp <= 0)
             OnDeath(this);
     }
 
-    void FinishWalk()
-    {
-        _canWalk = false;
-        OnWalkFinished(this);
-    }
+    
 }
