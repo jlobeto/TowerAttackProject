@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Minion : MonoBehaviour
 {
-    public int hp = 50;
+    public string minionName;
+    public float hp = 50;
     public GameObjectTypes type = GameObjectTypes.None;
     public MinionType minionType = MinionType.Runner;
     public float speed = 4;
@@ -16,6 +17,7 @@ public class Minion : MonoBehaviour
     [Range(0f,1f)]
     public float levelPointsToRecover = 0.75f;
     public Action<Minion> OnWalkFinished = delegate { };
+    public Action<Minion> OnDeath = delegate { };
 
     int _currentLevel = 1;//Level of the minion, ///TODO manage this when buying an upgrade of lvl;
     WalkNode _nextNode;
@@ -37,6 +39,12 @@ public class Minion : MonoBehaviour
         if (_nextNode.isEnd) return;//don't know if this will be here, for testing porpuse must be for the moment.
 
         _canWalk = val;
+    }
+
+    public void GetDamage(float dmg)
+    {
+        hp -= dmg;
+        DeathChecker();
     }
 
     protected virtual void PerformAction()
@@ -73,6 +81,12 @@ public class Minion : MonoBehaviour
     protected virtual void Update () {
         PerformAction();
 	}
+
+    void DeathChecker()
+    {
+        if (hp <= 0)
+            OnDeath(this);
+    }
 
     void FinishWalk()
     {

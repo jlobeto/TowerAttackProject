@@ -42,6 +42,7 @@ public class MinionManager : MonoBehaviour
         minion.InitMinion(level.initialWalkNodes[0]);
         minion.transform.SetParent(_allMinions.transform);
         minion.OnWalkFinished += MinionWalkFinishedHandler;
+        minion.OnDeath += MinionDeathHandler;
         _minions.Add(minion);
     }
 
@@ -73,6 +74,12 @@ public class MinionManager : MonoBehaviour
         DestroyMinion(m);
         _successCount++;
         level.UpdateLevelGoal();
+    }
+
+    void MinionDeathHandler(Minion m)
+    {
+        _deathCount++;
+        DestroyMinion(m);
     }
 
     void DestroyMinion(Minion m)

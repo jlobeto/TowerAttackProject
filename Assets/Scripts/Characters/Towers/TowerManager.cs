@@ -2,16 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerManager : MonoBehaviour {
+public class TowerManager : MonoBehaviour
+{
 
     public Level level;
 
+    TowerBase[] _towers;
+
 	void Start () {
-		
+        Init();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    void Init()
+    {
+        _towers = FindObjectsOfType<TowerBase>();
+    }
 }
