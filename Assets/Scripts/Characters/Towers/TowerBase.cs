@@ -18,6 +18,9 @@ public class TowerBase : MonoBehaviour
 
     GameObject _target;
     float _fireRateAux;
+    int _id;
+
+    public int Id { get { return _id; } }
 
     protected virtual void SpawnProjectile()
     {
@@ -25,7 +28,7 @@ public class TowerBase : MonoBehaviour
 
         var random = projectilePrefabs[Random.Range(0, projectilePrefabs.Count)];
         var p = Instantiate(random, spawnPoint.transform.position, spawnPoint.transform.rotation);
-        p.Init(_target.transform.position);
+        p.Init(_target);
     }
 
     protected virtual void GetTarget()
@@ -62,7 +65,7 @@ public class TowerBase : MonoBehaviour
 	void Start ()
     {
         _fireRateAux = fireRate;
-
+        _id = gameObject.GetInstanceID();
     }
 
     protected virtual void Update ()

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4926165141632770}
   - component: {fileID: 33630633774695462}
   - component: {fileID: 23276788410997456}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,10 +37,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4437578037218954}
   - component: {fileID: 33105207289103120}
+  - component: {fileID: 54300015179711808}
   - component: {fileID: 65680150233763044}
   - component: {fileID: 23458663008980922}
   - component: {fileID: 114475384334797264}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Dove
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +58,7 @@ GameObject:
   - component: {fileID: 4072952329483904}
   - component: {fileID: 33027652400317750}
   - component: {fileID: 23133403821727788}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +92,7 @@ GameObject:
   - component: {fileID: 4637289886411010}
   - component: {fileID: 33470043051822504}
   - component: {fileID: 23888628980727728}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +144,7 @@ GameObject:
   - component: {fileID: 4146119507235642}
   - component: {fileID: 33538460445704878}
   - component: {fileID: 23896027669789328}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +184,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1167213189989736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.295, y: 2.5, z: -0.6851604}
+  m_LocalPosition: {x: 16.25584, y: -1.6219854, z: -16.783361}
   m_LocalScale: {x: 1.3875002, y: 0.44562522, z: 0.46984398}
   m_Children:
   - {fileID: 224694000089046116}
@@ -425,6 +426,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1040647984159454}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54300015179711808
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1167213189989736}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &65680150233763044
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -457,6 +473,7 @@ MonoBehaviour:
   strength: 0
   coinValue: 0
   levelPointsToRecover: 0.75
+  yPos: 2.3
 --- !u!114 &114605298798526196
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -11,10 +11,11 @@ public class LevelSkillManager : MonoBehaviour
 
     public Level level;
 
-    List<SkillType> _levelSkills;
-    
+    List<SkillType> _levelSkillsTypes;
+    List<LevelSkill> _levelSkills;
 
-	void Start ()
+
+    void Start ()
     {
         Init();
     }
@@ -26,7 +27,26 @@ public class LevelSkillManager : MonoBehaviour
 
     void Init()
     {
-        _levelSkills = level.levelSkills;
+        _levelSkillsTypes = level.levelSkills;
+        foreach (var item in _levelSkillsTypes)
+        {
+            GameObject go = new GameObject();
+            go.transform.SetParent(transform);
+            var lvlSkill = go.AddComponent<LevelSkill>();
+            switch (item)
+            {
+                case SkillType.Stun:
+                    go.name = "Stun";
+                    lvlSkill.castSkill = new StunLevelSkill();
+                    break;
+                case SkillType.Slow:
+                    go.name = "Slow";
+                    lvlSkill.castSkill = new SlowLevelSkill();
+                    break;
+            }
+
+            level.LevelCanvasManager.CreateSkillButton(go.name, lvlSkill.OnInitCast);
+        }
     }
 
 }

@@ -2,14 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelSkill : MonoBehaviour {
+public class LevelSkill : MonoBehaviour
+{
+    public float AreaOfEffect = 10f;
+    public float effectTime = 4f;
+    public ILevelSkill castSkill;
 
-	// Use this for initialization
-	void Start () {
+    public void OnInitCast()
+    {
+
+    }
+
+    void Start () {
 		
 	}
 	
-	// Update is called once per frame
+	
 	void Update () {
 		
 	}

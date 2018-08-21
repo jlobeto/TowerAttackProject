@@ -10,13 +10,23 @@ public class ProjectileBase : MonoBehaviour
     public float damage = 5;
     public float range = 0;
 
-    Vector3 _target;
-    bool _canMove;
-    public void Init(Vector3 t)
+    protected bool pCanMove;
+    protected GameObject pTarget;
+    
+    public void Init(GameObject t)
     {
-        _canMove = true;
-        _target = t;
-        transform.forward = (_target - transform.position).normalized;
+        pCanMove = true;
+        pTarget = t;
+    }
+
+    protected virtual void Movement()
+    {
+        if (!pCanMove) return;
+
+        if(pTarget != null)
+            transform.forward = (pTarget.transform.position - transform.position).normalized;
+        
+        transform.position += transform.forward * speed * Time.deltaTime;
     }
 
     void Start () {
@@ -25,8 +35,7 @@ public class ProjectileBase : MonoBehaviour
 	
 	void Update ()
     {
-        if(_canMove)
-            transform.position += transform.forward * speed * Time.deltaTime;
+        Movement();
 	}
 
     private void OnTriggerEnter(Collider other)
@@ -41,7 +50,7 @@ public class ProjectileBase : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        if(_canMove)
-            Gizmos.DrawWireSphere(_target, range == 0f ? 0.3f : range);
+        if(pCanMove && pTarget != null)
+            Gizmos.DrawWireSphere(pTarget.transform.position, range == 0f ? 0.6f : range);
     }
 }

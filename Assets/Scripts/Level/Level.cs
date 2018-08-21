@@ -22,6 +22,7 @@ public class Level : MonoBehaviour
     MinionManager _minionManager;
     LevelSkillManager _lvlSkillManager;
     LevelGoal _levelGoal;
+    LevelCanvasManager _lvlCanvasManager;
 
     int _currentLevelPoints = 0;
 
@@ -29,7 +30,7 @@ public class Level : MonoBehaviour
     /// Used to inform CurrentLevelPoints to user on the GUI.
     /// </summary>
     public int CurrentLevelPoints { get { return _currentLevelPoints; } }
-
+    public LevelCanvasManager LevelCanvasManager { get { return _lvlCanvasManager; } }
 
     void Start () {
         Init();
@@ -73,6 +74,8 @@ public class Level : MonoBehaviour
         _towerManager.level = _lvlSkillManager.level = _minionManager.level = this;
         
         _currentLevelPoints = initialLevelPoints;
+
+        _lvlCanvasManager = FindObjectOfType<LevelCanvasManager>();
 
         InitLevelGoal();
     }
