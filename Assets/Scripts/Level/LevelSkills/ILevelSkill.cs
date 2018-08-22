@@ -4,6 +4,5 @@ using UnityEngine;
 
 public interface ILevelSkill
 {
-    void CastSkill(List<TowerBase> towers);
-    void CastSkill(List<Minion> minions);
+    void CastSkill(List<GameObject> targets);
 }

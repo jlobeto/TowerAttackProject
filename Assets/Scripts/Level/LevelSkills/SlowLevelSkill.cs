@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class SlowLevelSkill : ILevelSkill
 {
-    public void CastSkill(List<TowerBase> towers)
+    public void CastSkill(List<GameObject> targets)
     {
 
     }
-
-    public void CastSkill(List<Minion> minions)
-    {
-        throw new System.NotImplementedException();
-    }
+    
 }

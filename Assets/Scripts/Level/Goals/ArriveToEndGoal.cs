@@ -9,8 +9,8 @@ public class ArriveToEndGoal : LevelGoal
     {
         pCurrentLives += value;
         if (pCurrentLives > 0)
-            //Debug.Log("Goal Updated. Remaining lives : " + pCurrentLives);
-
+            Debug.Log("Goal Updated. Remaining lives : " + pCurrentLives);
+                
         CheckGoal(); 
     }
 

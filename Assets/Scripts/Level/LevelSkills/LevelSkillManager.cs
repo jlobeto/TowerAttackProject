@@ -45,7 +45,7 @@ public class LevelSkillManager : MonoBehaviour
                     break;
             }
 
-            level.LevelCanvasManager.CreateSkillButton(go.name, lvlSkill.OnInitCast);
+            level.LevelCanvasManager.CreateSkillButton(go.name, lvlSkill.OnInitCast, lvlSkill.OnCancelCast);
         }
     }
 
