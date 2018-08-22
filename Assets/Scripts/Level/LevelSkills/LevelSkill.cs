@@ -1,16 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System;
 
 public class LevelSkill : MonoBehaviour
 {
     public float AreaOfEffect = 15;
-    public float effectTime = 4f;
+    public float effectTime = 5f;
+    public float fireRate = 4f;
     public ILevelSkill castSkill;
+    public LevelSkillManager.SkillType skillType;
+
+    public Action OnSkillReleased = delegate { };
 
     bool _initialized;
     Vector3 _target;
     GameObject _sphere;
+    bool _canCast;
 
     public void OnInitCast()
     {
@@ -33,14 +40,14 @@ public class LevelSkill : MonoBehaviour
 
     public void OnCancelCast()
     {
-        _initialized = false;
+        _initialized = _canCast = false;
+        OnSkillReleased();
         Destroy(_sphere);
     }
 
     void Start () {
 		
 	}
-	
 	
 	void Update ()
     {
@@ -56,10 +63,27 @@ public class LevelSkill : MonoBehaviour
 
     void OnCheckInput()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            var go = Physics.OverlapSphere(_target, AreaOfEffect);
-
+            _canCast = true;
+        }
+        else if (Input.GetMouseButtonUp(0) && _canCast)
+        {
+            ///TODO// Filtrar por gameobjects que interesen(towers, minions y demas) crear alguna layer o tag en comun.
+            var go = Physics.OverlapSphere(_target, AreaOfEffect).Select(i => i.gameObject).ToList();
+            switch (skillType)
+            {
+                case LevelSkillManager.SkillType.Stun:
+                    castSkill.CastSkill(go, effectTime);
+                    break;
+                case LevelSkillManager.SkillType.Slow:
+                    castSkill.CastSkill(go, fireRate ,effectTime);
+                    break;
+                default:
+                    break;
+            }
+            
+            OnCancelCast();
         }
     }
 

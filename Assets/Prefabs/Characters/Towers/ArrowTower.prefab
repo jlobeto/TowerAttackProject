@@ -150,6 +150,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4127771572323496}
   - component: {fileID: 114674425084370268}
+  - component: {fileID: 65655656977974060}
   m_Layer: 0
   m_Name: ArrowTower
   m_TagString: Untagged
@@ -278,8 +279,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1681986375116948}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.19, y: -0.5, z: -8.36}
-  m_LocalScale: {x: 43.769543, y: 43.769535, z: 43.769535}
+  m_LocalPosition: {x: 11.91, y: 3.3200002, z: -10.07}
+  m_LocalScale: {x: 106.86115, y: 106.861046, z: 106.861046}
   m_Children:
   - {fileID: 4024613304628854}
   - {fileID: 4369246145488648}
@@ -631,6 +632,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1759858867245522}
   m_Mesh: {fileID: 4300006, guid: e580fca94920dde44bdd06b910a350f1, type: 3}
+--- !u!65 &65655656977974060
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1681986375116948}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.022498136, y: 0.02301275, z: 0.020129291}
+  m_Center: {x: -0.0010611587, y: 0.006506367, z: 0.0009051428}
 --- !u!114 &114674425084370268
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -644,7 +657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerName: 
   fireRate: 0.5
-  fireRange: 5.62
+  fireRange: 11.02
   towerType: 0
   projectilePrefabs:
   - {fileID: 114889584482150632, guid: 3217ea0652efa274ebea1a01193cc3b6, type: 2}
@@ -652,3 +665,4 @@ MonoBehaviour:
   rotationSpeed: 5
   spawnPoint: {fileID: 4121415482314510}
   toRotate: {fileID: 1388555945090082}
+  showGizmoRange: 0

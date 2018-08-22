@@ -46,7 +46,7 @@ public class LevelCanvasManager : MonoBehaviour
         }
     }
 
-    void ActivateSkillButtons()
+    public void ActivateSkillButtons()
     {
         foreach (var item in _skillButtons)
         {

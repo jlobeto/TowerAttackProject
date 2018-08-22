@@ -44,9 +44,15 @@ public class LevelSkillManager : MonoBehaviour
                     lvlSkill.castSkill = new SlowLevelSkill();
                     break;
             }
-
+            lvlSkill.skillType = item;
+            lvlSkill.OnSkillReleased += SkillReleasedHandler;
             level.LevelCanvasManager.CreateSkillButton(go.name, lvlSkill.OnInitCast, lvlSkill.OnCancelCast);
         }
+    }
+
+    void SkillReleasedHandler()
+    {
+        level.LevelCanvasManager.ActivateSkillButtons();
     }
 
 }

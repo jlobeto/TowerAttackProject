@@ -16,9 +16,15 @@ public class TowerBase : MonoBehaviour
     public GameObject toRotate;
     public bool showGizmoRange;
 
+    protected bool pImStunned;
+    protected float _stunTime;
+    protected bool pSlowDebuff;
+    protected float _slowTime;
+
     GameObject _target;
     float _fireRateAux;
     int _id;
+    float _initialFireRate;
 
     public int Id { get { return _id; } }
 
@@ -68,10 +74,8 @@ public class TowerBase : MonoBehaviour
         _id = gameObject.GetInstanceID();
     }
 
-    protected virtual void Update ()
+    protected void Fire()
     {
-        MinionAiming();
-
         _fireRateAux -= Time.deltaTime;
         if (_fireRateAux < 0)
         {
@@ -79,6 +83,58 @@ public class TowerBase : MonoBehaviour
             GetTarget();
             SpawnProjectile();
         }
+    }
+
+    #region Debuffs
+    public void ReceiveStun(float time)
+    {
+        _stunTime = time;
+        pImStunned = true;
+    }
+
+    public void SlowDebuff(float time, float newFireRate)
+    {
+        _slowTime = time;
+        _initialFireRate = fireRate;
+        fireRate *= newFireRate;
+        pSlowDebuff = true;
+    }
+
+
+    void StunTimer()
+    {
+        _stunTime -= Time.deltaTime;
+        if (_stunTime < 0)
+        {
+            pImStunned = false;
+        }
+    }
+
+    void SlowTimer()
+    {
+        _slowTime -= Time.deltaTime;
+        if (_slowTime < 0)
+        {
+            pSlowDebuff = false;
+            fireRate = _initialFireRate;
+        }
+    }
+    #endregion
+    protected virtual void Update()
+    {
+        if (!pImStunned)
+        {
+            MinionAiming();
+            Fire();
+
+            if (pSlowDebuff)
+                SlowTimer();
+        }
+        else
+        {
+            StunTimer();
+        }
+            
     }
 
     private void OnDrawGizmos()
