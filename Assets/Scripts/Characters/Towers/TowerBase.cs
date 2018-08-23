@@ -28,6 +28,18 @@ public class TowerBase : MonoBehaviour
 
     public int Id { get { return _id; } }
 
+    #region Attack
+    protected void Fire()
+    {
+        _fireRateAux -= Time.deltaTime;
+        if (_fireRateAux < 0)
+        {
+            _fireRateAux = fireRate;
+            GetTarget();
+            SpawnProjectile();
+        }
+    }
+
     protected virtual void SpawnProjectile()
     {
         if (_target == null) return;
@@ -68,21 +80,12 @@ public class TowerBase : MonoBehaviour
         toRotate.transform.rotation = Quaternion.Euler(0f, rotation.y, 0);
     }
 
-	void Start ()
+    #endregion
+
+    void Start ()
     {
         _fireRateAux = fireRate;
         _id = gameObject.GetInstanceID();
-    }
-
-    protected void Fire()
-    {
-        _fireRateAux -= Time.deltaTime;
-        if (_fireRateAux < 0)
-        {
-            _fireRateAux = fireRate;
-            GetTarget();
-            SpawnProjectile();
-        }
     }
 
     #region Debuffs
@@ -120,6 +123,7 @@ public class TowerBase : MonoBehaviour
         }
     }
     #endregion
+
     protected virtual void Update()
     {
         if (!pImStunned)
