@@ -70,6 +70,17 @@ public class MinionManager : MonoBehaviour
             minion.SetWalk(true);
     }
 
+    public int GetMinionPrice(MinionType t)
+    {
+        foreach (var item in level.availableMinions)
+        {
+            if (item.minionType == t)
+                return item.pointsValue;
+        }
+
+        throw new System.Exception("There is not an available minion of type " + t.ToString());
+    }
+
     void Start() {
         Init();
     }

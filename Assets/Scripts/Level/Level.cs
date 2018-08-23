@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,29 +39,6 @@ public class Level : MonoBehaviour
 
 	void Update ()
     {
-        MinionType t = MinionType.Runner;
-        bool pressed = false;
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            pressed = true;
-        }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            pressed = true;
-            t = MinionType.Tank;
-        }
-        else if (Input.GetMouseButtonDown(2))
-        {
-            pressed = true;
-            t = MinionType.Dove;
-        }
-
-        if (pressed)
-        {
-            _minionManager.SpawnMinion(t);
-            _minionManager.SetNextMinionFree();
-        }
         
     }
 
@@ -75,9 +53,25 @@ public class Level : MonoBehaviour
         
         _currentLevelPoints = initialLevelPoints;
 
-        _lvlCanvasManager = FindObjectOfType<LevelCanvasManager>();
-
         InitLevelGoal();
+        InitLevelCanvas();
+    }
+
+    public void BuildMinion(MinionType t)
+    {
+        if (!CheckMinionSale(t)) return;
+
+        var cost = _minionManager.GetMinionPrice(t);
+        _lvlCanvasManager.UpdateLevelPointBar(_currentLevelPoints - cost, initialLevelPoints);
+        _currentLevelPoints -= cost;
+        _minionManager.SpawnMinion(t);
+        _minionManager.SetNextMinionFree();
+    }
+        
+    bool CheckMinionSale(MinionType t)
+    {
+        var cost = _minionManager.GetMinionPrice(t);
+        return _currentLevelPoints - cost >= 0;
     }
 
     public void UpdateLevelGoal()
@@ -93,7 +87,13 @@ public class Level : MonoBehaviour
 
         _levelGoal.OnGoalComplete += GoalCompletedHandler;
     }
-       
+
+    void InitLevelCanvas()
+    {
+        _lvlCanvasManager = FindObjectOfType<LevelCanvasManager>();
+        _lvlCanvasManager.BuildAvailablesMinions(availableMinions.Select(i => i.minionType).ToList());
+        _lvlCanvasManager.level = this;
+    }
 
     void GoalCompletedHandler()
     {
