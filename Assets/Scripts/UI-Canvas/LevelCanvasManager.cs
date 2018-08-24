@@ -15,21 +15,70 @@ public class LevelCanvasManager : MonoBehaviour
     HorizontalLayoutGroup _skillsButtonPanel;
     HorizontalLayoutGroup _availablesPanel;
     List<Button> _skillButtons = new List<Button>();
-    
+    Button _timerBtn;
+    Text _timerText;
+    float _buildSquadTimer;
+    float _levelTimer;
     bool _isAnyButtonDisabled;
-    
-	void Awake ()
+    bool _readyToDiscountTimer;
+    bool _buildTimerHasEnded;
+    bool _levelTimerEnded;
+
+    void Awake()
     {
         var panels = GetComponentsInChildren<HorizontalLayoutGroup>();
         _skillsButtonPanel = panels.FirstOrDefault(i => i.tag == "LvlSkillPanel");
         _availablesPanel = panels.FirstOrDefault(i => i.tag == "AvailablesPanel");
-    }
-    
-    void Update () {
-		
-	}
 
-    public void BuildAvailablesMinions(List<MinionType> types)
+        _timerBtn = GetComponentsInChildren<Button>().FirstOrDefault(i => i.tag == "BuildSquadTimer");
+        _timerText = _timerBtn.GetComponentInChildren<Text>();
+    }
+
+    void Update() {
+        DiscountTimer();
+    }
+
+    void DiscountTimer()
+    {
+        if (!_readyToDiscountTimer) return;
+
+        if(!_levelTimerEnded)
+            _buildSquadTimer -= Time.deltaTime;
+
+        var text = _buildTimerHasEnded ? "Time ! " : "Squad ! ";
+        _timerText.text = text + _buildSquadTimer.ToString("0.00");
+        if (_buildSquadTimer < 0)
+        {
+            if (!_buildTimerHasEnded)
+            {
+                _buildSquadTimer = _levelTimer;
+                level.startMinionSpawning = true;
+            }
+                
+            _buildTimerHasEnded = true;
+        }
+
+        LevelEndCheckerByTime();
+    }
+
+    void LevelEndCheckerByTime()
+    {
+        if (!_buildTimerHasEnded) return;
+        if (_buildSquadTimer >= 0 || _levelTimerEnded) return;
+
+        Debug.Log("LEVEL HAS ENDED ------ ");
+        _levelTimerEnded = true;
+        _buildSquadTimer = 0;
+    }
+
+    public void SetBuildSquadTimer(float squad, float level)
+    {
+        _buildSquadTimer = squad;
+        _levelTimer = level;
+        _readyToDiscountTimer = true;
+    }
+
+    public void BuildAvailableMinionsButtons(List<MinionType> types)
     {
         foreach (var item in types)
         {
@@ -42,7 +91,7 @@ public class LevelCanvasManager : MonoBehaviour
 
     void OnBuyMinion(MinionType t)
     {
-        level.BuildMinion(t);
+        level.BuildMinion(t, !_buildTimerHasEnded);
     }
 
     public void UpdateLevelPointBar(int newValue, int baseValue)

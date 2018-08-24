@@ -33,6 +33,7 @@ public class Minion : MonoBehaviour
 
     public void InitMinion(WalkNode n)
     {
+        transform.position = n.transform.position;
         pNextNode = n.GetNextWalkNode();
     }
 
