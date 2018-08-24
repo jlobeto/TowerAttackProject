@@ -13,15 +13,16 @@ public class TestController : MonoBehaviour
             Destroy(gameObject);
 
         _guiStyle.fontSize = 12;
+        
     }
 
     private void OnGUI()
     {
-        GUILayout.BeginVertical();    
+        GUILayout.BeginVertical();
+        GUILayout.BeginHorizontal();
+        GUILayout.Space(250);
         GUILayout.Label("R: reset scene", _guiStyle);
-        GUILayout.Label("Left Click: spawn runner", _guiStyle);
-        GUILayout.Label("Right Click: spawn tank", _guiStyle);
-        GUILayout.Label("Middle Click: spawn dove", _guiStyle);
+        GUILayout.BeginHorizontal();
         GUILayout.EndVertical();
     }
 

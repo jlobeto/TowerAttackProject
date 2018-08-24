@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.4964127, b: 0.57481724, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1772,15 +1772,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4922557750259202, guid: 6ad82b2213d182742a7c1d43469aa633, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -29.64
+      value: -29.849
       objectReference: {fileID: 0}
     - target: {fileID: 4922557750259202, guid: 6ad82b2213d182742a7c1d43469aa633, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.44886
+      value: 0.37238
       objectReference: {fileID: 0}
     - target: {fileID: 4922557750259202, guid: 6ad82b2213d182742a7c1d43469aa633, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -26.51
+      value: -26.42
       objectReference: {fileID: 0}
     - target: {fileID: 4922557750259202, guid: 6ad82b2213d182742a7c1d43469aa633, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1805,6 +1805,11 @@ Prefab:
     - target: {fileID: 1014541566658822, guid: 6ad82b2213d182742a7c1d43469aa633, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114445797599323844, guid: 6ad82b2213d182742a7c1d43469aa633,
+        type: 2}
+      propertyPath: yPos
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ad82b2213d182742a7c1d43469aa633, type: 2}
@@ -3042,6 +3047,14 @@ Prefab:
       propertyPath: fireRange
       value: 10.32
       objectReference: {fileID: 0}
+    - target: {fileID: 1411403546479740, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759858867245522, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
   m_IsPrefabParent: 0
@@ -3260,6 +3273,24 @@ Prefab:
       propertyPath: buildSquadTime
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114851463829160704, guid: 557973ff5559e8f47834e042b8185f76,
+        type: 2}
+      propertyPath: availableMinions.Array.data[0]
+      value: 
+      objectReference: {fileID: 114718412350460800, guid: 080d111cb62d5a4488aeb1045a89b378,
+        type: 2}
+    - target: {fileID: 114851463829160704, guid: 557973ff5559e8f47834e042b8185f76,
+        type: 2}
+      propertyPath: availableMinions.Array.data[1]
+      value: 
+      objectReference: {fileID: 114738750435379174, guid: cc90e9bc8f5d03a46ad1865d7b4f0ed3,
+        type: 2}
+    - target: {fileID: 114851463829160704, guid: 557973ff5559e8f47834e042b8185f76,
+        type: 2}
+      propertyPath: availableMinions.Array.data[2]
+      value: 
+      objectReference: {fileID: 114445797599323844, guid: 6ad82b2213d182742a7c1d43469aa633,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 557973ff5559e8f47834e042b8185f76, type: 2}
   m_IsPrefabParent: 0
