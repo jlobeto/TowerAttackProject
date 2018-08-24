@@ -53,6 +53,8 @@ public class LevelCanvasManager : MonoBehaviour
             {
                 _buildSquadTimer = _levelTimer;
                 level.startMinionSpawning = true;
+                foreach (var item in _skillButtons)
+                    item.gameObject.SetActive(true);
             }
                 
             _buildTimerHasEnded = true;
@@ -109,6 +111,7 @@ public class LevelCanvasManager : MonoBehaviour
         btn.GetComponentInChildren<Text>().text = name;
         btn.onClick.AddListener(() => SkillButtonCallback(onActivate, onDeactivate, btn.GetInstanceID()));
         btn.transform.SetParent(_skillsButtonPanel.transform);
+        btn.gameObject.SetActive(false);
         _skillButtons.Add(btn);
     }
 
