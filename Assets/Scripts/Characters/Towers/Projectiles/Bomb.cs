@@ -37,10 +37,9 @@ public class Bomb : ProjectileBase
         foreach (var item in minions)
         {
             var m = item.GetComponent<Minion>();
+            
             if (m != null)
-            {
                 DoDamage(m);
-            }
         }
 
         Destroy(gameObject);

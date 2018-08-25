@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33081444667012076}
   - component: {fileID: 23572056859146408}
   - component: {fileID: 95897541923889026}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Drone Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 54737148117618232}
   - component: {fileID: 65140048698607444}
   - component: {fileID: 114965857223461940}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Drone Pref
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1999553106696042}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -53.28, y: 5.08, z: 0}
+  m_LocalPosition: {x: -37.46648, y: 5.14, z: 30.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4550291574086872}
@@ -125,8 +125,8 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -179,4 +179,4 @@ MonoBehaviour:
   strength: 0
   coinValue: 0
   levelPointsToRecover: 0.75
-  yPos: 2.3
+  yPos: 5.14

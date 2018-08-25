@@ -48,16 +48,19 @@ public class Minion : MonoBehaviour
     public void GetDamage(float dmg)
     {
         hp -= dmg;
-        pInfoCanvas.UpdateLife(hp);
+        //pInfoCanvas.UpdateLife(hp);
         DeathChecker();
     }
 
     public void GetSlowDebuff(float t, float speedDelta)
     {
-        _iceDebuff = true;
         _iceTime = t;
-        _normalSpeed = speed;
-        speed -= speedDelta * speed;
+        if (!_iceDebuff)
+        {
+            _iceDebuff = true;
+            _normalSpeed = speed;
+            speed -= speedDelta * speed;
+        }
     }
     
     protected virtual void PerformAction()
@@ -91,11 +94,11 @@ public class Minion : MonoBehaviour
     protected void Init()
     {
         _id = gameObject.GetInstanceID();
-        pInfoCanvas = GetComponentInChildren<InfoCanvas>();
+        /*pInfoCanvas = GetComponentInChildren<InfoCanvas>();
         if (pInfoCanvas == null)
             throw new Exception("InfoCanvas is not set as a child");
 
-        pInfoCanvas.Init(hp);
+        pInfoCanvas.Init(hp);*/
     }
     protected virtual void Start ()
     {
