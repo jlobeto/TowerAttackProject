@@ -82,12 +82,6 @@ public class TowerBase : MonoBehaviour
 
     #endregion
 
-    void Start ()
-    {
-        _fireRateAux = fireRate;
-        _id = gameObject.GetInstanceID();
-    }
-
     #region Debuffs
     public void ReceiveStun(float time)
     {
@@ -123,6 +117,13 @@ public class TowerBase : MonoBehaviour
         }
     }
     #endregion
+
+    void Start()
+    {
+        _fireRateAux = fireRate;
+        _id = gameObject.GetInstanceID();
+        
+    }
 
     protected virtual void Update()
     {

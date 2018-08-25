@@ -29,7 +29,7 @@ public class ProjectileBase : MonoBehaviour
         transform.position += transform.forward * speed * Time.deltaTime;
     }
 
-    void Start () {
+    protected virtual void Start () {
         Destroy(gameObject, 5f);
 	}
 	
@@ -38,7 +38,7 @@ public class ProjectileBase : MonoBehaviour
         Movement();
 	}
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Minion"))
         {
