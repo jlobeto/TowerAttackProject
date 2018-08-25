@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.4964127, b: 0.57481724, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -750,6 +750,10 @@ Prefab:
         type: 2}
       propertyPath: fireRange
       value: 10.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 1681986375116948, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
@@ -1753,6 +1757,10 @@ Prefab:
     - target: {fileID: 1681986375116948, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
       propertyPath: m_Name
       value: ArrowTower (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1681986375116948, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
@@ -2820,6 +2828,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1681986375116948, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
   m_IsPrefabParent: 0
@@ -2830,66 +2842,40 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4127771572323496, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
+    - target: {fileID: 4891688344670024, guid: 6ec409dc67750d749a9d6b77478f2bdc, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 12.079999
+      value: -13.24
       objectReference: {fileID: 0}
-    - target: {fileID: 4127771572323496, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
+    - target: {fileID: 4891688344670024, guid: 6ec409dc67750d749a9d6b77478f2bdc, type: 2}
       propertyPath: m_LocalPosition.y
       value: 3.3200002
       objectReference: {fileID: 0}
-    - target: {fileID: 4127771572323496, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
+    - target: {fileID: 4891688344670024, guid: 6ec409dc67750d749a9d6b77478f2bdc, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.17000002
+      value: 14.61
       objectReference: {fileID: 0}
-    - target: {fileID: 4127771572323496, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
+    - target: {fileID: 4891688344670024, guid: 6ec409dc67750d749a9d6b77478f2bdc, type: 2}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4127771572323496, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
+    - target: {fileID: 4891688344670024, guid: 6ec409dc67750d749a9d6b77478f2bdc, type: 2}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4127771572323496, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
+    - target: {fileID: 4891688344670024, guid: 6ec409dc67750d749a9d6b77478f2bdc, type: 2}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4127771572323496, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
+    - target: {fileID: 4891688344670024, guid: 6ec409dc67750d749a9d6b77478f2bdc, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4127771572323496, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
+    - target: {fileID: 4891688344670024, guid: 6ec409dc67750d749a9d6b77478f2bdc, type: 2}
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 1681986375116948, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
-      propertyPath: m_Name
-      value: ArrowTower (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 114674425084370268, guid: 5ab49322b77b5d04b8b77d9976b6401f,
-        type: 2}
-      propertyPath: showGizmoRange
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4127771572323496, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 106.86115
-      objectReference: {fileID: 0}
-    - target: {fileID: 4127771572323496, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 106.861046
-      objectReference: {fileID: 0}
-    - target: {fileID: 4127771572323496, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 106.861046
-      objectReference: {fileID: 0}
-    - target: {fileID: 114674425084370268, guid: 5ab49322b77b5d04b8b77d9976b6401f,
-        type: 2}
-      propertyPath: fireRange
-      value: 11.02
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
+  m_ParentPrefab: {fileID: 100100000, guid: 6ec409dc67750d749a9d6b77478f2bdc, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &2021881066
 Prefab:

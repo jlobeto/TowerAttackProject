@@ -25,6 +25,9 @@ public class Minion : MonoBehaviour
 
     int _currentLevel = 1;//Level of the minion, ///TODO manage this when buying an upgrade of lvl;
     int _spawnOrder;
+    float _normalSpeed;
+    bool _iceDebuff;
+    float _iceTime;
     int _id;
     bool _canWalk;
 
@@ -48,10 +51,29 @@ public class Minion : MonoBehaviour
         pInfoCanvas.UpdateLife(hp);
         DeathChecker();
     }
+
+    public void GetSlowDebuff(float t, float speedDelta)
+    {
+        _iceDebuff = true;
+        _iceTime = t;
+        _normalSpeed = speed;
+        speed -= speedDelta * speed;
+    }
+    
     protected virtual void PerformAction()
     {
         if (_canWalk)
             Walk();
+
+        if (_iceDebuff)
+        {
+            _iceTime -= Time.deltaTime;
+            if (_iceTime < 0)
+            {
+                speed = _normalSpeed;
+                _iceDebuff = false;
+            }
+        }
     }
     protected virtual void Walk()
     {
