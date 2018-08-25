@@ -21,7 +21,7 @@ public class Minion : MonoBehaviour
 
     protected WalkNode pNextNode;
     protected InfoCanvas pInfoCanvas;
-    protected float pDistanceToNextNode = 0.3f;//To change the next node;
+    protected float pDistanceToNextNode = 0.2f;//To change the next node;
 
     int _currentLevel = 1;//Level of the minion, ///TODO manage this when buying an upgrade of lvl;
     int _spawnOrder;
@@ -36,27 +36,23 @@ public class Minion : MonoBehaviour
         transform.position = n.transform.position;
         pNextNode = n.GetNextWalkNode();
     }
-
     public void SetWalk(bool val)
     {
         if (pNextNode.isEnd) return;//don't know if this will be here, for testing porpuse must be for the moment.
 
         _canWalk = val;
     }
-
     public void GetDamage(float dmg)
     {
         hp -= dmg;
         pInfoCanvas.UpdateLife(hp);
         DeathChecker();
     }
-
     protected virtual void PerformAction()
     {
         if (_canWalk)
             Walk();
     }
-
     protected virtual void Walk()
     {
         var dir = (pNextNode.transform.position - transform.position).normalized;
@@ -70,7 +66,6 @@ public class Minion : MonoBehaviour
                 FinishWalk();
         }
     }
-
     protected void Init()
     {
         _id = gameObject.GetInstanceID();
@@ -80,23 +75,18 @@ public class Minion : MonoBehaviour
 
         pInfoCanvas.Init(hp);
     }
-
     protected virtual void Start ()
     {
         Init();
 	}
-
-
     protected virtual void Update () {
         PerformAction();
 	}
-
     protected void FinishWalk()
     {
         _canWalk = false;
         OnWalkFinished(this);
     }
-
     void DeathChecker()
     {
         if (hp <= 0)
