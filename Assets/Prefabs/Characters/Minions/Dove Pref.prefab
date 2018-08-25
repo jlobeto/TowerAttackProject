@@ -19,7 +19,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4477381494608890}
-  m_Layer: 0
+  - component: {fileID: 54235870739656714}
+  - component: {fileID: 114826131964880602}
+  m_Layer: 8
   m_Name: Dove Pref
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +38,7 @@ GameObject:
   - component: {fileID: 4338293366236858}
   - component: {fileID: 33982000897352904}
   - component: {fileID: 23732186623935328}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +55,7 @@ GameObject:
   - component: {fileID: 4831327098614300}
   - component: {fileID: 33935202339390096}
   - component: {fileID: 23269638645078260}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +72,7 @@ GameObject:
   - component: {fileID: 4398706048296680}
   - component: {fileID: 33624590452071782}
   - component: {fileID: 23762742636501520}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder011
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +106,7 @@ GameObject:
   - component: {fileID: 4910166373752202}
   - component: {fileID: 33119708029563476}
   - component: {fileID: 23279560142629896}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder012
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +123,7 @@ GameObject:
   - component: {fileID: 4857929901599522}
   - component: {fileID: 33803172915092616}
   - component: {fileID: 23004395174260744}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +175,7 @@ GameObject:
   - component: {fileID: 4117433075209904}
   - component: {fileID: 33821453320762372}
   - component: {fileID: 23341020797653980}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder010
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +192,7 @@ GameObject:
   - component: {fileID: 4073265104822598}
   - component: {fileID: 33489307886656768}
   - component: {fileID: 23816392933062412}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,7 +209,7 @@ GameObject:
   - component: {fileID: 4336429039212132}
   - component: {fileID: 33953151240131104}
   - component: {fileID: 23095398153297516}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,7 +226,7 @@ GameObject:
   - component: {fileID: 4484397691683002}
   - component: {fileID: 33606349522425512}
   - component: {fileID: 23296734164872994}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder009
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +243,7 @@ GameObject:
   - component: {fileID: 4655382974860696}
   - component: {fileID: 33047815418225090}
   - component: {fileID: 23929685404927100}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,9 +259,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4752292999750746}
   - component: {fileID: 95164549121150664}
-  - component: {fileID: 114102018270254050}
-  - component: {fileID: 54193078038833438}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Dove
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,7 +276,7 @@ GameObject:
   - component: {fileID: 4503828805359582}
   - component: {fileID: 33248219936344450}
   - component: {fileID: 23087784448190338}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,7 +293,7 @@ GameObject:
   - component: {fileID: 4665117416848882}
   - component: {fileID: 33180699319717970}
   - component: {fileID: 23659458598608432}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -310,7 +310,7 @@ GameObject:
   - component: {fileID: 4786565747750494}
   - component: {fileID: 33416882814448832}
   - component: {fileID: 23099382349513370}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sphere001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 4337100553903916}
   - component: {fileID: 33196973073742878}
   - component: {fileID: 23663839710215288}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1132,12 +1132,12 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1036162967863110}
   m_Mesh: {fileID: 4300024, guid: f57e03111eda6c441bdd46284942840b, type: 3}
---- !u!54 &54193078038833438
+--- !u!54 &54235870739656714
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1582959058825568}
+  m_GameObject: {fileID: 1012429915558380}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -1164,27 +1164,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114102018270254050
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1582959058825568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c578e6be85fa04993e9e4b73fd23eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minionName: 
-  hp: 50
-  type: 0
-  minionType: 2
-  speed: 4
-  pointsValue: 15
-  strength: 0
-  coinValue: 0
-  levelPointsToRecover: 0.75
-  yPos: 2.3
 --- !u!114 &114353461230606356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1251,6 +1230,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpBar: {fileID: 114403157049692576}
+--- !u!114 &114826131964880602
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1012429915558380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81c578e6be85fa04993e9e4b73fd23eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minionName: 
+  hp: 50
+  type: 0
+  minionType: 2
+  speed: 4
+  pointsValue: 15
+  strength: 0
+  coinValue: 0
+  levelPointsToRecover: 0.75
+  yPos: 2.3
 --- !u!114 &114842726273312004
 MonoBehaviour:
   m_ObjectHideFlags: 1

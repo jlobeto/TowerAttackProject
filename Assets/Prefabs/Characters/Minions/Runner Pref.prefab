@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4265608273593658}
   - component: {fileID: 33068065055249490}
   - component: {fileID: 23525097900022810}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 4906918996342726}
   - component: {fileID: 33352186691276378}
   - component: {fileID: 23276517899000906}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 4352548846659414}
   - component: {fileID: 33284287127130258}
   - component: {fileID: 23548357376864274}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 4423658444518476}
   - component: {fileID: 33752519622437654}
   - component: {fileID: 23002517328923076}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 4418454014667514}
   - component: {fileID: 33309048178968722}
   - component: {fileID: 23133530081541498}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4929369883807278}
-  m_Layer: 0
+  - component: {fileID: 54753491082701078}
+  - component: {fileID: 114464370389213578}
+  m_Layer: 8
   m_Name: Runner Pref
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +140,7 @@ GameObject:
   - component: {fileID: 4893329103749460}
   - component: {fileID: 33124823748902534}
   - component: {fileID: 23572430664848546}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +157,7 @@ GameObject:
   - component: {fileID: 4964590429183448}
   - component: {fileID: 33159203613101824}
   - component: {fileID: 23468748754280320}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +174,7 @@ GameObject:
   - component: {fileID: 4971853489205884}
   - component: {fileID: 33031202575738368}
   - component: {fileID: 23635109119497150}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,9 +190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4448141753823858}
   - component: {fileID: 95591580871196662}
-  - component: {fileID: 114482900592566824}
-  - component: {fileID: 54356437905288814}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Runner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 4493305297247708}
   - component: {fileID: 33414910288038920}
   - component: {fileID: 23867388699275976}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 4503912743967044}
   - component: {fileID: 33031667137279382}
   - component: {fileID: 23132348348756656}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -844,12 +844,12 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1369222041147130}
   m_Mesh: {fileID: 4300010, guid: ca3527553a856b54bb66f853246e859a, type: 3}
---- !u!54 &54356437905288814
+--- !u!54 &54753491082701078
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1794412135979008}
+  m_GameObject: {fileID: 1556836230464586}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -876,12 +876,12 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114482900592566824
+--- !u!114 &114464370389213578
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1794412135979008}
+  m_GameObject: {fileID: 1556836230464586}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6267e966ed789348b05a17bc33fe0ca, type: 3}

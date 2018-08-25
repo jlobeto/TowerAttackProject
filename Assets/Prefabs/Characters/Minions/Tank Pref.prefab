@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4514064780096318}
   - component: {fileID: 33680056434871536}
   - component: {fileID: 23945254662243530}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4934940729018660}
   - component: {fileID: 33983898441770124}
   - component: {fileID: 23076458082393224}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 4563270896203232}
   - component: {fileID: 33686422050301370}
   - component: {fileID: 23270537668419040}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,9 +88,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4797046263027682}
   - component: {fileID: 95908446877979188}
-  - component: {fileID: 114368209156295992}
-  - component: {fileID: 54687768210961110}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +105,7 @@ GameObject:
   - component: {fileID: 4762440213710136}
   - component: {fileID: 33354251747989766}
   - component: {fileID: 23170752036263138}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +122,7 @@ GameObject:
   - component: {fileID: 4969797911711272}
   - component: {fileID: 33396139449434874}
   - component: {fileID: 23647340011791080}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +139,7 @@ GameObject:
   - component: {fileID: 4182817517361700}
   - component: {fileID: 33401130526280830}
   - component: {fileID: 23864642488055384}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +189,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4966495725218632}
-  m_Layer: 0
+  - component: {fileID: 54294010642371224}
+  - component: {fileID: 114224367342494148}
+  m_Layer: 8
   m_Name: Tank Pref
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 4432067484110750}
   - component: {fileID: 33918955669805726}
   - component: {fileID: 23941012592548016}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -629,12 +629,12 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1029311512859112}
   m_Mesh: {fileID: 4300002, guid: 75cb75ae16017ec45bd7c27a40cabe3e, type: 3}
---- !u!54 &54687768210961110
+--- !u!54 &54294010642371224
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1252976416503222}
+  m_GameObject: {fileID: 1896811075808824}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -715,12 +715,12 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114368209156295992
+--- !u!114 &114224367342494148
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1252976416503222}
+  m_GameObject: {fileID: 1896811075808824}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6267e966ed789348b05a17bc33fe0ca, type: 3}
