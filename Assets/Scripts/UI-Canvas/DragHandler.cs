@@ -11,6 +11,8 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler , IEndDragHandler, I
     Vector3 _startPosition;
     Transform _startParent;
     CanvasGroup _canvasGroup;
+    RectTransform _rectTransform;
+    float _distToRemove;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -27,20 +29,30 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler , IEndDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        
         itemBeingDragged = null;
         _canvasGroup.blocksRaycasts = true;
-        if (transform.parent == _startParent)
-            transform.position = _startPosition;
+        if (transform.parent.GetInstanceID() == _startParent.GetInstanceID())
+        {
+            var dist = Vector2.Distance(transform.position, transform.parent.position);
+            if (dist < _distToRemove)
+                transform.position = _startPosition;
+            else
+                slotParent.OnRemoveMe();
+        }
+            
     }
 
     void Start () {
         _canvasGroup = GetComponent<CanvasGroup>();
         slotParent = GetComponentInParent<DragAndDropSlot>();
+
+        _distToRemove = slotParent.childSize.y * 0.85f;
     }
 	
 	void Update () {
         //TODO/// Change this fucking shit.
-		if(slotParent != transform.parent)
+		if(slotParent.GetInstanceID() != transform.parent.GetInstanceID())
             slotParent = GetComponentInParent<DragAndDropSlot>();
     }
 }

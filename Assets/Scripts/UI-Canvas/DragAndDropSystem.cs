@@ -7,12 +7,17 @@ public class DragAndDropSystem : MonoBehaviour, IHasChanged
 {
     public DragAndDropSlot slotPref;
 
+    List<DragAndDropSlot> _slots = new List<DragAndDropSlot>();
     int _currentIndex = 0;
     LevelCanvasManager _canvas;
+
     public void AddSlot(MinionType t)
     {
         var slot = Instantiate<DragAndDropSlot>(slotPref, transform);
         slot.index = _currentIndex;
+        slot.OnRemoveMe += (() => OnDeleteSlot(slot));
+        _slots.Add(slot);
+
         GameObject slotImagePrefab = GetPrefab(t);
         var icon = Instantiate(slotImagePrefab, slot.transform);
         icon.GetComponent<DragHandler>().minionType = t;
@@ -20,6 +25,13 @@ public class DragAndDropSystem : MonoBehaviour, IHasChanged
         _currentIndex++;
     }
 
+    void OnDeleteSlot(DragAndDropSlot slot)
+    {
+        _canvas.MinionDeleted(slot.index);
+        _slots.Remove(slot);
+        Destroy(slot.gameObject);
+        ReorderSlotsIndeces();
+    }
 
     public void HasChanged(DragAndDropSlot affectedSlot, DragHandler affectedDraggable, DragAndDropSlot fromSlot, DragHandler beingDragged)
     {
@@ -81,5 +93,13 @@ public class DragAndDropSystem : MonoBehaviour, IHasChanged
         return slotImagePrefab;
     }
 
-
+    void ReorderSlotsIndeces()
+    {
+        var index = 0;
+        foreach (var item in _slots)
+        {
+            item.index = index;
+            index++;
+        }
+    }
 }

@@ -91,13 +91,22 @@ public class MinionManager : MonoBehaviour
 
     public void ChangeMinionOrder(int from, int to)
     {
-        /*Minion minionFrom = new Minion();
-        Minion minionTo = new Minion();*/
         var minionFrom =_minions[from];
         var minionTo = _minions[to];
 
         _minions[from] = minionTo;
         _minions[to] = minionFrom;
+    }
+
+    public int DeleteMinionByIndex(int index)
+    {
+        if (index >= _minions.Count) return 0;
+
+        var minion = _minions[index];
+        var pointsValue = minion.pointsValue;
+        _minions.RemoveAt(index);
+        Destroy(minion.gameObject);
+        return pointsValue;
     }
 
     void Start() {

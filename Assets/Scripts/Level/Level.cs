@@ -91,6 +91,16 @@ public class Level : MonoBehaviour
         _minionManager.ChangeMinionOrder(from, to);
     }
 
+    /// <summary>
+    /// When a minion is deleted with Drag&Drop system call  this function to delete the minion itself;
+    /// </summary>
+    public void MinionDeletedByDandD(int index)
+    {
+        var coinsToAdd = _minionManager.DeleteMinionByIndex(index);
+        _currentLevelPoints += coinsToAdd;
+        _lvlCanvasManager.UpdateLevelPointBar(_currentLevelPoints, initialLevelPoints);
+    }
+
     #endregion
     
     #region Inits()
