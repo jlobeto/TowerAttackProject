@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class LevelCanvasManager : MonoBehaviour
 {
+    [HideInInspector]
     public Level level;
     public Button skillButtonPrefab;
     public Image levelPointBar;
@@ -14,6 +15,7 @@ public class LevelCanvasManager : MonoBehaviour
 
     HorizontalLayoutGroup _skillsButtonPanel;
     HorizontalLayoutGroup _availablesPanel;
+    DragAndDropSystem _dragAndDropSystem;
     List<Button> _skillButtons = new List<Button>();
     Button _timerBtn;
     Text _timerText;
@@ -29,7 +31,7 @@ public class LevelCanvasManager : MonoBehaviour
         var panels = GetComponentsInChildren<HorizontalLayoutGroup>();
         _skillsButtonPanel = panels.FirstOrDefault(i => i.tag == "LvlSkillPanel");
         _availablesPanel = panels.FirstOrDefault(i => i.tag == "AvailablesPanel");
-
+        _dragAndDropSystem = GetComponentInChildren<DragAndDropSystem>();
         _timerBtn = GetComponentsInChildren<Button>().FirstOrDefault(i => i.tag == "BuildSquadTimer");
         _timerText = _timerBtn.GetComponentInChildren<Text>();
     }
@@ -93,7 +95,9 @@ public class LevelCanvasManager : MonoBehaviour
 
     void OnBuyMinion(MinionType t)
     {
-        level.BuildMinion(t, !_buildTimerHasEnded);
+        var created = level.BuildMinion(t, !_buildTimerHasEnded);
+        /*if(created)
+            _dragAndDropSystem.AddSlot(t);*/
     }
 
     public void UpdateLevelPointBar(int newValue, int baseValue)

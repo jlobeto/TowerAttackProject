@@ -51,15 +51,19 @@ public class Level : MonoBehaviour
 
 
     #region Minion Spawning Stuff
-    public void BuildMinion(MinionType t, bool builtTime)
+    
+    /// <returns>True if minion has been created</returns>
+    public bool BuildMinion(MinionType t, bool builtTime)
     {
-        if (!CheckMinionSale(t)) return;
+        if (!CheckMinionSale(t)) return false;
         var cost = _minionManager.GetMinionPrice(t);
         _lvlCanvasManager.UpdateLevelPointBar(_currentLevelPoints - cost, initialLevelPoints);
         _currentLevelPoints -= cost;
         _minionManager.SpawnMinion(t, builtTime);
         if(!builtTime)
             _minionManager.SetNextMinionFree();
+
+        return true;
     }
 
     void OnSpawnMinions()
