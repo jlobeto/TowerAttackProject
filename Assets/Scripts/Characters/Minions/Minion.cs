@@ -18,9 +18,10 @@ public class Minion : MonoBehaviour
     public float levelPointsToRecover = 0.75f;
     public Action<Minion> OnWalkFinished = delegate { };
     public Action<Minion> OnDeath = delegate { };
+    public InfoCanvas infoCanvas;
 
     protected WalkNode pNextNode;
-    protected InfoCanvas pInfoCanvas;
+    
     protected float pDistanceToNextNode = 0.2f;//To change the next node;
 
     int _currentLevel = 1;//Level of the minion, ///TODO manage this when buying an upgrade of lvl;
@@ -48,7 +49,7 @@ public class Minion : MonoBehaviour
     public void GetDamage(float dmg)
     {
         hp -= dmg;
-        //pInfoCanvas.UpdateLife(hp);
+        infoCanvas.UpdateLife(hp);
         DeathChecker();
     }
 
@@ -65,6 +66,8 @@ public class Minion : MonoBehaviour
     
     protected virtual void PerformAction()
     {
+        infoCanvas.UpdatePosition(transform.position);
+
         if (_canWalk)
             Walk();
 
@@ -94,11 +97,16 @@ public class Minion : MonoBehaviour
     protected void Init()
     {
         _id = gameObject.GetInstanceID();
-        /*pInfoCanvas = GetComponentInChildren<InfoCanvas>();
-        if (pInfoCanvas == null)
-            throw new Exception("InfoCanvas is not set as a child");
+        infoCanvas = Instantiate<InfoCanvas>(infoCanvas, transform.position, transform.rotation);
+        infoCanvas.Init(hp);
+        if (Debug.isDebugBuild)
+        {
+            var parent = GameObject.Find("InfoCanvasParent");
+            if (parent == null)
+                parent = new GameObject("InfoCanvasParent");
 
-        pInfoCanvas.Init(hp);*/
+            infoCanvas.transform.SetParent(parent.transform);
+        }
     }
     protected virtual void Start ()
     {
@@ -115,7 +123,10 @@ public class Minion : MonoBehaviour
     void DeathChecker()
     {
         if (hp <= 0)
+        {
+            Destroy(infoCanvas.gameObject);
             OnDeath(this);
+        }
     }
 
     
