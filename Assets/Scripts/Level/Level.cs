@@ -86,6 +86,11 @@ public class Level : MonoBehaviour
         return _currentLevelPoints - cost >= 0;
     }
 
+    public void MinionOrderHasChanged(int from, int to)
+    {
+        _minionManager.ChangeMinionOrder(from, to);
+    }
+
     #endregion
     
     #region Inits()

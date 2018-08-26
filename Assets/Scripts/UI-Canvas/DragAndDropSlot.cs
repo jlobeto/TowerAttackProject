@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class DragAndDropSlot : MonoBehaviour, IDropHandler
 {
+    public int index;
 
     public GameObject item
     {
@@ -23,15 +24,19 @@ public class DragAndDropSlot : MonoBehaviour, IDropHandler
     {
         if (item != null)
         {
-            var dragHandler = GetComponentInChildren<DragHandler>();
-            if (dragHandler.minionType == DragHandler.itemBeingDragged.minionType) return;
+            var myChild = GetComponentInChildren<DragHandler>();
+            if (myChild.minionType == DragHandler.itemBeingDragged.minionType) return;
 
-            dragHandler.transform.SetParent(DragHandler.itemBeingDragged.slotParent.transform);
-            DragHandler.itemBeingDragged.transform.SetParent(transform);
-            ExecuteEvents.ExecuteHierarchy<IHasChanged>(gameObject, null, (x, y) => x.HasChanged());
+            ExecuteEvents.ExecuteHierarchy<IHasChanged>(gameObject
+                , null
+                , (x, y) => x.HasChanged
+                (this
+                , myChild
+                , DragHandler.itemBeingDragged.slotParent
+                , DragHandler.itemBeingDragged));
         }
     }
-    
+
     void Start () {
 		
 	}

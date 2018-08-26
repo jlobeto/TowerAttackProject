@@ -6,23 +6,38 @@ using UnityEngine.UI;
 public class DragAndDropSystem : MonoBehaviour, IHasChanged
 {
     public DragAndDropSlot slotPref;
+
+    int _currentIndex = 0;
+    LevelCanvasManager _canvas;
     public void AddSlot(MinionType t)
     {
         var slot = Instantiate<DragAndDropSlot>(slotPref, transform);
+        slot.index = _currentIndex;
         GameObject slotImagePrefab = GetPrefab(t);
         var icon = Instantiate(slotImagePrefab, slot.transform);
         icon.GetComponent<DragHandler>().minionType = t;
+
+        _currentIndex++;
     }
 
 
-    public void HasChanged()
+    public void HasChanged(DragAndDropSlot affectedSlot, DragHandler affectedDraggable, DragAndDropSlot fromSlot, DragHandler beingDragged)
     {
-        Debug.Log("has changed");
+        SetParent(beingDragged.transform, affectedSlot.transform);
+        SetParent(affectedDraggable.transform, fromSlot.transform);
+
+        _canvas.MinionOrderUpdated(fromSlot.index, affectedSlot.index);
     }
+
+    void SetParent(Transform child, Transform parent)
+    {
+        child.SetParent(parent);
+    }
+
 
     void Start () {
-		
-	}
+        _canvas = GetComponentInParent<LevelCanvasManager>();
+    }
 	
 	
 	void Update () {
@@ -65,5 +80,6 @@ public class DragAndDropSystem : MonoBehaviour, IHasChanged
         }
         return slotImagePrefab;
     }
+
 
 }

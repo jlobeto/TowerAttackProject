@@ -53,6 +53,7 @@ public class LevelCanvasManager : MonoBehaviour
         {
             if (!_buildTimerHasEnded)
             {
+                Destroy(_dragAndDropSystem.gameObject);
                 _buildSquadTimer = _levelTimer;
                 level.startMinionSpawning = true;
                 foreach (var item in _skillButtons)
@@ -96,8 +97,13 @@ public class LevelCanvasManager : MonoBehaviour
     void OnBuyMinion(MinionType t)
     {
         var created = level.BuildMinion(t, !_buildTimerHasEnded);
-        /*if(created)
-            _dragAndDropSystem.AddSlot(t);*/
+        if(created)
+            _dragAndDropSystem.AddSlot(t);
+    }
+
+    public void MinionOrderUpdated(int from, int to)
+    {
+        level.MinionOrderHasChanged(from, to);
     }
 
     public void UpdateLevelPointBar(int newValue, int baseValue)

@@ -14,6 +14,7 @@ public class MinionManager : MonoBehaviour
 
     public void SpawnMinion(MinionType type, bool isBuiltTime)
     {
+        
         Minion minion = null;
         Minion available = null;
 
@@ -86,6 +87,17 @@ public class MinionManager : MonoBehaviour
         }
 
         throw new System.Exception("There is not an available minion of type " + t.ToString());
+    }
+
+    public void ChangeMinionOrder(int from, int to)
+    {
+        /*Minion minionFrom = new Minion();
+        Minion minionTo = new Minion();*/
+        var minionFrom =_minions[from];
+        var minionTo = _minions[to];
+
+        _minions[from] = minionTo;
+        _minions[to] = minionFrom;
     }
 
     void Start() {
