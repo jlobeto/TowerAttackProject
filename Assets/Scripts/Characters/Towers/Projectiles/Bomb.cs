@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Bomb : ProjectileBase
 {
+    public ParticleSystem explotion;
+
     protected override void Start()
     {
         //dont distroy GO till arrives to end point
@@ -41,8 +43,12 @@ public class Bomb : ProjectileBase
             if (m != null)
                 DoDamage(m);
         }
-
-        Destroy(gameObject);
+        var p = Instantiate(explotion, transform);
+        Destroy(GetComponentInChildren<MeshRenderer>());
+        Destroy(p.gameObject, p.main.duration);
+        Destroy(gameObject, p.main.duration);
+        p.Play();
+        
     }
 
 }
