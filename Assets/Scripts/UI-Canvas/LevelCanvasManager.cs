@@ -34,10 +34,23 @@ public class LevelCanvasManager : MonoBehaviour
         _dragAndDropSystem = GetComponentInChildren<DragAndDropSystem>();
         _timerBtn = GetComponentsInChildren<Button>().FirstOrDefault(i => i.tag == "BuildSquadTimer");
         _timerText = _timerBtn.GetComponentInChildren<Text>();
+        _timerBtn.onClick.AddListener(() => OnTimerButtonClicked());
     }
 
     void Update() {
         DiscountTimer();
+    }
+
+    void OnTimerButtonClicked()
+    {
+        if (_buildTimerHasEnded)
+        {
+            _timerBtn.onClick.RemoveAllListeners();
+            return;
+        }
+
+        BuildSquadTimeStops();
+        _timerBtn.onClick.RemoveAllListeners();
     }
 
     void DiscountTimer()
@@ -51,19 +64,24 @@ public class LevelCanvasManager : MonoBehaviour
         _timerText.text = text + _buildSquadTimer.ToString("0.00");
         if (_buildSquadTimer < 0)
         {
-            if (!_buildTimerHasEnded)
-            {
-                //Destroy(_dragAndDropSystem.gameObject);
-                _buildSquadTimer = _levelTimer;
-                level.startMinionSpawning = true;
-                foreach (var item in _skillButtons)
-                    item.gameObject.SetActive(true);
-            }
-                
-            _buildTimerHasEnded = true;
+            BuildSquadTimeStops();
         }
 
         LevelEndCheckerByTime();
+    }
+
+    void BuildSquadTimeStops()
+    {
+        if (!_buildTimerHasEnded)
+        {
+            Destroy(_dragAndDropSystem.gameObject);
+            _buildSquadTimer = _levelTimer;
+            level.startMinionSpawning = true;
+            foreach (var item in _skillButtons)
+                item.gameObject.SetActive(true);
+        }
+
+        _buildTimerHasEnded = true;
     }
 
     void LevelEndCheckerByTime()
