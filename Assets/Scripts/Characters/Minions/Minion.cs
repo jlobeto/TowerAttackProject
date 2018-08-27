@@ -19,11 +19,12 @@ public class Minion : MonoBehaviour
     public Action<Minion> OnWalkFinished = delegate { };
     public Action<Minion> OnDeath = delegate { };
     public InfoCanvas infoCanvas;
+    public SimpleParticleSystem explotionPS;
 
     protected WalkNode pNextNode;
-    
     protected float pDistanceToNextNode = 0.2f;//To change the next node;
 
+    float _initHP;
     int _currentLevel = 1;//Level of the minion, ///TODO manage this when buying an upgrade of lvl;
     int _spawnOrder;
     float _normalSpeed;
@@ -31,6 +32,7 @@ public class Minion : MonoBehaviour
     float _iceTime;
     int _id;
     bool _canWalk;
+    bool _hasExplotionEffect;
 
     public int Id { get { return _id; } }
     public bool CanWalk { get { return _canWalk; } }
@@ -50,6 +52,7 @@ public class Minion : MonoBehaviour
     {
         hp -= dmg;
         infoCanvas.UpdateLife(hp);
+        CheckPSExplotion();
         DeathChecker();
     }
 
@@ -99,6 +102,7 @@ public class Minion : MonoBehaviour
         _id = gameObject.GetInstanceID();
         infoCanvas = Instantiate<InfoCanvas>(infoCanvas, transform.position, transform.rotation);
         infoCanvas.Init(hp);
+        _initHP = hp;
         if (Debug.isDebugBuild)
         {
             var parent = GameObject.Find("InfoCanvasParent");
@@ -128,6 +132,24 @@ public class Minion : MonoBehaviour
             Destroy(infoCanvas.gameObject);
             OnDeath(this);
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void CheckPSExplotion()
+    {
+        if (hp > (_initHP * 0.5f)) return;
+        SimpleParticleSystem ps;
+        if (!_hasExplotionEffect)
+        {
+            ps = Instantiate(explotionPS, transform);
+            _hasExplotionEffect = true;
+        }
+        else
+            ps = GetComponentInChildren<SimpleParticleSystem>();
+
+        ps.IncrementBurst();
     }
 
     
