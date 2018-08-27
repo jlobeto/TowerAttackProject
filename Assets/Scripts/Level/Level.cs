@@ -149,4 +149,13 @@ public class Level : MonoBehaviour
     {
         Debug.Log("----- Level Completed -----");
     }
+
+    /// <summary>
+    /// ONLY FOR TESTS
+    /// </summary>
+    public void AddPoints()
+    {
+        _currentLevelPoints = initialLevelPoints;
+        _lvlCanvasManager.UpdateLevelPointBar(1, 1);
+    }
 }

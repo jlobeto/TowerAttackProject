@@ -23,15 +23,23 @@ public class TestController : MonoBehaviour
         GUILayout.Space(250);
         GUILayout.Label("R: reset scene", _guiStyle);
         GUILayout.BeginHorizontal();
+        GUILayout.BeginHorizontal();
+        GUILayout.Space(250);
+        GUILayout.Label("P: Add Points", _guiStyle);
+        GUILayout.BeginHorizontal();
         GUILayout.EndVertical();
     }
 
-    // Update is called once per frame
     void Update ()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene("Sandbox Scene");
         }
-	}
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            FindObjectOfType<Level>().AddPoints();
+        }
+    }
 }
