@@ -118,6 +118,7 @@ public class Minion : MonoBehaviour
     protected void FinishWalk()
     {
         _canWalk = false;
+        Destroy(infoCanvas.gameObject);
         OnWalkFinished(this);
     }
     void DeathChecker()
