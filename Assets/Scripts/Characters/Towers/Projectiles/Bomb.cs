@@ -17,12 +17,14 @@ public class Bomb : ProjectileBase
         if (!pCanMove) return;
 
         base.Movement();
-
-        var dist = Vector3.Distance(transform.position, pTarget.transform.position);
-        if (dist < 0.5f)
+        if (pTarget != null)
         {
-            pCanMove = false;
-            Explode();
+            var dist = Vector3.Distance(transform.position, pTarget.transform.position);
+            if (dist < 0.5f)
+            {
+                pCanMove = false;
+                Explode();
+            }
         }
 
     }

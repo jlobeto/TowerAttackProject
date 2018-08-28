@@ -39,7 +39,7 @@ public class TestController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            FindObjectOfType<Level>().AddPoints();
+            FindObjectOfType<Level>().UpdatePoints(10000);
         }
     }
 }

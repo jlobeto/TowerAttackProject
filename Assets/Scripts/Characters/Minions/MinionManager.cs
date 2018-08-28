@@ -124,6 +124,8 @@ public class MinionManager : MonoBehaviour
 
     void MinionWalkFinishedHandler(Minion m)
     {
+        int toAdd = Mathf.RoundToInt( m.pointsValue * m.levelPointsToRecover);
+        level.UpdatePoints(toAdd);
         DestroyMinion(m);
         _successCount++;
         level.UpdateLevelGoal();
@@ -131,6 +133,8 @@ public class MinionManager : MonoBehaviour
 
     void MinionDeathHandler(Minion m)
     {
+        int toAdd = Mathf.RoundToInt(m.pointsValue * m.levelPointsToRecover * .75f);
+        level.UpdatePoints(toAdd);
         _deathCount++;
         DestroyMinion(m);
     }

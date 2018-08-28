@@ -57,8 +57,9 @@ public class Level : MonoBehaviour
     {
         if (!CheckMinionSale(t)) return false;
         var cost = _minionManager.GetMinionPrice(t);
-        _lvlCanvasManager.UpdateLevelPointBar(_currentLevelPoints - cost, initialLevelPoints);
-        _currentLevelPoints -= cost;
+        UpdatePoints(-cost);
+        /*_lvlCanvasManager.UpdateLevelPointBar(_currentLevelPoints - cost, initialLevelPoints);
+        _currentLevelPoints -= cost;*/
         _minionManager.SpawnMinion(t, builtTime);
         if(!builtTime)
             _minionManager.SetNextMinionFree();
@@ -97,8 +98,9 @@ public class Level : MonoBehaviour
     public void MinionDeletedByDandD(int index)
     {
         var coinsToAdd = _minionManager.DeleteMinionByIndex(index);
-        _currentLevelPoints += coinsToAdd;
-        _lvlCanvasManager.UpdateLevelPointBar(_currentLevelPoints, initialLevelPoints);
+        UpdatePoints(coinsToAdd);
+        /*_currentLevelPoints += coinsToAdd;
+        _lvlCanvasManager.UpdateLevelPointBar(_currentLevelPoints, initialLevelPoints);*/
     }
 
     #endregion
@@ -135,6 +137,7 @@ public class Level : MonoBehaviour
         _lvlCanvasManager.BuildAvailableMinionsButtons(availableMinions.Select(i => i.minionType).ToList());
         _lvlCanvasManager.level = this;
         _lvlCanvasManager.SetBuildSquadTimer(buildSquadTime,levelTime);
+        _lvlCanvasManager.pointsText.text = initialLevelPoints + " / " + initialLevelPoints;
     }
 
     #endregion
@@ -149,13 +152,14 @@ public class Level : MonoBehaviour
     {
         Debug.Log("----- Level Completed -----");
     }
-
-    /// <summary>
-    /// ONLY FOR TESTS
-    /// </summary>
-    public void AddPoints()
+    
+    public void UpdatePoints(int points)
     {
-        _currentLevelPoints = initialLevelPoints;
-        _lvlCanvasManager.UpdateLevelPointBar(1, 1);
+        var prevPoints = _currentLevelPoints;
+        _currentLevelPoints += points;
+        if (_currentLevelPoints > initialLevelPoints)
+            _currentLevelPoints = initialLevelPoints;
+
+        _lvlCanvasManager.UpdateLevelPointBar(_currentLevelPoints, prevPoints, initialLevelPoints);
     }
 }

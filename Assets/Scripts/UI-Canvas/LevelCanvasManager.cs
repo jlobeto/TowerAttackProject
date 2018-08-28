@@ -9,6 +9,8 @@ public class LevelCanvasManager : MonoBehaviour
 {
     [HideInInspector]
     public Level level;
+    [HideInInspector]
+    public Text pointsText;
     public Button skillButtonPrefab;
     public Image levelPointBar;
     public Button minionSaleButtonPrefab;
@@ -25,9 +27,11 @@ public class LevelCanvasManager : MonoBehaviour
     bool _readyToDiscountTimer;
     bool _buildTimerHasEnded;
     bool _levelTimerEnded;
+    bool _pointBarLerpAnim;
 
     void Awake()
     {
+        
         var panels = GetComponentsInChildren<HorizontalLayoutGroup>();
         _skillsButtonPanel = panels.FirstOrDefault(i => i.tag == "LvlSkillPanel");
         _availablesPanel = panels.FirstOrDefault(i => i.tag == "AvailablesPanel");
@@ -35,6 +39,7 @@ public class LevelCanvasManager : MonoBehaviour
         _timerBtn = GetComponentsInChildren<Button>().FirstOrDefault(i => i.tag == "BuildSquadTimer");
         _timerText = _timerBtn.GetComponentInChildren<Text>();
         _timerBtn.onClick.AddListener(() => OnTimerButtonClicked());
+        pointsText = levelPointBar.transform.parent.GetComponentInChildren<Text>();
     }
 
     void Update() {
@@ -75,6 +80,7 @@ public class LevelCanvasManager : MonoBehaviour
         if (!_buildTimerHasEnded)
         {
             Destroy(_dragAndDropSystem.gameObject);
+            _dragAndDropSystem = null;
             _buildSquadTimer = _levelTimer;
             level.startMinionSpawning = true;
             foreach (var item in _skillButtons)
@@ -115,7 +121,7 @@ public class LevelCanvasManager : MonoBehaviour
     void OnBuyMinion(MinionType t)
     {
         var created = level.BuildMinion(t, !_buildTimerHasEnded);
-        if(created)
+        if(created && _dragAndDropSystem != null)
             _dragAndDropSystem.AddSlot(t);
     }
 
@@ -129,13 +135,16 @@ public class LevelCanvasManager : MonoBehaviour
         level.MinionDeletedByDandD(index);
     }
 
-    public void UpdateLevelPointBar(int newValue, int baseValue)
+    public void UpdateLevelPointBar(int newValue, int prevValue, int baseValue)
     {
+        _pointBarLerpAnim = true;
         float n = (float)newValue;
         float b = (float)baseValue;
         levelPointBar.fillAmount = n / b;
+        pointsText.text = newValue + " / " + baseValue;
         //Debug.Log(levelPointBar.fillAmount);
     }
+    
 
     #region Skills Buttons
     public void CreateSkillButton(string name, Action onActivate, Action onDeactivate)
