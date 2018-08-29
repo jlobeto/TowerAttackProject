@@ -12,7 +12,7 @@ public class Minion : MonoBehaviour
     public float speed = 4;
     public int pointsValue = 15;
     public float strength = 0;
-    public IMinionSkill skill;
+    //public IMinionSkill skill;
     public int coinValue = 0;
     [Range(0f,1f)]
     public float levelPointsToRecover = 0.75f;
@@ -20,15 +20,17 @@ public class Minion : MonoBehaviour
     public Action<Minion> OnDeath = delegate { };
     public InfoCanvas infoCanvas;
     public SimpleParticleSystem explotionPS;
-
+    public float skillTime = 2;
+    
+    protected bool pMakeSkill;
     protected WalkNode pNextNode;
     protected float pDistanceToNextNode = 0.2f;//To change the next node;
+    protected bool pIceDebuff;
 
     float _initHP;
     int _currentLevel = 1;//Level of the minion, ///TODO manage this when buying an upgrade of lvl;
     int _spawnOrder;
     float _normalSpeed;
-    bool _iceDebuff;
     float _iceTime;
     int _id;
     bool _canWalk;
@@ -37,7 +39,7 @@ public class Minion : MonoBehaviour
     public int Id { get { return _id; } }
     public bool CanWalk { get { return _canWalk; } }
 
-    public void InitMinion(WalkNode n)
+    public virtual void InitMinion(WalkNode n)
     {
         transform.position = n.transform.position;
         pNextNode = n.GetNextWalkNode();
@@ -48,7 +50,7 @@ public class Minion : MonoBehaviour
 
         _canWalk = val;
     }
-    public void GetDamage(float dmg)
+    public virtual void GetDamage(float dmg)
     {
         hp -= dmg;
         infoCanvas.UpdateLife(hp);
@@ -59,9 +61,9 @@ public class Minion : MonoBehaviour
     public void GetSlowDebuff(float t, float speedDelta)
     {
         _iceTime = t;
-        if (!_iceDebuff)
+        if (!pIceDebuff)
         {
-            _iceDebuff = true;
+            pIceDebuff = true;
             _normalSpeed = speed;
             speed -= speedDelta * speed;
         }
@@ -72,15 +74,18 @@ public class Minion : MonoBehaviour
         infoCanvas.UpdatePosition(transform.position);
 
         if (_canWalk)
+        {
             Walk();
+            ExecuteSkill();
+        }
 
-        if (_iceDebuff)
+        if (pIceDebuff)
         {
             _iceTime -= Time.deltaTime;
             if (_iceTime < 0)
             {
                 speed = _normalSpeed;
-                _iceDebuff = false;
+                pIceDebuff = false;
             }
         }
     }
@@ -97,6 +102,20 @@ public class Minion : MonoBehaviour
                 FinishWalk();
         }
     }
+
+    /// <summary>
+    /// Set the initial variables values so the skill can be executed.
+    /// So maybe here will be all requirement to activate the skill
+    /// </summary>
+    public virtual void ActivateSkill()
+    {
+        throw new NotImplementedException("ActivateSkill() is not implemented on dependences.");
+    }
+    protected virtual void ExecuteSkill()
+    {
+        throw new NotImplementedException("ExecuteSkill() is not implemented on dependences.");
+    }
+
     protected void Init()
     {
         _id = gameObject.GetInstanceID();
@@ -134,9 +153,7 @@ public class Minion : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
+
     void CheckPSExplotion()
     {
         if (hp > (_initHP * 0.5f)) return;

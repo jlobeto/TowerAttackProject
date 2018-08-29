@@ -8,25 +8,24 @@ using UnityEngine;
 public class GameObjectSelector : MonoBehaviour
 {
     public bool isActivated;
-    Level _level;
 
 	void Start () {
-        _level = FindObjectOfType<Level>();
     }
 	
 	
 	void Update ()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            var g = SelectGameObject(LayerMask.NameToLayer("Tower"));
-            if(g != null)
-                Debug.Log(g.name);
-        }
+        
 	}
-    
+
     public GameObject SelectGameObject(int layer)
     {
+        if (!isActivated)
+        {
+            Debug.LogError("GameObjectSelector is disabled!");
+            return null;
+        }
+
         Vector3 pos = Input.mousePosition;
         pos.z = Camera.main.transform.position.y;
         pos = Camera.main.ScreenToWorldPoint(pos);

@@ -11,6 +11,7 @@ public class MinionManager : MonoBehaviour
     int _deathCount;
     int _successCount;
     GameObject _allMinions;
+    
 
     public void SpawnMinion(MinionType type, bool isBuiltTime)
     {
@@ -22,8 +23,11 @@ public class MinionManager : MonoBehaviour
         switch (type)
         {
             case MinionType.Runner:
+                available = level.availableMinions.FirstOrDefault(m => m.GetType() == typeof(Runner));
+                minion = Instantiate<Runner>((Runner)available, spawnPos, Quaternion.identity);
+                break;
             case MinionType.Tank:
-                available = level.availableMinions.FirstOrDefault(m => m.GetType() == typeof(Minion) && m.minionType == type);
+                available = level.availableMinions.FirstOrDefault(m => m.GetType() == typeof(Minion));
                 minion = Instantiate<Minion>(available, spawnPos, Quaternion.identity);
                 break;
             case MinionType.Dove:
@@ -114,14 +118,29 @@ public class MinionManager : MonoBehaviour
     }
 
     void Update() {
-
+        
     }
 
     void Init()
     {
         _allMinions = new GameObject("All Minions");
+        
     }
 
+    /// <summary>
+    /// When a minion is already released and is walking throught the path it can be selected to pop a number of
+    /// differents actions.
+    /// </summary>
+    public void OnReleasedMinionSelected(int instanceID)
+    {
+        var selected = _minions.FirstOrDefault(i => i.gameObject.GetInstanceID() == instanceID);
+        if (selected == null) return;
+
+        selected.ActivateSkill();
+
+    }
+
+    #region Handlers
     void MinionWalkFinishedHandler(Minion m)
     {
         int toAdd = Mathf.RoundToInt( m.pointsValue * m.levelPointsToRecover);
@@ -138,6 +157,7 @@ public class MinionManager : MonoBehaviour
         _deathCount++;
         DestroyMinion(m);
     }
+    #endregion
 
     void DestroyMinion(Minion m)
     {

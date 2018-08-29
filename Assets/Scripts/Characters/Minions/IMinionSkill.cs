@@ -1,4 +1,4 @@
 ﻿public interface IMinionSkill
 {
-    void DoSkill();    
+    void DoSkill();
 }

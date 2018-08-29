@@ -12,6 +12,12 @@ public class Dove : Minion
         transform.position = new Vector3(transform.position.x, yPos, transform.position.z);
     }
 
+    public override void InitMinion(WalkNode n)
+    {
+        transform.position = new Vector3( n.transform.position.x, yPos, n.transform.position.z);
+        pNextNode = n.GetNextWalkNode();
+    }
+
     protected override void Walk()
     {
         var nextNodePos = new Vector3(pNextNode.transform.position.x, yPos, pNextNode.transform.position.z);

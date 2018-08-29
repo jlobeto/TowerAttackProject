@@ -28,6 +28,7 @@ public class Level : MonoBehaviour
     LevelSkillManager _lvlSkillManager;
     LevelGoal _levelGoal;
     LevelCanvasManager _lvlCanvasManager;
+    GameObjectSelector _goSelector;
 
     int _currentLevelPoints = 0;
     float _minionSpawnTimeAux;
@@ -46,12 +47,23 @@ public class Level : MonoBehaviour
 	void Update ()
     {
         OnSpawnMinions();
+        GameObjectSelection();
     }
 
+    void GameObjectSelection()
+    {
+        if (_goSelector == null) return;
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            var selected = _goSelector.SelectGameObject(LayerMask.NameToLayer("Minion"));
+            if (selected == null) return;
+            _minionManager.OnReleasedMinionSelected(selected.GetInstanceID());
+        }
+    }
 
     #region Minion Spawning Stuff
-    
+
     /// <returns>True if minion has been created</returns>
     public bool BuildMinion(MinionType t, bool builtTime)
     {
@@ -99,8 +111,6 @@ public class Level : MonoBehaviour
     {
         var coinsToAdd = _minionManager.DeleteMinionByIndex(index);
         UpdatePoints(coinsToAdd);
-        /*_currentLevelPoints += coinsToAdd;
-        _lvlCanvasManager.UpdateLevelPointBar(_currentLevelPoints, initialLevelPoints);*/
     }
 
     #endregion
@@ -112,6 +122,7 @@ public class Level : MonoBehaviour
         _minionManager = gameplayManagersGO.AddComponent<MinionManager>();
         _towerManager = gameplayManagersGO.AddComponent<TowerManager>();
         _lvlSkillManager = gameplayManagersGO.AddComponent<LevelSkillManager>();
+        _goSelector = FindObjectOfType<GameObjectSelector>();
 
         _towerManager.level = _lvlSkillManager.level = _minionManager.level = this;
 
