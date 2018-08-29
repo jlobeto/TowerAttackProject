@@ -19,7 +19,7 @@ public class Runner : Minion
 
     public override void ActivateSkill()
     {
-        if (pMakeSkill) return;
+        if (pMakeSkill || pIceDebuff) return;
 
         pMakeSkill = true;
         _skillTimeAux = skillTime;
