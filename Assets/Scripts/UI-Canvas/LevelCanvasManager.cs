@@ -40,6 +40,8 @@ public class LevelCanvasManager : MonoBehaviour
         _timerText = _timerBtn.GetComponentInChildren<Text>();
         _timerBtn.onClick.AddListener(() => OnTimerButtonClicked());
         pointsText = levelPointBar.transform.parent.GetComponentInChildren<Text>();
+
+        
     }
 
     void Update() {
@@ -102,7 +104,7 @@ public class LevelCanvasManager : MonoBehaviour
 
     public void SetBuildSquadTimer(float squad, float level)
     {
-        _buildSquadTimer = squad;
+        //_buildSquadTimer = squad;
         _levelTimer = level;
         _readyToDiscountTimer = true;
     }
