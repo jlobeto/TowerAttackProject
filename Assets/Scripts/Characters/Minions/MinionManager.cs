@@ -27,8 +27,8 @@ public class MinionManager : MonoBehaviour
                 minion = Instantiate<Runner>((Runner)available, spawnPos, Quaternion.identity);
                 break;
             case MinionType.Tank:
-                available = level.availableMinions.FirstOrDefault(m => m.GetType() == typeof(Minion));
-                minion = Instantiate<Minion>(available, spawnPos, Quaternion.identity);
+                available = level.availableMinions.FirstOrDefault(m => m.GetType() == typeof(Tank));
+                minion = Instantiate<Tank>((Tank)available, spawnPos, Quaternion.identity);
                 break;
             case MinionType.Dove:
                 available = level.availableMinions.FirstOrDefault(m => m.GetType() == typeof(Dove));

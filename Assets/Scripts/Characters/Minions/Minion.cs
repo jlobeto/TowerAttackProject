@@ -21,7 +21,11 @@ public class Minion : MonoBehaviour
     public InfoCanvas infoCanvas;
     public SimpleParticleSystem explotionPS;
     public float skillTime = 2;
-    
+
+    [HideInInspector]
+    public int tankShieldHits = -1;//Whhen minion is affected by tank skill
+    public Func<int, bool> OnTankSkill;
+
     protected bool pMakeSkill;
     protected WalkNode pNextNode;
     protected float pDistanceToNextNode = 0.2f;//To change the next node;
@@ -39,19 +43,21 @@ public class Minion : MonoBehaviour
     public int Id { get { return _id; } }
     public bool CanWalk { get { return _canWalk; } }
 
-    public virtual void InitMinion(WalkNode n)
-    {
-        transform.position = n.transform.position;
-        pNextNode = n.GetNextWalkNode();
-    }
-    public void SetWalk(bool val)
-    {
-        if (pNextNode.isEnd) return;//don't know if this will be here, for testing porpuse must be for the moment.
 
-        _canWalk = val;
-    }
     public virtual void GetDamage(float dmg)
     {
+        bool canReceiveDmg = true;
+        if (OnTankSkill != null)
+        {
+            tankShieldHits--;
+            canReceiveDmg = OnTankSkill(tankShieldHits);
+
+            if (canReceiveDmg)
+                OnTankSkill = null;
+        }
+
+        if (!canReceiveDmg) return;
+
         hp -= dmg;
         infoCanvas.UpdateLife(hp);
         CheckPSExplotion();
@@ -68,7 +74,8 @@ public class Minion : MonoBehaviour
             speed -= speedDelta * speed;
         }
     }
-    
+
+
     protected virtual void PerformAction()
     {
         infoCanvas.UpdatePosition(transform.position);
@@ -116,6 +123,7 @@ public class Minion : MonoBehaviour
         throw new NotImplementedException("ExecuteSkill() is not implemented on dependences.");
     }
 
+    #region Inits, Start and Update
     protected void Init()
     {
         _id = gameObject.GetInstanceID();
@@ -131,6 +139,18 @@ public class Minion : MonoBehaviour
             infoCanvas.transform.SetParent(parent.transform);
         }
     }
+    public virtual void InitMinion(WalkNode n)
+    {
+        transform.position = n.transform.position;
+        pNextNode = n.GetNextWalkNode();
+    }
+    public void SetWalk(bool val)
+    {
+        if (pNextNode.isEnd) return;//don't know if this will be here, for testing porpuse must be for the moment.
+
+        _canWalk = val;
+    }
+
     protected virtual void Start ()
     {
         Init();
@@ -138,6 +158,8 @@ public class Minion : MonoBehaviour
     protected virtual void Update () {
         PerformAction();
 	}
+    #endregion
+
     protected void FinishWalk()
     {
         _canWalk = false;

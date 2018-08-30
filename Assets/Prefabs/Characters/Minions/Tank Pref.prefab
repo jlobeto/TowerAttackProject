@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4550818725026188}
   - component: {fileID: 54304227462530952}
   - component: {fileID: 65523342459918226}
-  - component: {fileID: 114236035928698874}
+  - component: {fileID: 114975196733645906}
   m_Layer: 8
   m_Name: Tank Pref
   m_TagString: Untagged
@@ -54,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1577243169177044}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 4.670099, y: 2.020599, z: -15.345759}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4736292235164062}
@@ -159,7 +159,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114236035928698874
+--- !u!114 &114975196733645906
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1577243169177044}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6267e966ed789348b05a17bc33fe0ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 54d7dcdee3c115a47a630666562b2501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   minionName: 
@@ -183,3 +183,8 @@ MonoBehaviour:
     type: 2}
   explotionPS: {fileID: 114042232387667590, guid: 6611df02f34bd9a4abb10eec8cf94460,
     type: 2}
+  skillTime: 15
+  tankShieldHits: -1
+  shieldHits: 3
+  skillArea: 9
+  showAreaGizmo: 1
