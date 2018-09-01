@@ -80,6 +80,7 @@ public class Minion : MonoBehaviour
         return false;
     }
 
+
     protected virtual void PerformAction()
     {
         infoCanvas.UpdatePosition(transform.position);

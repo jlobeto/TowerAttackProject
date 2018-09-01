@@ -30,6 +30,7 @@ public class TowerBase : MonoBehaviour
 
     public int Id { get { return _id; } }
 
+
     #region Attack
     protected void Fire()
     {

@@ -20,6 +20,18 @@ public class BaseMinionSkill : MonoBehaviour
 
     public bool IsEnabled { get { return pIsEnabled; } }
 
+    public virtual bool Initialize()
+    {
+        if (pIsEnabled)
+        {
+            Debug.Log("skill already activated.");
+            return false;
+        }
+
+        pIsEnabled = true;
+        return true;
+    }
+
     public virtual bool Initialize(float time)
     {
         if (pIsEnabled)
