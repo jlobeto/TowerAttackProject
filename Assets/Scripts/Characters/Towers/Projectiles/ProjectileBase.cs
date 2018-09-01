@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProjectileBase : MonoBehaviour
 {
     public GameObjectTypes type = GameObjectTypes.None;
-    public ProjectileTypes projectileType = ProjectileTypes.Ground;
+    public TargetType projectileType = TargetType.Ground;
     public float speed = 6;
     public float damage = 5;
     public float range = 0;

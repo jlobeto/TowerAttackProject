@@ -32,9 +32,5 @@ public class Dove : Minion
                 FinishWalk();
         }
     }
-
-    protected override void ExecuteSkill()
-    {
-        
-    }
+    
 }

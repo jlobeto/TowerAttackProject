@@ -136,7 +136,7 @@ public class MinionManager : MonoBehaviour
         var selected = _minions.FirstOrDefault(i => i.gameObject.GetInstanceID() == instanceID);
         if (selected == null) return;
 
-        selected.ActivateSkill();
+        selected.ActivateSelfSkill();
 
     }
 

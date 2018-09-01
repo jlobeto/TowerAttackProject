@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class TowerBase : MonoBehaviour
 {
@@ -59,7 +60,7 @@ public class TowerBase : MonoBehaviour
         }
 
         var minDist = float.MaxValue;
-        foreach (var item in minions)
+        foreach (var item in minions.Select(i => i.GetComponent<Minion>()).Where(i => i.IsTargetable))
         {
             var dist = Vector3.Distance(transform.position, item.transform.position);
             if (dist < minDist)

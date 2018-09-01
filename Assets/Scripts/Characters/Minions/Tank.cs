@@ -10,91 +10,86 @@ public class Tank : Minion
     public float skillArea = 5;
     public bool showAreaGizmo;
 
-    int _hitsLeft;
-    float _skillTimeAux;
     Minion[] _skillAffectedMinions;
+    ShieldSkill _mySkill;
 
-    /// <summary>
-    /// return true if can receive damage;
-    /// </summary>
-    bool OnProcessDamage(int hits)
+    protected override void Start()
     {
-        return hits < 0;
+        base.Start();
+        _mySkill = gameObject.AddComponent<ShieldSkill>();
+        
+        skills.Add(_mySkill);
     }
 
-    /// <summary>
-    /// This must to be here because is the source of the skill, if hits are wasted, the skill is done.
-    /// In the other hand(minions affected with this skill), they does not have any self skill activated, 
-    /// the only thing the know is that they have a 'x' number of shield hits to cover out.
-    /// </summary>
     public override void GetDamage(float dmg)
     {
-        if (pMakeSkill)
-            _hitsLeft--;
-            
-        if (!pMakeSkill || _hitsLeft < 0)
+        
+        _mySkill.ExecuteSkill();
+
+        if (!_mySkill.IsEnabled)
         {
-            if (_hitsLeft < 0)
-                pMakeSkill = false;
-                
+            //Debug.Log("Get real Damage");
             base.GetDamage(dmg);
         }
+        /*else
+            Debug.Log("damage shielded");*/
+
     }
 
-    public override void ActivateSkill()
+    public override void ActivateSelfSkill()
     {
-        if (pMakeSkill) return;
-        
-        pMakeSkill = true;
-        _skillTimeAux = skillTime;
-        _hitsLeft = shieldHits;
+        var wasDisabled =_mySkill.Initialize(skillTime, shieldHits);
+
+        //If the skill has been already enabled(because other tank has given it) return and false selfSkillEnabled
+        if (!wasDisabled) return;
+
         _skillAffectedMinions = GetNearMinions();
-        if (_skillAffectedMinions == null || _skillAffectedMinions.Length == 0) return;
+        if (_skillAffectedMinions.Length == 0) return;
 
         foreach (var item in _skillAffectedMinions)
-            SetMinionsVars(item,true);
+            SetSkillToMinion(item,true);
     }
-
-    protected override void ExecuteSkill()
-    {
-        if (!pMakeSkill) return;
-
-        _skillTimeAux -= Time.deltaTime;
-        if (_skillTimeAux < 0)
-        {
-            pMakeSkill = false;
-
-            if (_skillAffectedMinions != null)
-            {
-                foreach (var item in _skillAffectedMinions)
-                    SetMinionsVars(item, false);
-            }
-        }
-    }
+    
 
     /// <summary>
-    /// For the skill use. MUST delete this tank from the calculation
+    /// For the skill use. MUST delete this tank from the algorithm
+    /// If any selected minions has shield skill activated it won't be included in the resulting array;
     /// </summary>
     Minion[] GetNearMinions()
     {
         var minions = Physics.OverlapSphere(transform.position, skillArea, 1 << LayerMask.NameToLayer("Minion"));
-
         var arr = minions.Select(i => i.GetComponent<Minion>()).Where(m => m != this).ToArray();
-        return arr;
+        Minion[] result = new Minion[arr.Length];
+        int resultIndex = 0;
+        for (int i = 0; i < arr.Length; i++)
+        {
+            var m = arr[i];
+            var skill = GetMinionShieldIfPossible(m);
+            if (skill == null || !skill.IsEnabled)
+            {
+                result[resultIndex] = m;
+                resultIndex++;
+            }
+        }
+        return result.Where(i => i != null).ToArray();
     }
 
-    void SetMinionsVars(Minion m, bool activate)
+    void SetSkillToMinion(Minion m, bool activate)
     {
-        if (activate)
+        var shieldSkill = GetMinionShieldIfPossible(m);
+
+        if (shieldSkill == null)
         {
-            m.tankShieldHits = shieldHits;
-            m.OnTankSkill = OnProcessDamage;
+            shieldSkill = m.gameObject.AddComponent<ShieldSkill>();
+            m.skills.Add(shieldSkill);
         }
-        else
-        {
-            m.tankShieldHits = -1;
-            m.OnTankSkill = null;
-        }
+        
+        shieldSkill.Initialize(skillTime, shieldHits);
+    }
+
+    ShieldSkill GetMinionShieldIfPossible(Minion m)
+    {
+        return (ShieldSkill)BaseMinionSkill.GetSkillByType(BaseMinionSkill.SkillType.HitShield, m.skills);
     }
 
     private void OnDrawGizmos()
@@ -102,12 +97,15 @@ public class Tank : Minion
         if(showAreaGizmo)
             Gizmos.DrawWireSphere(transform.position, skillArea);
 
-        if (_skillAffectedMinions != null && pMakeSkill)
+
+        if (_skillAffectedMinions != null)
         {
             Gizmos.color = Color.blue;
             foreach (var item in _skillAffectedMinions)
             {
-                Gizmos.DrawLine(transform.position, item.transform.position);
+                var skill = GetMinionShieldIfPossible(item);
+                if(skill != null && skill.IsEnabled)
+                    Gizmos.DrawLine(transform.position, item.transform.position);
             }
         }
     }

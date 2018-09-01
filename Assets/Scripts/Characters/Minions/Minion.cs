@@ -20,16 +20,13 @@ public class Minion : MonoBehaviour
     public Action<Minion> OnDeath = delegate { };
     public InfoCanvas infoCanvas;
     public SimpleParticleSystem explotionPS;
+    public List<BaseMinionSkill> skills = new List<BaseMinionSkill>();
     public float skillTime = 2;
-
-    [HideInInspector]
-    public int tankShieldHits = -1;//Whhen minion is affected by tank skill
-    public Func<int, bool> OnTankSkill;
-
-    protected bool pMakeSkill;
+    
     protected WalkNode pNextNode;
     protected float pDistanceToNextNode = 0.2f;//To change the next node;
     protected bool pIceDebuff;
+    protected bool pBuffInvisible;//like runner run boost skill.
 
     float _initHP;
     int _currentLevel = 1;//Level of the minion, ///TODO manage this when buying an upgrade of lvl;
@@ -42,21 +39,12 @@ public class Minion : MonoBehaviour
 
     public int Id { get { return _id; } }
     public bool CanWalk { get { return _canWalk; } }
+    public bool IsTargetable { get { return !pBuffInvisible; } }
 
 
     public virtual void GetDamage(float dmg)
     {
-        bool canReceiveDmg = true;
-        if (OnTankSkill != null)
-        {
-            tankShieldHits--;
-            canReceiveDmg = OnTankSkill(tankShieldHits);
-
-            if (canReceiveDmg)
-                OnTankSkill = null;
-        }
-
-        if (!canReceiveDmg) return;
+        if (HasShieldBuff()) return;
 
         hp -= dmg;
         infoCanvas.UpdateLife(hp);
@@ -75,6 +63,21 @@ public class Minion : MonoBehaviour
         }
     }
 
+    bool HasShieldBuff()
+    {
+        var shieldSkill = (ShieldSkill)BaseMinionSkill.GetSkillByType(BaseMinionSkill.SkillType.HitShield, skills);
+        if (shieldSkill != null)
+        {
+            var enabled = shieldSkill.ExecuteSkill();
+            if (this is Runner)
+            {
+                Debug.Log(enabled ? "shieldeed !! " : " you eat it D: ");
+            }
+            return enabled;
+        }
+
+        return false;
+    }
 
     protected virtual void PerformAction()
     {
@@ -83,7 +86,6 @@ public class Minion : MonoBehaviour
         if (_canWalk)
         {
             Walk();
-            ExecuteSkill();
         }
 
         if (pIceDebuff)
@@ -114,13 +116,9 @@ public class Minion : MonoBehaviour
     /// Set the initial variables values so the skill can be executed.
     /// So maybe here will be all requirement to activate the skill
     /// </summary>
-    public virtual void ActivateSkill()
+    public virtual void ActivateSelfSkill()
     {
         throw new NotImplementedException("ActivateSkill() is not implemented on dependences.");
-    }
-    protected virtual void ExecuteSkill()
-    {
-        throw new NotImplementedException("ExecuteSkill() is not implemented on dependences.");
     }
 
     #region Inits, Start and Update

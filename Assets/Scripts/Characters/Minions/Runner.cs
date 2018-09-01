@@ -4,39 +4,31 @@ using UnityEngine;
 
 public class Runner : Minion
 {
-
     public float skillDeltaSpeed = 2;
+    RunnerSkill _mySkill;
 
-    float _lastSpeed;//this is the current speed before the skill is triggered.
-    float _skillTimeAux;
-
+    protected override void Start()
+    {
+        base.Start();
+        _mySkill = gameObject.AddComponent<RunnerSkill>();
+        skills.Add(_mySkill);
+    }
 
     public override void GetDamage(float dmg)
     {
-        if(!pMakeSkill)//if he is making a skill, no damage will be recieved.
+        if (!_mySkill.IsEnabled)
             base.GetDamage(dmg);
     }
 
-    public override void ActivateSkill()
+    protected override void Walk()
     {
-        if (pMakeSkill || pIceDebuff) return;
-
-        pMakeSkill = true;
-        _skillTimeAux = skillTime;
-        _lastSpeed = speed;
-        speed *= skillDeltaSpeed;
+        pBuffInvisible = _mySkill.ExecuteSkill();
+        base.Walk();
     }
 
-    protected override void ExecuteSkill()
-    {
-        if (!pMakeSkill) return;
 
-        _skillTimeAux -= Time.deltaTime;
-        if (_skillTimeAux < 0)
-        {
-            pMakeSkill = false;
-            speed = _lastSpeed;
-            _skillTimeAux = skillTime;
-        }
+    public override void ActivateSelfSkill()
+    {
+        _mySkill.Initialize(skillTime, skillDeltaSpeed, speed);
     }
 }
