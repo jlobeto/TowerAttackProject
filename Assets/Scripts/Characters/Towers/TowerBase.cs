@@ -9,6 +9,7 @@ public class TowerBase : MonoBehaviour
     public float fireRate = 1f;
     public float fireRange = 8f;
     public GameObjectTypes towerType = GameObjectTypes.None;
+    public TargetType targetType = TargetType.Both;
     public List<ProjectileBase> projectilePrefabs = new List<ProjectileBase>();
     [Tooltip("Tower Level to calculate debuffs numbers, increment damage and so on.")]
     public int level = 1;
@@ -62,6 +63,9 @@ public class TowerBase : MonoBehaviour
         var minDist = float.MaxValue;
         foreach (var item in minions.Select(i => i.GetComponent<Minion>()).Where(i => i.IsTargetable))
         {
+            if(targetType != TargetType.Both)
+                if (item.targetType != targetType) continue;
+
             var dist = Vector3.Distance(transform.position, item.transform.position);
             if (dist < minDist)
             {

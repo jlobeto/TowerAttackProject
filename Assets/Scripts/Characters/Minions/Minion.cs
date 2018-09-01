@@ -9,6 +9,7 @@ public class Minion : MonoBehaviour
     public float hp = 50;
     public GameObjectTypes type = GameObjectTypes.None;
     public MinionType minionType = MinionType.Runner;
+    public TargetType targetType = TargetType.Both;
     public float speed = 4;
     public int pointsValue = 15;
     public float strength = 0;
