@@ -14,34 +14,34 @@ public class BaseMinionSkill : MonoBehaviour
     }
 
     public SkillType skillType = SkillType.None;
-    
-    protected bool pIsEnabled;
+    public InfoCanvas infoCanvas;
+    public bool useCanvas = true;//If useCanvas, it will call all the functions to run the infoCanvas and add more feedback
+
+    protected bool pIsActivated;
+    protected bool pIsLocked;
     protected float pSkillTime;
+    protected float pSkillCooldown;
+    
 
-    public bool IsEnabled { get { return pIsEnabled; } }
+    public bool IsActivated { get { return pIsActivated; } }
 
-    public virtual bool Initialize()
+    
+    public virtual bool Initialize(float time, float cooldown)
     {
-        if (pIsEnabled)
+        if (pIsLocked)
+            return false;
+
+        if (pIsActivated)
         {
             Debug.Log("skill already activated.");
             return false;
         }
 
-        pIsEnabled = true;
-        return true;
-    }
-
-    public virtual bool Initialize(float time)
-    {
-        if (pIsEnabled)
-        {
-            Debug.Log("skill already activated.");
-            return false;
-        }
-
-        pIsEnabled = true;
+        pIsActivated = true;
         pSkillTime = time;
+        pSkillCooldown = cooldown;
+        if(useCanvas)
+            infoCanvas.UpdateSkillTimes(pSkillTime, true);
 
         return true;
     }
@@ -49,17 +49,17 @@ public class BaseMinionSkill : MonoBehaviour
     /// <summary>
     /// in this case times is the number of hits for shield skill
     /// </summary>
-    public virtual bool Initialize(float lastingTime, int times)
+    public virtual bool Initialize(float lastingTime, float cooldown, int times)
     {
-        return this.Initialize(lastingTime);
+        return this.Initialize(lastingTime, cooldown);
     }
 
     /// <summary>
     /// Params for runner skill
     /// </summary>
-    public virtual bool Initialize(float lastingTime, float speedDelta, float prevSpeed)
+    public virtual bool Initialize(float lastingTime,float cooldown, float speedDelta, float prevSpeed)
     {
-        return this.Initialize(lastingTime);
+        return this.Initialize(lastingTime, cooldown);
     }
 
 
@@ -70,12 +70,28 @@ public class BaseMinionSkill : MonoBehaviour
 
     void Update()
     {
-        if (pIsEnabled)
+        if (pIsActivated)
         {
             pSkillTime -= Time.deltaTime;
+            if (useCanvas) infoCanvas.UpdateSkillTimes(pSkillTime, true);
             if (pSkillTime < 0)
             {
-                pIsEnabled = false;
+                if (useCanvas) infoCanvas.UpdateSkillTimes(0, true);
+                infoCanvas.shieldSkill.fillAmount = 0;//this one must to update its shieldskill bar.
+                pIsActivated = false;
+                pIsLocked = true;
+            }
+        }
+
+        if (pIsLocked)
+        {
+            pSkillCooldown -= Time.deltaTime;
+            if (useCanvas) infoCanvas.UpdateSkillTimes(pSkillCooldown, false);
+            if (pSkillCooldown < 0)
+            {
+                pIsLocked = false;
+                if (useCanvas) infoCanvas.UpdateSkillTimes(0, false);
+                if (useCanvas) infoCanvas.UpdateSkillTimes(pSkillTime, true, true);
             }
         }
     }

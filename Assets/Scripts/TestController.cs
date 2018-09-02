@@ -34,7 +34,7 @@ public class TestController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene("Sandbox Scene");
+            SceneManager.LoadScene(1);
         }
 
         if (Input.GetKeyDown(KeyCode.P))

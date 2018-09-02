@@ -16,9 +16,9 @@ public class Tank : Minion
     protected override void Start()
     {
         base.Start();
-        _mySkill = gameObject.AddComponent<ShieldSkill>();
-        
+        _mySkill = gameObject.AddComponent<ShieldSkill>();        
         skills.Add(_mySkill);
+        _mySkill.infoCanvas = infoCanvas;
     }
 
     public override void GetDamage(float dmg)
@@ -26,7 +26,7 @@ public class Tank : Minion
         
         _mySkill.ExecuteSkill();
 
-        if (!_mySkill.IsEnabled)
+        if (!_mySkill.IsActivated)
         {
             //Debug.Log("Get real Damage");
             base.GetDamage(dmg);
@@ -38,7 +38,7 @@ public class Tank : Minion
 
     public override void ActivateSelfSkill()
     {
-        var wasDisabled =_mySkill.Initialize(skillTime, shieldHits);
+        var wasDisabled =_mySkill.Initialize(skillTime, skillCooldown ,shieldHits);
 
         //If the skill has been already enabled(because other tank has given it) return and false selfSkillEnabled
         if (!wasDisabled) return;
@@ -65,7 +65,7 @@ public class Tank : Minion
         {
             var m = arr[i];
             var skill = GetMinionShieldIfPossible(m);
-            if (skill == null || !skill.IsEnabled)
+            if (skill == null || !skill.IsActivated)
             {
                 result[resultIndex] = m;
                 resultIndex++;
@@ -82,9 +82,11 @@ public class Tank : Minion
         {
             shieldSkill = m.gameObject.AddComponent<ShieldSkill>();
             m.skills.Add(shieldSkill);
+            shieldSkill.infoCanvas = m.infoCanvas;
+            shieldSkill.useCanvas = false;
         }
         
-        shieldSkill.Initialize(skillTime, shieldHits);
+        shieldSkill.Initialize(skillTime,0 ,shieldHits);
     }
 
     ShieldSkill GetMinionShieldIfPossible(Minion m)
@@ -96,15 +98,14 @@ public class Tank : Minion
     {
         if(showAreaGizmo)
             Gizmos.DrawWireSphere(transform.position, skillArea);
-
-
+        
         if (_skillAffectedMinions != null)
         {
             Gizmos.color = Color.blue;
             foreach (var item in _skillAffectedMinions)
             {
                 var skill = GetMinionShieldIfPossible(item);
-                if(skill != null && skill.IsEnabled)
+                if(skill != null && skill.IsActivated)
                     Gizmos.DrawLine(transform.position, item.transform.position);
             }
         }

@@ -7,13 +7,15 @@ public class ShieldSkill : BaseMinionSkill
     //Minion _thisMinion;
     int _hitsLeft;
     
-    public override bool Initialize(float lastingTime, int times)
+    public override bool Initialize(float lastingTime, float cooldown, int times)
     {
         //Debug.Log("shield skill Initialize()");
-        var result = base.Initialize(lastingTime);
+        var result = base.Initialize(lastingTime, cooldown);
 
         if (!result) return false;
 
+        //Debug.Log("activate!!");
+        infoCanvas.InitShield(times);
         _hitsLeft = times;
 
         return true;
@@ -24,11 +26,14 @@ public class ShieldSkill : BaseMinionSkill
     /// </summary>
     public override bool ExecuteSkill()
     {
-        if (!pIsEnabled) return false;
+        if (!pIsActivated) return false;
 
         _hitsLeft--;
-        pIsEnabled = _hitsLeft >= 0;
-        return pIsEnabled;
+        infoCanvas.RemoveShieldHit();
+        var continueActivated = _hitsLeft >= 0;
+        if (!continueActivated) //if the shield has gone for num of hits, turn 0 the skillTime
+            pSkillTime = 0;
+        return continueActivated;
     }
 
     void Start ()

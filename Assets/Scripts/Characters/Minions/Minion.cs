@@ -23,7 +23,8 @@ public class Minion : MonoBehaviour
     public SimpleParticleSystem explotionPS;
     public List<BaseMinionSkill> skills = new List<BaseMinionSkill>();
     public float skillTime = 2;
-    
+    public float skillCooldown = 5;
+
     protected WalkNode pNextNode;
     protected float pDistanceToNextNode = 0.2f;//To change the next node;
     protected bool pIceDebuff;
@@ -70,10 +71,6 @@ public class Minion : MonoBehaviour
         if (shieldSkill != null)
         {
             var enabled = shieldSkill.ExecuteSkill();
-            if (this is Runner)
-            {
-                Debug.Log(enabled ? "shieldeed !! " : " you eat it D: ");
-            }
             return enabled;
         }
 
@@ -128,7 +125,7 @@ public class Minion : MonoBehaviour
     {
         _id = gameObject.GetInstanceID();
         infoCanvas = Instantiate<InfoCanvas>(infoCanvas, transform.position, transform.rotation);
-        infoCanvas.Init(hp);
+        infoCanvas.Init(hp, skillTime, skillCooldown);
         _initHP = hp;
         if (Debug.isDebugBuild)
         {

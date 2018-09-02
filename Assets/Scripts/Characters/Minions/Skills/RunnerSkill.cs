@@ -8,9 +8,9 @@ public class RunnerSkill : BaseMinionSkill
     float _lastSpeed;
     bool _isInitialized;
 
-    public override bool Initialize(float lastingTime, float speedDelta, float prevSpeed)
+    public override bool Initialize(float lastingTime,float cooldown, float speedDelta, float prevSpeed)
     {
-        var result = base.Initialize(lastingTime);
+        var result = base.Initialize(lastingTime, cooldown);
 
         if (!result) return false;
 
@@ -23,13 +23,13 @@ public class RunnerSkill : BaseMinionSkill
 
     public override bool ExecuteSkill()
     {
-        if (!pIsEnabled && _isInitialized)
+        if (!pIsActivated && _isInitialized)
         {
             _myMinion.speed = _lastSpeed;
             _isInitialized = false;
         }
 
-        return pIsEnabled;
+        return pIsActivated;
     }
 
     void Start ()

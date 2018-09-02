@@ -12,11 +12,13 @@ public class Runner : Minion
         base.Start();
         _mySkill = gameObject.AddComponent<RunnerSkill>();
         skills.Add(_mySkill);
+        _mySkill.infoCanvas = infoCanvas;
+
     }
 
     public override void GetDamage(float dmg)
     {
-        if (!_mySkill.IsEnabled)
+        if (!_mySkill.IsActivated)
             base.GetDamage(dmg);
     }
 
@@ -29,6 +31,6 @@ public class Runner : Minion
 
     public override void ActivateSelfSkill()
     {
-        _mySkill.Initialize(skillTime, skillDeltaSpeed, speed);
+        _mySkill.Initialize(skillTime, skillCooldown ,skillDeltaSpeed, speed);
     }
 }

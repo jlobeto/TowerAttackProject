@@ -17,6 +17,7 @@ public class Dove : Minion
         _mySkill = gameObject.AddComponent<ChangeTargetSkill>();
         skills.Add(_mySkill);
         _targetPos = airYpos;
+        _mySkill.infoCanvas = infoCanvas;
     }
 
     public override void InitMinion(WalkNode n)
@@ -27,8 +28,8 @@ public class Dove : Minion
 
     public override void ActivateSelfSkill()
     {
-        Debug.Log("activated");
-        var wasDisabled = _mySkill.Initialize();
+        //Debug.Log("activated");
+        var wasDisabled = _mySkill.Initialize(0, skillCooldown);
 
         if (!wasDisabled) return;
 

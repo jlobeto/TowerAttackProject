@@ -10,6 +10,16 @@ public class ChangeTargetSkill : BaseMinionSkill
         skillType = SkillType.SpeedBoost;
     }
 
+    public override bool Initialize(float lastingTime, float cooldown)
+    {
+        var result = base.Initialize(lastingTime, cooldown);
+
+        if (!result) return false;
+
+        return true;
+    }
+
+
     public void SetYDest(float y)
     {
         _to = y;
@@ -22,13 +32,8 @@ public class ChangeTargetSkill : BaseMinionSkill
         var y = transform.position.y;
         y = Mathf.Lerp(y, _to, Time.deltaTime * 3);
         
-        /*if (y >= _to - 0.2f || y <= _to + 0.2f)
-        {
-            y = _to;
-            _to = 0;
-        }*/
         transform.position = new Vector3(transform.position.x, y, transform.position.z);
-
+        
         return true;
     }
 
