@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 33549465229112706}
   - component: {fileID: 65561886314127136}
   - component: {fileID: 23872069679990368}
-  - component: {fileID: 95799484970963488}
+  - component: {fileID: 95170331050207986}
   m_Layer: 0
   m_Name: Possible Tower Spot (40)
   m_TagString: Untagged
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 33510967044252740}
   - component: {fileID: 65341841197874766}
   - component: {fileID: 23222407291699140}
-  - component: {fileID: 95410134699012146}
+  - component: {fileID: 95698363894212216}
   m_Layer: 0
   m_Name: Possible Tower Spot (16)
   m_TagString: Untagged
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 33837854184901860}
   - component: {fileID: 65980601751259212}
   - component: {fileID: 23464258983227024}
-  - component: {fileID: 95736232562691014}
+  - component: {fileID: 95535067132185112}
   m_Layer: 0
   m_Name: Possible Tower Spot (38)
   m_TagString: Untagged
@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 33859492438573216}
   - component: {fileID: 65373648642099198}
   - component: {fileID: 23656364535275276}
-  - component: {fileID: 95434411502086560}
+  - component: {fileID: 95085579718849136}
   m_Layer: 0
   m_Name: Possible Tower Spot (22)
   m_TagString: Untagged
@@ -294,7 +294,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1417939632073122}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -58.5, y: 0, z: 175.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4472027093677706}
@@ -866,24 +866,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!95 &95410134699012146
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1406040309660880}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 620e58be9e0c2744499bd07b1dfa58ee, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
---- !u!95 &95434411502086560
+--- !u!95 &95085579718849136
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
@@ -900,7 +883,24 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!95 &95736232562691014
+--- !u!95 &95170331050207986
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1360420884827278}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 620e58be9e0c2744499bd07b1dfa58ee, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95535067132185112
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
@@ -917,13 +917,13 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!95 &95799484970963488
+--- !u!95 &95698363894212216
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1360420884827278}
+  m_GameObject: {fileID: 1406040309660880}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 620e58be9e0c2744499bd07b1dfa58ee, type: 2}
