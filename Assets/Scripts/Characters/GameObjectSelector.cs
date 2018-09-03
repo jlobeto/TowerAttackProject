@@ -32,12 +32,18 @@ public class GameObjectSelector : MonoBehaviour
         var ray = new Ray(pos, (pos - Camera.main.transform.position).normalized);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 100, 1 << layer))
+        if (Physics.Raycast(ray, out hit, 100, 1 << LayerMask.NameToLayer("Floor")))
         {
-            var overlaps = Physics.OverlapSphere(hit.point, 5, 1 << layer);
+            var overlaps = Physics.OverlapSphere(hit.point, 3.5f, 1 << layer);
             if (overlaps.Length > 0)
                 return overlaps[0].gameObject;
+
+            if (Physics.Raycast(ray, out hit, 100, 1 << layer))
+            {
+                return hit.collider.gameObject;
+            }
         }
+        
         return null;
     }
 

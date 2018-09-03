@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RunnerSkill : BaseMinionSkill
 {
-    Minion _myMinion;
     float _lastSpeed;
     bool _isInitialized;
 
@@ -15,7 +14,7 @@ public class RunnerSkill : BaseMinionSkill
         if (!result) return false;
 
         _isInitialized = true;
-        _myMinion.speed *= speedDelta;
+        pThisMinion.speed *= speedDelta;
         _lastSpeed = prevSpeed;
 
         return true;
@@ -25,7 +24,7 @@ public class RunnerSkill : BaseMinionSkill
     {
         if (!pIsActivated && _isInitialized)
         {
-            _myMinion.speed = _lastSpeed;
+            pThisMinion.speed = _lastSpeed;
             _isInitialized = false;
         }
 
@@ -35,7 +34,7 @@ public class RunnerSkill : BaseMinionSkill
     void Start ()
     {
         skillType = SkillType.SpeedBoost;
-        _myMinion = GetComponent<Minion>();
+        pThisMinion = GetComponent<Minion>();
     }
 	
 	

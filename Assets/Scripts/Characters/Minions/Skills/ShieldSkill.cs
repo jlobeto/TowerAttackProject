@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ShieldSkill : BaseMinionSkill
 {
-    //Minion _thisMinion;
     int _hitsLeft;
     
     public override bool Initialize(float lastingTime, float cooldown, int times)
@@ -17,7 +16,7 @@ public class ShieldSkill : BaseMinionSkill
         //Debug.Log("activate!!");
         infoCanvas.InitShield(times);
         _hitsLeft = times;
-
+        pThisMinion.ShieldBubble.SetActive(true);
         return true;
     }
 
@@ -30,16 +29,22 @@ public class ShieldSkill : BaseMinionSkill
 
         _hitsLeft--;
         infoCanvas.RemoveShieldHit();
-        var continueActivated = _hitsLeft >= 0;
-        if (!continueActivated) //if the shield has gone for num of hits, turn 0 the skillTime
-            pSkillTime = 0;
-        return continueActivated;
+        var continueActivated = _hitsLeft > 0;
+        if (!continueActivated) //if the shield has gone for num of hits, turn -1 the skillTime
+            pSkillTime = -1;
+
+        return true;
+    }
+
+    protected override void OnFinishSkillByTime()
+    {
+        pThisMinion.ShieldBubble.SetActive(false);
     }
 
     void Start ()
     {
         skillType = SkillType.HitShield;
-        //_thisMinion = GetComponent<Minion>();
+        pThisMinion = GetComponent<Minion>();
     }
-	
+
 }

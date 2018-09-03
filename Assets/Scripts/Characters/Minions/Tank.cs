@@ -24,9 +24,9 @@ public class Tank : Minion
     public override void GetDamage(float dmg)
     {
         
-        _mySkill.ExecuteSkill();
+        var isEnabled =_mySkill.ExecuteSkill();
 
-        if (!_mySkill.IsActivated)
+        if (!isEnabled)
         {
             //Debug.Log("Get real Damage");
             base.GetDamage(dmg);

@@ -26,9 +26,12 @@ public class Minion : MonoBehaviour
     public float skillCooldown = 5;
 
     protected WalkNode pNextNode;
+    protected GameObject pShieldBubble;
+    protected Animator pAnimator;
     protected float pDistanceToNextNode = 0.2f;//To change the next node;
     protected bool pIceDebuff;
     protected bool pBuffInvisible;//like runner run boost skill.
+
 
     float _initHP;
     int _currentLevel = 1;//Level of the minion, ///TODO manage this when buying an upgrade of lvl;
@@ -42,6 +45,7 @@ public class Minion : MonoBehaviour
     public int Id { get { return _id; } }
     public bool CanWalk { get { return _canWalk; } }
     public bool IsTargetable { get { return !pBuffInvisible; } }
+    public GameObject ShieldBubble { get { return pShieldBubble; } }
 
 
     public virtual void GetDamage(float dmg)
@@ -80,7 +84,8 @@ public class Minion : MonoBehaviour
 
     protected virtual void PerformAction()
     {
-        infoCanvas.UpdatePosition(transform.position);
+        if(infoCanvas != null)
+            infoCanvas.UpdatePosition(transform.position);
 
         if (_canWalk)
         {
@@ -124,6 +129,8 @@ public class Minion : MonoBehaviour
     protected void Init()
     {
         _id = gameObject.GetInstanceID();
+        pAnimator = GetComponentInChildren<Animator>();
+
         infoCanvas = Instantiate<InfoCanvas>(infoCanvas, transform.position, transform.rotation);
         infoCanvas.Init(hp, skillTime, skillCooldown);
         _initHP = hp;
@@ -134,6 +141,16 @@ public class Minion : MonoBehaviour
                 parent = new GameObject("InfoCanvasParent");
 
             infoCanvas.transform.SetParent(parent.transform);
+        }
+
+        foreach (Transform item in transform)
+        {
+            if (item.tag == "ShieldBubble")
+            {
+                pShieldBubble = item.gameObject;
+                pShieldBubble.SetActive(false);
+                break;
+            }
         }
     }
     public virtual void InitMinion(WalkNode n)
@@ -167,11 +184,20 @@ public class Minion : MonoBehaviour
     {
         if (hp <= 0)
         {
-            Destroy(infoCanvas.gameObject);
-            OnDeath(this);
+            pAnimator.SetBool("RunDissolve", true);
+            Debug.Log("is dead");
         }
     }
 
+    /// <summary>
+    /// Animation Event
+    /// </summary>
+    public void DissolveStopped()
+    {
+        Destroy(infoCanvas.gameObject);
+        Debug.Log("dissolve stopped");
+        OnDeath(this);
+    }
 
     void CheckPSExplotion()
     {

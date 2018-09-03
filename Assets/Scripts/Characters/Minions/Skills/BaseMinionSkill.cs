@@ -12,7 +12,7 @@ public class BaseMinionSkill : MonoBehaviour
         SpeedBoost,
         ChangeTarget //Change targets types (ground and air) when is needed.
     }
-
+    
     public SkillType skillType = SkillType.None;
     public InfoCanvas infoCanvas;
     public bool useCanvas = true;//If useCanvas, it will call all the functions to run the infoCanvas and add more feedback
@@ -21,7 +21,8 @@ public class BaseMinionSkill : MonoBehaviour
     protected bool pIsLocked;
     protected float pSkillTime;
     protected float pSkillCooldown;
-    
+
+    protected Minion pThisMinion;
 
     public bool IsActivated { get { return pIsActivated; } }
 
@@ -80,6 +81,7 @@ public class BaseMinionSkill : MonoBehaviour
                 infoCanvas.shieldSkill.fillAmount = 0;//this one must to update its shieldskill bar.
                 pIsActivated = false;
                 pIsLocked = true;
+                OnFinishSkillByTime();
             }
         }
 
@@ -96,6 +98,10 @@ public class BaseMinionSkill : MonoBehaviour
         }
     }
 
+    protected virtual void OnFinishSkillByTime()
+    {
+
+    }
 
     public static BaseMinionSkill GetSkillByType(SkillType type, List<BaseMinionSkill> minionSkills)
     {
