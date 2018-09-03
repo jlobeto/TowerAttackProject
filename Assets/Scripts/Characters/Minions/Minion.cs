@@ -185,7 +185,6 @@ public class Minion : MonoBehaviour
         if (hp <= 0)
         {
             pAnimator.SetBool("RunDissolve", true);
-            Debug.Log("is dead");
         }
     }
 
@@ -195,7 +194,6 @@ public class Minion : MonoBehaviour
     public void DissolveStopped()
     {
         Destroy(infoCanvas.gameObject);
-        Debug.Log("dissolve stopped");
         OnDeath(this);
     }
 

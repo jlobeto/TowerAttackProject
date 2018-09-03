@@ -6,6 +6,7 @@ public class Dove : Minion
 {
     public float airYpos = 2.3f;
     public float groundYpos = 0.5f;
+    public ParticleSystem skillPS;
 
     float _targetPos;
     ChangeTargetSkill _mySkill;
@@ -13,6 +14,7 @@ public class Dove : Minion
     protected override void Start()
     {
         base.Start();
+        skillPS = GetComponentInChildren<ParticleSystem>();
         transform.position = new Vector3(transform.position.x, airYpos, transform.position.z);
         _mySkill = gameObject.AddComponent<ChangeTargetSkill>();
         skills.Add(_mySkill);
@@ -36,6 +38,7 @@ public class Dove : Minion
         targetType = targetType == TargetType.Air ? TargetType.Ground : TargetType.Air;
         _targetPos = targetType == TargetType.Air ? airYpos : groundYpos;
 
+        skillPS.Play();
         _mySkill.SetYDest(_targetPos);
     }
 

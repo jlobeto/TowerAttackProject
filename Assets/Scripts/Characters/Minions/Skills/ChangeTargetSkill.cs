@@ -5,10 +5,13 @@ using UnityEngine;
 public class ChangeTargetSkill : BaseMinionSkill
 {
     float _to;
-    void Start()
+    
+    protected override void Start()
     {
-        skillType = SkillType.SpeedBoost;
+        base.Start();
+        skillType = SkillType.ChangeTarget;
     }
+
 
     public override bool Initialize(float lastingTime, float cooldown)
     {

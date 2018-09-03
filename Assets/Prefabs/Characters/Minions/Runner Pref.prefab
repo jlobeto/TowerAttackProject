@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 33217098577472340}
   - component: {fileID: 23674809110077768}
   - component: {fileID: 95703166828525830}
+  - component: {fileID: 114728962669269026}
   m_Layer: 8
   m_Name: Runner Model
   m_TagString: Untagged
@@ -64,7 +65,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4597261519385706
 Transform:
   m_ObjectHideFlags: 1
@@ -72,7 +73,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1387158786030756}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.28247, y: 0.85, z: 30.056707}
+  m_LocalPosition: {x: -79.15564, y: -1.89, z: 185.9487}
   m_LocalScale: {x: 0.9632631, y: 0.96326303, z: 0.96326303}
   m_Children:
   - {fileID: 4896113984568824}
@@ -261,6 +262,17 @@ MonoBehaviour:
   skillTime: 2
   skillCooldown: 2
   skillDeltaSpeed: 2
+--- !u!114 &114728962669269026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1470576002224754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfd29d0bb75a124a968129eae71eb53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135184913284479584
 SphereCollider:
   m_ObjectHideFlags: 1

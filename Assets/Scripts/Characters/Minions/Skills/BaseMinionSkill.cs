@@ -26,7 +26,12 @@ public class BaseMinionSkill : MonoBehaviour
 
     public bool IsActivated { get { return pIsActivated; } }
 
-    
+
+    protected virtual void Start()
+    {
+        pThisMinion = GetComponent<Minion>();
+    }
+
     public virtual bool Initialize(float time, float cooldown)
     {
         if (pIsLocked)
@@ -37,6 +42,8 @@ public class BaseMinionSkill : MonoBehaviour
             Debug.Log("skill already activated.");
             return false;
         }
+        if(pThisMinion == null)
+            pThisMinion = GetComponent<Minion>();
 
         pIsActivated = true;
         pSkillTime = time;

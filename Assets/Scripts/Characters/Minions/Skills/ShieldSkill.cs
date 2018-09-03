@@ -16,7 +16,9 @@ public class ShieldSkill : BaseMinionSkill
         //Debug.Log("activate!!");
         infoCanvas.InitShield(times);
         _hitsLeft = times;
-        pThisMinion.ShieldBubble.SetActive(true);
+        if(pThisMinion!=null)
+            pThisMinion.ShieldBubble.SetActive(true);
+
         return true;
     }
 
@@ -41,10 +43,9 @@ public class ShieldSkill : BaseMinionSkill
         pThisMinion.ShieldBubble.SetActive(false);
     }
 
-    void Start ()
+    protected override void Start()
     {
+        base.Start();
         skillType = SkillType.HitShield;
-        pThisMinion = GetComponent<Minion>();
     }
-
 }

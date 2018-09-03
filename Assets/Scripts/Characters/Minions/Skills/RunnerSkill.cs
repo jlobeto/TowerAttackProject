@@ -31,12 +31,10 @@ public class RunnerSkill : BaseMinionSkill
         return pIsActivated;
     }
 
-    void Start ()
+    protected override void Start()
     {
+        base.Start();
         skillType = SkillType.SpeedBoost;
-        pThisMinion = GetComponent<Minion>();
     }
-	
-	
 
 }
