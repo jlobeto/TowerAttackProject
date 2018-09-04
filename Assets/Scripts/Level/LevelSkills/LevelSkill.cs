@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -6,7 +7,7 @@ using System;
 
 public class LevelSkill : MonoBehaviour
 {
-    public float AreaOfEffect = 15;
+    public float AreaOfEffect = 8;
     public float effectTime = 5f;
     public float fireRate = 4f;
     public ILevelSkill castSkill;
@@ -22,20 +23,24 @@ public class LevelSkill : MonoBehaviour
     public void OnInitCast()
     {
         _initialized = true;
-        _sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        _sphere.GetComponent<SphereCollider>().radius = AreaOfEffect;
-        _sphere.transform.localScale = new Vector3(AreaOfEffect * 2, AreaOfEffect * 2, AreaOfEffect * 2);
-        var m = new Material(Shader.Find("Standard"));
-        m.SetFloat("_Mode", 3);
-        m.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        m.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        m.SetInt("_ZWrite", 0);
-        m.DisableKeyword("_ALPHATEST_ON");
-        m.EnableKeyword("_ALPHABLEND_ON");
-        m.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        m.renderQueue = 3000;
-        m.color = new Color(0, 200, 0, .1f);
-        _sphere.GetComponent<Renderer>().material = m;
+        //_sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //_sphere.GetComponent<SphereCollider>().radius = AreaOfEffect;
+        //_sphere.transform.localScale = new Vector3(AreaOfEffect * 2, AreaOfEffect * 2, AreaOfEffect * 2);
+        //var m = new Material(Shader.Find("Standard"));
+        //m.SetFloat("_Mode", 3);
+        //m.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        //m.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        //m.SetInt("_ZWrite", 0);
+        //m.DisableKeyword("_ALPHATEST_ON");
+        //m.EnableKeyword("_ALPHABLEND_ON");
+        //m.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        //m.renderQueue = 3000;
+        //m.color = new Color(0, 200, 0, .1f);
+        //_sphere.GetComponent<Renderer>().material = m;
+
+        var spot = Resources.Load("Level/Skills/Spotlight", typeof(GameObject)) as GameObject;
+        _sphere = Instantiate<GameObject>(spot);
+        AreaOfEffect = _sphere.GetComponentInChildren<Transform>().localScale.x * 8;
     }
 
     public void OnCancelCast()
@@ -54,7 +59,7 @@ public class LevelSkill : MonoBehaviour
         if (_initialized)
         {
             _target = GetTarget();
-            _sphere.transform.position = _target;
+            _sphere.transform.position = new Vector3(_target.x, 13, _target.z);
             OnCheckInput();
         }
         else
@@ -95,8 +100,9 @@ public class LevelSkill : MonoBehaviour
         var ray = new Ray(pos, (pos - Camera.main.transform.position).normalized);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 100, 1 << LayerMask.NameToLayer("Floor")))
+        if (Physics.Raycast(ray, out hit, 100, 1 << LayerMask.NameToLayer("FloorForLvlSkill")))
         {
+            var ret = new Vector3(hit.point.x, 1.5f, hit.point.z);
             return hit.point;
         }
         else
