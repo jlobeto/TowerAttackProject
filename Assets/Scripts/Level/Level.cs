@@ -67,7 +67,10 @@ public class Level : MonoBehaviour
 
     #region Minion Spawning Stuff
 
-    /// <returns>True if minion has been created</returns>
+    /// <summary>
+    /// Build the minion type passed in the first parameter.
+    /// Returns True if minion has been created
+    /// </summary>
     public bool BuildMinion(MinionType t, bool builtTime = false)
     {
         if (!CheckMinionSale(t)) return false;
@@ -137,7 +140,7 @@ public class Level : MonoBehaviour
     void InitLevelCanvas()
     {
         _lvlCanvasManager = FindObjectOfType<LevelCanvasManager>();
-        _lvlCanvasManager.BuildAvailableMinionsButtons(availableMinions.Select(i => i.minionType).ToList());
+        _lvlCanvasManager.BuildAvailableMinionsButtons(availableMinions);
         _lvlCanvasManager.level = this;
         _lvlCanvasManager.UpdateLevelTimer(levelTime);
         _lvlCanvasManager.UpdateLevelLives(_levelGoal.CurrentLives, _levelGoal.lives);

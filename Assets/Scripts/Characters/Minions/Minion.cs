@@ -13,6 +13,7 @@ public class Minion : MonoBehaviour
     public float speed = 4;
     public int pointsValue = 15;
     public float strength = 0;
+    public float spawnCooldown = 0.5f;
     //public IMinionSkill skill;
     public int coinValue = 0;
     [Range(0f,1f)]

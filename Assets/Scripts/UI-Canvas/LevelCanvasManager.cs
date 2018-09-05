@@ -69,23 +69,44 @@ public class LevelCanvasManager : MonoBehaviour
         _levelLives.text = newLive + " / " + initLives;
     }
 
-    public void BuildAvailableMinionsButtons(List<MinionType> types)
+    public void BuildAvailableMinionsButtons(List<Minion> minions)
     {
-        foreach (var item in types)
+        foreach (var minion in minions)
         {
             var btn = Instantiate<Button>(minionSaleButtonPrefab, _availablesPanel.transform);
-            btn.GetComponentInChildren<Text>().text = item.ToString();
-            var t = item;//fucking lazyness
-            btn.onClick.AddListener(() => OnBuyMinion(t));
+            btn.GetComponentInChildren<Text>().text = minion.minionType +" x"+ minion.pointsValue;
+            var t = minion.minionType;
+            var newBtn = btn;
+            var cooldown = minion.spawnCooldown;
+            var fillImg = btn.GetComponentsInChildren<Image>();//Returns btn.image and its child.image(DONT KNOW WHY)
+            btn.onClick.AddListener(() => OnBuyMinion(newBtn,fillImg[1], t, cooldown));
         }
     }
 
-    void OnBuyMinion(MinionType t)
+    void OnBuyMinion(Button btn,Image fillImg, MinionType t, float cooldown)
     {
+        if (!btn.interactable) return;
+        
         var created = level.BuildMinion(t);
-        /*For Drag&Drop system.
-         * if(created && _dragAndDropSystem != null)
-            _dragAndDropSystem.AddSlot(t);*/
+        if (!created) return;
+
+        btn.interactable = false;
+        fillImg.fillAmount = 1;
+        StartCoroutine(BuyMinionFreeze(cooldown, fillImg, btn));
+    }
+
+
+    IEnumerator BuyMinionFreeze(float totalTime, Image forground, Button btn)
+    {
+        var currTime = totalTime;
+        while (currTime >= 0)
+        {
+            yield return new WaitForEndOfFrame();
+            currTime -= Time.deltaTime;
+            forground.fillAmount = (currTime / totalTime);
+        }
+        forground.fillAmount = 0;
+        btn.interactable = true;
     }
 
     public void UpdateLevelPointBar(int newValue, int prevValue, int baseValue)
