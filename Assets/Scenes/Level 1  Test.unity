@@ -226,7 +226,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1963730553559018, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
@@ -277,7 +277,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1453408979104168, guid: 6ec409dc67750d749a9d6b77478f2bdc, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ec409dc67750d749a9d6b77478f2bdc, type: 2}
@@ -421,7 +421,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1963730553559018, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
@@ -523,6 +523,11 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114876332040566722, guid: 54e792e26c1399644943d1269048cf7f,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 54e792e26c1399644943d1269048cf7f, type: 2}
   m_IsPrefabParent: 0
@@ -576,7 +581,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1963730553559018, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ab49322b77b5d04b8b77d9976b6401f, type: 2}
@@ -1066,7 +1071,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1948536783100008, guid: bef094ed6d9a3b642962c96ba5b26778, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bef094ed6d9a3b642962c96ba5b26778, type: 2}
@@ -1080,6 +1085,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1839767451}
   - component: {fileID: 1839767450}
+  - component: {fileID: 1839767452}
   m_Layer: 0
   m_Name: testcontroller
   m_TagString: Untagged
@@ -1111,6 +1117,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1839767452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1839767449}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d0508ea5984d044a2c1757a4cd2ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateInterval: 0.5
 --- !u!1001 &1993102570
 Prefab:
   m_ObjectHideFlags: 0

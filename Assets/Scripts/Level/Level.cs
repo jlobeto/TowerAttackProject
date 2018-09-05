@@ -25,6 +25,7 @@ public class Level : MonoBehaviour
     LevelGoal _levelGoal;
     LevelCanvasManager _lvlCanvasManager;
     GameObjectSelector _goSelector;
+    FloorEffect _floorEffect;
 
     int _currentLevelPoints = 0;
     float _levelTimeAux;
@@ -118,6 +119,7 @@ public class Level : MonoBehaviour
         _towerManager = gameplayManagersGO.AddComponent<TowerManager>();
         _lvlSkillManager = gameplayManagersGO.AddComponent<LevelSkillManager>();
         _goSelector = FindObjectOfType<GameObjectSelector>();
+        _floorEffect = FindObjectOfType<FloorEffect>();
 
         _towerManager.level = _lvlSkillManager.level = _minionManager.level = this;
 
@@ -154,6 +156,7 @@ public class Level : MonoBehaviour
     {
         _levelGoal.UpdateGoal(-1);
         _lvlCanvasManager.UpdateLevelLives(_levelGoal.CurrentLives, _levelGoal.lives);
+        _floorEffect.InitAnimation();
     }
 
     void GoalCompletedHandler()
