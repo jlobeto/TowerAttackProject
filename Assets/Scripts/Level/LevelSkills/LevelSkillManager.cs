@@ -45,12 +45,12 @@ public class LevelSkillManager : MonoBehaviour
                     break;
             }
             lvlSkill.skillType = item;
-            lvlSkill.OnSkillReleased += SkillReleasedHandler;
+            lvlSkill.OnSkillCancel += SkillCancelHandler;
             level.LevelCanvasManager.CreateSkillButton(go.name, lvlSkill.OnInitCast, lvlSkill.OnCancelCast);
         }
     }
 
-    void SkillReleasedHandler()
+    void SkillCancelHandler()
     {
         level.LevelCanvasManager.ActivateSkillButtons();
     }

@@ -49,9 +49,7 @@ public class LevelCanvasManager : MonoBehaviour
 
         _levelTimer = _levelTimerBG.GetComponentInChildren<Text>();
         _levelLives = _levelLivesBG.GetComponentInChildren<Text>();
-
-        foreach (var item in _skillButtons)
-            item.gameObject.SetActive(true);
+        
     }
 
     void Update()
@@ -108,7 +106,7 @@ public class LevelCanvasManager : MonoBehaviour
         btn.GetComponentInChildren<Text>().text = name;
         btn.onClick.AddListener(() => SkillButtonCallback(onActivate, onDeactivate, btn.GetInstanceID()));
         btn.transform.SetParent(_skillsButtonPanel.transform);
-        btn.gameObject.SetActive(false);
+        //btn.gameObject.SetActive(false);
         _skillButtons.Add(btn);
     }
 

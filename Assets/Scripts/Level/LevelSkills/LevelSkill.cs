@@ -13,7 +13,7 @@ public class LevelSkill : MonoBehaviour
     public ILevelSkill castSkill;
     public LevelSkillManager.SkillType skillType;
 
-    public Action OnSkillReleased = delegate { };
+    public Action OnSkillCancel = delegate { };
 
     bool _initialized;
     Vector3 _target;
@@ -46,7 +46,7 @@ public class LevelSkill : MonoBehaviour
     public void OnCancelCast()
     {
         _initialized = _canCast = false;
-        OnSkillReleased();
+        OnSkillCancel();
         Destroy(_sphere);
     }
 
@@ -100,7 +100,7 @@ public class LevelSkill : MonoBehaviour
         var ray = new Ray(pos, (pos - Camera.main.transform.position).normalized);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 100, 1 << LayerMask.NameToLayer("FloorForLvlSkill")))
+        if (Physics.Raycast(ray, out hit, 100, 1 << LayerMask.NameToLayer("LevelSkillFloor")))
         {
             var ret = new Vector3(hit.point.x, 1.5f, hit.point.z);
             return hit.point;
