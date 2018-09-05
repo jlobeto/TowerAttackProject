@@ -27,7 +27,7 @@ public class DragAndDropSystem : MonoBehaviour, IHasChanged
 
     void OnDeleteSlot(DragAndDropSlot slot)
     {
-        _canvas.MinionDeleted(slot.index);
+        //_canvas.MinionDeleted(slot.index);
         _slots.Remove(slot);
         Destroy(slot.gameObject);
         ReorderSlotsIndeces();
@@ -38,7 +38,7 @@ public class DragAndDropSystem : MonoBehaviour, IHasChanged
         SetParent(beingDragged.transform, affectedSlot.transform);
         SetParent(affectedDraggable.transform, fromSlot.transform);
 
-        _canvas.MinionOrderUpdated(fromSlot.index, affectedSlot.index);
+        //_canvas.MinionOrderUpdated(fromSlot.index, affectedSlot.index);
     }
 
     void SetParent(Transform child, Transform parent)

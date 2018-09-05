@@ -16,6 +16,8 @@ public class LevelGoal : MonoBehaviour, ILevelGoal
 
     protected int pCurrentLives;
 
+    public int CurrentLives { get { return pCurrentLives; } }
+
     void Start()
     {
         pCurrentLives = lives;

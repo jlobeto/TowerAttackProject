@@ -12,16 +12,12 @@ public class Level : MonoBehaviour
 
     public int initialLevelPoints;
     [Tooltip("In seconds")]
-    public float buildSquadTime = 15;
-    [Tooltip("In seconds")]
     public float levelTime = 60;
-    [Tooltip("At wave init")]
-    public float minionSpawnTime = 1f;
     public List<LevelSkillManager.SkillType> levelSkills = new List<LevelSkillManager.SkillType>();
     public List<Minion> availableMinions = new List<Minion>();
 
-    [HideInInspector]
-    public bool startMinionSpawning;
+    //[HideInInspector]
+    //public bool startMinionSpawning;
 
     TowerManager _towerManager;
     MinionManager _minionManager;
@@ -31,7 +27,7 @@ public class Level : MonoBehaviour
     GameObjectSelector _goSelector;
 
     int _currentLevelPoints = 0;
-    float _minionSpawnTimeAux;
+    float _levelTimeAux;
 
     /// <summary>
     /// Used to inform CurrentLevelPoints to user on the GUI.
@@ -46,8 +42,15 @@ public class Level : MonoBehaviour
 
 	void Update ()
     {
-        OnSpawnMinions();
+        //OnSpawnMinions();
         GameObjectSelection();
+        OnRunLevelTimer();
+    }
+
+    void OnRunLevelTimer()
+    {
+        _levelTimeAux -= Time.deltaTime;
+        _lvlCanvasManager.UpdateLevelTimer(_levelTimeAux < 0 ? 0 : _levelTimeAux);
     }
 
     void GameObjectSelection()
@@ -65,7 +68,7 @@ public class Level : MonoBehaviour
     #region Minion Spawning Stuff
 
     /// <returns>True if minion has been created</returns>
-    public bool BuildMinion(MinionType t, bool builtTime)
+    public bool BuildMinion(MinionType t, bool builtTime = false)
     {
         if (!CheckMinionSale(t)) return false;
         var cost = _minionManager.GetMinionPrice(t);
@@ -79,19 +82,8 @@ public class Level : MonoBehaviour
         return true;
     }
 
-    void OnSpawnMinions()
-    {
-        if (!startMinionSpawning) return;
-        _minionSpawnTimeAux -= Time.deltaTime;
-        if (_minionSpawnTimeAux < 0)
-        {
-            var continueSpawning = _minionManager.SetNextMinionFree();
-            if (!continueSpawning)
-                startMinionSpawning = false;
 
-            _minionSpawnTimeAux = minionSpawnTime;
-        }
-    }
+    
 
     bool CheckMinionSale(MinionType t)
     {
@@ -127,7 +119,7 @@ public class Level : MonoBehaviour
         _towerManager.level = _lvlSkillManager.level = _minionManager.level = this;
 
         _currentLevelPoints = initialLevelPoints;
-        _minionSpawnTimeAux = minionSpawnTime;
+        _levelTimeAux = levelTime;
 
         InitLevelGoal();
         InitLevelCanvas();
@@ -147,8 +139,9 @@ public class Level : MonoBehaviour
         _lvlCanvasManager = FindObjectOfType<LevelCanvasManager>();
         _lvlCanvasManager.BuildAvailableMinionsButtons(availableMinions.Select(i => i.minionType).ToList());
         _lvlCanvasManager.level = this;
-        _lvlCanvasManager.SetBuildSquadTimer(buildSquadTime,levelTime);
-        _lvlCanvasManager.pointsText.text = initialLevelPoints + " / " + initialLevelPoints;
+        _lvlCanvasManager.UpdateLevelTimer(levelTime);
+        _lvlCanvasManager.UpdateLevelLives(_levelGoal.CurrentLives, _levelGoal.lives);
+        UpdatePoints(0);
     }
 
     #endregion
@@ -157,6 +150,7 @@ public class Level : MonoBehaviour
     public void UpdateLevelGoal()
     {
         _levelGoal.UpdateGoal(-1);
+        _lvlCanvasManager.UpdateLevelLives(_levelGoal.CurrentLives, _levelGoal.lives);
     }
 
     void GoalCompletedHandler()
@@ -173,4 +167,26 @@ public class Level : MonoBehaviour
 
         _lvlCanvasManager.UpdateLevelPointBar(_currentLevelPoints, prevPoints, initialLevelPoints);
     }
+
+    #region Commented Functions
+    /// <summary>
+    /// This is to spawn minions within a squadTimer.
+    /// So it will spawn minions selected one per one. Not necesary right now.
+    /// </summary>
+    /*void OnSpawnMinions()
+    {
+        if (!startMinionSpawning) return;
+        _minionSpawnTimeAux -= Time.deltaTime;
+        if (_minionSpawnTimeAux < 0)
+        {
+            var continueSpawning = _minionManager.SetNextMinionFree();
+            if (!continueSpawning)
+                startMinionSpawning = false;
+
+            _minionSpawnTimeAux = minionSpawnTime;
+        }
+    }*/
+
+    #endregion
+
 }
