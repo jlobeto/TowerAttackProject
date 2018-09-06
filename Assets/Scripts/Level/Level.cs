@@ -27,6 +27,7 @@ public class Level : MonoBehaviour
     GameObjectSelector _goSelector;
     FloorEffect _floorEffect;
 
+    bool _levelEnded;
     int _currentLevelPoints = 0;
     float _levelTimeAux;
 
@@ -43,7 +44,8 @@ public class Level : MonoBehaviour
 
 	void Update ()
     {
-        //OnSpawnMinions();
+        if(_levelEnded) return;
+
         GameObjectSelection();
         OnRunLevelTimer();
     }
@@ -52,6 +54,12 @@ public class Level : MonoBehaviour
     {
         _levelTimeAux -= Time.deltaTime;
         _lvlCanvasManager.UpdateLevelTimer(_levelTimeAux < 0 ? 0 : _levelTimeAux);
+        if (_levelTimeAux < 0)
+        {
+            _levelEnded = true;
+            var popupMan = FindObjectOfType<PopupManager>();//esto no vá. mas adelante voy a crear un gamemanager que tenga este coso
+            popupMan.BuildEndLevelPopup(_lvlCanvasManager.transform);
+        }
     }
 
     void GameObjectSelection()
@@ -85,9 +93,6 @@ public class Level : MonoBehaviour
 
         return true;
     }
-
-
-    
 
     bool CheckMinionSale(MinionType t)
     {

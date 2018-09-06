@@ -41,5 +41,11 @@ public class TestController : MonoBehaviour
         {
             FindObjectOfType<Level>().UpdatePoints(10000);
         }
+        /*if (Input.GetKeyDown(KeyCode.A))
+        {
+            var _lvlCanvasManager = FindObjectOfType<LevelCanvasManager>();
+            var popupMan = FindObjectOfType<PopupManager>();
+            popupMan.SpawnBasePopup(_lvlCanvasManager.transform);
+        }*/
     }
 }
