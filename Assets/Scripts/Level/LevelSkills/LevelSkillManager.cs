@@ -47,8 +47,11 @@ public class LevelSkillManager : MonoBehaviour
                 var lvlSkill = go.AddComponent<LevelSkill>();
                 lvlSkill.stats = skillData;
                 lvlSkill.castSkill = GetCastSkill(skillType);
-                lvlSkill.OnSkillCancel += SkillCancelHandler;
-                level.LevelCanvasManager.CreateSkillButton(skillData.skillType, lvlSkill.OnInitCast, lvlSkill.OnCancelCast);
+                lvlSkill.skillType = skillType;
+                lvlSkill.OnSkillExecuted += SkillExecutedHandler;
+                level.LevelCanvasManager.CreateSkillButton(lvlSkill
+                    , lvlSkill.OnInitCast
+                    , lvlSkill.StopCasting);
             }
         }
     }
@@ -87,9 +90,9 @@ public class LevelSkillManager : MonoBehaviour
         return json;
     }
 
-    void SkillCancelHandler()
+    void SkillExecutedHandler(int currUses, int initUses, SkillType type)
     {
-        level.LevelCanvasManager.ActivateSkillButtons();
+        level.LevelCanvasManager.SkillExecutedVisualHandler(type, initUses - currUses > 0, currUses, initUses);
     }
 
 }

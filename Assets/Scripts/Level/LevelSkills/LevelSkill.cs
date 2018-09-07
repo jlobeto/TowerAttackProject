@@ -11,8 +11,9 @@ public class LevelSkill : MonoBehaviour
     public ILevelSkill castSkill;
     public LevelSkillManager.SkillType skillType;
 
-    public Action OnSkillCancel = delegate { };
+    public Action<int,int, LevelSkillManager.SkillType> OnSkillExecuted = delegate { };
 
+    int _currentUses;
     bool _initialized;
     Vector3 _target;
     GameObject _sphere;
@@ -26,10 +27,9 @@ public class LevelSkill : MonoBehaviour
         stats.areaOfEffect = _sphere.GetComponentInChildren<Transform>().localScale.x * 8;
     }
 
-    public void OnCancelCast()
+    public void StopCasting()
     {
         _initialized = _canCast = false;
-        OnSkillCancel();
         Destroy(_sphere);
     }
 
@@ -70,8 +70,10 @@ public class LevelSkill : MonoBehaviour
                 default:
                     break;
             }
-            
-            OnCancelCast();
+
+            _currentUses++;
+            OnSkillExecuted(_currentUses,stats.useCountPerLevel, skillType);
+            StopCasting();
         }
     }
 

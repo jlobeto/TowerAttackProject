@@ -11,7 +11,7 @@ public class LevelCanvasManager : MonoBehaviour
     public Level level;
     [HideInInspector]
     public Text pointsText;
-    public Button skillButtonPrefab;
+    public CanvasSkillLvlButton skillButtonPrefab;
     public Image levelPointBar;
     public Button minionSaleButtonPrefab;
 
@@ -21,7 +21,7 @@ public class LevelCanvasManager : MonoBehaviour
     /// </summary>
     HorizontalLayoutGroup _availablesPanel;
     //DragAndDropSystem _dragAndDropSystem;
-    List<Button> _skillButtons = new List<Button>();
+    List<CanvasSkillLvlButton> _skillButtons = new List<CanvasSkillLvlButton>();
     Image _levelTimerBG;
     Image _levelLivesBG;
     Text _levelTimer;
@@ -121,35 +121,60 @@ public class LevelCanvasManager : MonoBehaviour
     
 
     #region Skills Buttons
-    public void CreateSkillButton(string name, Action onActivate, Action onDeactivate)
+    public void CreateSkillButton(LevelSkill skill,Action onActivate, Action onDeactivate)
     {
-        var btn = Instantiate<Button>(skillButtonPrefab, transform);
-        btn.GetComponentInChildren<Text>().text = name;
-        btn.onClick.AddListener(() => SkillButtonCallback(onActivate, onDeactivate, btn.GetInstanceID()));
-        btn.transform.SetParent(_skillsButtonPanel.transform);
-        //btn.gameObject.SetActive(false);
-        _skillButtons.Add(btn);
+        var lvlBtn = Instantiate<CanvasSkillLvlButton>(skillButtonPrefab, transform);
+        lvlBtn.type = skill.skillType;
+        lvlBtn.GetComponentInChildren<Text>().text = skill.stats.skillType + " " + skill.stats.useCountPerLevel+ "/" + skill.stats.useCountPerLevel;
+        lvlBtn.button.onClick.AddListener(() => SkillButtonCallback(onActivate, onDeactivate, lvlBtn.GetInstanceID()));
+        lvlBtn.transform.SetParent(_skillsButtonPanel.transform);
+        _skillButtons.Add(lvlBtn);
     }
 
-    void SkillButtonCallback(Action onClick, Action onDeactivate, int goID)
+    void SkillButtonCallback(Action onActivate, Action onDeactivate, int goID)
     {
         if (!_isAnyButtonDisabled)
         {
-            onClick();
+            onActivate();
             DeactivateSkillButtons(goID);
         }
         else
         {
             onDeactivate();
-            ActivateSkillButtons();
+            TryActivatingSkillButtons();
         }
+    }
+
+    /// <summary>
+    /// Handles the visual stuff of the button of type 'type' ones the skill is executed.
+    /// </summary>
+    public void SkillExecutedVisualHandler(LevelSkillManager.SkillType type, bool interactable, int currentUses, int initUses)
+    {
+        var skillBtn = _skillButtons.FirstOrDefault(i => i.type == type);
+        skillBtn.button.interactable = skillBtn.usable = interactable;
+        skillBtn.button.GetComponentInChildren<Text>().text = type.ToString() + " " + (initUses-currentUses) + "/" + initUses;
+        TryActivatingSkillButtons();
+    }
+
+    /// <summary>
+    /// If button type is not exception and it is usable, it will activate it
+    /// </summary>
+    public void TryActivatingSkillButtons()
+    {
+        foreach (var item in _skillButtons)
+        {
+            if(item.usable)
+                item.button.interactable = true;
+        }
+
+        _isAnyButtonDisabled = false;
     }
 
     public void ActivateSkillButtons()
     {
         foreach (var item in _skillButtons)
         {
-            item.interactable = true;
+            item.button.interactable = true;
         }
 
         _isAnyButtonDisabled = false;
@@ -162,9 +187,8 @@ public class LevelCanvasManager : MonoBehaviour
             if (item.GetInstanceID() != activatedOne)
             {
                 _isAnyButtonDisabled = true;
-                item.interactable = false;
+                item.button.interactable = false;
             }
-                
         }
     }
     #endregion

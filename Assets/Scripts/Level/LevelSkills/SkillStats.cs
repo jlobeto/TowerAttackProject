@@ -9,5 +9,6 @@ public class SkillStats
     public float areaOfEffect = 8;
     public float effectTime = 5f;
     public float fireRate = 4f;
+    public int useCountPerLevel = 1;
     public string skillType;
 }

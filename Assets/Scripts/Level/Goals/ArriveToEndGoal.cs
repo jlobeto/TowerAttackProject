@@ -8,8 +8,8 @@ public class ArriveToEndGoal : LevelGoal
     public override void UpdateGoal(int value)
     {
         pCurrentLives += value;
-        if (pCurrentLives > 0)
-            Debug.Log("Goal Updated. Remaining lives : " + pCurrentLives);
+        /*if (pCurrentLives > 0)
+            Debug.Log("Goal Updated. Remaining lives : " + pCurrentLives);*/
                 
         CheckGoal(); 
     }
