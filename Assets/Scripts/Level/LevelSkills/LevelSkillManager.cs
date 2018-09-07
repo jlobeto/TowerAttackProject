@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class LevelSkillManager : MonoBehaviour
@@ -12,7 +14,7 @@ public class LevelSkillManager : MonoBehaviour
     public Level level;
 
     List<SkillType> _levelSkillsTypes;
-    List<LevelSkill> _levelSkills;
+    SkillStatsList _skillStatsConfig;
 
 
     void Start ()
@@ -27,27 +29,62 @@ public class LevelSkillManager : MonoBehaviour
 
     void Init()
     {
+        var s = GetSkillConfig();
+        _skillStatsConfig = JsonUtility.FromJson<SkillStatsList>(s);
+
         _levelSkillsTypes = level.levelSkills;
-        foreach (var item in _levelSkillsTypes)
+
+        GameObject go = new GameObject();
+        go.transform.SetParent(transform);
+        go.name = "Level Skills";
+
+        foreach (var skillType in _levelSkillsTypes)
         {
-            GameObject go = new GameObject();
-            go.transform.SetParent(transform);
-            var lvlSkill = go.AddComponent<LevelSkill>();
-            switch (item)
+            foreach (var skillData in _skillStatsConfig.skillStatsList)
             {
-                case SkillType.Stun:
-                    go.name = "Stun";
-                    lvlSkill.castSkill = new StunLevelSkill();
-                    break;
-                case SkillType.Slow:
-                    go.name = "Slow";
-                    lvlSkill.castSkill = new SlowLevelSkill();
-                    break;
+                if (skillType != GetSkillType(skillData.skillType)) continue;
+
+                var lvlSkill = go.AddComponent<LevelSkill>();
+                lvlSkill.stats = skillData;
+                lvlSkill.castSkill = GetCastSkill(skillType);
+                lvlSkill.OnSkillCancel += SkillCancelHandler;
+                level.LevelCanvasManager.CreateSkillButton(skillData.skillType, lvlSkill.OnInitCast, lvlSkill.OnCancelCast);
             }
-            lvlSkill.skillType = item;
-            lvlSkill.OnSkillCancel += SkillCancelHandler;
-            level.LevelCanvasManager.CreateSkillButton(go.name, lvlSkill.OnInitCast, lvlSkill.OnCancelCast);
         }
+    }
+
+    ILevelSkill GetCastSkill(SkillType type)
+    {
+        switch (type)
+        {
+            case SkillType.Stun:
+                return new StunLevelSkill();
+            case SkillType.Slow:
+                return new SlowLevelSkill();
+        }
+
+        throw new Exception("GetCastSkill() => must update switch with new types");
+    }
+
+    SkillType GetSkillType(string type)
+    {
+        if (Enum.IsDefined(typeof(SkillType), type))
+        {
+            return (SkillType)Enum.Parse(typeof(SkillType), type);
+        }
+
+        throw new Exception("GetSkillType() => type param is '"+ type + "' update LevelSkillManager.SkillType");
+    }
+
+    string GetSkillConfig()
+    {
+        string json = "";
+        using (StreamReader r = new StreamReader("Assets/GameConfig/LevelSkillConfig.json"))
+        {
+            json = r.ReadToEnd();
+        }
+
+        return json;
     }
 
     void SkillCancelHandler()
