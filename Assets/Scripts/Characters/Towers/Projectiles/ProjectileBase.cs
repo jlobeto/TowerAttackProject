@@ -49,8 +49,8 @@ public class ProjectileBase : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        /*Gizmos.color = Color.red;
         if(pCanMove && pTarget != null)
-            Gizmos.DrawWireSphere(pTarget.transform.position, range == 0f ? 0.6f : range);
+            Gizmos.DrawWireSphere(pTarget.transform.position, range == 0f ? 0.6f : range);*/
     }
 }

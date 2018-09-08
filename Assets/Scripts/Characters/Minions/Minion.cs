@@ -186,6 +186,12 @@ public class Minion : MonoBehaviour
         if (hp <= 0)
         {
             pAnimator.SetBool("RunDissolve", true);
+            if (_hasExplotionEffect)
+            {
+                var ps = GetComponentInChildren<SimpleParticleSystem>();
+                if(ps != null)
+                    ps.Stop();
+            }
         }
     }
 
@@ -210,7 +216,8 @@ public class Minion : MonoBehaviour
         else
             ps = GetComponentInChildren<SimpleParticleSystem>();
 
-        ps.IncrementBurst();
+        if(ps != null)
+            ps.IncrementBurst();
     }
 
     
