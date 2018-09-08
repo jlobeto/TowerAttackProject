@@ -82,6 +82,15 @@ public class Minion : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Increment of HP, if new hp is above initHP the new hp will be initHP
+    /// </summary>
+    public void GetHealth(float health)
+    {
+        hp += health;
+        if (hp > _initHP)
+            hp = _initHP;
+    }
 
     protected virtual void PerformAction()
     {

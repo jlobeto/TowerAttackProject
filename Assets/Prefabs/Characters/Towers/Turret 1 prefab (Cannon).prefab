@@ -11,6 +11,21 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1676690817777106}
   m_IsPrefabParent: 1
+--- !u!1 &1210908651282158
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4316985925076030}
+  m_Layer: 0
+  m_Name: spawnpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1579373710692734
 GameObject:
   m_ObjectHideFlags: 1
@@ -52,6 +67,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4365815457783224}
+  - component: {fileID: 54353250649233848}
+  - component: {fileID: 65052883141451972}
+  - component: {fileID: 114792983361602340}
   m_Layer: 0
   m_Name: Turret 1 prefab (Cannon)
   m_TagString: Untagged
@@ -115,10 +133,24 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: -0.000038010192, y: 0.8718008, z: 0.43224669}
   m_LocalScale: {x: -0.94386816, y: -1.6485382, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4316985925076030}
   m_Father: {fileID: 4775673452739812}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -180, y: 0, z: 0}
+--- !u!4 &4316985925076030
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1210908651282158}
+  m_LocalRotation: {x: 0, y: 0, z: -1, w: 0.00000037252897}
+  m_LocalPosition: {x: 0, y: 0, z: 0.301}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4143591094351646}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180.00002}
 --- !u!4 &4365815457783224
 Transform:
   m_ObjectHideFlags: 1
@@ -285,6 +317,33 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1579373710692734}
   m_Mesh: {fileID: 4300002, guid: 942a1366fc4ae9347b9e1c4d68af7b15, type: 3}
+--- !u!54 &54353250649233848
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1676690817777106}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &65052883141451972
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1676690817777106}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.149716, y: 1.6709142, z: 2.422335}
+  m_Center: {x: -0.005926808, y: 0.836283, z: -0.011852709}
 --- !u!95 &95082480693696272
 Animator:
   serializedVersion: 3
@@ -302,3 +361,26 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114792983361602340
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1676690817777106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45031be602e57b24cbd698122fdb9a1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerName: Cannon Tower
+  fireRate: 3.5
+  fireRange: 6.03
+  towerType: 1
+  targetType: 1
+  projectilePrefabs:
+  - {fileID: 114406113943285256, guid: 99b82d6f7ab4a6e40b4c33e7b0566aba, type: 2}
+  level: 1
+  rotationSpeed: 5
+  spawnPoint: {fileID: 4316985925076030}
+  toRotate: {fileID: 1579373710692734}
+  showGizmoRange: 1

@@ -6,19 +6,38 @@ using UnityEngine;
 public class Healer : Minion
 {
     public float areaOfEffect = 5;
-
+    public float healPerSecond = 2;
     public bool showTestGizmo = true;
+    public ProjectilePS giveHealth;
 
     [HideInInspector]
     public MinionManager manager;
+
+    float _timerAux = 1;
 
     protected override void PerformAction()
     {
         base.PerformAction();
 
+        HealPerSecond();
+    }
+
+    void HealPerSecond()
+    {
         if (manager == null) return;
-        //var nearMinions = manager.GetMinions(GetMinionHandler);
-        
+
+        _timerAux -= Time.deltaTime;
+        if (_timerAux < 0)
+        {
+            _timerAux = 1;
+            var nearMinions = manager.GetMinions(GetMinionHandler);
+            foreach (var item in nearMinions)
+            {
+                item.GetHealth(healPerSecond);
+                var ps = Instantiate<ProjectilePS>(giveHealth);
+                ps.Init(transform, item.transform);
+            }
+        }
     }
 
     bool GetMinionHandler(Minion m)
