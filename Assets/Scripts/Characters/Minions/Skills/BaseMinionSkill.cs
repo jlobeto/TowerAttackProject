@@ -39,7 +39,7 @@ public class BaseMinionSkill : MonoBehaviour
 
         if (pIsActivated)
         {
-            Debug.Log("skill already activated.");
+            //Debug.Log("skill already activated.");
             return false;
         }
         if(pThisMinion == null)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -41,6 +42,9 @@ public class MinionManager : MonoBehaviour
             case MinionType.GoldDigger:
                 break;
             case MinionType.Healer:
+                available = level.availableMinions.FirstOrDefault(m => m.GetType() == typeof(Healer));
+                minion = Instantiate<Healer>((Healer)available, spawnPos, Quaternion.identity);
+                (minion as Healer).manager = this;
                 break;
             case MinionType.Ghost:
                 break;
@@ -124,7 +128,19 @@ public class MinionManager : MonoBehaviour
     void Init()
     {
         _allMinions = new GameObject("All Minions");
-        
+    }
+
+    public List<Minion> GetMinions(Func<Minion,bool> func)
+    {
+        var list = new List<Minion>();
+
+        foreach (var item in _minions)
+        {
+            if (func(item))
+                list.Add(item);
+        }
+
+        return list;
     }
 
     /// <summary>

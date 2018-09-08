@@ -9,19 +9,37 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1783641941774566}
+  m_RootGameObject: {fileID: 1250248803781714}
   m_IsPrefabParent: 1
---- !u!1 &1664938962166110
+--- !u!1 &1250248803781714
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4648280789834562}
-  - component: {fileID: 33617393537745566}
-  - component: {fileID: 23848352954529754}
-  - component: {fileID: 95213945307124892}
+  - component: {fileID: 4898523292516694}
+  - component: {fileID: 54876397987864158}
+  - component: {fileID: 65091105519623474}
+  - component: {fileID: 114569184015996796}
+  m_Layer: 8
+  m_Name: Healer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1860557236742870
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4572857990838868}
+  - component: {fileID: 33811144179937998}
+  - component: {fileID: 23225025120265066}
+  - component: {fileID: 95486351989440638}
   m_Layer: 8
   m_Name: Healer Model
   m_TagString: Untagged
@@ -29,56 +47,39 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1783641941774566
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4863045027968932}
-  - component: {fileID: 54058064634620506}
-  - component: {fileID: 65115628541840346}
-  m_Layer: 8
-  m_Name: Healer Pref
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4648280789834562
+--- !u!4 &4572857990838868
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1664938962166110}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.57171583, y: 0.57171583, z: 0.57171583}
+  m_GameObject: {fileID: 1860557236742870}
+  m_LocalRotation: {x: 0.00000010430811, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.42, z: 0}
+  m_LocalScale: {x: 1.3224264, y: 1.3224256, z: 1.3224256}
   m_Children: []
-  m_Father: {fileID: 4863045027968932}
+  m_Father: {fileID: 4898523292516694}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4863045027968932
+--- !u!4 &4898523292516694
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1783641941774566}
+  m_GameObject: {fileID: 1250248803781714}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -48.574974, y: -0.24704987, z: 183.40804}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4648280789834562}
+  - {fileID: 4572857990838868}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23848352954529754
+--- !u!23 &23225025120265066
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1664938962166110}
+  m_GameObject: {fileID: 1860557236742870}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -107,19 +108,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33617393537745566
+--- !u!33 &33811144179937998
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1664938962166110}
+  m_GameObject: {fileID: 1860557236742870}
   m_Mesh: {fileID: 4300000, guid: cd749fbd7ca0b5c49902d7d905bca74e, type: 3}
---- !u!54 &54058064634620506
+--- !u!54 &54876397987864158
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1783641941774566}
+  m_GameObject: {fileID: 1250248803781714}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -129,25 +130,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65115628541840346
+--- !u!65 &65091105519623474
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1783641941774566}
+  m_GameObject: {fileID: 1250248803781714}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5789833, y: 0.82681465, z: 0.31181479}
-  m_Center: {x: -0.003911972, y: 0.0041236877, z: -0.037537336}
---- !u!95 &95213945307124892
+  m_Size: {x: 1, y: 2.0010448, z: 1}
+  m_Center: {x: 0, y: 0.5005224, z: 0}
+--- !u!95 &95486351989440638
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1664938962166110}
+  m_GameObject: {fileID: 1860557236742870}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: cd749fbd7ca0b5c49902d7d905bca74e, type: 3}
   m_Controller: {fileID: 0}
@@ -158,3 +159,35 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114569184015996796
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1250248803781714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fedb4ea8b6f29441a1ab51f9a4aa614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minionName: Healer
+  hp: 35
+  type: 0
+  minionType: 6
+  targetType: 1
+  speed: 4
+  pointsValue: 30
+  strength: 0
+  spawnCooldown: 0.5
+  coinValue: 0
+  levelPointsToRecover: 0.9
+  infoCanvas: {fileID: 114230314114155488, guid: 161153ce31506e040bccf87ec4525dac,
+    type: 2}
+  explotionPS: {fileID: 114042232387667590, guid: 6611df02f34bd9a4abb10eec8cf94460,
+    type: 2}
+  skills: []
+  skillTime: 0
+  skillCooldown: 0
+  areaOfEffect: 7
+  showTestGizmo: 1
+  manager: {fileID: 0}

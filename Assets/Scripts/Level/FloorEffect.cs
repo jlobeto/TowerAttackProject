@@ -17,6 +17,9 @@ public class FloorEffect : MonoBehaviour {
 
     public void InitAnimation()
     {
+        if(_anim.GetBool("FloorBGAnim"))
+            _anim.SetBool("FloorBGAnim", false);
+
         _anim.SetBool("FloorBGAnim", true);
     }
 
