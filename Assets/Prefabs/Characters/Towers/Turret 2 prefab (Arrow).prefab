@@ -59,6 +59,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1103590418333420
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4211442102066892}
+  m_Layer: 0
+  m_Name: RotatePart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1131485687535084
 GameObject:
   m_ObjectHideFlags: 1
@@ -111,19 +126,33 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4211442102066892
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1103590418333420}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4378779008631042}
+  m_Father: {fileID: 4535399013049266}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4378779008631042
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1050427673753670}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.009035156, y: 0.80793875, z: 0.023616513}
-  m_LocalScale: {x: 1.164475, y: 1.164475, z: 1.164475}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.009034553, y: 0.80793875, z: 0.0236131}
+  m_LocalScale: {x: 1.164475, y: 1.1644756, z: 1.1644756}
   m_Children:
   - {fileID: 4525034602490682}
-  m_Father: {fileID: 4535399013049266}
-  m_RootOrder: 1
+  m_Father: {fileID: 4211442102066892}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &4413837380104856
 Transform:
@@ -190,7 +219,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4459702954568992}
-  - {fileID: 4378779008631042}
+  - {fileID: 4211442102066892}
   m_Father: {fileID: 4413837380104856}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -382,5 +411,5 @@ MonoBehaviour:
   level: 1
   rotationSpeed: 5
   spawnPoint: {fileID: 4478413624364972}
-  toRotate: {fileID: 1050427673753670}
-  showGizmoRange: 1
+  toRotate: {fileID: 1103590418333420}
+  showGizmoRange: 0

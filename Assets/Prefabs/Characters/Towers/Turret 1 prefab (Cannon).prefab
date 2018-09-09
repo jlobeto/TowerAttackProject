@@ -111,6 +111,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1905536848604036
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4979225409332306}
+  m_Layer: 0
+  m_Name: RotatePart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4108943385821514
 Transform:
   m_ObjectHideFlags: 1
@@ -176,7 +191,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4108943385821514}
-  - {fileID: 4775673452739812}
+  - {fileID: 4979225409332306}
   m_Father: {fileID: 4365815457783224}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -186,14 +201,28 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1579373710692734}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: -0.0011633459, y: 0.8441975, z: -0.06620286}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.0011639895, y: 0.8441976, z: -0.066207334}
   m_LocalScale: {x: 1, y: -1, z: 1}
   m_Children:
   - {fileID: 4143591094351646}
+  m_Father: {fileID: 4979225409332306}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!4 &4979225409332306
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1905536848604036}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.0000002533197}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4775673452739812}
   m_Father: {fileID: 4671476276480804}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180.00002, z: 0}
 --- !u!23 &23033062833533988
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -373,7 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerName: Cannon Tower
-  fireRate: 3.5
+  fireRate: 2
   fireRange: 6.03
   towerType: 1
   targetType: 1
@@ -382,5 +411,5 @@ MonoBehaviour:
   level: 1
   rotationSpeed: 5
   spawnPoint: {fileID: 4316985925076030}
-  toRotate: {fileID: 1579373710692734}
-  showGizmoRange: 1
+  toRotate: {fileID: 1905536848604036}
+  showGizmoRange: 0
