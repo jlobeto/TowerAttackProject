@@ -15,11 +15,7 @@ public class ChangeTargetSkill : BaseMinionSkill
 
     public override bool Initialize(float lastingTime, float cooldown)
     {
-        var result = base.Initialize(lastingTime, cooldown);
-
-        if (!result) return false;
-
-        return true;
+        return base.Initialize(lastingTime, cooldown);
     }
 
 

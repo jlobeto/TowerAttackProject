@@ -10,6 +10,7 @@ public class BaseMinionSkill : MonoBehaviour
         None,
         HitShield, //Shield that last for a number of hits.
         SpeedBoost,
+        GiveHealth,
         ChangeTarget //Change targets types (ground and air) when is needed.
     }
     
@@ -25,6 +26,7 @@ public class BaseMinionSkill : MonoBehaviour
     protected Minion pThisMinion;
 
     public bool IsActivated { get { return pIsActivated; } }
+    public bool IsLocked { get { return pIsLocked; } }
 
 
     protected virtual void Start()

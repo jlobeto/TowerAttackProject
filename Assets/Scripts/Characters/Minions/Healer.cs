@@ -7,13 +7,33 @@ public class Healer : Minion
 {
     public float areaOfEffect = 5;
     public float healPerSecond = 2;
+    public int skillHealAmount = 15;
     public bool showTestGizmo = true;
-    public ProjectilePS giveHealth;
+    public ProjectilePS givePassiveHealth;
+    public ProjectilePS giveActiveHealth;
 
     [HideInInspector]
     public MinionManager manager;
 
+    HealerSkill _mySkill;
     float _timerAux = 1;
+
+    protected override void Start()
+    {
+        base.Start();
+        _mySkill = gameObject.AddComponent<HealerSkill>();
+        skills.Add(_mySkill);
+        _mySkill.infoCanvas = infoCanvas;
+    }
+
+    public override void ActivateSelfSkill()
+    {
+        if (_mySkill.IsLocked) return;//check this so we don't run GetMinions if we don't have to.
+
+        var nearMinions = manager.GetMinions(GetMinionHandler);
+
+        _mySkill.InitializeHealerSkill(nearMinions, skillCooldown, giveActiveHealth, skillHealAmount);
+    }
 
     protected override void PerformAction()
     {
@@ -34,7 +54,7 @@ public class Healer : Minion
             foreach (var item in nearMinions)
             {
                 item.GetHealth(healPerSecond);
-                var ps = Instantiate<ProjectilePS>(giveHealth);
+                var ps = Instantiate<ProjectilePS>(givePassiveHealth);
                 ps.Init(transform, item.transform);
             }
         }

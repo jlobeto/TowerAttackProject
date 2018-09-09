@@ -22,6 +22,7 @@ public class Minion : MonoBehaviour
     public Action<Minion> OnDeath = delegate { };
     public InfoCanvas infoCanvas;
     public SimpleParticleSystem explotionPS;
+    [HideInInspector]
     public List<BaseMinionSkill> skills = new List<BaseMinionSkill>();
     public float skillTime = 2;
     public float skillCooldown = 5;
