@@ -134,6 +134,7 @@ public class Level : MonoBehaviour
         InitLevelGoal();
         InitLevelCanvas();
 
+        
     }
     void InitLevelGoal()
     {

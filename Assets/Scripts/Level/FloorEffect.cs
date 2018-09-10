@@ -1,30 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class FloorEffect : MonoBehaviour {
 
-
+    List<BlockEffect> _blocks = new List<BlockEffect>();
     Animator _anim;
 	void Start () {
-        _anim = GetComponent<Animator>();
+        _blocks = GetComponentsInChildren<BlockEffect>().ToList();
     }
 	
-	// Update is called once per frame
+	
 	void Update () {
 		
 	}
 
     public void InitAnimation()
     {
-        if(_anim.GetBool("FloorBGAnim"))
-            _anim.SetBool("FloorBGAnim", false);
-
-        _anim.SetBool("FloorBGAnim", true);
-    }
-
-    public void OnFinishFloorBGAnim()
-    {
-        _anim.SetBool("FloorBGAnim", false);
+        foreach (var item in _blocks)
+        {
+            item.InitAnimation();
+        }
     }
 }
