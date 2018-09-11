@@ -13,6 +13,7 @@ public class Level : MonoBehaviour
     public int initialLevelPoints;
     [Tooltip("In seconds")]
     public float levelTime = 60;
+    public int pointsPerSecond = 1;
     public List<LevelSkillManager.SkillType> levelSkills = new List<LevelSkillManager.SkillType>();
     public List<Minion> availableMinions = new List<Minion>();
 
@@ -42,12 +43,24 @@ public class Level : MonoBehaviour
         Init();
     }
 
+    float timerAux = 1;
+
 	void Update ()
     {
         if(_levelEnded) return;
 
         GameObjectSelection();
         OnRunLevelTimer();
+
+        if (_currentLevelPoints != initialLevelPoints)
+        {
+            timerAux -= Time.deltaTime;
+            if (timerAux < 0)
+            {
+                UpdatePoints(pointsPerSecond);
+                timerAux = 1;
+            }
+        }
     }
 
     void OnRunLevelTimer()
@@ -58,7 +71,9 @@ public class Level : MonoBehaviour
         {
             _levelEnded = true;
             var popupMan = FindObjectOfType<PopupManager>();//esto no vá. mas adelante voy a crear un gamemanager que tenga este coso
-            popupMan.BuildEndLevelPopup(_lvlCanvasManager.transform);
+            popupMan.BuildEndLevelPopup(_lvlCanvasManager.transform, "Game Over !", "Try Again" );
+            _towerManager.StopTowers();
+            _minionManager.StopMinions();
         }
     }
 
@@ -168,6 +183,10 @@ public class Level : MonoBehaviour
     void GoalCompletedHandler()
     {
         Debug.Log("----- Level Completed -----");
+        var popupMan = FindObjectOfType<PopupManager>();//esto no vá. mas adelante voy a crear un gamemanager que tenga este coso
+        popupMan.BuildEndLevelPopup(_lvlCanvasManager.transform, "You won!" , "Retry level");
+        _towerManager.StopTowers();
+        _minionManager.StopMinions();
     }
     
     public void UpdatePoints(int points)

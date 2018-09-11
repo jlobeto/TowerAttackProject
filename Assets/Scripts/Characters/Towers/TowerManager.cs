@@ -17,6 +17,14 @@ public class TowerManager : MonoBehaviour
 		
 	}
 
+    public void StopTowers()
+    {
+        foreach (var item in _towers)
+        {
+            item.enabled = false;
+        }
+    }
+
     void Init()
     {
         _towers = FindObjectsOfType<TowerBase>();

@@ -10,8 +10,8 @@ public class OneBtnPopup : BasePopup
     public Button actionButton;
 	
 	protected override void Start () {
-        title.text = "Game Over !";
-        description.text = "Try Again";
+        /*title.text = "Game Over !";
+        description.text = "Try Again";*/
     }
 	
 	

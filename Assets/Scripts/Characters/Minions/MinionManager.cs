@@ -117,6 +117,15 @@ public class MinionManager : MonoBehaviour
         return pointsValue;
     }
 
+    public void StopMinions()
+    {
+        foreach (var item in _minions)
+        {
+            item.enabled = false;
+        }
+    }
+
+
     void Start() {
         Init();
     }
