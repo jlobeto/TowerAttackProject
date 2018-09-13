@@ -23,7 +23,7 @@ public class HealerSkill : BaseMinionSkill
         {
             item.GetHealth(healAmount);
             var particles = Instantiate<ProjectilePS>(ps);
-            particles.Init(transform, item.transform,5);
+            particles.Init(transform, item.transform,7);
         }
     }
 

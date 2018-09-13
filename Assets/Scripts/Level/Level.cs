@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Level : MonoBehaviour
 {
@@ -16,10 +17,10 @@ public class Level : MonoBehaviour
     public int pointsPerSecond = 1;
     public List<LevelSkillManager.SkillType> levelSkills = new List<LevelSkillManager.SkillType>();
     public List<Minion> availableMinions = new List<Minion>();
+    public int[] objetives;//[5, 7, 10] first the minimun, last the maximun.
+    public LevelMode levelMode;
 
-    //[HideInInspector]
-    //public bool startMinionSpawning;
-
+    GameManager _gameManager;
     TowerManager _towerManager;
     MinionManager _minionManager;
     LevelSkillManager _lvlSkillManager;
@@ -148,8 +149,9 @@ public class Level : MonoBehaviour
 
         InitLevelGoal();
         InitLevelCanvas();
+        GetLevelInfo();
 
-        
+
     }
     void InitLevelGoal()
     {
@@ -170,6 +172,23 @@ public class Level : MonoBehaviour
         UpdatePoints(0);
     }
 
+    void GetLevelInfo()
+    {
+        _gameManager = FindObjectOfType<GameManager>();
+        if (_gameManager == null)
+        {
+            var gameMan = new GameObject("GameManager_test");
+            _gameManager = gameMan.AddComponent<GameManager>();
+            objetives = new int[] { 5, 8, 10 };
+            levelMode = LevelMode.Normal;
+        }
+        else
+        {
+            objetives = _gameManager.currentLevelInfo.objectives;
+            levelMode = (LevelMode)Enum.Parse(typeof(LevelMode), _gameManager.currentLevelInfo.mode);
+        }
+        
+    }
     #endregion
 
 

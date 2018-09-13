@@ -17,7 +17,7 @@ public class ProjectilePS : MonoBehaviour {
         Destroy(gameObject, 3);
     }
 
-    public void Init(Transform from, Transform to, float speed = 10)
+    public void Init(Transform from, Transform to, float speed = 11)
     {
         transform.position = from.position;
         _ps.Play();
