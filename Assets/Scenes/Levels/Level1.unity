@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.4964127, b: 0.57481724, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -212,11 +212,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4365815457783224, guid: 80796dab6cb5b3e4baf08954f77bc724, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1676690817777106, guid: 80796dab6cb5b3e4baf08954f77bc724, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 80796dab6cb5b3e4baf08954f77bc724, type: 2}
@@ -364,11 +364,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4413837380104856, guid: f3f1b04312210dc4c95632f1691af515, type: 2}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1644407864733282, guid: f3f1b04312210dc4c95632f1691af515, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1644407864733282, guid: f3f1b04312210dc4c95632f1691af515, type: 2}
       propertyPath: m_Name
@@ -508,7 +508,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4739211670654354, guid: 44b84abf22f10cc449f7f8c836cca83d, type: 2}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 44b84abf22f10cc449f7f8c836cca83d, type: 2}
@@ -550,11 +550,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4413837380104856, guid: f3f1b04312210dc4c95632f1691af515, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1644407864733282, guid: f3f1b04312210dc4c95632f1691af515, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f3f1b04312210dc4c95632f1691af515, type: 2}
@@ -917,7 +917,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1635158221
 Prefab:
@@ -956,11 +956,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4413837380104856, guid: f3f1b04312210dc4c95632f1691af515, type: 2}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 1644407864733282, guid: f3f1b04312210dc4c95632f1691af515, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1644407864733282, guid: f3f1b04312210dc4c95632f1691af515, type: 2}
       propertyPath: m_Name
@@ -1096,7 +1096,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1001 &1817344583
+--- !u!1001 &1791346668
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1133,15 +1133,43 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4390909190058884, guid: bef094ed6d9a3b642962c96ba5b26778, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 1948536783100008, guid: bef094ed6d9a3b642962c96ba5b26778, type: 2}
-      propertyPath: m_IsActive
-      value: 1
+      propertyPath: m_Name
+      value: IceTower
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114517220739657720, guid: bef094ed6d9a3b642962c96ba5b26778, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: bef094ed6d9a3b642962c96ba5b26778, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1791346669 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1948536783100008, guid: bef094ed6d9a3b642962c96ba5b26778,
+    type: 2}
+  m_PrefabInternal: {fileID: 1791346668}
+--- !u!114 &1791346670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1791346669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c9dd7a71a64284894995fc73f95eb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerName: 
+  fireRate: 1
+  fireRange: 8
+  towerType: 2
+  targetType: 1
+  projectilePrefabs: []
+  level: 1
+  rotationSpeed: 0
+  spawnPoint: {fileID: 0}
+  toRotate: {fileID: 0}
+  showGizmoRange: 0
 --- !u!1 &1839767449
 GameObject:
   m_ObjectHideFlags: 0

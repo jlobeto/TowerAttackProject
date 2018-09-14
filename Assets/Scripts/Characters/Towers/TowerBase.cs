@@ -104,7 +104,7 @@ public class TowerBase : MonoBehaviour
     }
 
 
-    void StunTimer()
+    protected void StunTimer()
     {
         _stunTime -= Time.deltaTime;
         if (_stunTime < 0)

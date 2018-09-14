@@ -22,6 +22,12 @@ public class Runner : Minion
             base.GetDamage(dmg);
     }
 
+    public override void GetFreezeDebuff(float t)
+    {
+        if(!_mySkill.IsActivated)
+            base.GetFreezeDebuff(t);
+    }
+
     protected override void Walk()
     {
         pBuffInvisible = _mySkill.ExecuteSkill();

@@ -39,7 +39,6 @@ public class Minion : MonoBehaviour
     int _currentLevel = 1;//Level of the minion, ///TODO manage this when buying an upgrade of lvl;
     int _spawnOrder;
     float _normalSpeed;
-    float _iceTime;
     int _id;
     bool _canWalk;
     bool _hasExplotionEffect;
@@ -49,7 +48,7 @@ public class Minion : MonoBehaviour
     public bool IsTargetable { get { return !pBuffInvisible; } }
     public GameObject ShieldBubble { get { return pShieldBubble; } }
 
-
+    #region Damage to Minion
     public virtual void GetDamage(float dmg)
     {
         if (HasShieldBuff()) return;
@@ -60,16 +59,52 @@ public class Minion : MonoBehaviour
         DeathChecker();
     }
 
+    /// <summary>
+    /// if t == 0, this minion won't manage the timer the remove debuff by it self,
+    /// it will wait until another thing gives the call to remove the debuff.
+    /// If t != 0, it will use a coroutine to remove debuff.(need to test that because is new)
+    /// </summary>
     public void GetSlowDebuff(float t, float speedDelta)
     {
-        _iceTime = t;
         if (!pIceDebuff)
         {
             pIceDebuff = true;
             _normalSpeed = speed;
             speed -= speedDelta * speed;
+
+            if (t != 0)
+                StartCoroutine(SlowDebuffTimer(t));
         }
     }
+
+    IEnumerator SlowDebuffTimer(float t)
+    {
+        yield return new WaitForSeconds(t);
+        speed = _normalSpeed;
+        pIceDebuff = false;
+    }
+
+    public void StopSlowDebuff()
+    {
+        if (!pIceDebuff) return;
+
+        speed = _normalSpeed;
+        pIceDebuff = false;
+    }
+    
+    public virtual void GetFreezeDebuff(float t)
+    {
+        _canWalk = false;
+        StartCoroutine(FreezeDebuffTimer(t));
+    }
+
+    IEnumerator FreezeDebuffTimer(float t)
+    {
+        yield return new WaitForSeconds(t);
+        _canWalk = true;
+    }
+
+    #endregion
 
     bool HasShieldBuff()
     {
@@ -103,15 +138,6 @@ public class Minion : MonoBehaviour
             Walk();
         }
 
-        if (pIceDebuff)
-        {
-            _iceTime -= Time.deltaTime;
-            if (_iceTime < 0)
-            {
-                speed = _normalSpeed;
-                pIceDebuff = false;
-            }
-        }
     }
     protected virtual void Walk()
     {

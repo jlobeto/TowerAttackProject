@@ -5,7 +5,6 @@ using UnityEngine;
 public class ProjectileBase : MonoBehaviour
 {
     public GameObjectTypes type = GameObjectTypes.None;
-    public TargetType projectileType = TargetType.Ground;
     public float speed = 6;
     public float damage = 5;
     public float range = 0;
@@ -38,12 +37,26 @@ public class ProjectileBase : MonoBehaviour
         Movement();
 	}
 
+    protected virtual void DoDamage(Minion m)
+    {
+        m.GetDamage(damage);
+    }
+
+    /// <summary>
+    /// Ones the projectile reaches the target. It would be nice if here is all the implementations 
+    /// of particles, destroying, etc.
+    /// </summary>
+    protected virtual void OnTargetReached()
+    {
+        Destroy(gameObject);
+    }
+
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Minion"))
         {
-            other.GetComponent<Minion>().GetDamage(damage);
-            Destroy(gameObject);
+            DoDamage(other.GetComponent<Minion>());
+            OnTargetReached();
         }
     }
 

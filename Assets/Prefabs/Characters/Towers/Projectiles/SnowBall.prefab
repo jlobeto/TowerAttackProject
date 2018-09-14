@@ -37,9 +37,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4497781209025922}
-  - component: {fileID: 114306659641767488}
+  - component: {fileID: 65686353802452374}
+  - component: {fileID: 114358147376538934}
   m_Layer: 0
-  m_Name: IceBombPref
+  m_Name: SnowBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1771920677183814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.621857, y: 1.0059029, z: -4.860401}
+  m_LocalPosition: {x: -73.05765, y: 0.582, z: 205.83672}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4784602400368614}
@@ -113,6 +114,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1229998723926094}
   m_Mesh: {fileID: 4300000, guid: 503c96d7bead2fa4a86e4a835ddf3a4a, type: 3}
+--- !u!65 &65686353802452374
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1771920677183814}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8611603, y: 0.72893286, z: 1.2776794}
+  m_Center: {x: 0.0033035278, y: -0.0033056736, z: -0.13883972}
 --- !u!95 &95892650475446218
 Animator:
   serializedVersion: 3
@@ -130,7 +143,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114306659641767488
+--- !u!114 &114358147376538934
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -138,15 +151,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1771920677183814}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8b614a3866201b479633ac09356ec64, type: 3}
+  m_Script: {fileID: 11500000, guid: a5df110bb358e7540be0217619d62be3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  projectileType: 1
-  speed: 10
-  damage: 4
+  projectileType: 2
+  speed: 8
+  damage: 8
   range: 0
-  explotion: {fileID: 198680921249558260, guid: 2a5f14bdd9455824daffe4b9bc25583e,
+  freezeTime: 1
+  hitEffect: {fileID: 198680921249558260, guid: 2a5f14bdd9455824daffe4b9bc25583e,
     type: 2}
-  deltaSpeed: 0.4
-  slowTime: 2

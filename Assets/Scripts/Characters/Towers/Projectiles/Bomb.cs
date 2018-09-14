@@ -28,13 +28,7 @@ public class Bomb : ProjectileBase
         }
 
     }
-
-    protected virtual void DoDamage(Minion m)
-    {
-        m.GetDamage(damage);
-    }
-
-
+    
     void Explode()
     {
         var minions = Physics.OverlapSphere(transform.position, range, 1 << LayerMask.NameToLayer("Minion"));
