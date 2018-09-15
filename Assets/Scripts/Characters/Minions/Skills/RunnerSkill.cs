@@ -14,6 +14,7 @@ public class RunnerSkill : BaseMinionSkill
         if (!result) return false;
 
         _isInitialized = true;
+        pThisMinion.StopSlowDebuff();
         pThisMinion.speed *= speedDelta;
         _lastSpeed = prevSpeed;
 
