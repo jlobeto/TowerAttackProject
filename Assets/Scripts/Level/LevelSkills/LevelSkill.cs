@@ -16,21 +16,26 @@ public class LevelSkill : MonoBehaviour
     int _currentUses;
     bool _initialized;
     Vector3 _target;
-    GameObject _sphere;
+    GameObject _skillGO;
     bool _canCast;
 
     public void OnInitCast()
     {
         _initialized = true;
-        var spot = Resources.Load("Level/Skills/Spotlight", typeof(GameObject)) as GameObject;
-        _sphere = Instantiate<GameObject>(spot);
-        stats.areaOfEffect = _sphere.GetComponentInChildren<Transform>().localScale.x * 8;
+        var spot = Resources.Load("Level/Skills/LevelSkillCoockie", typeof(GameObject)) as GameObject;
+        _skillGO = Instantiate<GameObject>(spot);
+        var sphere = _skillGO.GetComponentInChildren<SphereCollider>();
+        sphere.transform.localScale = new Vector3(stats.areaOfEffect, stats.areaOfEffect, stats.areaOfEffect);
+
+        var light = _skillGO.GetComponentInChildren<Light>();
+        light.transform.localPosition = new Vector3(0, stats.areaOfEffect / 2, 0);
+        light.range = stats.areaOfEffect;
     }
 
     public void StopCasting()
     {
         _initialized = _canCast = false;
-        Destroy(_sphere);
+        Destroy(_skillGO);
     }
 
     void Start () {
@@ -42,7 +47,7 @@ public class LevelSkill : MonoBehaviour
         if (_initialized)
         {
             _target = GetTarget();
-            _sphere.transform.position = new Vector3(_target.x, 13, _target.z);
+            _skillGO.transform.position = _target;
             OnCheckInput();
         }
         else
@@ -58,7 +63,7 @@ public class LevelSkill : MonoBehaviour
         else if (Input.GetMouseButtonUp(0) && _canCast)
         {
             ///TODO// Filtrar por gameobjects que interesen(towers, minions y demas) crear alguna layer o tag en comun.
-            var go = Physics.OverlapSphere(_target, stats.areaOfEffect).Select(i => i.gameObject).ToList();
+            var go = Physics.OverlapSphere(_target, stats.areaOfEffect/2).Select(i => i.gameObject).ToList();
             switch (skillType)
             {
                 case LevelSkillManager.SkillType.Stun:
@@ -79,17 +84,11 @@ public class LevelSkill : MonoBehaviour
 
     Vector3 GetTarget()
     {
-        Vector3 pos = Input.mousePosition;
-        pos.z = Camera.main.transform.position.y;
-        pos = Camera.main.ScreenToWorldPoint(pos);
-        var ray = new Ray(pos, (pos - Camera.main.transform.position).normalized);
         RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, 100, 1 << LayerMask.NameToLayer("LevelSkillFloor")))
-        {
-            var ret = new Vector3(hit.point.x, 1.5f, hit.point.z);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        
+        if (Physics.Raycast(ray, out hit,1000, 1 << LayerMask.NameToLayer("LevelSkillFloor")))
             return hit.point;
-        }
         else
             return Vector3.zero;
     }
@@ -98,7 +97,7 @@ public class LevelSkill : MonoBehaviour
     {
         if (_initialized)
         {
-            Gizmos.DrawWireSphere(GetTarget(), stats.areaOfEffect);
+            Gizmos.DrawWireSphere(GetTarget(), stats.areaOfEffect/2);
         }
     }
 }
