@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class PopupManager : MonoBehaviour
 {
@@ -19,12 +20,16 @@ public class PopupManager : MonoBehaviour
 		
 	}
 
-    public void BuildEndLevelPopup(Transform parent, string title, string descript)
+    public void BuildOneButtonPopup(Transform parent, string title, string descript, string btnText)
     {
-        var popup = Instantiate<BasePopup>(popupPrefabs.FirstOrDefault(i => i.popupId == "RetryLevel"), parent);
+        var popup = Instantiate<BasePopup>(popupPrefabs.FirstOrDefault(i => i.popupId == "OneButton"), parent);
         popup.title.text = title;
         popup.description.text = descript;
         popup.GetComponent<Animator>().SetFloat("EntryAnim", GetRandomAnimation());
+
+        popup.GetComponentsInChildren<Button>()
+            .FirstOrDefault(i => i.tag == "PopupOneButton")
+            .GetComponentInChildren<Text>().text = btnText;
     }
 
 

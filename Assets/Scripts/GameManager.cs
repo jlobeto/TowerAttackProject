@@ -15,13 +15,18 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public LevelInfo currentLevelInfo;
     public CurrentScene currentScene = CurrentScene.MainMap;
-
-	void Awake() {
+    public PopupManager popupManager;
+	void Awake()
+    {
         DontDestroyOnLoad(this);
 	}
-	
-	
-	void Update () {
+
+    private void Start()
+    {
+        popupManager = FindObjectOfType<PopupManager>();
+    }
+
+    void Update () {
 		
 	}
 }

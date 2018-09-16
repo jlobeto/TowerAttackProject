@@ -72,7 +72,7 @@ public class Level : MonoBehaviour
         {
             _levelEnded = true;
             var popupMan = FindObjectOfType<PopupManager>();//esto no vá. mas adelante voy a crear un gamemanager que tenga este coso
-            popupMan.BuildEndLevelPopup(_lvlCanvasManager.transform, "Game Over !", "Try Again" );
+            popupMan.BuildOneButtonPopup(_lvlCanvasManager.transform, "Game Over !", "Try Again", "Main map");
             _towerManager.StopTowers();
             _minionManager.StopMinions();
         }
@@ -175,14 +175,14 @@ public class Level : MonoBehaviour
     void GetLevelInfo()
     {
         _gameManager = FindObjectOfType<GameManager>();
-        if (_gameManager == null)
+        if (_gameManager == null)//For level only tests.
         {
             var gameMan = new GameObject("GameManager_test");
             _gameManager = gameMan.AddComponent<GameManager>();
             objetives = new int[] { 5, 8, 10 };
             levelMode = LevelMode.Normal;
         }
-        else
+        else //common Behaviour
         {
             objetives = _gameManager.currentLevelInfo.objectives;
             levelMode = (LevelMode)Enum.Parse(typeof(LevelMode), _gameManager.currentLevelInfo.mode);
@@ -203,7 +203,7 @@ public class Level : MonoBehaviour
     {
         Debug.Log("----- Level Completed -----");
         var popupMan = FindObjectOfType<PopupManager>();//esto no vá. mas adelante voy a crear un gamemanager que tenga este coso
-        popupMan.BuildEndLevelPopup(_lvlCanvasManager.transform, "You won!" , "Retry level");
+        popupMan.BuildOneButtonPopup(_lvlCanvasManager.transform, "You won!" , "Continue...", "Main map");
         _towerManager.StopTowers();
         _minionManager.StopMinions();
     }
