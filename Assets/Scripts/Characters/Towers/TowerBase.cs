@@ -6,14 +6,14 @@ using System.Linq;
 public class TowerBase : MonoBehaviour
 {
     public string towerName;
-    public float fireRate = 1f;
-    public float fireRange = 8f;
+    public TowerStats towerStats;
+    
     public GameObjectTypes towerType = GameObjectTypes.None;
     public TargetType targetType = TargetType.Both;
     public List<ProjectileBase> projectilePrefabs = new List<ProjectileBase>();
+    
     [Tooltip("Tower Level to calculate debuffs numbers, increment damage and so on.")]
-    public int level = 1;
-    public float rotationSpeed = 5f;
+    
     public Transform spawnPoint;
     public GameObject toRotate;
     public bool showGizmoRange;
@@ -37,7 +37,7 @@ public class TowerBase : MonoBehaviour
         _fireRateAux -= Time.deltaTime;
         if (_fireRateAux < 0)
         {
-            _fireRateAux = fireRate;
+            _fireRateAux = towerStats.fireRate;
             GetTarget();
             SpawnProjectile();
         }
@@ -49,12 +49,12 @@ public class TowerBase : MonoBehaviour
 
         var random = projectilePrefabs[Random.Range(0, projectilePrefabs.Count)];
         var p = Instantiate(random, spawnPoint.transform.position, spawnPoint.transform.rotation);
-        p.Init(_target);
+        p.Init(_target, towerStats.bulletDamage, towerStats.bulletRange);
     }
 
     protected virtual void GetTarget()
     {
-        var minions = Physics.OverlapSphere(transform.position, fireRange, 1 << LayerMask.NameToLayer("Minion"));
+        var minions = Physics.OverlapSphere(transform.position, towerStats.fireRange, 1 << LayerMask.NameToLayer("Minion"));
         if (minions.Length == 0)
         {
             _target = null;
@@ -82,7 +82,7 @@ public class TowerBase : MonoBehaviour
 
         Vector3 dir = _target.transform.position - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(dir);
-        Vector3 rotation = Quaternion.Lerp(toRotate.transform.rotation, lookRotation, Time.deltaTime * rotationSpeed).eulerAngles;
+        Vector3 rotation = Quaternion.Lerp(toRotate.transform.rotation, lookRotation, Time.deltaTime * towerStats.rotationSpeed).eulerAngles;
         toRotate.transform.rotation = Quaternion.Euler(0f, rotation.y, 0);
     }
 
@@ -98,8 +98,8 @@ public class TowerBase : MonoBehaviour
     public void SlowDebuff(float time, float newFireRate)
     {
         _slowTime = time;
-        _initialFireRate = fireRate;
-        fireRate *= newFireRate;
+        _initialFireRate = towerStats.fireRate;
+        towerStats.fireRate *= newFireRate;
         pSlowDebuff = true;
     }
 
@@ -123,7 +123,7 @@ public class TowerBase : MonoBehaviour
         if (_slowTime < 0)
         {
             pSlowDebuff = false;
-            fireRate = _initialFireRate;
+            towerStats.fireRate = _initialFireRate;
             //visual effect for feedback
             var effect = GetComponentsInChildren<ParticleSystem>().FirstOrDefault(i => i.tag == "LevelSkillEffect");
             if (effect != null)
@@ -134,7 +134,7 @@ public class TowerBase : MonoBehaviour
 
     void Start()
     {
-        _fireRateAux = fireRate;
+        _fireRateAux = towerStats.fireRate;
         _id = gameObject.GetInstanceID();
         
     }
@@ -160,6 +160,6 @@ public class TowerBase : MonoBehaviour
     {
         Gizmos.color = Color.black;
         if(showGizmoRange)
-            Gizmos.DrawWireSphere(transform.position, fireRange);
+            Gizmos.DrawWireSphere(transform.position, towerStats.fireRange);
     }
 }

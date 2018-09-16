@@ -17,7 +17,9 @@ public class Level : MonoBehaviour
     public int pointsPerSecond = 1;
     public List<LevelSkillManager.SkillType> levelSkills = new List<LevelSkillManager.SkillType>();
     public List<Minion> availableMinions = new List<Minion>();
+    [HideInInspector]
     public int[] objetives;//[5, 7, 10] first the minimun, last the maximun.
+    [HideInInspector]
     public LevelMode levelMode;
 
     GameManager _gameManager;

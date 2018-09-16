@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class IceTower : TowerBase
 {
-    [Range(0f, 1f)]
-    public float deltaSpeed = 0.4f;
+    /*[Range(0f, 1f)]
+    public float deltaSpeed = 0.4f;*/
 
     HitAreaCollider _hitAreaCollider;
     ParticleSystem _particleSys;
@@ -18,6 +18,7 @@ public class IceTower : TowerBase
         _hitAreaCollider.OnTriggerEnterCallback += OnTriggerEnterHandler;
 
         _particleSys = GetComponentInChildren<ParticleSystem>();
+
     }
 	
 	
@@ -61,7 +62,7 @@ public class IceTower : TowerBase
             if (m.targetType == targetType || targetType == TargetType.Both)
             {
                 //_affectedMinions.Add(m);
-                m.GetSlowDebuff(0, deltaSpeed);
+                m.GetSlowDebuff(0, (towerStats as IceTowerStats).deltaSpeed);
             }
         }
     }

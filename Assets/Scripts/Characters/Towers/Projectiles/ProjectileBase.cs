@@ -6,16 +6,18 @@ public class ProjectileBase : MonoBehaviour
 {
     public GameObjectTypes type = GameObjectTypes.None;
     public float speed = 6;
-    public float damage = 5;
-    public float range = 0;
 
+    protected float damage = 5;
+    protected float range = 0;
     protected bool pCanMove;
     protected GameObject pTarget;
     
-    public void Init(GameObject t)
+    public void Init(GameObject target, float dmg, float rng)
     {
         pCanMove = true;
-        pTarget = t;
+        pTarget = target;
+        damage = dmg;
+        range = rng;
     }
 
     protected virtual void Movement()
