@@ -16,7 +16,7 @@ public class SlowLevelSkill : ILevelSkill
         foreach (var item in targets)
         {
             var tower = item.GetComponent<TowerBase>();
-            if (tower != null)
+            if (tower != null && !(tower is IceTower))
                 towers.Add(tower);
         }
 
