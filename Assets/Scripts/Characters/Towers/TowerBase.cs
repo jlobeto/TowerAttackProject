@@ -89,7 +89,7 @@ public class TowerBase : MonoBehaviour
     #endregion
 
     #region Debuffs
-    public void ReceiveStun(float time)
+    public virtual void ReceiveStun(float time)
     {
         _stunTime = time;
         pImStunned = true;
@@ -104,7 +104,7 @@ public class TowerBase : MonoBehaviour
     }
 
 
-    protected void StunTimer()
+    protected virtual void StunTimer()
     {
         _stunTime -= Time.deltaTime;
         if (_stunTime < 0)

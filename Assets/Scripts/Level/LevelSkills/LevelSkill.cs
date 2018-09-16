@@ -13,6 +13,7 @@ public class LevelSkill : MonoBehaviour
 
     public Action<int,int, LevelSkillManager.SkillType> OnSkillExecuted = delegate { };
 
+    GameObject _spotPrefab;
     int _currentUses;
     bool _initialized;
     Vector3 _target;
@@ -22,8 +23,7 @@ public class LevelSkill : MonoBehaviour
     public void OnInitCast()
     {
         _initialized = true;
-        var spot = Resources.Load("Level/Skills/LevelSkillCoockie", typeof(GameObject)) as GameObject;
-        _skillGO = Instantiate<GameObject>(spot);
+        _skillGO = Instantiate<GameObject>(_spotPrefab);
         var sphere = _skillGO.GetComponentInChildren<SphereCollider>();
         sphere.transform.localScale = new Vector3(stats.areaOfEffect, stats.areaOfEffect, stats.areaOfEffect);
 
@@ -39,8 +39,8 @@ public class LevelSkill : MonoBehaviour
     }
 
     void Start () {
-		
-	}
+        _spotPrefab = Resources.Load("Level/Skills/LevelSkillCoockie"+ stats.skillType, typeof(GameObject)) as GameObject;
+    }
 	
 	void Update ()
     {

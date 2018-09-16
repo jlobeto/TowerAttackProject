@@ -8,6 +8,7 @@ public class IceTower : TowerBase
     public float deltaSpeed = 0.4f;
 
     HitAreaCollider _hitAreaCollider;
+    ParticleSystem _particleSys;
     //List<Minion> _affectedMinions = new List<Minion>();//minions affected by the ice of the tower
 
 	void Start () {
@@ -15,6 +16,8 @@ public class IceTower : TowerBase
         _hitAreaCollider.OnTriggerStayCallback += OnTriggerStayHandler;
         _hitAreaCollider.OnTriggerExitCallback += OnTriggerExitHandler;
         _hitAreaCollider.OnTriggerEnterCallback += OnTriggerEnterHandler;
+
+        _particleSys = GetComponentInChildren<ParticleSystem>();
     }
 	
 	
@@ -25,6 +28,20 @@ public class IceTower : TowerBase
             StunTimer();
         }   
 	}
+
+    public override void ReceiveStun(float time)
+    {
+        base.ReceiveStun(time);
+        _particleSys.Stop();
+    }
+
+    protected override void StunTimer()
+    {
+        base.StunTimer();
+
+        if(!pImStunned)
+            _particleSys.Play();
+    }
 
     void OnTriggerStayHandler(Collider other)
     {
