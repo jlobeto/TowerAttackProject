@@ -26,8 +26,11 @@ public class IceTower : TowerBase
         if (pImStunned)
         {
             StunTimer();
-        }   
-	}
+        }
+
+        if (pSlowDebuff)
+            SlowTimer();
+    }
 
     public override void ReceiveStun(float time)
     {

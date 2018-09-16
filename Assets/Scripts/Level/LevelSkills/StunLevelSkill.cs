@@ -1,10 +1,11 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class StunLevelSkill : ILevelSkill
 {
-    public void CastSkill(List<GameObject> targets, float time = 0)
+    public List<GameObject> CastSkill(List<GameObject> targets, float time = 0)
     {
         List<TowerBase> towers = new List<TowerBase>();
         foreach (var item in targets)
@@ -18,8 +19,10 @@ public class StunLevelSkill : ILevelSkill
         {
             item.ReceiveStun(time);
         }
+
+        return towers.Select(i => i.gameObject).ToList();
     }
-    public void CastSkill(List<GameObject> targets, float rate, float t = 0)
+    public List<GameObject> CastSkill(List<GameObject> targets, float rate, float t = 0)
     {
         throw new System.NotImplementedException();
     }

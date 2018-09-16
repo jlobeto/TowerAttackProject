@@ -110,16 +110,24 @@ public class TowerBase : MonoBehaviour
         if (_stunTime < 0)
         {
             pImStunned = false;
+            //visual effect for feedback
+            var effect = GetComponentsInChildren<ParticleSystem>().FirstOrDefault(i => i.tag == "LevelSkillEffect");
+            if(effect != null)
+                Destroy(effect.gameObject);
         }
     }
 
-    void SlowTimer()
+    protected void SlowTimer()
     {
         _slowTime -= Time.deltaTime;
         if (_slowTime < 0)
         {
             pSlowDebuff = false;
             fireRate = _initialFireRate;
+            //visual effect for feedback
+            var effect = GetComponentsInChildren<ParticleSystem>().FirstOrDefault(i => i.tag == "LevelSkillEffect");
+            if (effect != null)
+                Destroy(effect.gameObject);
         }
     }
     #endregion

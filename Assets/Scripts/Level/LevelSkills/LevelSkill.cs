@@ -14,6 +14,7 @@ public class LevelSkill : MonoBehaviour
     public Action<int,int, LevelSkillManager.SkillType> OnSkillExecuted = delegate { };
 
     GameObject _spotPrefab;
+    GameObject _effectPrefab;
     int _currentUses;
     bool _initialized;
     Vector3 _target;
@@ -40,6 +41,7 @@ public class LevelSkill : MonoBehaviour
 
     void Start () {
         _spotPrefab = Resources.Load("Level/Skills/LevelSkillCoockie"+ stats.skillType, typeof(GameObject)) as GameObject;
+        _effectPrefab = Resources.Load("Level/Skills/LvlSkillEffect" + stats.skillType, typeof(GameObject)) as GameObject;
     }
 	
 	void Update ()
@@ -64,17 +66,21 @@ public class LevelSkill : MonoBehaviour
         {
             ///TODO// Filtrar por gameobjects que interesen(towers, minions y demas) crear alguna layer o tag en comun.
             var go = Physics.OverlapSphere(_target, stats.areaOfEffect/2).Select(i => i.gameObject).ToList();
+            List<GameObject> affectedOnes = null;
             switch (skillType)
             {
                 case LevelSkillManager.SkillType.Stun:
-                    castSkill.CastSkill(go, stats.effectTime);
+                    affectedOnes = castSkill.CastSkill(go, stats.effectTime);
                     break;
                 case LevelSkillManager.SkillType.Slow:
-                    castSkill.CastSkill(go, stats.fireRate , stats.effectTime);
+                    affectedOnes = castSkill.CastSkill(go, stats.fireRate , stats.effectTime);
                     break;
                 default:
                     break;
             }
+
+            if (affectedOnes != null)
+                SetSkillFeedback(affectedOnes);
 
             _currentUses++;
             OnSkillExecuted(_currentUses,stats.useCountPerLevel, skillType);
@@ -92,6 +98,16 @@ public class LevelSkill : MonoBehaviour
         else
             return Vector3.zero;
     }
+
+    void SetSkillFeedback(List<GameObject> affectedOnes)
+    {
+        foreach (var item in affectedOnes)
+        {
+            var e = Instantiate<GameObject>(_effectPrefab, item.transform);
+            e.transform.localPosition = new Vector3(0, 3.5f, 0);
+        }
+    }
+
 
     private void OnDrawGizmos()
     {
