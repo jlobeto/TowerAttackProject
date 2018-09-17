@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class Bomb : ProjectileBase
 {
-    public ParticleSystem explotion;
 
     protected override void Start()
     {
         //dont distroy GO till arrives to end point
     }
 
-    protected override void Movement()
+    /*protected override void Movement()
     {
         if (!pCanMove) return;
 
@@ -27,6 +26,18 @@ public class Bomb : ProjectileBase
             }
         }
 
+    }*/
+
+    protected override void DoDamage(Minion minion)
+    {
+        var minions = Physics.OverlapSphere(transform.position, range, 1 << LayerMask.NameToLayer("Minion"));
+        foreach (var item in minions)
+        {
+            var m = item.GetComponent<Minion>();
+
+            if (m != null)
+                base.DoDamage(m);
+        }
     }
     
     void Explode()

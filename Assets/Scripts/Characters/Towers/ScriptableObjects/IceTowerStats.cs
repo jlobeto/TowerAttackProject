@@ -7,4 +7,5 @@ public class IceTowerStats : TowerStats
 {
     [Range(0f, 1f)]
     public float deltaSpeed = 0.4f;
+    public float freezeTime = 1;
 }

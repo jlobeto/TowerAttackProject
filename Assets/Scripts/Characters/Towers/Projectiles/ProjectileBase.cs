@@ -6,6 +6,7 @@ public class ProjectileBase : MonoBehaviour
 {
     public GameObjectTypes type = GameObjectTypes.None;
     public float speed = 6;
+    public ParticleSystem explotion;
 
     protected float damage = 5;
     protected float range = 0;
@@ -19,6 +20,8 @@ public class ProjectileBase : MonoBehaviour
         damage = dmg;
         range = rng;
     }
+
+    
 
     protected virtual void Movement()
     {
@@ -50,7 +53,19 @@ public class ProjectileBase : MonoBehaviour
     /// </summary>
     protected virtual void OnTargetReached()
     {
-        Destroy(gameObject);
+
+        if (explotion == null)
+            Destroy(gameObject);
+        else
+        {
+            var p = Instantiate(explotion, transform);
+            Destroy(GetComponentInChildren<MeshRenderer>());
+            Destroy(gameObject, p.main.duration);
+            p.Play();
+
+            Destroy(gameObject, explotion.main.duration);
+        }
+            
     }
 
     protected virtual void OnTriggerEnter(Collider other)
