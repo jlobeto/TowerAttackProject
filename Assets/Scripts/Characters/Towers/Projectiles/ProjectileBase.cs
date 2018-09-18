@@ -58,9 +58,10 @@ public class ProjectileBase : MonoBehaviour
             Destroy(gameObject);
         else
         {
-            var p = Instantiate(explotion, transform);
+            var p = Instantiate(explotion, transform.position, Quaternion.identity);
             Destroy(GetComponentInChildren<MeshRenderer>());
             Destroy(gameObject, p.main.duration);
+            Destroy(p.gameObject, p.main.duration);
             p.Play();
 
             Destroy(gameObject, explotion.main.duration);

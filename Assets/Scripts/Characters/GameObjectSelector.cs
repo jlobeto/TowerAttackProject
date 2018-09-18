@@ -25,12 +25,8 @@ public class GameObjectSelector : MonoBehaviour
             Debug.LogError("GameObjectSelector is disabled!");
             return null;
         }
-
-        Vector3 pos = Input.mousePosition;
-        pos.z = Camera.main.transform.position.y;
-        pos = Camera.main.ScreenToWorldPoint(pos);
-        var ray = new Ray(pos, (pos - Camera.main.transform.position).normalized);
         RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit, 100, 1 << LayerMask.NameToLayer("Floor")))
         {
