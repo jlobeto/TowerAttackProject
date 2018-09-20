@@ -8,9 +8,10 @@ public class StunLevelSkill : ILevelSkill
     public List<GameObject> CastSkill(List<GameObject> targets, float time = 0)
     {
         List<TowerBase> towers = new List<TowerBase>();
+        TowerBase t;
         foreach (var item in targets)
         {
-            var t = item.GetComponent<TowerBase>();
+            t = item.GetComponent<TowerBase>();
             if (t != null)
                 towers.Add(t);
         }

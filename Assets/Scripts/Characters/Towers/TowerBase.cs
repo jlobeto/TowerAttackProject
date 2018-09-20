@@ -19,14 +19,11 @@ public class TowerBase : MonoBehaviour
     public bool showGizmoRange;
 
     protected bool pImStunned;
-    protected float _stunTime;
     protected bool pSlowDebuff;
-    protected float _slowTime;
 
     GameObject _target;
     float _fireRateAux;
     int _id;
-    float _initialFireRate;
 
     public int Id { get { return _id; } }
 
@@ -91,44 +88,38 @@ public class TowerBase : MonoBehaviour
     #region Debuffs
     public virtual void ReceiveStun(float time)
     {
-        _stunTime = time;
         pImStunned = true;
+        StartCoroutine(StoppingStunDebuff(time));
     }
 
-    public void SlowDebuff(float time, float newFireRate)
+    public void SlowDebuff(float time, float deltaFireRate)
     {
-        _slowTime = time;
-        _initialFireRate = towerStats.fireRate;
-        towerStats.fireRate *= newFireRate;
+        _fireRateAux *= deltaFireRate;
         pSlowDebuff = true;
+        StartCoroutine(StoppingSlowDebuff(time));
     }
 
-
-    protected virtual void StunTimer()
+    protected virtual IEnumerator StoppingStunDebuff(float time)
     {
-        _stunTime -= Time.deltaTime;
-        if (_stunTime < 0)
-        {
-            pImStunned = false;
-            //visual effect for feedback
-            var effect = GetComponentsInChildren<ParticleSystem>().FirstOrDefault(i => i.tag == "LevelSkillEffect");
-            if(effect != null)
-                Destroy(effect.gameObject);
-        }
+        yield return new WaitForSeconds(time);
+
+        pImStunned = false;
+        //visual effect for feedback
+        var effect = GetComponentsInChildren<ParticleSystem>().FirstOrDefault(i => i.tag == "LevelSkillEffect");
+        if (effect != null)
+            Destroy(effect.gameObject);
     }
 
-    protected void SlowTimer()
+    IEnumerator StoppingSlowDebuff(float time)
     {
-        _slowTime -= Time.deltaTime;
-        if (_slowTime < 0)
-        {
-            pSlowDebuff = false;
-            towerStats.fireRate = _initialFireRate;
-            //visual effect for feedback
-            var effect = GetComponentsInChildren<ParticleSystem>().FirstOrDefault(i => i.tag == "LevelSkillEffect");
-            if (effect != null)
-                Destroy(effect.gameObject);
-        }
+        yield return new WaitForSeconds(time);
+
+        pSlowDebuff = false;
+        _fireRateAux = towerStats.fireRate;
+        //visual effect for feedback
+        var effect = GetComponentsInChildren<ParticleSystem>().FirstOrDefault(i => i.tag == "LevelSkillEffect");
+        if (effect != null)
+            Destroy(effect.gameObject);
     }
     #endregion
 
@@ -145,15 +136,7 @@ public class TowerBase : MonoBehaviour
         {
             MinionAiming();
             Fire();
-
-            if (pSlowDebuff)
-                SlowTimer();
-        }
-        else
-        {
-            StunTimer();
-        }
-            
+        }   
     }
 
     private void OnDrawGizmos()

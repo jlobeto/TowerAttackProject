@@ -38,13 +38,14 @@ public class LevelSkillManager : MonoBehaviour
         go.transform.SetParent(transform);
         go.name = "Level Skills";
 
+        LevelSkill lvlSkill;
         foreach (var skillType in _levelSkillsTypes)
         {
             foreach (var skillData in _skillStatsConfig.skillStatsList)
             {
                 if (skillType != GetSkillType(skillData.skillType)) continue;
 
-                var lvlSkill = go.AddComponent<LevelSkill>();
+                lvlSkill = go.AddComponent<LevelSkill>();
                 lvlSkill.stats = skillData;
                 lvlSkill.castSkill = GetCastSkill(skillType);
                 lvlSkill.skillType = skillType;

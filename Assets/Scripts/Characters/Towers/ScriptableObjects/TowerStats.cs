@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "TowerStat", menuName = "ScriptableObjects/Tower Stats")]
 public class TowerStats : ScriptableObject
 {
+    //this values MUST NOT be modified, because it gonna affect the scriptable object for ever.
     public float fireRate = 1f;
     public float fireRange = 8f;
     public float bulletDamage = 5;

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class IceTower : TowerBase
@@ -20,18 +21,6 @@ public class IceTower : TowerBase
         _particleSys = GetComponentInChildren<ParticleSystem>();
 
     }
-	
-	
-	protected override void Update ()
-    {
-        if (pImStunned)
-        {
-            StunTimer();
-        }
-
-        if (pSlowDebuff)
-            SlowTimer();
-    }
 
     public override void ReceiveStun(float time)
     {
@@ -39,12 +28,18 @@ public class IceTower : TowerBase
         _particleSys.Stop();
     }
 
-    protected override void StunTimer()
+    protected override IEnumerator StoppingStunDebuff(float time)
     {
-        base.StunTimer();
+        yield return new WaitForSeconds(time);
 
-        if(!pImStunned)
-            _particleSys.Play();
+        pImStunned = false;
+
+        //visual effect for feedback
+        var effect = GetComponentsInChildren<ParticleSystem>().FirstOrDefault(i => i.tag == "LevelSkillEffect");
+        if (effect != null)
+            Destroy(effect.gameObject);
+
+        _particleSys.Play();
     }
 
     void OnTriggerStayHandler(Collider other)
