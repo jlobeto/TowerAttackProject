@@ -22,23 +22,11 @@ public class LevelNodesLoader
     {
         var json = "";
 
-        /*using (StreamReader r = new StreamReader(jsonName))
+        using (StreamReader r = new StreamReader(jsonName))
         {
             json = r.ReadToEnd();
-        }*/
-        TextAsset txtAsset = (TextAsset)Resources.Load("LevelInfoConfig", typeof(TextAsset));
-        return txtAsset.text;
-        if (json == "")
-        {
-            jsonName = "LevelInfoConfig.json";
-            
-            using (StreamReader r = new StreamReader(jsonName))
-            {
-                json = r.ReadToEnd();
-            }
         }
-
-
+        
         return json;
     }
 }

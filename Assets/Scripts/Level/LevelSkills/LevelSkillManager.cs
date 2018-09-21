@@ -82,25 +82,12 @@ public class LevelSkillManager : MonoBehaviour
 
     string GetSkillConfig()
     {
-        TextAsset txtAsset = (TextAsset)Resources.Load("LevelSkillConfig", typeof(TextAsset));
-        return txtAsset.text;
         string json = "";
         using (StreamReader r = new StreamReader("Assets/GameConfig/LevelSkillConfig.json"))
         {
             json = r.ReadToEnd();
         }
-        if (json == "")
-        {
-            using (StreamReader r = new StreamReader("LevelSkillConfig.json"))
-            {
-                json = r.ReadToEnd();
-            }
-        }
-        
-
-        if (json =="")
-            json = "{\r\n  \"skillStatsList\": [\r\n    {\r\n      \"areaOfEffect\": 8.0,\r\n      \"effectTime\": 5,\r\n      \"fireRate\": 0,\r\n      \"useCountPerLevel\": 1,\r\n      \"skillType\": \"Stun\"\r\n    },\r\n    {\r\n      \"areaOfEffect\": 8,\r\n      \"effectTime\": 10,\r\n      \"fireRate\": 4,\r\n      \"useCountPerLevel\": 1,\r\n      \"skillType\": \"Slow\"\r\n    }\r\n  ]\r\n}";
-
+      
         return json;
     }
 
