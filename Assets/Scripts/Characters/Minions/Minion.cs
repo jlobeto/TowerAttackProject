@@ -27,13 +27,14 @@ public class Minion : MonoBehaviour
     public float skillTime = 2;
     public float skillCooldown = 5;
 
+    protected bool pDamageDebuff;
+    protected float pDamageDebuffValue;
     protected WalkNode pNextNode;
     protected GameObject pShieldBubble;
     protected Animator pAnimator;
     protected float pDistanceToNextNode = 0.2f;//To change the next node;
     protected bool pIceDebuff;
     protected bool pBuffInvisible;//like runner run boost skill.
-
 
     float _initHP;
     int _currentLevel = 1;//Level of the minion, ///TODO manage this when buying an upgrade of lvl;
@@ -53,6 +54,9 @@ public class Minion : MonoBehaviour
     {
         if (HasShieldBuff()) return;
 
+        if (pDamageDebuff)
+            dmg *= pDamageDebuffValue;
+
         hp -= dmg;
         infoCanvas.UpdateLife(hp);
         CheckPSExplotion();
@@ -60,7 +64,7 @@ public class Minion : MonoBehaviour
     }
 
     /// <summary>
-    /// if t == 0, this minion won't manage the timer the remove debuff by it self,
+    /// if t == 0, this minion won't manage the timer to remove debuff by it self,
     /// it will wait until another thing gives the call to remove the debuff.
     /// If t != 0, it will use a coroutine to remove debuff.(need to test that because is new)
     /// </summary>
@@ -70,7 +74,7 @@ public class Minion : MonoBehaviour
         {
             pIceDebuff = true;
             _normalSpeed = speed;
-            speed -= speedDelta * speed;
+            speed *= speedDelta;
 
             if (t != 0)
                 StartCoroutine(SlowDebuffTimer(t));
@@ -104,6 +108,12 @@ public class Minion : MonoBehaviour
         _canWalk = true;
     }
 
+    public void DamageDebuff(bool enabled, float dmgDelta = 1)
+    {
+        pDamageDebuff = enabled;
+        pDamageDebuffValue = dmgDelta;
+    }
+    
     #endregion
 
     bool HasShieldBuff()

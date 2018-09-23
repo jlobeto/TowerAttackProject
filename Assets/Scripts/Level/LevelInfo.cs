@@ -17,5 +17,5 @@ public class LevelInfo
     /// </summary>
     public int[] objectives;
     public int[] currencyGainedByObjectives;
-
+    public bool weatherEvents;
 }

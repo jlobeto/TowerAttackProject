@@ -7,6 +7,8 @@ using UnityEngine;
 public class MinionManager : MonoBehaviour
 {
     public Level level;
+    public Action OnNewMinionSpawned = delegate { };
+
 
     List<Minion> _minions = new List<Minion>();
     int _deathCount;
@@ -68,6 +70,7 @@ public class MinionManager : MonoBehaviour
         minion.OnWalkFinished += MinionWalkFinishedHandler;
         minion.OnDeath += MinionDeathHandler;
         _minions.Add(minion);
+        OnNewMinionSpawned();
     }
 
     /// <summary>
@@ -150,6 +153,14 @@ public class MinionManager : MonoBehaviour
         }
 
         return list;
+    }
+
+    public void AffectMinions(Action<Minion> action)
+    {
+        foreach (var m in _minions)
+        {
+            action(m);
+        }
     }
 
     /// <summary>

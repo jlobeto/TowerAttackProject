@@ -29,9 +29,7 @@ public class LevelSkillManager : MonoBehaviour
 
     void Init()
     {
-        var s = GetSkillConfig();
-        _skillStatsConfig = JsonUtility.FromJson<SkillStatsList>(s);
-
+        _skillStatsConfig = GameUtils.LoadConfig<SkillStatsList>("LevelSkillConfig.json");
         _levelSkillsTypes = level.levelSkills;
 
         GameObject go = new GameObject();
@@ -78,20 +76,7 @@ public class LevelSkillManager : MonoBehaviour
         }
 
         throw new Exception("GetSkillType() => type param is '"+ type + "' update LevelSkillManager.SkillType");
-    }
-
-    string GetSkillConfig()
-    {
-        string json = "";
-        using (StreamReader r = new StreamReader("Assets/GameConfig/LevelSkillConfig.json"))
-        {
-            json = r.ReadToEnd();
-        }
-      
-        return json;
-    }
-
-    
+    }    
 
     void SkillExecutedHandler(int currUses, int initUses, SkillType type)
     {

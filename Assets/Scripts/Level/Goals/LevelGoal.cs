@@ -13,7 +13,6 @@ public class LevelGoal : MonoBehaviour, ILevelGoal
     [Tooltip("When reach 0, user wins the level")]
     public int lives = 10;
     public Action OnGoalComplete = delegate { };
-
     protected int pCurrentLives;
 
     public int CurrentLives { get { return pCurrentLives; } }

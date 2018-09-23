@@ -6,7 +6,7 @@ using System;
 
 public class Level : MonoBehaviour
 {
-    public string levelID = "test01";
+    public int levelID;
     public List<WalkNode> initialWalkNodes = new List<WalkNode>();
     [Tooltip("Ones camera is set, asign to this")]
     public Transform cameraTransform;
@@ -26,6 +26,7 @@ public class Level : MonoBehaviour
     TowerManager _towerManager;
     MinionManager _minionManager;
     LevelSkillManager _lvlSkillManager;
+    LevelEventManager _lvlEventManager;
     LevelGoal _levelGoal;
     LevelCanvasManager _lvlCanvasManager;
     GameObjectSelector _goSelector;
@@ -40,7 +41,8 @@ public class Level : MonoBehaviour
     /// </summary>
     public int CurrentLevelPoints { get { return _currentLevelPoints; } }
     public LevelCanvasManager LevelCanvasManager { get { return _lvlCanvasManager; } }
-    
+    public MinionManager MinionManager { get { return _minionManager; } }
+
 
     void Start () {
         Init();
@@ -73,8 +75,7 @@ public class Level : MonoBehaviour
         if (_levelTimeAux < 0)
         {
             _levelEnded = true;
-            var popupMan = FindObjectOfType<PopupManager>();//esto no vá. mas adelante voy a crear un gamemanager que tenga este coso
-            popupMan.BuildOneButtonPopup(_lvlCanvasManager.transform, "Game Over !", "Try Again", "Main map");
+            _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform, "Game Over !", "Try Again", "Main map");
             _towerManager.StopTowers();
             _minionManager.StopMinions();
         }
@@ -145,14 +146,13 @@ public class Level : MonoBehaviour
         _floorEffect = FindObjectOfType<FloorEffect>();
 
         _towerManager.level = _lvlSkillManager.level = _minionManager.level = this;
-
+        
         _currentLevelPoints = initialLevelPoints;
         _levelTimeAux = levelTime;
 
         InitLevelGoal();
         InitLevelCanvas();
         GetLevelInfo();
-
 
     }
     void InitLevelGoal()
@@ -188,11 +188,30 @@ public class Level : MonoBehaviour
         {
             objetives = _gameManager.currentLevelInfo.objectives;
             levelMode = (LevelMode)Enum.Parse(typeof(LevelMode), _gameManager.currentLevelInfo.mode);
+            levelID = _gameManager.currentLevelInfo.id;
+            ConfigureLevelEvents();
         }
-        
+    }
+
+    void ConfigureLevelEvents()
+    {
+        List<LevelEventManager.EventType> eventTypes = new List<LevelEventManager.EventType>();
+        if (_gameManager.currentLevelInfo.weatherEvents)
+        {
+            _lvlEventManager = gameObject.AddComponent<LevelEventManager>();
+            eventTypes.Add(LevelEventManager.EventType.Weather);
+        }
+
+        if (_lvlEventManager != null)
+            _lvlEventManager.Init(eventTypes, levelID, _gameManager,this);
     }
     #endregion
 
+
+    public void LoopThroughMinions(Action<Minion> action)
+    {
+        _minionManager.AffectMinions(action);
+    }
 
     public void UpdateLevelGoal()
     {
@@ -204,10 +223,12 @@ public class Level : MonoBehaviour
     void GoalCompletedHandler()
     {
         Debug.Log("----- Level Completed -----");
-        var popupMan = FindObjectOfType<PopupManager>();//esto no vá. mas adelante voy a crear un gamemanager que tenga este coso
-        popupMan.BuildOneButtonPopup(_lvlCanvasManager.transform, "You won!" , "Continue...", "Main map");
+        _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform, "You won!" , "Continue...", "Main map");
         _towerManager.StopTowers();
         _minionManager.StopMinions();
+
+        if (_lvlEventManager != null)
+            _lvlEventManager.StopEvents();
     }
     
     public void UpdatePoints(int points)
@@ -219,26 +240,5 @@ public class Level : MonoBehaviour
 
         _lvlCanvasManager.UpdateLevelPointBar(_currentLevelPoints, prevPoints, initialLevelPoints);
     }
-
-    #region Commented Functions
-    /// <summary>
-    /// This is to spawn minions within a squadTimer.
-    /// So it will spawn minions selected one per one. Not necesary right now.
-    /// </summary>
-    /*void OnSpawnMinions()
-    {
-        if (!startMinionSpawning) return;
-        _minionSpawnTimeAux -= Time.deltaTime;
-        if (_minionSpawnTimeAux < 0)
-        {
-            var continueSpawning = _minionManager.SetNextMinionFree();
-            if (!continueSpawning)
-                startMinionSpawning = false;
-
-            _minionSpawnTimeAux = minionSpawnTime;
-        }
-    }*/
-
-    #endregion
-
+    
 }

@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public LevelInfo currentLevelInfo;
     public CurrentScene currentScene = CurrentScene.MainMap;
     public PopupManager popupManager;
+
+    LevelEventLoader _levelEventsLoader;
+    public LevelEventLoader LevelEventsLoader { get { return _levelEventsLoader; } }
 	void Awake()
     {
         DontDestroyOnLoad(this);
@@ -24,6 +27,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         popupManager = FindObjectOfType<PopupManager>();
+
+        _levelEventsLoader = new LevelEventLoader();
     }
 
     void Update () {

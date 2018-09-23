@@ -10,23 +10,10 @@ public class LevelNodesLoader
 
     LevelNodeList _levelNodeList;
 
-    string jsonName = "Assets/GameConfig/LevelInfoConfig.json";
+    string jsonName = "LevelInfoConfig.json";
 
     public LevelNodesLoader()
     {
-        var json = GetJson();
-        _levelNodeList = JsonUtility.FromJson<LevelNodeList>(json);
-    }
-
-    string GetJson()
-    {
-        var json = "";
-
-        using (StreamReader r = new StreamReader(jsonName))
-        {
-            json = r.ReadToEnd();
-        }
-        
-        return json;
+        _levelNodeList = GameUtils.LoadConfig<LevelNodeList>(jsonName);
     }
 }
