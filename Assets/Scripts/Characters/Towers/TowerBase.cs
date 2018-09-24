@@ -29,7 +29,7 @@ public class TowerBase : MonoBehaviour
 
 
     #region Attack
-    protected void Fire()
+    protected virtual void Fire()
     {
         _fireRateAux -= Time.deltaTime;
         if (_fireRateAux < 0)

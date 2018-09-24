@@ -22,6 +22,12 @@ public class IceTower : TowerBase
 
     }
 
+    protected override void Update()
+    {
+        //don't use inherited update.
+    }
+
+
     public override void ReceiveStun(float time)
     {
         base.ReceiveStun(time);
