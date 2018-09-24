@@ -52,6 +52,8 @@ public class Minion : MonoBehaviour
     #region Damage to Minion
     public virtual void GetDamage(float dmg)
     {
+        if (hp <= 0) return;
+
         if (HasShieldBuff()) return;
 
         if (pDamageDebuff)
@@ -224,7 +226,8 @@ public class Minion : MonoBehaviour
     protected void FinishWalk()
     {
         _canWalk = false;
-        Destroy(infoCanvas.gameObject);
+        if (infoCanvas != null)
+            Destroy(infoCanvas.gameObject);
         OnWalkFinished(this);
     }
     void DeathChecker()
@@ -232,6 +235,9 @@ public class Minion : MonoBehaviour
         if (hp <= 0)
         {
             pAnimator.SetBool("RunDissolve", true);
+            if(infoCanvas != null)
+                Destroy(infoCanvas.gameObject);
+            _canWalk = false;
             if (_hasExplotionEffect)
             {
                 var ps = GetComponentInChildren<SimpleParticleSystem>();
@@ -246,7 +252,6 @@ public class Minion : MonoBehaviour
     /// </summary>
     public void DissolveStopped()
     {
-        Destroy(infoCanvas.gameObject);
         OnDeath(this);
     }
 

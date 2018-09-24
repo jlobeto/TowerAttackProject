@@ -46,9 +46,9 @@ public class InfoCanvas : MonoBehaviour
 
     public void UpdateSkillTimes(float t, bool skillTime, bool completeFill=false)
     {
-        if(skillTime)
+        if(skillTime && skillBar != null)
             skillBar.fillAmount = !completeFill ? t / _skillTime : 1;
-        else
+        else if(!skillTime && skillBarCooldown != null)
             skillBarCooldown.fillAmount = 1 - (t / _skillCooldown);
     }
 
