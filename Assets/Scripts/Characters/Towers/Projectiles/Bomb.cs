@@ -36,7 +36,11 @@ public class Bomb : ProjectileBase
             var m = item.GetComponent<Minion>();
 
             if (m != null)
-                base.DoDamage(m);
+            {
+                if(m.targetType == pTargetType || pTargetType == TargetType.Both)
+                    base.DoDamage(m);
+            }
+                
         }
     }
     

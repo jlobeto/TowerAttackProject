@@ -7,9 +7,9 @@ public class SnowBall : ProjectileBase
     float _freezeTime = 1f;
     //public ParticleSystem hitEffect;
 
-    public void Init(GameObject target, float dmg, float rng, float freezeTime)
+    public void Init(GameObject target, float dmg, float rng, float freezeTime, TargetType tt)
     {
-        Init(target, dmg, rng);
+        base.Init(target, dmg, rng, tt);
         _freezeTime = freezeTime;
     }
 

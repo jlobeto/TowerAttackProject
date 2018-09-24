@@ -20,8 +20,8 @@ public class TowerBase : MonoBehaviour
 
     protected bool pImStunned;
     protected bool pSlowDebuff;
+    protected GameObject pTarget;
 
-    GameObject _target;
     float _fireRateAux;
     int _id;
 
@@ -42,11 +42,11 @@ public class TowerBase : MonoBehaviour
 
     protected virtual void SpawnProjectile()
     {
-        if (_target == null) return;
+        if (pTarget == null) return;
 
         var random = projectilePrefabs[Random.Range(0, projectilePrefabs.Count)];
         var p = Instantiate(random, spawnPoint.transform.position, spawnPoint.transform.rotation);
-        p.Init(_target, towerStats.bulletDamage, towerStats.bulletRange);
+        p.Init(pTarget, towerStats.bulletDamage, towerStats.bulletRange, targetType);
     }
 
     protected virtual void GetTarget()
@@ -54,7 +54,7 @@ public class TowerBase : MonoBehaviour
         var minions = Physics.OverlapSphere(transform.position, towerStats.fireRange, 1 << LayerMask.NameToLayer("Minion"));
         if (minions.Length == 0)
         {
-            _target = null;
+            pTarget = null;
             return;
         }
 
@@ -68,16 +68,16 @@ public class TowerBase : MonoBehaviour
             if (dist < minDist)
             {
                 minDist = dist;
-                _target = item.gameObject;
+                pTarget = item.gameObject;
             }
         }
     }
 
     protected virtual void MinionAiming()
     {
-        if (_target == null) return;
+        if (pTarget == null) return;
 
-        Vector3 dir = _target.transform.position - transform.position;
+        Vector3 dir = pTarget.transform.position - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(dir);
         Vector3 rotation = Quaternion.Lerp(toRotate.transform.rotation, lookRotation, Time.deltaTime * towerStats.rotationSpeed).eulerAngles;
         toRotate.transform.rotation = Quaternion.Euler(0f, rotation.y, 0);
@@ -123,7 +123,7 @@ public class TowerBase : MonoBehaviour
     }
     #endregion
 
-    void Start()
+    protected virtual void Start()
     {
         _fireRateAux = towerStats.fireRate;
         _id = gameObject.GetInstanceID();

@@ -8,17 +8,19 @@ public class ProjectileBase : MonoBehaviour
     public float speed = 6;
     public ParticleSystem explotion;
 
+    protected TargetType pTargetType;
     protected float damage = 5;
     protected float range = 0;
     protected bool pCanMove;
     protected GameObject pTarget;
     
-    public void Init(GameObject target, float dmg, float rng)
+    public void Init(GameObject target, float dmg, float rng, TargetType targetType)
     {
         pCanMove = true;
         pTarget = target;
         damage = dmg;
         range = rng;
+        pTargetType = targetType;
     }
 
     
