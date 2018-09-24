@@ -226,7 +226,7 @@ public class Level : MonoBehaviour
         _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform, "You won!" , "Continue...", "Main map");
         _towerManager.StopTowers();
         _minionManager.StopMinions();
-
+        _levelEnded = true;
         if (_lvlEventManager != null)
             _lvlEventManager.StopEvents();
     }
