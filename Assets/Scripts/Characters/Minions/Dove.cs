@@ -24,6 +24,7 @@ public class Dove : Minion
 
     public override void InitMinion(WalkNode n)
     {
+        hasBeenFreed = true;
         transform.position = new Vector3( n.transform.position.x, airYpos, n.transform.position.z);
         pNextNode = n.GetNextWalkNode();
     }

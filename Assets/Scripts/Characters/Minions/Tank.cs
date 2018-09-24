@@ -58,7 +58,7 @@ public class Tank : Minion
     Minion[] GetNearMinions()
     {
         var minions = Physics.OverlapSphere(transform.position, skillArea, 1 << LayerMask.NameToLayer("Minion"));
-        var arr = minions.Select(i => i.GetComponent<Minion>()).Where(m => m != this).ToArray();
+        var arr = minions.Select(i => i.GetComponent<Minion>()).Where(m => m != this && !m.IsDead).ToArray();
         Minion[] result = new Minion[arr.Length];
         int resultIndex = 0;
         for (int i = 0; i < arr.Length; i++)

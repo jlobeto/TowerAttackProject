@@ -75,7 +75,8 @@ public class Level : MonoBehaviour
         if (_levelTimeAux < 0)
         {
             _levelEnded = true;
-            _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform, "Game Over !", "Try Again", "Main map");
+            if(_gameManager.popupManager != null)
+                _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform, "Game Over !", "Try Again", "Main map");
             _towerManager.StopTowers();
             _minionManager.StopMinions();
         }
@@ -99,16 +100,13 @@ public class Level : MonoBehaviour
     /// Build the minion type passed in the first parameter.
     /// Returns True if minion has been created
     /// </summary>
-    public bool BuildMinion(MinionType t, bool builtTime = false)
+    public bool BuildMinion(MinionType t)
     {
         if (!CheckMinionSale(t)) return false;
         var cost = _minionManager.GetMinionPrice(t);
         UpdatePoints(-cost);
-        /*_lvlCanvasManager.UpdateLevelPointBar(_currentLevelPoints - cost, initialLevelPoints);
-        _currentLevelPoints -= cost;*/
-        _minionManager.SpawnMinion(t, builtTime);
-        if(!builtTime)
-            _minionManager.SetNextMinionFree();
+        _minionManager.SpawnMinion(t);
+        _minionManager.SetNextMinionFree();
 
         return true;
     }
@@ -223,7 +221,8 @@ public class Level : MonoBehaviour
     void GoalCompletedHandler()
     {
         Debug.Log("----- Level Completed -----");
-        _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform, "You won!" , "Continue...", "Main map");
+        if(_gameManager.popupManager != null)
+            _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform, "You won!" , "Continue...", "Main map");
         _towerManager.StopTowers();
         _minionManager.StopMinions();
         _levelEnded = true;

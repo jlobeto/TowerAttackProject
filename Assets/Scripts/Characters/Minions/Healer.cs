@@ -69,7 +69,7 @@ public class Healer : Minion
 
     private void OnDrawGizmos()
     {
-        if (showTestGizmo)
-            Gizmos.DrawWireSphere(transform.position, areaOfEffect);
+        /*if (showTestGizmo)
+            Gizmos.DrawWireSphere(transform.position, areaOfEffect);*/
     }
 }

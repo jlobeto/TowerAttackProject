@@ -26,6 +26,7 @@ public class Minion : MonoBehaviour
     public List<BaseMinionSkill> skills = new List<BaseMinionSkill>();
     public float skillTime = 2;
     public float skillCooldown = 5;
+    public bool hasBeenFreed;
 
     protected bool pDamageDebuff;
     protected float pDamageDebuffValue;
@@ -48,11 +49,12 @@ public class Minion : MonoBehaviour
     public bool CanWalk { get { return _canWalk; } }
     public bool IsTargetable { get { return !pBuffInvisible; } }
     public GameObject ShieldBubble { get { return pShieldBubble; } }
+    public bool IsDead { get { return hp <= 0; } }
 
     #region Damage to Minion
     public virtual void GetDamage(float dmg)
     {
-        if (hp <= 0) return;
+        if (IsDead) return;
 
         if (HasShieldBuff()) return;
 
@@ -204,13 +206,12 @@ public class Minion : MonoBehaviour
     }
     public virtual void InitMinion(WalkNode n)
     {
+        hasBeenFreed = true;
         transform.position = n.transform.position;
         pNextNode = n.GetNextWalkNode();
     }
     public void SetWalk(bool val)
     {
-        if (pNextNode.isEnd) return;//don't know if this will be here, for testing porpuse must be for the moment.
-
         _canWalk = val;
     }
 
@@ -232,11 +233,12 @@ public class Minion : MonoBehaviour
     }
     void DeathChecker()
     {
-        if (hp <= 0)
+        if (IsDead)
         {
             pAnimator.SetBool("RunDissolve", true);
             if(infoCanvas != null)
                 Destroy(infoCanvas.gameObject);
+            GetComponent<Collider>().enabled = false;
             _canWalk = false;
             if (_hasExplotionEffect)
             {
@@ -246,6 +248,7 @@ public class Minion : MonoBehaviour
             }
         }
     }
+
 
     /// <summary>
     /// Animation Event

@@ -16,13 +16,13 @@ public class MinionManager : MonoBehaviour
     GameObject _allMinions;
     
 
-    public void SpawnMinion(MinionType type, bool isBuiltTime)
+    public void SpawnMinion(MinionType type)
     {
         
         Minion minion = null;
         Minion available = null;
 
-        Vector3 spawnPos = isBuiltTime ? new Vector3(1000, 1000, 1000) : level.initialWalkNodes[0].transform.position;
+        Vector3 spawnPos = level.initialWalkNodes[0].transform.position;
         switch (type)
         {
             case MinionType.Runner:
@@ -78,13 +78,14 @@ public class MinionManager : MonoBehaviour
     /// </summary>
     public bool SetNextMinionFree()
     {
-        var minion = _minions.FirstOrDefault(m => !m.CanWalk);
-        if (minion != null)
+        foreach (var minion in _minions)
         {
-            minion.InitMinion(level.initialWalkNodes[0]);
-            minion.SetWalk(true);
-            return true;
-
+            if (minion != null && !minion.hasBeenFreed && !minion.IsDead)
+            {
+                minion.InitMinion(level.initialWalkNodes[0]);
+                minion.SetWalk(true);
+                return true;
+            }
         }
         return false; //there is not a minion deactivated   
     }
@@ -169,7 +170,7 @@ public class MinionManager : MonoBehaviour
     /// </summary>
     public void OnReleasedMinionSelected(int instanceID)
     {
-        var selected = _minions.FirstOrDefault(i => i.gameObject.GetInstanceID() == instanceID);
+        var selected = _minions.FirstOrDefault(i => i.gameObject.GetInstanceID() == instanceID && !i.IsDead);
         if (selected == null) return;
 
         selected.ActivateSelfSkill();
