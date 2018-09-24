@@ -6,6 +6,8 @@ public class WeatherManager : MonoBehaviour, IEvent
 {
     public LevelEventManager.EventType type = LevelEventManager.EventType.Weather;
 
+    string[] _weathers = {"wind","rain"};
+
     ParticleSystem _rainPS;
     ParticleSystem _windPS;
     WeatherEventItem _weather;
@@ -18,9 +20,8 @@ public class WeatherManager : MonoBehaviour, IEvent
     bool _isRaining;
     bool _isWindBlowing;
 
-    float _currRainTimer;
+    float _currentCooldown;
     float _currRainDuration;
-    float _currWindTimer;
     float _currWindDuration;
 
     public void Init(WeatherEventItem item, Level lvl)
@@ -34,9 +35,11 @@ public class WeatherManager : MonoBehaviour, IEvent
 
         _level.MinionManager.OnNewMinionSpawned += NewMinionSpawnedHandler;
 
+        if(_rainEnabled || _windEnabled)
+            _currentCooldown = Random.Range(_weather.eventTimer[0], _weather.eventTimer[1]);
+
         if (_rainEnabled)
         {
-            _currRainTimer = Random.Range(_weather.rainCooldown[0], _weather.rainCooldown[1]);
             _rainPS = GameObject.FindGameObjectWithTag("AcidRain").GetComponent<ParticleSystem>();
             if (_rainPS == null)
                 throw new System.Exception("Acid Rain Particle System has not been founded.");
@@ -44,7 +47,6 @@ public class WeatherManager : MonoBehaviour, IEvent
 
         if (_windEnabled)
         {
-            _currWindTimer = Random.Range(_weather.windCooldown[0], _weather.windCooldown[1]);
             _windPS = GameObject.FindGameObjectWithTag("ToxicCloud").GetComponent<ParticleSystem>();
             if (_windPS == null)
                 throw new System.Exception("ToxicCloud Particle System has not been founded.");
@@ -57,22 +59,30 @@ public class WeatherManager : MonoBehaviour, IEvent
     {
         if (!_enabled) return;
 
-        //this ifs are here because maybe we dont want to have two events at the same time.
-        if(!_isWindBlowing)
-            ManageRain();
+        if (_rainEnabled || _windEnabled)
+        {
+            if (!_isRaining && !_isWindBlowing)
+            {
+                _currentCooldown -= Time.deltaTime;
+                if (_currentCooldown < 0)
+                {
+                    _currentCooldown = Random.Range(_weather.eventTimer[0], _weather.eventTimer[1]);
+                    SelectEvent();
+                }
+            }
+            
+        }
 
-        if (!_isRaining)
-            ManageWind();
+        ManageRain();
+        ManageWind();
     }
 
-    void ManageRain()
+    void SelectEvent()
     {
-        if (!_rainEnabled) return;
-
-        if (!_isRaining)
+        string selected = _weathers[Random.Range(0, _weathers.Length)];
+        if (selected == "rain" && _rainEnabled)
         {
-            _currRainTimer -= Time.deltaTime;
-            if (_currRainTimer < 0 && _rainCanSpawn)
+            if (_rainCanSpawn)
             {
                 BuildRain();
                 _weather.rainAmount--;
@@ -80,15 +90,28 @@ public class WeatherManager : MonoBehaviour, IEvent
                     _rainCanSpawn = false;
             }
         }
+        else if (selected == "wind" && _windEnabled)
+        {
+            if (_windCanSpawn)
+            {
+                BuildWind();
+                _weather.windAmount--;
+                if (_weather.windAmount == 0)
+                    _windCanSpawn = false;
+            }
+        }
+    }
+
+    void ManageRain()
+    {
+        if (!_rainEnabled) return;
 
         if (_isRaining)
         {
             _currRainDuration -= Time.deltaTime;
             if (_currRainDuration < 0)
             {
-                if (_rainCanSpawn)
-                    _currRainTimer = Random.Range(_weather.rainCooldown[0], _weather.rainCooldown[1]);
-                else
+                if (!_rainCanSpawn)
                     _rainEnabled = false;
 
                 StopRain();
@@ -131,27 +154,13 @@ public class WeatherManager : MonoBehaviour, IEvent
     void ManageWind()
     {
         if (!_windEnabled) return;
-
-        if (!_isWindBlowing)
-        {
-            _currWindTimer -= Time.deltaTime;
-            if (_currWindTimer < 0 && _windCanSpawn)
-            {
-                BuildWind();
-                _weather.windAmount--;
-                if (_weather.windAmount == 0)
-                    _windCanSpawn = false;
-            }
-        }
-
+        
         if (_isWindBlowing)
         {
             _currWindDuration -= Time.deltaTime;
             if (_currWindDuration < 0)
             {
-                if (_windCanSpawn)
-                    _currWindTimer = Random.Range(_weather.windCooldown[0], _weather.windCooldown[1]);
-                else
+                if (!_windCanSpawn)
                     _windEnabled = false;
 
                 StopWind();
@@ -169,7 +178,7 @@ public class WeatherManager : MonoBehaviour, IEvent
             var m = _windPS.main;
             m.loop = false;
             m.duration = _currWindDuration;
-            _windPS.Play();
+            _windPS.Play(true);
         }
         
         _level.LoopThroughMinions(WindDebuff);
@@ -178,8 +187,9 @@ public class WeatherManager : MonoBehaviour, IEvent
     void StopWind()
     {
         _isWindBlowing = false;
-        _windPS.Stop();
+        _windPS.Stop(true);
         _level.LoopThroughMinions(WindDebuff);
+            
     }
 
     void WindDebuff(Minion m)
