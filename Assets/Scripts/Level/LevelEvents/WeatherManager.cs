@@ -37,13 +37,19 @@ public class WeatherManager : MonoBehaviour, IEvent
         if (_rainEnabled)
         {
             _currRainTimer = Random.Range(_weather.rainCooldown[0], _weather.rainCooldown[1]);
-            //_rainPS = GameObject.FindGameObjectWithTag("")
-            /*if (_rainPS == null)
-                throw new System.Exception("Rain Particle System has not been founded.");*/
+            _rainPS = GameObject.FindGameObjectWithTag("AcidRain").GetComponent<ParticleSystem>();
+            if (_rainPS == null)
+                throw new System.Exception("Acid Rain Particle System has not been founded.");
         }
 
-        if(_windEnabled)
+        if (_windEnabled)
+        {
             _currWindTimer = Random.Range(_weather.windCooldown[0], _weather.windCooldown[1]);
+            _windPS = GameObject.FindGameObjectWithTag("ToxicCloud").GetComponent<ParticleSystem>();
+            if (_windPS == null)
+                throw new System.Exception("ToxicCloud Particle System has not been founded.");
+        }
+            
 
     }
 
