@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameUtils
 {
-    public const string CONFIG_PATH = "Assets/GameConfig/";
+    public const string CONFIG_PATH = "GameConfig/";
     public static string GetJson(string path)
     {
         var json = "";
