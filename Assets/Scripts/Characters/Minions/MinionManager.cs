@@ -199,7 +199,7 @@ public class MinionManager : MonoBehaviour
             case MinionType.Healer:
                 (minion as Healer).areaOfEffect = stats.areaOfEffect;
                 (minion as Healer).healPerSecond = stats.healPerSecond;
-                (minion as Healer).skillHealAmount = stats.skillHealAmount;
+                (minion as Healer).skillHealPercent = stats.skillHealAmount;
                 break;
             default:
                 break;
