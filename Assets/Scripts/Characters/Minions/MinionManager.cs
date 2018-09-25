@@ -23,56 +23,27 @@ public class MinionManager : MonoBehaviour
         Minion available = null;
 
         Vector3 spawnPos = level.initialWalkNodes[0].transform.position;
-        switch (type)
-        {
-            case MinionType.Runner:
-                available = level.availableMinions.FirstOrDefault(m => m.GetType() == typeof(Runner));
-                minion = Instantiate<Runner>((Runner)available, spawnPos, Quaternion.identity);
-                break;
-            case MinionType.Tank:
-                available = level.availableMinions.FirstOrDefault(m => m.GetType() == typeof(Tank));
-                minion = Instantiate<Tank>((Tank)available, spawnPos, Quaternion.identity);
-                break;
-            case MinionType.Dove:
-                available = level.availableMinions.FirstOrDefault(m => m.GetType() == typeof(Dove));
-                minion = Instantiate<Dove>((Dove)available, spawnPos, Quaternion.identity);
-                break;
-            case MinionType.Zeppelin:
-                break;
-            case MinionType.FatTank:
-                break;
-            case MinionType.GoldDigger:
-                break;
-            case MinionType.Healer:
-                available = level.availableMinions.FirstOrDefault(m => m.GetType() == typeof(Healer));
-                minion = Instantiate<Healer>((Healer)available, spawnPos, Quaternion.identity);
-                (minion as Healer).manager = this;
-                break;
-            case MinionType.Ghost:
-                break;
-            case MinionType.WarScreammer:
-                break;
-            case MinionType.Eagle:
-                break;
-            case MinionType.Clown:
-                break;
-            default:
-                break;
-        }
+        available = level.availableMinions.FirstOrDefault(m => m.minionType == type);
+        minion = Instantiate(available, spawnPos, Quaternion.identity);
+
+        if(type == MinionType.Healer)
+            (minion as Healer).manager = this;
+
 
         if (minion == null)
         {
             Debug.LogError("Error creating a Minion");
             return;
         }
-        
+
+        ModifyMinionStatByLevelID(ref minion, level.levelID);
         minion.transform.SetParent(_allMinions.transform);
         minion.OnWalkFinished += MinionWalkFinishedHandler;
         minion.OnDeath += MinionDeathHandler;
         _minions.Add(minion);
         OnNewMinionSpawned();
     }
-
+    
     /// <summary>
     /// Will release and set minion walk to true. One minion at a time;
     /// </summary>
@@ -200,5 +171,38 @@ public class MinionManager : MonoBehaviour
     {
         _minions.Remove(m);
         Destroy(m.gameObject);
+    }
+
+    void ModifyMinionStatByLevelID(ref Minion minion, int levelId)
+    {
+        var stats = level.GameManager.MinionsLoader.GetStatByLevel(minion.minionType, levelId);
+        minion.hp = stats.hp;
+        minion.speed = stats.speed;
+        minion.strength = stats.strength;
+        minion.pointsValue = stats.pointsValue;
+        minion.spawnCooldown = stats.spawnCooldown;
+        minion.levelPointsToRecover = stats.levelPointsToRecover;
+        minion.skillTime = stats.skillTime;
+        minion.skillCooldown = stats.skillCooldown;
+
+        switch (minion.minionType)
+        {
+            case MinionType.Runner:
+                (minion as Runner).skillDeltaSpeed = stats.skillDeltaSpeed;
+                break;
+            case MinionType.Tank:
+                (minion as Tank).shieldHits = stats.shieldHits;
+                (minion as Tank).skillArea = stats.skillArea;
+                break;
+            case MinionType.Dove://does not have any special stats
+                break;
+            case MinionType.Healer:
+                (minion as Healer).areaOfEffect = stats.areaOfEffect;
+                (minion as Healer).healPerSecond = stats.healPerSecond;
+                (minion as Healer).skillHealAmount = stats.skillHealAmount;
+                break;
+            default:
+                break;
+        }
     }
 }

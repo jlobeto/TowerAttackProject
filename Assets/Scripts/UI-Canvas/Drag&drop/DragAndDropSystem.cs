@@ -59,6 +59,7 @@ public class DragAndDropSystem : MonoBehaviour, IHasChanged
     GameObject GetPrefab(MinionType t)
     {
         GameObject slotImagePrefab = null;
+        Debug.Log("DESACTUALIZADOOO");
         switch (t)
         {
             case MinionType.Runner:
@@ -69,25 +70,6 @@ public class DragAndDropSystem : MonoBehaviour, IHasChanged
                 break;
             case MinionType.Dove:
                 slotImagePrefab = Resources.Load("UI/DragAndDropSprites/DroneIcon", typeof(GameObject)) as GameObject;
-                break;
-            case MinionType.Zeppelin:
-                slotImagePrefab = Resources.Load("UI/DragAndDropSprites/ZepelinIcon", typeof(GameObject)) as GameObject;
-                break;
-            case MinionType.FatTank:
-                break;
-            case MinionType.GoldDigger:
-                break;
-            case MinionType.Healer:
-                break;
-            case MinionType.Ghost:
-                break;
-            case MinionType.WarScreammer:
-                break;
-            case MinionType.Eagle:
-                break;
-            case MinionType.Clown:
-                break;
-            default:
                 break;
         }
         return slotImagePrefab;

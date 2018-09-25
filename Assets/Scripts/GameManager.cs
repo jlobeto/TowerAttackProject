@@ -18,8 +18,12 @@ public class GameManager : MonoBehaviour
     public PopupManager popupManager;
 
     LevelEventLoader _levelEventsLoader;
+    MinionsJsonLoaderManager _minionJSONLoader;
     public LevelEventLoader LevelEventsLoader { get { return _levelEventsLoader; } }
-	void Awake()
+    public MinionsJsonLoaderManager MinionsLoader { get { return _minionJSONLoader; } }
+
+
+    void Awake()
     {
         DontDestroyOnLoad(this);
 	}
@@ -29,6 +33,7 @@ public class GameManager : MonoBehaviour
         popupManager = FindObjectOfType<PopupManager>();
 
         _levelEventsLoader = new LevelEventLoader();
+        _minionJSONLoader = new MinionsJsonLoaderManager();
     }
 
     void Update () {

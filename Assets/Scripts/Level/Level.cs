@@ -42,7 +42,7 @@ public class Level : MonoBehaviour
     public int CurrentLevelPoints { get { return _currentLevelPoints; } }
     public LevelCanvasManager LevelCanvasManager { get { return _lvlCanvasManager; } }
     public MinionManager MinionManager { get { return _minionManager; } }
-
+    public GameManager GameManager { get { return _gameManager; } }
 
     void Start () {
         Init();
