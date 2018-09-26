@@ -258,7 +258,7 @@ MonoBehaviour:
   minionName: Healer
   hp: 35
   type: 0
-  minionType: 6
+  minionType: 3
   targetType: 1
   speed: 4
   pointsValue: 30
@@ -273,9 +273,10 @@ MonoBehaviour:
   skills: []
   skillTime: 0
   skillCooldown: 7
+  hasBeenFreed: 0
   areaOfEffect: 10.47
   healPerSecond: 2
-  skillHealAmount: 15
+  skillHealPercent: 15
   showTestGizmo: 1
   givePassiveHealth: {fileID: 114859879402797624, guid: 2af922c399f5505459ae2543af367b7e,
     type: 2}
