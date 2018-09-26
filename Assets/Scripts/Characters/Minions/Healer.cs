@@ -7,7 +7,7 @@ public class Healer : Minion
 {
     public float areaOfEffect = 5;
     public float healPerSecond = 2;
-    public int skillHealAmount = 15;
+    public int skillHealPercent = 15;
     public bool showTestGizmo = true;
     public ProjectilePS givePassiveHealth;
     public ProjectilePS giveActiveHealth;
@@ -32,7 +32,7 @@ public class Healer : Minion
 
         var nearMinions = manager.GetMinions(GetMinionHandler);
 
-        _mySkill.InitializeHealerSkill(nearMinions, skillCooldown, giveActiveHealth, skillHealAmount);
+        _mySkill.InitializeHealerSkill(nearMinions, skillCooldown, giveActiveHealth, skillHealPercent);
     }
 
     protected override void PerformAction()

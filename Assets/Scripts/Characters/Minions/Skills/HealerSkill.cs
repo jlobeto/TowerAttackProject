@@ -21,9 +21,13 @@ public class HealerSkill : BaseMinionSkill
 
         foreach (var item in toGiveHealth)
         {
-            item.GetHealth(healAmount);
+            var toGive = (healAmount * item.InitialHP) / 100;
+            if (toGive < 15)
+                toGive = 15;
+
+            item.GetHealth(toGive);
             var particles = Instantiate<ProjectilePS>(ps);
-            particles.Init(transform, item.transform,7);
+            particles.Init(transform, item.transform, 7);
         }
     }
 

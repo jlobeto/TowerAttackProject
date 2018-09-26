@@ -50,6 +50,7 @@ public class Minion : MonoBehaviour
     public bool IsTargetable { get { return !pBuffInvisible; } }
     public GameObject ShieldBubble { get { return pShieldBubble; } }
     public bool IsDead { get { return hp <= 0; } }
+    public float InitialHP { get { return _initHP; } }
 
     #region Damage to Minion
     public virtual void GetDamage(float dmg)
