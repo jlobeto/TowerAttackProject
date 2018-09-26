@@ -181,6 +181,7 @@ public class Level : MonoBehaviour
             _gameManager = gameMan.AddComponent<GameManager>();
             objetives = new int[] { 5, 8, 10 };
             levelMode = LevelMode.Normal;
+            levelID = 1;//this will ensurance that all the minions has level 1 json stats.
         }
         else //common Behaviour
         {
