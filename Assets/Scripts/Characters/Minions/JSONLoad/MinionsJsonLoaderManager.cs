@@ -19,6 +19,7 @@ public class MinionsJsonLoaderManager
             MinionType t = (MinionType)item;
             //El tipo T del generic "GenericListJsonLoader<T>" puede ser distinto dependiendo del que minion sea.
             //Posibles 'T' = BaseMinionStat, RunnerMinionStat, TankMinionStat, etc.
+            Debug.Log(t);
             var config = GameUtils.LoadConfig<GenericListJsonLoader<BaseMinionStat>>
                 (item.ToString()+".json"
                 , GameUtils.MINION_CONFIG_PATH);
