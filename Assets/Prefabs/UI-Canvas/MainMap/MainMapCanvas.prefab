@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224203423234288384}
   - component: {fileID: 222715893115013744}
-  - component: {fileID: 114523759152492896}
+  - component: {fileID: 114630844031040302}
   m_Layer: 5
   m_Name: LevelButtonContainer
   m_TagString: Untagged
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114523759152492896
+--- !u!114 &114630844031040302
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1148687798960478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -405508275, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: -2095666955, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
@@ -145,11 +145,12 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 100, y: 40}
+  m_Spacing: {x: 0, y: 0}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!114 &114920470159549182
 MonoBehaviour:
   m_ObjectHideFlags: 1
