@@ -12,18 +12,18 @@ public class MinionsJsonLoaderManager
     {
         _allJsons = new Dictionary<MinionType, GenericListJsonLoader<BaseMinionStat>>();
 
-        var types = Enum.GetValues(typeof(MinionType));
+        var types = Enum.GetValues(typeof(MinionType)).Cast<MinionType>().Where(i => i != MinionType.MiniZeppelin).ToList();
         
         foreach (var item in types)
         {
-            MinionType t = (MinionType)item;
             //El tipo T del generic "GenericListJsonLoader<T>" puede ser distinto dependiendo del que minion sea.
             //Posibles 'T' = BaseMinionStat, RunnerMinionStat, TankMinionStat, etc.
+            //Debug.Log(item);
             var config = GameUtils.LoadConfig<GenericListJsonLoader<BaseMinionStat>>
                 (item.ToString()+".json"
                 , GameUtils.MINION_CONFIG_PATH);
 
-            _allJsons.Add(t, config);
+            _allJsons.Add(item, config);
         }
         
     }

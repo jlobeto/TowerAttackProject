@@ -29,4 +29,9 @@ public class BaseMinionStat
     public float areaOfEffect;
     public float healPerSecond;
     public int skillHealAmount;
+
+    //Zeppelin
+    public MiniZeppelinStat miniZeppelinStat;
+    public int miniZeppelinCount;
+    public int skillMiniZepCount;
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class MinionManager : MonoBehaviour
 {
+    [HideInInspector]
     public Level level;
     public Action OnNewMinionSpawned = delegate { };
 
@@ -14,21 +15,18 @@ public class MinionManager : MonoBehaviour
     int _deathCount;
     int _successCount;
     GameObject _allMinions;
-    
 
-    public void SpawnMinion(MinionType type)
+
+    public void SpawnMinion(MinionType type, Vector3 spawnPos, Minion available)
     {
-        
         Minion minion = null;
-        Minion available = null;
 
-        Vector3 spawnPos = level.initialWalkNodes[0].transform.position;
-        available = level.availableMinions.FirstOrDefault(m => m.minionType == type);
         minion = Instantiate(available, spawnPos, Quaternion.identity);
 
-        if(type == MinionType.Healer)
+        if(type == MinionType.Healer )
             (minion as Healer).manager = this;
-
+        else if(type == MinionType.Zeppelin)
+            (minion as Zeppelin).manager = this;
 
         if (minion == null)
         {
@@ -47,13 +45,13 @@ public class MinionManager : MonoBehaviour
     /// <summary>
     /// Will release and set minion walk to true. One minion at a time;
     /// </summary>
-    public bool SetNextMinionFree()
+    public bool SetNextMinionFree(WalkNode node, Vector3 position = default(Vector3))
     {
         foreach (var minion in _minions)
         {
             if (minion != null && !minion.hasBeenFreed && !minion.IsDead)
             {
-                minion.InitMinion(level.initialWalkNodes[0]);
+                minion.InitMinion(node, position);
                 minion.SetWalk(true);
                 return true;
             }
@@ -175,13 +173,18 @@ public class MinionManager : MonoBehaviour
 
     void ModifyMinionStatByLevelID(ref Minion minion, int levelId)
     {
-        var stats = level.GameManager.MinionsLoader.GetStatByLevel(minion.minionType, levelId);
+        BaseMinionStat stats;
+        if(minion.minionType != MinionType.MiniZeppelin)
+            stats = level.GameManager.MinionsLoader.GetStatByLevel(minion.minionType, levelId);
+        else
+            stats = level.GameManager.MinionsLoader.GetStatByLevel(MinionType.Zeppelin, levelId);
+        
         minion.hp = stats.hp;
+        minion.pointsValue = stats.pointsValue;
+        minion.levelPointsToRecover = stats.levelPointsToRecover;
         minion.speed = stats.speed;
         minion.strength = stats.strength;
-        minion.pointsValue = stats.pointsValue;
         minion.spawnCooldown = stats.spawnCooldown;
-        minion.levelPointsToRecover = stats.levelPointsToRecover;
         minion.skillTime = stats.skillTime;
         minion.skillCooldown = stats.skillCooldown;
 
@@ -200,6 +203,16 @@ public class MinionManager : MonoBehaviour
                 (minion as Healer).areaOfEffect = stats.areaOfEffect;
                 (minion as Healer).healPerSecond = stats.healPerSecond;
                 (minion as Healer).skillHealPercent = stats.skillHealAmount;
+                break;
+            case MinionType.MiniZeppelin:
+                minion.hp = stats.miniZeppelinStat.hitsToDie;
+                minion.pointsValue = stats.miniZeppelinStat.pointsValue;
+                minion.levelPointsToRecover = stats.miniZeppelinStat.levelPointsToRecover;
+                minion.speed = stats.miniZeppelinStat.speed;
+                break;
+            case MinionType.Zeppelin:
+                (minion as Zeppelin).miniZeppelinCount = stats.miniZeppelinCount;
+                (minion as Zeppelin).skillMiniZepCount = stats.skillMiniZepCount;
                 break;
             default:
                 break;

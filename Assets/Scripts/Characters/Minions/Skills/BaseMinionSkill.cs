@@ -11,7 +11,8 @@ public class BaseMinionSkill : MonoBehaviour
         HitShield, //Shield that last for a number of hits.
         SpeedBoost,
         GiveHealth,
-        ChangeTarget //Change targets types (ground and air) when is needed.
+        ChangeTarget, //Change targets types (ground and air) when is needed.
+        SmokeBomb //zeppelin skill
     }
     
     public SkillType skillType = SkillType.None;
@@ -57,7 +58,8 @@ public class BaseMinionSkill : MonoBehaviour
     }
 
     /// <summary>
-    /// in this case times is the number of hits for shield skill
+    /// in this case times is the number of hits for shield skill 
+    /// or the quantity of miniZeppelin spawned by the zeppelin
     /// </summary>
     public virtual bool Initialize(float lastingTime, float cooldown, int times)
     {

@@ -105,8 +105,9 @@ public class Level : MonoBehaviour
         if (!CheckMinionSale(t)) return false;
         var cost = _minionManager.GetMinionPrice(t);
         UpdatePoints(-cost);
-        _minionManager.SpawnMinion(t);
-        _minionManager.SetNextMinionFree();
+        _minionManager.SpawnMinion(t, initialWalkNodes[0].transform.position
+            , availableMinions.FirstOrDefault(m => m.minionType == t));
+        _minionManager.SetNextMinionFree(initialWalkNodes[0]);
 
         return true;
     }

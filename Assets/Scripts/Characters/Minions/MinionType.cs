@@ -3,5 +3,7 @@
     Runner,
     Tank,
     Dove,
-    Healer
+    Healer,
+    Zeppelin,
+    MiniZeppelin
 }

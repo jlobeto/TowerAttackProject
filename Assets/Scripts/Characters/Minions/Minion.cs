@@ -36,17 +36,16 @@ public class Minion : MonoBehaviour
     protected float pDistanceToNextNode = 0.2f;//To change the next node;
     protected bool pIceDebuff;
     protected bool pBuffInvisible;//like runner run boost skill.
+    protected bool pCanWalk;
 
     float _initHP;
     int _currentLevel = 1;//Level of the minion, ///TODO manage this when buying an upgrade of lvl;
     int _spawnOrder;
     float _normalSpeed;
     int _id;
-    bool _canWalk;
     bool _hasExplotionEffect;
 
     public int Id { get { return _id; } }
-    public bool CanWalk { get { return _canWalk; } }
     public bool IsTargetable { get { return !pBuffInvisible; } }
     public GameObject ShieldBubble { get { return pShieldBubble; } }
     public bool IsDead { get { return hp <= 0; } }
@@ -103,14 +102,14 @@ public class Minion : MonoBehaviour
     
     public virtual void GetFreezeDebuff(float t)
     {
-        _canWalk = false;
+        pCanWalk = false;
         StartCoroutine(FreezeDebuffTimer(t));
     }
 
     IEnumerator FreezeDebuffTimer(float t)
     {
         yield return new WaitForSeconds(t);
-        _canWalk = true;
+        pCanWalk = true;
     }
 
     public void DamageDebuff(bool enabled, float dmgDelta = 1)
@@ -121,7 +120,7 @@ public class Minion : MonoBehaviour
     
     #endregion
 
-    bool HasShieldBuff()
+    protected bool HasShieldBuff()
     {
         var shieldSkill = (ShieldSkill)BaseMinionSkill.GetSkillByType(BaseMinionSkill.SkillType.HitShield, skills);
         if (shieldSkill != null)
@@ -148,7 +147,7 @@ public class Minion : MonoBehaviour
         if(infoCanvas != null)
             infoCanvas.UpdatePosition(transform.position);
 
-        if (_canWalk)
+        if (pCanWalk)
         {
             Walk();
         }
@@ -184,7 +183,11 @@ public class Minion : MonoBehaviour
         pAnimator = GetComponentInChildren<Animator>();
 
         infoCanvas = Instantiate<InfoCanvas>(infoCanvas, transform.position, transform.rotation);
-        infoCanvas.Init(hp, skillTime, skillCooldown);
+        if(minionType == MinionType.MiniZeppelin)
+            infoCanvas.Init(hp, 0,0, true);
+        else
+            infoCanvas.Init(hp, skillTime, skillCooldown);
+
         _initHP = hp;
         if (Debug.isDebugBuild)
         {
@@ -205,15 +208,19 @@ public class Minion : MonoBehaviour
             }
         }
     }
-    public virtual void InitMinion(WalkNode n)
+    public virtual void InitMinion(WalkNode n, Vector3 pTransform = default(Vector3))
     {
         hasBeenFreed = true;
-        transform.position = n.transform.position;
+        if (pTransform == default(Vector3))
+            transform.position = n.transform.position;
+        else
+            transform.position = pTransform;
+
         pNextNode = n.GetNextWalkNode();
     }
     public void SetWalk(bool val)
     {
-        _canWalk = val;
+        pCanWalk = val;
     }
 
     protected virtual void Start ()
@@ -227,7 +234,7 @@ public class Minion : MonoBehaviour
 
     protected void FinishWalk()
     {
-        _canWalk = false;
+        pCanWalk = false;
         if (infoCanvas != null)
             Destroy(infoCanvas.gameObject);
         OnWalkFinished(this);
@@ -240,7 +247,7 @@ public class Minion : MonoBehaviour
             if(infoCanvas != null)
                 Destroy(infoCanvas.gameObject);
             GetComponent<Collider>().enabled = false;
-            _canWalk = false;
+            pCanWalk = false;
             if (_hasExplotionEffect)
             {
                 var ps = GetComponentInChildren<SimpleParticleSystem>();

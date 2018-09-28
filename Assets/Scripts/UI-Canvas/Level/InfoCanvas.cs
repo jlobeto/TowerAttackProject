@@ -19,11 +19,14 @@ public class InfoCanvas : MonoBehaviour
     float _shieldMaxHits;
     float _shieldMaxHitsAux;
 
-    public void Init(float life, float skillTime, float skillCooldown)
+    public void Init(float life, float skillTime, float skillCooldown, bool notSkill = false)
     {
         _initLife = life;
         _skillTime = skillTime;
         _skillCooldown = skillCooldown;
+
+        if (notSkill)
+            skillBar.fillAmount = 0;
     }
 
     public void InitShield(int maxhits)

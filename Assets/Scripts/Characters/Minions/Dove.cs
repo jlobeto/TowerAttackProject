@@ -4,25 +4,28 @@ using UnityEngine;
 
 public class Dove : Minion
 {
-    public float airYpos = 2.3f;
-    public float groundYpos = 0.5f;
-    public ParticleSystem skillPS;
+    public float airYpos = 7;
+    public float groundYpos = 1;
 
-    float _targetPos;
+    ParticleSystem _skillPS;
     ChangeTargetSkill _mySkill;
 
+    float _targetPos;
+    
     protected override void Start()
     {
         base.Start();
-        skillPS = GetComponentInChildren<ParticleSystem>();
-        transform.position = new Vector3(transform.position.x, airYpos, transform.position.z);
+        
         _mySkill = gameObject.AddComponent<ChangeTargetSkill>();
+        _skillPS = GetComponentInChildren<ParticleSystem>();
+        transform.position = new Vector3(transform.position.x, airYpos, transform.position.z);
+
         skills.Add(_mySkill);
         _targetPos = airYpos;
         _mySkill.infoCanvas = infoCanvas;
     }
 
-    public override void InitMinion(WalkNode n)
+    public override void InitMinion(WalkNode n, Vector3 position=default(Vector3))
     {
         hasBeenFreed = true;
         transform.position = new Vector3( n.transform.position.x, airYpos, n.transform.position.z);
@@ -39,7 +42,7 @@ public class Dove : Minion
         targetType = targetType == TargetType.Air ? TargetType.Ground : TargetType.Air;
         _targetPos = targetType == TargetType.Air ? airYpos : groundYpos;
 
-        skillPS.Play();
+        _skillPS.Play();
         _mySkill.SetYDest(_targetPos);
     }
 
