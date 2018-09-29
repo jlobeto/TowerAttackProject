@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class WalkNode : MonoBehaviour
 {
-
+    public string levelEventBridgeNodeName = "";
     public bool isInitial;
     public bool isEnd;
     public List<WalkNode> nexts = new List<WalkNode>();
-
-
+    
     bool _alreadyTransited;
 	
 	void Start () {

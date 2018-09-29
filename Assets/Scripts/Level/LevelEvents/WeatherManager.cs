@@ -54,6 +54,15 @@ public class WeatherManager : MonoBehaviour, IEvent
             
 
     }
+    public void StopEvent()
+    {
+        _enabled = false;
+        if(_isRaining)
+            StopRain();
+
+        if (_isWindBlowing)
+            StopWind();
+    }
 
     public void UpdateEvent()
     {
@@ -201,6 +210,7 @@ public class WeatherManager : MonoBehaviour, IEvent
         else
             m.StopSlowDebuff();
     }
+
 
     #region Handlers
     /// <summary>

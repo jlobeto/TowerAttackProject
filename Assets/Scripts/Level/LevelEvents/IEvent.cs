@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IEvent
 {
-   void UpdateEvent();
+    void UpdateEvent();
+    void StopEvent();
 }

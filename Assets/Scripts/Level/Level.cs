@@ -201,6 +201,13 @@ public class Level : MonoBehaviour
             _lvlEventManager = gameObject.AddComponent<LevelEventManager>();
             eventTypes.Add(LevelEventManager.EventType.Weather);
         }
+        if (_gameManager.currentLevelInfo.levelEvents)
+        {
+            if(_lvlEventManager == null)
+                _lvlEventManager = gameObject.AddComponent<LevelEventManager>();
+
+            eventTypes.Add(LevelEventManager.EventType.Environment);
+        }
 
         if (_lvlEventManager != null)
             _lvlEventManager.Init(eventTypes, levelID, _gameManager,this);

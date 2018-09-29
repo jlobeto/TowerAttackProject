@@ -6,7 +6,8 @@ public class LevelEventManager : MonoBehaviour
 {
     public enum EventType
     {
-        Weather
+        Weather,
+        Environment
     }
 
     int _levelId;
@@ -17,8 +18,9 @@ public class LevelEventManager : MonoBehaviour
 
     bool _eventsEnabled;
     bool _weatherEnabled;
+    bool _environmentEventEnabled;
 
-	void Update ()
+    void Update ()
     {
         if (!_eventsEnabled) return;
 
@@ -44,14 +46,26 @@ public class LevelEventManager : MonoBehaviour
             m.Init(weatherEvent, _lvl);
             _currentEvents.Add(m);
         }
+        if (_currentEventTypes.Contains(EventType.Environment))
+        {
+            var lvlEvt = _gameManager.LevelEventsLoader.GetEnvironmentItem(_levelId);
+            _environmentEventEnabled = true;
+            var m = eventsGameObject.AddComponent<EnvironmentManager>();
+            m.Init(lvlEvt, lvl);
+            _currentEvents.Add(m);
+        }
 
-        if(_weatherEnabled /*o cualquier otro evento*/)
+        if(_weatherEnabled || _environmentEventEnabled/*o cualquier otro evento*/)
             _eventsEnabled = true;
     }
 
     public void StopEvents()
     {
         _eventsEnabled = false;
+        foreach (var item in _currentEvents)
+        {
+            item.StopEvent();
+        }
     }
     
 }
