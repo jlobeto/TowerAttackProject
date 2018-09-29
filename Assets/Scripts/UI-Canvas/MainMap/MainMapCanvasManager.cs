@@ -8,10 +8,10 @@ public class MainMapCanvasManager : MonoBehaviour
 {
     public Button levelNodeButton;
 
-    HorizontalLayoutGroup _levelNodesContainer;
+    GridLayoutGroup _levelNodesContainer;
 
 	void Awake () {
-        _levelNodesContainer = GetComponentInChildren<HorizontalLayoutGroup>();
+        _levelNodesContainer = GetComponentInChildren<GridLayoutGroup>();
 	}
 	
 	void Update () {
