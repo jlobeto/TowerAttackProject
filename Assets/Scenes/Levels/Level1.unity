@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.4964127, b: 0.57481724, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -19421,6 +19421,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114851463829160704, guid: 557973ff5559e8f47834e042b8185f76,
+        type: 2}
+      propertyPath: availableMinions.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4305466995462742, guid: 557973ff5559e8f47834e042b8185f76, type: 2}
       propertyPath: m_LocalPosition.x
       value: -51.773804
@@ -19465,9 +19470,10 @@ Prefab:
       objectReference: {fileID: 1194597129}
     - target: {fileID: 114851463829160704, guid: 557973ff5559e8f47834e042b8185f76,
         type: 2}
-      propertyPath: initialLevelPoints
-      value: 125
-      objectReference: {fileID: 0}
+      propertyPath: availableMinions.Array.data[3]
+      value: 
+      objectReference: {fileID: 114569184015996796, guid: e5163b2161ade4540b625292a49e718a,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 557973ff5559e8f47834e042b8185f76, type: 2}
   m_IsPrefabParent: 0

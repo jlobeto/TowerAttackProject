@@ -28,7 +28,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1779314226635612
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 54501059183328784}
   - component: {fileID: 65658314095699760}
   - component: {fileID: 23328265244391432}
-  - component: {fileID: 114187432342052336}
+  - component: {fileID: 114471082263891244}
   m_Layer: 8
   m_Name: MiniZeppelin
   m_TagString: Untagged
@@ -185,7 +185,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.9557166, y: 1.6811165, z: 1.1440747}
   m_Center: {x: 0.13740382, y: -0.0004557931, z: 0.008016026}
---- !u!114 &114187432342052336
+--- !u!114 &114471082263891244
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -193,14 +193,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1779314226635612}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29eb449d0aca6bc4886bf2598706a9d7, type: 3}
+  m_Script: {fileID: 11500000, guid: 8143492d8c6a23343bbeade2ca6182c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   minionName: 
   hp: 50
   type: 0
   minionType: 5
-  targetType: 0
+  targetType: 2
   speed: 4
   pointsValue: 15
   strength: 0
@@ -212,8 +212,8 @@ MonoBehaviour:
   explotionPS: {fileID: 114042232387667590, guid: 6611df02f34bd9a4abb10eec8cf94460,
     type: 2}
   skills: []
-  skillTime: 0
-  skillCooldown: 0
+  skillTime: 2
+  skillCooldown: 5
   hasBeenFreed: 0
   airYpos: 7
 --- !u!135 &135566595660997524
