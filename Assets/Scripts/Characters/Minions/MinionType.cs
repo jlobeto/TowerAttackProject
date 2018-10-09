@@ -5,5 +5,6 @@
     Dove,
     Healer,
     Zeppelin,
-    MiniZeppelin
+    MiniZeppelin,
+	WarScreamer
 }

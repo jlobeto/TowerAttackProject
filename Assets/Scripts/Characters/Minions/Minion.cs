@@ -6,17 +6,18 @@ using UnityEngine;
 public class Minion : MonoBehaviour
 {
     public string minionName;
-    public float hp = 50;
+    [HideInInspector] public float hp = 50;
     public GameObjectTypes type = GameObjectTypes.None;
     public MinionType minionType = MinionType.Runner;
     public TargetType targetType = TargetType.Both;
-    public float speed = 4;
-    public int pointsValue = 15;
-    public float strength = 0;
-    public float spawnCooldown = 0.5f;
+    [HideInInspector] public float speed = 4;
+    [HideInInspector] public int pointsValue = 15;
+    [HideInInspector] public float strength = 0;
+    [HideInInspector] public float spawnCooldown = 0.5f;
     //public IMinionSkill skill;
-    public int coinValue = 0;
+    [HideInInspector] public int coinValue = 0;
     [Range(0f,1f)]
+    [HideInInspector]
     public float levelPointsToRecover = 0.75f;
     public Action<Minion> OnWalkFinished = delegate { };
     public Action<Minion> OnDeath = delegate { };
@@ -24,8 +25,8 @@ public class Minion : MonoBehaviour
     public SimpleParticleSystem explotionPS;
     [HideInInspector]
     public List<BaseMinionSkill> skills = new List<BaseMinionSkill>();
-    public float skillTime = 2;
-    public float skillCooldown = 5;
+    [HideInInspector] public float skillTime = 2;
+    [HideInInspector] public float skillCooldown = 5;
     public bool hasBeenFreed;
 
     protected bool pDamageDebuff;
@@ -72,8 +73,13 @@ public class Minion : MonoBehaviour
     /// it will wait until another thing gives the call to remove the debuff.
     /// If t != 0, it will use a coroutine to remove debuff.(need to test that because is new)
     /// </summary>
-    public void GetSlowDebuff(float t, float speedDelta)
+    public void GetSlowDebuff(float t, float speedDelta, bool fromWindDust = false)
     {
+        if(fromWindDust)
+        {
+            if (targetType == TargetType.Ground) return;
+        }
+
         if (!pIceDebuff)
         {
             pIceDebuff = true;
@@ -133,6 +139,22 @@ public class Minion : MonoBehaviour
     }
 
     /// <summary>
+    /// para testear-
+    /// </summary>
+    /// <param name="lastSpeed"></param>
+    public void EndOfWarScreamerSkill(float lastSpeed)
+    {
+        if(pIceDebuff)
+        {
+            speed = lastSpeed;
+        }
+        else
+        {
+            speed = _normalSpeed;
+        }
+    }
+
+    /// <summary>
     /// Increment of HP, if new hp is above initHP the new hp will be initHP
     /// </summary>
     public void GetHealth(float health)
@@ -173,6 +195,8 @@ public class Minion : MonoBehaviour
     /// </summary>
     public virtual void ActivateSelfSkill()
     {
+        if (minionType == MinionType.MiniZeppelin) return;
+
         throw new NotImplementedException("ActivateSkill() is not implemented on dependences.");
     }
 
@@ -189,6 +213,7 @@ public class Minion : MonoBehaviour
             infoCanvas.Init(hp, skillTime, skillCooldown);
 
         _initHP = hp;
+        _normalSpeed = speed;
         if (Debug.isDebugBuild)
         {
             var parent = GameObject.Find("InfoCanvasParent");

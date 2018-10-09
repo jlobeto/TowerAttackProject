@@ -25,8 +25,10 @@ public class BaseMinionStat
     public int shieldHits;
     public float skillArea;
 
-    //Healer
+    //Healer && warscreamer
     public float areaOfEffect;
+
+    //Healer
     public float healPerSecond;
     public int skillHealAmount;
 
@@ -34,4 +36,11 @@ public class BaseMinionStat
     public MiniZeppelinStat miniZeppelinStat;
     public int miniZeppelinCount;
     public int skillMiniZepCount;
+
+    //warscreamer
+    public float activeSpeedDelta;
+    public float passiveSpeedDelta;
+    public float lifePercentThresholdToActivatePassive;
+    public float passiveSkillDurationOnAffectedMinion;
+    public float timeToPassive;
 }

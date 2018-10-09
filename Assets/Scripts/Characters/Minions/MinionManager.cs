@@ -27,6 +27,8 @@ public class MinionManager : MonoBehaviour
             (minion as Healer).manager = this;
         else if(type == MinionType.Zeppelin)
             (minion as Zeppelin).manager = this;
+		else if(type == MinionType.WarScreamer)
+			(minion as WarScreamer).manager = this;
 
         if (minion == null)
         {
@@ -213,6 +215,14 @@ public class MinionManager : MonoBehaviour
             case MinionType.Zeppelin:
                 (minion as Zeppelin).miniZeppelinCount = stats.miniZeppelinCount;
                 (minion as Zeppelin).skillMiniZepCount = stats.skillMiniZepCount;
+                break;
+			case MinionType.WarScreamer:
+				(minion as WarScreamer).areaOfEffect = stats.areaOfEffect;
+				(minion as WarScreamer).activeSpeedDelta = stats.activeSpeedDelta;
+				(minion as WarScreamer).passiveSpeedDelta = stats.passiveSpeedDelta;
+				(minion as WarScreamer).lifePercentThresholdToActivatePassive = stats.lifePercentThresholdToActivatePassive;
+				(minion as WarScreamer).passiveSkillDurationOnAffectedMinion = stats.passiveSkillDurationOnAffectedMinion;
+				(minion as WarScreamer).timeToPassive = stats.timeToPassive;
                 break;
             default:
                 break;

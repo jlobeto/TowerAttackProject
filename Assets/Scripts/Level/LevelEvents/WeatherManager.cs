@@ -206,7 +206,7 @@ public class WeatherManager : MonoBehaviour, IEvent
         if (m == null) return;
 
         if (_isWindBlowing)
-            m.GetSlowDebuff(0, _weather.windEffectDelta);
+            m.GetSlowDebuff(0, _weather.windEffectDelta, true);
         else
             m.StopSlowDebuff();
     }

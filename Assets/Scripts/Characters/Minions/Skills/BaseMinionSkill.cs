@@ -12,7 +12,8 @@ public class BaseMinionSkill : MonoBehaviour
         SpeedBoost,
         GiveHealth,
         ChangeTarget, //Change targets types (ground and air) when is needed.
-        SmokeBomb //zeppelin skill
+        SmokeBomb, //zeppelin skill
+		WarScreamer
     }
     
     public SkillType skillType = SkillType.None;
