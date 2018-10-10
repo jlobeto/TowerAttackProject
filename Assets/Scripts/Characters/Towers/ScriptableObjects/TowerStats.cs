@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "TowerStat", menuName = "ScriptableObjects/Tower Stats")]
+//[CreateAssetMenu(fileName = "TowerStat", menuName = "ScriptableObjects/Tower Stats")]
 public class TowerStats : ScriptableObject
 {
     //this values MUST NOT be modified, because it gonna affect the scriptable object for ever.

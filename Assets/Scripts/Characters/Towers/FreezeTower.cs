@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class FreezeTower : TowerBase
 {
-    FreezeTowerStats _freezeTowerStats;
     protected override void Start()
     {
         base.Start();
-        _freezeTowerStats = (FreezeTowerStats)towerStats;
     }
 
     protected override void SpawnProjectile()
@@ -17,6 +15,6 @@ public class FreezeTower : TowerBase
 
         var random = (SnowBall) projectilePrefabs[Random.Range(0, projectilePrefabs.Count)];
         var p = Instantiate(random, spawnPoint.transform.position, spawnPoint.transform.rotation);
-        p.Init(pTarget, towerStats.bulletDamage, towerStats.bulletRange, _freezeTowerStats.freezeTime ,targetType);
+		p.Init(pTarget, pMyStat.bulletDamage, pMyStat.bulletRange, pMyStat.freezeTime ,targetType);
     }
 }

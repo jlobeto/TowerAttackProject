@@ -18,9 +18,12 @@ public class GameManager : MonoBehaviour
     public PopupManager popupManager;
 
     LevelEventLoader _levelEventsLoader;
-    MinionsJsonLoaderManager _minionJSONLoader;
+	MinionsJsonLoaderManager _minionJSONLoader;
+	TowerJSONLoaderManager _towerJSONLoader;
+
     public LevelEventLoader LevelEventsLoader { get { return _levelEventsLoader; } }
-    public MinionsJsonLoaderManager MinionsLoader { get { return _minionJSONLoader; } }
+	public MinionsJsonLoaderManager MinionsLoader { get { return _minionJSONLoader; } }
+	public TowerJSONLoaderManager TowerLoader { get { return _towerJSONLoader; } }
 
 
     void Awake()
@@ -34,9 +37,6 @@ public class GameManager : MonoBehaviour
 
         _levelEventsLoader = new LevelEventLoader();
         _minionJSONLoader = new MinionsJsonLoaderManager();
+		_towerJSONLoader = new TowerJSONLoaderManager ();
     }
-
-    void Update () {
-		
-	}
 }

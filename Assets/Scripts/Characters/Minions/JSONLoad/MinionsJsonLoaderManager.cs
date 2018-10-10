@@ -23,7 +23,6 @@ public class MinionsJsonLoaderManager
 
             _allJsons.Add(item, config);
         }
-        
     }
 
     public BaseMinionStat GetStatByLevel(MinionType type, int lvlId)

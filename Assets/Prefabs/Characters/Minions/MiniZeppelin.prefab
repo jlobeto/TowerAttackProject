@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 65658314095699760}
   - component: {fileID: 23328265244391432}
   - component: {fileID: 114471082263891244}
+  - component: {fileID: 114881338645848868}
   m_Layer: 8
   m_Name: MiniZeppelin
   m_TagString: Untagged
@@ -209,6 +210,36 @@ MonoBehaviour:
   levelPointsToRecover: 0.75
   infoCanvas: {fileID: 114230314114155488, guid: 161153ce31506e040bccf87ec4525dac,
     type: 2}
+  explotionPS: {fileID: 114042232387667590, guid: 6611df02f34bd9a4abb10eec8cf94460,
+    type: 2}
+  skills: []
+  skillTime: 2
+  skillCooldown: 5
+  hasBeenFreed: 0
+  airYpos: 7
+--- !u!114 &114881338645848868
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1779314226635612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d70d7b87cb294b09855fded3272aa9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minionName: 
+  hp: 50
+  type: 0
+  minionType: 5
+  targetType: 0
+  speed: 4
+  pointsValue: 15
+  strength: 0
+  spawnCooldown: 0.5
+  coinValue: 0
+  levelPointsToRecover: 0.75
+  infoCanvas: {fileID: 0}
   explotionPS: {fileID: 114042232387667590, guid: 6611df02f34bd9a4abb10eec8cf94460,
     type: 2}
   skills: []

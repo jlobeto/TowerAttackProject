@@ -9,11 +9,12 @@ public class TowerManager : MonoBehaviour
 
     TowerBase[] _towers;
 
-	void Start () {
-        Init();
+	void Start () 
+	{
 	}
 	
-	void Update () {
+	void Update () 
+	{
 		
 	}
 
@@ -25,8 +26,14 @@ public class TowerManager : MonoBehaviour
         }
     }
 
-    void Init()
+    public void Init()
     {
         _towers = FindObjectsOfType<TowerBase>();
+		for (int i = 0; i < _towers.Length; i++) 
+		{
+			var t = _towers [i];
+			var stat = level.GameManager.TowerLoader.GetStatByLevel (t.towerType, level.levelID);
+			t.Initialize (stat);
+		}
     }
 }

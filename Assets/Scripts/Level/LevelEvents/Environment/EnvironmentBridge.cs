@@ -7,6 +7,9 @@ public class EnvironmentBridge
     public WalkNode pivot;
     public WalkNode destinationA;
     public WalkNode destinationB;
+	/// <summary>
+	/// this is the minion path (only visual) gameobject.
+	/// </summary>
     public EnvironBridgeEffect bridge_A_GameObject;
     public EnvironBridgeEffect bridge_B_GameObject;
     public bool isPointingA;

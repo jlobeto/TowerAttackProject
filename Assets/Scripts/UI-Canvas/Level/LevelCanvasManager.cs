@@ -69,18 +69,15 @@ public class LevelCanvasManager : MonoBehaviour
         _levelLives.text = newLive + " / " + initLives;
     }
 
-    public void BuildAvailableMinionsButtons(List<Minion> minions)
-    {
-        foreach (var minion in minions)
-        {
+    public void BuildAvailableMinionButton(Minion m)
+    {        
             var btn = Instantiate<Button>(minionSaleButtonPrefab, _availablesPanel.transform);
-            btn.GetComponentInChildren<Text>().text = minion.minionType +" x"+ minion.pointsValue;
-            var t = minion.minionType;
+            btn.GetComponentInChildren<Text>().text = m.minionType +" x"+ m.pointsValue;
+            var t = m.minionType;
             var newBtn = btn;
-            var cooldown = minion.spawnCooldown;
+            var cooldown = m.spawnCooldown;
             var fillImg = btn.GetComponentsInChildren<Image>();//Returns btn.image and its child.image(DONT KNOW WHY)
-            btn.onClick.AddListener(() => OnBuyMinion(newBtn,fillImg[1], t, cooldown));
-        }
+            btn.onClick.AddListener(() => OnBuyMinion(newBtn,fillImg[1], t, cooldown));        
     }
 
     void OnBuyMinion(Button btn,Image fillImg, MinionType t, float cooldown)

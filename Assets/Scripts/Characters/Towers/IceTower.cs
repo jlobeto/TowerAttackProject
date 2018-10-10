@@ -63,7 +63,7 @@ public class IceTower : TowerBase
             if (m.targetType == targetType || targetType == TargetType.Both)
             {
                 //_affectedMinions.Add(m);
-                m.GetSlowDebuff(0, (towerStats as IceTowerStats).deltaSpeed);
+				m.GetSlowDebuff(0, pMyStat.deltaSpeed);
             }
         }
     }

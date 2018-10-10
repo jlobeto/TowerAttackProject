@@ -45,19 +45,25 @@ public class EnvironmentManager : MonoBehaviour, IEvent
                         
                         if (splitted[2] == "a")
                         {
-                            Debug.Log("A");
+                            //Debug.Log("A");
                             bridge.destinationA = destination;
                             bridge.bridge_A_GameObject = bridgesGO.FirstOrDefault(i => i.destination == destination.levelEventBridgeNodeName);
                         }
                         else if (splitted[2] == "b")
                         {
-                            Debug.Log("B");
+                            //Debug.Log("B");
                             bridge.destinationB = destination;
                             bridge.bridge_B_GameObject = bridgesGO.FirstOrDefault(i => i.destination == destination.levelEventBridgeNodeName);
                         }
-                            
+
                     }
                 }
+
+				if (bridge.bridge_B_GameObject == null || bridge.bridge_A_GameObject == null) 
+				{
+					var name = bridge.bridge_A_GameObject == null ? "A" : "B";
+					throw new UnityException ("There is not a GameObject With 'EvironBridgeEffect' for bridge " + name);
+				}
 
                 _bridges.Add(bridge);
             }
