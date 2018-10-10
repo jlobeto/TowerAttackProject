@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4253408633256222}
   - component: {fileID: 54866002609003890}
   - component: {fileID: 65155664089071518}
-  - component: {fileID: 114931179261377480}
+  - component: {fileID: 114489970806372932}
   m_Layer: 8
   m_Name: Zepelin Pref
   m_TagString: Untagged
@@ -73,7 +73,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1422517632817690}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -71.98964, y: 2.27, z: 205.79767}
+  m_LocalPosition: {x: 12.905468, y: -3.7765164, z: -8.910639}
   m_LocalScale: {x: 1.6847875, y: 1.6847879, z: 1.3052077}
   m_Children:
   - {fileID: 4962314148902602}
@@ -155,7 +155,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 90adf3bff9951bb42ac3125e2ec3dedf, type: 2}
+  - {fileID: 2100000, guid: 596af686f96ff465891ad9f317098809, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -225,7 +225,7 @@ Animator:
   m_GameObject: {fileID: 1785738402045482}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 55bf5a72dac82a847b1f5d0928ec2063, type: 3}
-  m_Controller: {fileID: 9100000, guid: 66abeedb2a645084bbf624e0f5cd06d8, type: 2}
+  m_Controller: {fileID: 9100000, guid: c453e288aedf94771bc43821c2732f93, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -233,18 +233,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114906586007935932
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1785738402045482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dfd29d0bb75a124a968129eae71eb53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114931179261377480
+--- !u!114 &114489970806372932
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -252,7 +241,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1422517632817690}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7304a8c0005a94284955030fb794c218, type: 3}
+  m_Script: {fileID: 11500000, guid: 4424c97b81bd34649bce0f3681a365ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   minionName: 
@@ -274,12 +263,23 @@ MonoBehaviour:
   skillTime: 2
   skillCooldown: 5
   hasBeenFreed: 0
-  miniZeppelin: {fileID: 114881338645848868, guid: 16cb3a13d47ef4b1b86ef543a1d8b5f5,
+  miniZeppelin: {fileID: 114920024571131730, guid: 2a1341392e9fb446ea4a0944fdbcdbed,
     type: 2}
   airYpos: 7
   manager: {fileID: 0}
   miniZeppelinCount: 0
   skillMiniZepCount: 0
+--- !u!114 &114906586007935932
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1785738402045482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfd29d0bb75a124a968129eae71eb53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135468325965272938
 SphereCollider:
   m_ObjectHideFlags: 1
