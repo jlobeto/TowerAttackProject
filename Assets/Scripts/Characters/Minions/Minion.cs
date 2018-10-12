@@ -22,18 +22,18 @@ public class Minion : MonoBehaviour
     public Action<Minion> OnWalkFinished = delegate { };
     public Action<Minion> OnDeath = delegate { };
     public InfoCanvas infoCanvas;
-    public SimpleParticleSystem explotionPS;
+    public SimpleParticleSystem sparkParticleSys;
     [HideInInspector]
     public List<BaseMinionSkill> skills = new List<BaseMinionSkill>();
     [HideInInspector] public float skillTime = 2;
     [HideInInspector] public float skillCooldown = 5;
     public bool hasBeenFreed;
+    public ParticleSystem explotion;
 
     protected bool pDamageDebuff;
     protected float pDamageDebuffValue;
     protected WalkNode pNextNode;
     protected GameObject pShieldBubble;
-    protected Animator pAnimator;
     protected float pDistanceToNextNode = 0.2f;//To change the next node;
     protected bool pIceDebuff;
     protected bool pBuffInvisible;//like runner run boost skill.
@@ -44,7 +44,7 @@ public class Minion : MonoBehaviour
     int _spawnOrder;
     float _normalSpeed;
     int _id;
-    bool _hasExplotionEffect;
+    bool _hasSparkEffect;
 
     public int Id { get { return _id; } }
     public bool IsTargetable { get { return !pBuffInvisible; } }
@@ -64,7 +64,7 @@ public class Minion : MonoBehaviour
 
         hp -= dmg;
         infoCanvas.UpdateLife(hp);
-        CheckPSExplotion();
+        CheckPSSpark();
         DeathChecker();
     }
 
@@ -204,7 +204,6 @@ public class Minion : MonoBehaviour
     protected void Init()
     {
         _id = gameObject.GetInstanceID();
-        pAnimator = GetComponentInChildren<Animator>();
 
         infoCanvas = Instantiate<InfoCanvas>(infoCanvas, transform.position, transform.rotation);
         if(minionType == MinionType.MiniZeppelin)
@@ -268,37 +267,41 @@ public class Minion : MonoBehaviour
     {
         if (IsDead)
         {
-            pAnimator.SetBool("RunDissolve", true);
             if(infoCanvas != null)
                 Destroy(infoCanvas.gameObject);
             GetComponent<Collider>().enabled = false;
+            GetComponentInChildren<MeshRenderer>().enabled = false;
             pCanWalk = false;
-            if (_hasExplotionEffect)
+            if (_hasSparkEffect)
             {
                 var ps = GetComponentInChildren<SimpleParticleSystem>();
                 if(ps != null)
                     ps.Stop();
             }
+
+            if (explotion != null)
+            {
+                explotion.Play();
+                StartCoroutine(ExplotionStopped(explotion.main.duration));
+            }
         }
     }
 
 
-    /// <summary>
-    /// Animation Event
-    /// </summary>
-    public void DissolveStopped()
+    IEnumerator ExplotionStopped(float t )
     {
+        yield return new WaitForSeconds(t);
         OnDeath(this);
     }
 
-    void CheckPSExplotion()
+    void CheckPSSpark()
     {
         if (hp > (_initHP * 0.5f)) return;
         SimpleParticleSystem ps;
-        if (!_hasExplotionEffect)
+        if (!_hasSparkEffect)
         {
-            ps = Instantiate(explotionPS, transform);
-            _hasExplotionEffect = true;
+            ps = Instantiate(sparkParticleSys, transform);
+            _hasSparkEffect = true;
         }
         else
             ps = GetComponentInChildren<SimpleParticleSystem>();
