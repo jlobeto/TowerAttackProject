@@ -296,6 +296,8 @@ public class Minion : MonoBehaviour
 
     void CheckPSSpark()
     {
+        if (sparkParticleSys == null) return;
+
         if (hp > (_initHP * 0.5f)) return;
         SimpleParticleSystem ps;
         if (!_hasSparkEffect)
