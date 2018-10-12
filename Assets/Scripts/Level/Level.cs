@@ -137,6 +137,7 @@ public class Level : MonoBehaviour
     #region Inits()
     void Init()
     {
+
         var gameplayManagersGO = new GameObject("GameplayManagers");
         _minionManager = gameplayManagersGO.AddComponent<MinionManager>();
         _towerManager = gameplayManagersGO.AddComponent<TowerManager>();
@@ -148,10 +149,12 @@ public class Level : MonoBehaviour
         
         _currentLevelPoints = initialLevelPoints;
         _levelTimeAux = levelTime;
-		GameManagerInit();
-
+        GameManagerInit();
         InitLevelGoal();
-		InitLevelCanvas();
+
+        InitLevelCanvas();
+
+        ConfigureLevelEvents();
 
 
     }
@@ -170,6 +173,10 @@ public class Level : MonoBehaviour
 
 		foreach (var m in availableMinions) //need to get json data to show correct point value on spawn button 
 		{
+            if (m == null) {
+                Debug.LogError("minion item in AvailableMinions List is null ");
+                continue;
+            }
 			var minionStats = GameManager.MinionsLoader.GetStatByLevel (m.minionType, levelID);
 			m.pointsValue = minionStats.pointsValue;
 			_lvlCanvasManager.BuildAvailableMinionButton(m);
@@ -197,7 +204,7 @@ public class Level : MonoBehaviour
             objetives = _gameManager.currentLevelInfo.objectives;
             levelMode = (LevelMode)Enum.Parse(typeof(LevelMode), _gameManager.currentLevelInfo.mode);
             levelID = _gameManager.currentLevelInfo.id;
-            ConfigureLevelEvents();
+            
         }
 
 		_towerManager.Init ();

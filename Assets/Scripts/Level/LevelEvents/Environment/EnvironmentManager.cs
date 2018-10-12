@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EnvironmentManager : MonoBehaviour, IEvent
 {
@@ -62,7 +63,7 @@ public class EnvironmentManager : MonoBehaviour, IEvent
 				if (bridge.bridge_B_GameObject == null || bridge.bridge_A_GameObject == null) 
 				{
 					var name = bridge.bridge_A_GameObject == null ? "A" : "B";
-					throw new UnityException ("There is not a GameObject With 'EvironBridgeEffect' for bridge " + name);
+					throw new Exception ("There is not a GameObject With 'EvironBridgeEffect' for bridge " + name);
 				}
 
                 _bridges.Add(bridge);
@@ -78,6 +79,7 @@ public class EnvironmentManager : MonoBehaviour, IEvent
 
     List<WalkNode> GetNodeList(WalkNode node, List<WalkNode> list)
     {
+        if(node)
         list.Add(node);
         if (node.isEnd)
             return list;
@@ -105,7 +107,7 @@ public class EnvironmentManager : MonoBehaviour, IEvent
         {
             ManageBridge();
             _warningTimeUsed = false;
-            _currentTimeToChange = Random.Range(_item.eventTimer[0], _item.eventTimer[1]);
+            _currentTimeToChange = UnityEngine.Random.Range(_item.eventTimer[0], _item.eventTimer[1]);
         }
     }
 
