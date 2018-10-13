@@ -270,7 +270,6 @@ public class Minion : MonoBehaviour
             if(infoCanvas != null)
                 Destroy(infoCanvas.gameObject);
             GetComponent<Collider>().enabled = false;
-            GetComponentInChildren<MeshRenderer>().enabled = false;
             pCanWalk = false;
             if (_hasSparkEffect)
             {
@@ -281,7 +280,8 @@ public class Minion : MonoBehaviour
 
             if (explotion != null)
             {
-                explotion.Play();
+                explotion.Play(true);
+                explotion.GetComponentInChildren<Animation>().Play("test");
                 StartCoroutine(ExplotionStopped(explotion.main.duration));
             }
         }

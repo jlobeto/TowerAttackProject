@@ -482,7 +482,7 @@ GameObject:
   - component: {fileID: 199251431017737516}
   m_Layer: 0
   m_Name: DeadPartilce Init (Ground) (1)
-  m_TagString: Untagged
+  m_TagString: MinionDeathParticle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -717,7 +717,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1361170021582544}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -70.05481, y: -0.25, z: 206.2713}
+  m_LocalPosition: {x: -54.891335, y: -0.25, z: 202.79189}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4164074372918216}
@@ -9063,8 +9063,8 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     startSize:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: 2
+      minMaxState: 0
+      scalar: 0.6
       minScalar: 3
       maxCurve:
         serializedVersion: 2
@@ -9104,7 +9104,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 3
+      minMaxState: 0
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -9145,7 +9145,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 3
+      minMaxState: 0
       scalar: 1
       minScalar: 1
       maxCurve:

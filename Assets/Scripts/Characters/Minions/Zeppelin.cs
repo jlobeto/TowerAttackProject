@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Zeppelin : Minion
@@ -24,7 +25,7 @@ public class Zeppelin : Minion
         base.Start();
 
         _mySkill = gameObject.AddComponent<ZeppelinSkill>();
-        _skillPS = GetComponentInChildren<ParticleSystem>();
+        //_skillPS = GetComponentsInChildren<ParticleSystem>().Where(i => i.tag != "MinionDeathParticle").First();
         transform.position = new Vector3(transform.position.x, airYpos, transform.position.z);
 
         skills.Add(_mySkill);

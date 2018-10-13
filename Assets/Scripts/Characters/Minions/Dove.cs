@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ public class Dove : Minion
         base.Start();
         
         _mySkill = gameObject.AddComponent<ChangeTargetSkill>();
-        _skillPS = GetComponentInChildren<ParticleSystem>();
+        _skillPS = GetComponentsInChildren<ParticleSystem>().Where(i => i.tag != "MinionDeathParticle").First();
         transform.position = new Vector3(transform.position.x, airYpos, transform.position.z);
 
         skills.Add(_mySkill);

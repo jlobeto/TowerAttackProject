@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 199472946172520464}
   m_Layer: 0
   m_Name: DeadPartilce Init (Ground)
-  m_TagString: Untagged
+  m_TagString: MinionDeathParticle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,7 +83,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1625253912357548}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 211, y: 177, z: -45}
+  m_LocalPosition: {x: -56.81, y: 1.63, z: 208.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4108143668295556}
@@ -180,7 +180,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1477967228
+  randomSeed: -1033491327
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -332,8 +332,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2
-      minScalar: 3
+      scalar: 0.7
+      minScalar: 0.3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -3541,7 +3541,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1971015012
+  randomSeed: -1446675487
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6902,7 +6902,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1802325338
+  randomSeed: 1041879132
   InitialModule:
     serializedVersion: 3
     enabled: 1
