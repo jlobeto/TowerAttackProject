@@ -15,6 +15,7 @@ public class TowerBase : MonoBehaviour
     public Transform spawnPoint;
     public GameObject toRotate;
     public bool showGizmoRange;
+    public float testRange = 5f;
 
 	protected bool isInitialized;
 	public TowerStat pMyStat;
@@ -150,11 +151,8 @@ public class TowerBase : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-		if (!isInitialized)
-			return;
-		
         Gizmos.color = Color.black;
         if(showGizmoRange)
-			Gizmos.DrawWireSphere(transform.position, pMyStat.fireRange);
+			Gizmos.DrawWireSphere(transform.position, testRange);
     }
 }
