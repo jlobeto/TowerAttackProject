@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Level : MonoBehaviour
 {
@@ -43,7 +44,12 @@ public class Level : MonoBehaviour
     public LevelCanvasManager LevelCanvasManager { get { return _lvlCanvasManager; } }
     public MinionManager MinionManager { get { return _minionManager; } }
     public GameManager GameManager { get { return _gameManager; } }
-
+    private void Awake()
+    {
+        _gameManager = FindObjectOfType<GameManager>();
+        if (_gameManager == null)
+            SceneManager.LoadScene(0);
+    }
     void Start () {
         Init();
     }
@@ -137,6 +143,9 @@ public class Level : MonoBehaviour
     #region Inits()
     void Init()
     {
+        _gameManager = FindObjectOfType<GameManager>();
+        if(_gameManager == null)
+            SceneManager.LoadScene(0);
 
         var gameplayManagersGO = new GameObject("GameplayManagers");
         _minionManager = gameplayManagersGO.AddComponent<MinionManager>();
@@ -190,14 +199,9 @@ public class Level : MonoBehaviour
 
     void GameManagerInit()
     {
-        _gameManager = FindObjectOfType<GameManager>();
+        
         if (_gameManager == null)//For level only tests.
         {
-            var gameMan = new GameObject("GameManager_test");
-            _gameManager = gameMan.AddComponent<GameManager>();
-            objetives = new int[] { 5, 8, 10 };
-            levelMode = LevelMode.Normal;
-            levelID = 1;//this will ensurance that all the minions has level 1 json stats.
         }
         else //common Behaviour
         {
