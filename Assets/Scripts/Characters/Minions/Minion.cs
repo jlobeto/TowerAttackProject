@@ -288,7 +288,7 @@ public class Minion : MonoBehaviour
     }
 
 
-    IEnumerator ExplotionStopped(float t )
+    IEnumerator ExplotionStopped(float t)
     {
         yield return new WaitForSeconds(t);
         OnDeath(this);
