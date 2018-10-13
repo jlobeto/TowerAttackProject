@@ -30,7 +30,7 @@ public class GameObjectSelector : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 100, 1 << LayerMask.NameToLayer("Floor")))
         {
-            var overlaps = Physics.OverlapSphere(hit.point, 3.5f, 1 << layer);
+            var overlaps = Physics.OverlapSphere(hit.point, 1.5f, 1 << layer);
             if (overlaps.Length > 0)
                 return overlaps[0].gameObject;
 
