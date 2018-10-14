@@ -12,7 +12,8 @@ public class WeatherManager : MonoBehaviour, IEvent
     ParticleSystem _windPS;
     WeatherEventItem _weather;
     Level _level;
-    
+    RainColliderManager _rainColMan;
+
     bool _enabled;
     bool _rainEnabled;
     bool _windEnabled;
@@ -47,6 +48,11 @@ public class WeatherManager : MonoBehaviour, IEvent
             _rainPS = GameObject.FindGameObjectWithTag("AcidRain").GetComponent<ParticleSystem>();
             if (_rainPS == null)
                 throw new System.Exception("Acid Rain Particle System has not been founded.");
+                
+
+            _rainColMan = FindObjectOfType<RainColliderManager>();
+            if(_rainColMan == null)
+                throw new System.Exception("Rain Collider Manager has not been founded.");
         }
 
         if (_windEnabled)
@@ -162,16 +168,22 @@ public class WeatherManager : MonoBehaviour, IEvent
             m.loop = false;
             m.duration = _currRainDuration;
             _rainPS.Play();
+            var selected = _rainColMan.SelectArea(_weather.rainEffectDelta);
+            var shape = _rainPS.shape;
+            shape.scale = new Vector3( selected.transform.localScale.x, selected.transform.localScale.z, 1);
+            _rainPS.transform.position = new Vector3(selected.transform.position.x, 15, selected.transform.position.z);
         }
 
-        _level.LoopThroughMinions(RainDebuff);
+        //_level.LoopThroughMinions(RainDebuff);
     }
     void StopRain()
     {
         _isRaining = false;
-        _rainPS.Stop();
-        _level.LoopThroughMinions(RainDebuff);
+        _rainPS.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        _rainColMan.StopArea();
+        //_level.LoopThroughMinions(RainDebuff);
     }
+
     void RainDebuff(Minion m)
     {
         if (m == null) return;
@@ -219,7 +231,7 @@ public class WeatherManager : MonoBehaviour, IEvent
     void StopWind()
     {
         _isWindBlowing = false;
-        _windPS.Stop(true);
+        _windPS.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         _level.LoopThroughMinions(WindDebuff);
             
     }
@@ -241,8 +253,8 @@ public class WeatherManager : MonoBehaviour, IEvent
     /// </summary>
     void NewMinionSpawnedHandler()
     {
-        if(_isRaining)
-            _level.LoopThroughMinions(RainDebuff);
+        /*if(_isRaining)
+            _level.LoopThroughMinions(RainDebuff);*/
 
         if(_isWindBlowing)
             _level.LoopThroughMinions(WindDebuff);

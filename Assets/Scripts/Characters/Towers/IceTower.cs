@@ -12,9 +12,11 @@ public class IceTower : TowerBase
     ParticleSystem _particleSys;
     //List<Minion> _affectedMinions = new List<Minion>();//minions affected by the ice of the tower
 
-	void Start () {
+	protected override void  Start () {
+
+        base.Start();
+
         _hitAreaCollider = GetComponentInChildren<HitAreaCollider>();
-        _hitAreaCollider.OnTriggerStayCallback += OnTriggerStayHandler;
         _hitAreaCollider.OnTriggerExitCallback += OnTriggerExitHandler;
         _hitAreaCollider.OnTriggerEnterCallback += OnTriggerEnterHandler;
 
@@ -47,12 +49,7 @@ public class IceTower : TowerBase
 
         _particleSys.Play();
     }
-
-    void OnTriggerStayHandler(Collider other)
-    {
-
-    }
-
+    
     void OnTriggerEnterHandler(Collider other)
     {
         if (pImStunned) return;
