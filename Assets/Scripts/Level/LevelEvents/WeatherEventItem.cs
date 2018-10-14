@@ -4,6 +4,7 @@ public class WeatherEventItem
 {
     public int levelId;
     public int[] eventTimer;
+    public float warningTime;
 
     public int rainAmount;
     public int[] rainTime;

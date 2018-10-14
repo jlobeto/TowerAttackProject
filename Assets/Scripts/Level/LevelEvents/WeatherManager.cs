@@ -6,12 +6,13 @@ public class WeatherManager : MonoBehaviour, IEvent
 {
     public LevelEventManager.EventType type = LevelEventManager.EventType.Weather;
 
-    string[] _weathers = {"wind","rain"};
+    string[] _weathers = {"dust","rain"};
 
     ParticleSystem _rainPS;
     ParticleSystem _windPS;
     WeatherEventItem _weather;
     Level _level;
+    
     bool _enabled;
     bool _rainEnabled;
     bool _windEnabled;
@@ -19,7 +20,9 @@ public class WeatherManager : MonoBehaviour, IEvent
     bool _windCanSpawn;
     bool _isRaining;
     bool _isWindBlowing;
+    bool _warningTriggered;
 
+    string _selected = "";
     float _currentCooldown;
     float _currRainDuration;
     float _currWindDuration;
@@ -34,6 +37,7 @@ public class WeatherManager : MonoBehaviour, IEvent
         _windCanSpawn = _windEnabled = _weather.windAmount != 0;
 
         _level.MinionManager.OnNewMinionSpawned += NewMinionSpawnedHandler;
+        
 
         if(_rainEnabled || _windEnabled)
             _currentCooldown = Random.Range(_weather.eventTimer[0], _weather.eventTimer[1]);
@@ -73,10 +77,30 @@ public class WeatherManager : MonoBehaviour, IEvent
             if (!_isRaining && !_isWindBlowing)
             {
                 _currentCooldown -= Time.deltaTime;
+                
+                if (_currentCooldown <= _weather.warningTime && !_warningTriggered)
+                {
+                    _selected = _weathers[Random.Range(0, _weathers.Length)];
+
+                    //if randon result is not enabled, enabled the other event, that one must be enabled.
+                    if (_selected == "dust" && !_windEnabled && _rainEnabled)
+                    {
+                        _selected = "rain";
+                    }
+                    else if (_selected == "rain" && !_rainEnabled && _windEnabled)
+                    {
+                        _selected = "dust";
+                    }
+
+                    _warningTriggered = true;
+                    _level.LevelCanvasManager.TriggerEventWarning(true, _weather.warningTime, _selected);
+                }
                 if (_currentCooldown < 0)
                 {
+                    _warningTriggered = false;
+                    _level.LevelCanvasManager.TriggerEventWarning(false, 0 , _selected);
                     _currentCooldown = Random.Range(_weather.eventTimer[0], _weather.eventTimer[1]);
-                    SelectEvent();
+                    SelectEvent(_selected);
                 }
             }
             
@@ -86,10 +110,9 @@ public class WeatherManager : MonoBehaviour, IEvent
         ManageWind();
     }
 
-    void SelectEvent()
+    void SelectEvent(string name)
     {
-        string selected = _weathers[Random.Range(0, _weathers.Length)];
-        if (selected == "rain" && _rainEnabled)
+        if (name == "rain")
         {
             if (_rainCanSpawn)
             {
@@ -99,7 +122,7 @@ public class WeatherManager : MonoBehaviour, IEvent
                     _rainCanSpawn = false;
             }
         }
-        else if (selected == "wind" && _windEnabled)
+        else if (name == "dust")
         {
             if (_windCanSpawn)
             {

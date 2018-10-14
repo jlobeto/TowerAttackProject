@@ -14,6 +14,7 @@ public class LevelCanvasManager : MonoBehaviour
     public CanvasSkillLvlButton skillButtonPrefab;
     public Image levelPointBar;
     public Button minionSaleButtonPrefab;
+    public Image eventWarning;
 
     HorizontalLayoutGroup _skillsButtonPanel;
     /// <summary>
@@ -26,8 +27,13 @@ public class LevelCanvasManager : MonoBehaviour
     Image _levelLivesBG;
     Text _levelTimer;
     Text _levelLives;
+    Text _eventWarningText;
     bool _isAnyButtonDisabled;
     bool _pointBarLerpAnim;
+
+    string _evtType;
+    bool _eventWarningEnabled;
+    float _eventWarningTime;
 
     void Awake()
     {
@@ -49,12 +55,15 @@ public class LevelCanvasManager : MonoBehaviour
 
         _levelTimer = _levelTimerBG.GetComponentInChildren<Text>();
         _levelLives = _levelLivesBG.GetComponentInChildren<Text>();
-        
+
+        _eventWarningText = eventWarning.GetComponentInChildren<Text>();
+        eventWarning.enabled = false;
+        _eventWarningText.enabled = false;
     }
 
     void Update()
     {
-
+        UpdateEventWarning();
     }
     
 
@@ -115,7 +124,22 @@ public class LevelCanvasManager : MonoBehaviour
         pointsText.text = newValue + " / " + baseValue;
         //Debug.Log(levelPointBar.fillAmount);
     }
-    
+
+    public void TriggerEventWarning(bool activate, float initTime , string eventType)
+    {
+        _eventWarningEnabled = activate;
+        eventWarning.enabled = activate;
+        _eventWarningText.enabled = activate;
+        _eventWarningTime = initTime;
+        _evtType = eventType;
+    }
+    void UpdateEventWarning()
+    {
+        if (!_eventWarningEnabled) return;
+
+        _eventWarningTime -= Time.deltaTime;
+        _eventWarningText.text = _evtType.ToUpper() + " IN: " + _eventWarningTime.ToString("0.0") + "''";
+    }
 
     #region Skills Buttons
     public void CreateSkillButton(LevelSkill skill,Action onActivate, Action onDeactivate)
