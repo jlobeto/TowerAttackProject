@@ -7,6 +7,7 @@ public class LaserTower : TowerBase
     public Transform upSpawn;
     public Transform secondGrounSpawn;
     public ParticleSystem laserSpawnPS;
+    public ParticleSystem laserHitPS;
 
     Minion _target;
     LineRenderer _lineRender;
@@ -44,6 +45,7 @@ public class LaserTower : TowerBase
         {
             if (_lineRender.enabled)
             {
+                laserHitPS.Stop();
                 laserSpawnPS.Stop();
                 _lineRender.enabled = false;
             }
@@ -59,6 +61,7 @@ public class LaserTower : TowerBase
             laserSpawnPS.Play();
             //_targetHPToGo = _target.hp - pMyStat.dmgPerSecond;
             _target.GetDamage(pMyStat.dmgPerSecond);
+            laserHitPS.Play();
         }
 
         /*_target.hp = Mathf.Lerp(_target.hp, _targetHPToGo, Time.deltaTime);
@@ -73,31 +76,39 @@ public class LaserTower : TowerBase
 
         if (_target != null)
         {
+            Vector3 dir;
             if (_target.targetType == TargetType.Ground)
             {
                 if (_leftSpawn)
                 {
                     laserSpawnPS.transform.position = spawnPoint.position;
                     _lineRender.SetPosition(0, spawnPoint.position);
+                    dir = spawnPoint.position - _target.transform.position;
                 }
                 else
                 {
                     laserSpawnPS.transform.position = secondGrounSpawn.position;
                     _lineRender.SetPosition(0, secondGrounSpawn.position);
+                    dir = secondGrounSpawn.position - _target.transform.position;
                 }
             }
             else
             {
                 laserSpawnPS.transform.position = upSpawn.position;
                 _lineRender.SetPosition(0, upSpawn.position);
+                dir = upSpawn.position - _target.transform.position;
             }
 
 
-
             _lineRender.SetPosition(1, _target.transform.position);
+            laserHitPS.transform.position = _target.transform.position + dir.normalized;
+            laserHitPS.transform.rotation = Quaternion.LookRotation(dir);
+
         }
         else
         {
+            laserHitPS.transform.position = spawnPoint.transform.position;
+            laserHitPS.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear);
             _leftSpawn = !_leftSpawn;
             pTarget = null;
         }

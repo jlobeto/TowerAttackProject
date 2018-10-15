@@ -18,7 +18,7 @@ public class Runner : Minion
 
     public override void GetDamage(float dmg)
     {
-        if (!_mySkill.IsActivated)
+        if (_mySkill == null || !_mySkill.IsActivated)
             base.GetDamage(dmg);
     }
 
