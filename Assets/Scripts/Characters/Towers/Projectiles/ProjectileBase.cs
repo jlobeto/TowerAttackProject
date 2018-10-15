@@ -13,7 +13,9 @@ public class ProjectileBase : MonoBehaviour
     protected float range = 0;
     protected bool pCanMove;
     protected GameObject pTarget;
-    
+
+    protected ParticleSystem pTrail;
+
     public void Init(GameObject target, float dmg, float rng, TargetType targetType)
     {
         pCanMove = true;
@@ -21,6 +23,7 @@ public class ProjectileBase : MonoBehaviour
         damage = dmg;
         range = rng;
         pTargetType = targetType;
+        pTrail = GetComponentInChildren<ParticleSystem>();
     }
 
     
@@ -64,6 +67,10 @@ public class ProjectileBase : MonoBehaviour
             Destroy(GetComponentInChildren<MeshRenderer>());
             Destroy(gameObject, p.main.duration);
             Destroy(p.gameObject, p.main.duration);
+            if (pTrail != null)
+            {
+                Destroy(pTrail.gameObject);
+            }
             p.Play();
 
             Destroy(gameObject, explotion.main.duration);
