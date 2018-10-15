@@ -22,6 +22,7 @@ public class TowerBase : MonoBehaviour
     protected bool pImStunned;
     protected bool pSlowDebuff;
     protected GameObject pTarget;
+    protected GameObject pLastTarget;
 
     float _fireRateAux;
     int _id;
@@ -72,6 +73,17 @@ public class TowerBase : MonoBehaviour
                 pTarget = item.gameObject;
             }
         }
+
+
+        if (pTarget != null && pLastTarget != null && pLastTarget != pTarget)
+            OnTargetHasChanged();
+
+        pLastTarget = pTarget;
+    }
+
+    protected virtual void OnTargetHasChanged()
+    {
+
     }
 
     protected virtual void MinionAiming()
@@ -127,7 +139,6 @@ public class TowerBase : MonoBehaviour
     protected virtual void Start()
     {
         _id = gameObject.GetInstanceID();
-        
     }
 
 	public virtual void Initialize(TowerStat stat)

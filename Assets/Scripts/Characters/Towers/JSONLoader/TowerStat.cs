@@ -15,6 +15,9 @@ public class TowerStat
 	public float bulletRange = 0;
 	public float rotationSpeed = 5f;
 
+    //laser
+    public float dmgPerSecond = 1;
+
 	//ice tower
 	public float deltaSpeed = 0.8f;
 
