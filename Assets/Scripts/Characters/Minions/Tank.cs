@@ -23,7 +23,12 @@ public class Tank : Minion
 
     public override void GetDamage(float dmg)
     {
-        
+        if (_mySkill == null)
+        {
+            base.GetDamage(dmg);
+            return;
+        }
+
         var isEnabled =_mySkill.ExecuteSkill();
 
         if (!isEnabled)
