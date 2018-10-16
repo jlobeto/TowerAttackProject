@@ -184,7 +184,7 @@ public class WeatherManager : MonoBehaviour, IEvent
         //_level.LoopThroughMinions(RainDebuff);
     }
 
-    void RainDebuff(Minion m)
+    /*void RainDebuff(Minion m)
     {
         if (m == null) return;
 
@@ -192,7 +192,7 @@ public class WeatherManager : MonoBehaviour, IEvent
             m.DamageDebuff(true, _weather.rainEffectDelta);
         else
             m.DamageDebuff(false);
-    }
+    }*/
 
 
     void ManageWind()
