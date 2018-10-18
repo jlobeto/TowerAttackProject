@@ -100,6 +100,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4343840888280250}
   - component: {fileID: 114826271578807588}
+  - component: {fileID: 54111792563845432}
+  - component: {fileID: 65610996206619422}
   m_Layer: 10
   m_Name: Antiair Tower
   m_TagString: Untagged
@@ -203,8 +205,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1553734198450726}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -52.84, y: 0.7650001, z: 181.54}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.832905, y: 15.163438, z: -13.434372}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4355759499052826}
@@ -416,6 +418,33 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1640705495349792}
   m_Mesh: {fileID: 4300002, guid: 4a66fc0070fc07e46b2f3f1c27d71bd9, type: 3}
+--- !u!54 &54111792563845432
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1553734198450726}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &65610996206619422
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1553734198450726}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.934925, y: 2.8065643, z: 3.3729248}
+  m_Center: {x: -0.031217575, y: 0.90328217, z: -0.12489319}
 --- !u!95 &95218193452588686
 Animator:
   serializedVersion: 3
@@ -462,5 +491,6 @@ MonoBehaviour:
     bulletDamage: 5
     bulletRange: 0
     rotationSpeed: 5
+    dmgPerSecond: 1
     deltaSpeed: 0.8
     freezeTime: 1
