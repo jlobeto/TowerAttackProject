@@ -73,6 +73,7 @@ public class SwapTowerSystem : MonoBehaviour
         
         var toBeReplacedList = GetTowersTypeToSwap(minionRep);
         var currentTowers = _towerManager.GetLevelTowersByType(toBeReplacedList);
+        if (currentTowers.Count == 0) return;
         var selected = currentTowers[UnityEngine.Random.Range(0, currentTowers.Count)];
         var newTower = GetNewTowerPrefab(GameplayUtils.GetTargetTypeByMinionType(minionRep.type));
         SwapTowers(selected, newTower);
