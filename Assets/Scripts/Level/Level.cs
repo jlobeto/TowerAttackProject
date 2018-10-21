@@ -43,6 +43,7 @@ public class Level : MonoBehaviour
     public int CurrentLevelPoints { get { return _currentLevelPoints; } }
     public LevelCanvasManager LevelCanvasManager { get { return _lvlCanvasManager; } }
     public MinionManager MinionManager { get { return _minionManager; } }
+    public TowerManager TowerManager { get { return _towerManager; } }
     public GameManager GameManager { get { return _gameManager; } }
     private void Awake()
     {
@@ -143,10 +144,6 @@ public class Level : MonoBehaviour
     #region Inits()
     void Init()
     {
-        _gameManager = FindObjectOfType<GameManager>();
-        if(_gameManager == null)
-            SceneManager.LoadScene(0);
-
         var gameplayManagersGO = new GameObject("GameplayManagers");
         _minionManager = gameplayManagersGO.AddComponent<MinionManager>();
         _towerManager = gameplayManagersGO.AddComponent<TowerManager>();
@@ -158,15 +155,16 @@ public class Level : MonoBehaviour
         
         _currentLevelPoints = initialLevelPoints;
         _levelTimeAux = levelTime;
-        GameManagerInit();
+        SetGameManagerData();
         InitLevelGoal();
 
         InitLevelCanvas();
 
         ConfigureLevelEvents();
 
-
+        _gameManager.LevelInitFinished(this);
     }
+
     void InitLevelGoal()
     {
         _levelGoal = GetComponent<LevelGoal>();
@@ -197,32 +195,23 @@ public class Level : MonoBehaviour
         UpdatePoints(0);
     }
 
-    void GameManagerInit()
+    void SetGameManagerData()
     {
-        
-        if (_gameManager == null)//For level only tests.
-        {
-        }
-        else //common Behaviour
-        {
-            objetives = _gameManager.currentLevelInfo.objectives;
-            levelMode = (LevelMode)Enum.Parse(typeof(LevelMode), _gameManager.currentLevelInfo.mode);
-            levelID = _gameManager.currentLevelInfo.id;
-            
-        }
-
-		_towerManager.Init ();
+        objetives = _gameManager.CurrentLevelInfo.objectives;
+        levelMode = (LevelMode)Enum.Parse(typeof(LevelMode), _gameManager.CurrentLevelInfo.mode);
+        levelID = _gameManager.CurrentLevelInfo.id;
+        _towerManager.Init ();
     }
 
     void ConfigureLevelEvents()
     {
         List<LevelEventManager.EventType> eventTypes = new List<LevelEventManager.EventType>();
-        if (_gameManager.currentLevelInfo.weatherEvents)
+        if (_gameManager.CurrentLevelInfo.weatherEvents)
         {
             _lvlEventManager = gameObject.AddComponent<LevelEventManager>();
             eventTypes.Add(LevelEventManager.EventType.Weather);
         }
-        if (_gameManager.currentLevelInfo.levelEvents)
+        if (_gameManager.CurrentLevelInfo.levelEvents)
         {
             if(_lvlEventManager == null)
                 _lvlEventManager = gameObject.AddComponent<LevelEventManager>();

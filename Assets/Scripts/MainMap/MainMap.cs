@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class MainMap : MonoBehaviour
 {
 
-    GameManager _gameManager;
+    GameManager[] _gameManagers;
     LevelNodesLoader _levelInfoLoader;
     MainMapCanvasManager _mainMapCanvas;
 
@@ -17,7 +17,8 @@ public class MainMap : MonoBehaviour
     void Start()
     {
         _mainMapCanvas = FindObjectOfType<MainMapCanvasManager>();
-        _gameManager = FindObjectOfType<GameManager>();
+        _gameManagers = FindObjectsOfType<GameManager>();
+
         CreateLevelNodes();
     }
 
@@ -35,7 +36,12 @@ public class MainMap : MonoBehaviour
 
     void OnLevelNodeClick(LevelInfo lvlInfo)
     {
-        _gameManager.currentLevelInfo = lvlInfo;
+
+        for (int i = 0; i < _gameManagers.Length; i++)
+        {
+            if (_gameManagers[i] == null) continue;
+            _gameManagers[i].SetCurrentLevelInfo(lvlInfo);
+        }
 
         try
         {
@@ -43,7 +49,7 @@ public class MainMap : MonoBehaviour
         }
         catch (System.Exception)
         {
-            throw new System.Exception("Error Loading LevelScene > There is not a scene called Level"+lvlInfo.id);
+            throw new System.Exception("Error Loading LevelScene > There is not a scene called 'Level"+lvlInfo.id+"'");
         }
         
     }

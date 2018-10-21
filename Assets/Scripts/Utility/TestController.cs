@@ -21,7 +21,7 @@ public class TestController : MonoBehaviour
         GUILayout.BeginVertical();
         GUILayout.BeginHorizontal();
         GUILayout.Space(250);
-        GUILayout.Label("R: reset scene", _guiStyle);
+        GUILayout.Label("Q: Quit To MainMap", _guiStyle);
         GUILayout.BeginHorizontal();
         GUILayout.BeginHorizontal();
         GUILayout.Space(250);
@@ -32,9 +32,10 @@ public class TestController : MonoBehaviour
 
     void Update ()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            SceneManager.LoadScene(1);
+            FindObjectOfType<GameManager>().SetCurrentLevelInfo(null);
+            SceneManager.LoadScene(0);
         }
 
         if (Input.GetKeyDown(KeyCode.P))

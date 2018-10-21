@@ -26,6 +26,7 @@ public class OneBtnPopup : BasePopup
 
     public void OnActionButton()
     {
+        FindObjectOfType<GameManager>().SetCurrentLevelInfo(null);
         SceneManager.LoadScene(0);
     }
 }

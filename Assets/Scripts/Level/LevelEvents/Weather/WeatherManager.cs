@@ -251,7 +251,7 @@ public class WeatherManager : MonoBehaviour, IEvent
     /// <summary>
     /// If a minion is spawned after an event starts, this will activate the event on those minions
     /// </summary>
-    void NewMinionSpawnedHandler()
+    void NewMinionSpawnedHandler(MinionType type)
     {
         /*if(_isRaining)
             _level.LoopThroughMinions(RainDebuff);*/

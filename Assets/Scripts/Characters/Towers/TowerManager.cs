@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class TowerManager : MonoBehaviour
 
     public Level level;
 
-    TowerBase[] _towers;
+    List<TowerBase> _towers;
 
 	void Start () 
 	{
@@ -28,12 +29,42 @@ public class TowerManager : MonoBehaviour
 
     public void Init()
     {
-        _towers = FindObjectsOfType<TowerBase>();
-		for (int i = 0; i < _towers.Length; i++) 
+        _towers = FindObjectsOfType<TowerBase>().ToList();
+		for (int i = 0; i < _towers.Count; i++)
 		{
 			var t = _towers [i];
 			var stat = level.GameManager.TowerLoader.GetStatByLevel (t.towerType, level.levelID);
 			t.Initialize (stat);
 		}
     }
+
+    public void InitSingleTower(TowerBase t)
+    {
+        var stat = level.GameManager.TowerLoader.GetStatByLevel(t.towerType, level.levelID);
+        t.Initialize(stat);
+        _towers.Add(t);
+    }
+
+    public void DestroySingleTower(TowerBase t)
+    {
+        _towers.Remove(t);
+        Destroy(t.gameObject);
+    }
+
+    public List<TowerBase> GetLevelTowersByType(List<TowerType> types)
+    {
+        var list = new List<TowerBase>();
+        foreach (var t in _towers)
+        {
+            foreach (var item in types)
+            {
+                if (t.towerType == item && !list.Any(i => i.towerType == t.towerType))
+                    list.Add(t);
+            }
+        }
+
+        return list;
+    }
+
+
 }

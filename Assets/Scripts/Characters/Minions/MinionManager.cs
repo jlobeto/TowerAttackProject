@@ -8,7 +8,8 @@ public class MinionManager : MonoBehaviour
 {
     [HideInInspector]
     public Level level;
-    public Action OnNewMinionSpawned = delegate { };
+    public Action<MinionType> OnNewMinionSpawned = delegate { };
+    public Action<MinionType> OnMinionWalkFinished = delegate { };
 
 
     List<Minion> _minions = new List<Minion>();
@@ -41,7 +42,7 @@ public class MinionManager : MonoBehaviour
         minion.OnWalkFinished += MinionWalkFinishedHandler;
         minion.OnDeath += MinionDeathHandler;
         _minions.Add(minion);
-        OnNewMinionSpawned();
+        OnNewMinionSpawned(type);
     }
     
     /// <summary>
@@ -156,6 +157,7 @@ public class MinionManager : MonoBehaviour
         DestroyMinion(m);
         _successCount++;
         level.UpdateLevelGoal();
+        OnMinionWalkFinished(m.minionType);
     }
 
     void MinionDeathHandler(Minion m)
