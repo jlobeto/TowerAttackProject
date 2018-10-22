@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 4413240717129902}
   - component: {fileID: 198938297357700490}
   - component: {fileID: 199472946172520464}
-  - component: {fileID: 95648102555410652}
+  - component: {fileID: 111228230561823628}
   m_Layer: 0
   m_Name: DeadPartilce Init (air)
   m_TagString: MinionDeathParticle
@@ -122,23 +122,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!95 &95648102555410652
-Animator:
-  serializedVersion: 3
+--- !u!111 &111228230561823628
+Animation:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1625253912357548}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b963dd7f00537be4d8c07e4df8737fa2, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: fc953747e8e45ba449785d5e7a569820, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!198 &198238394410032868
 ParticleSystem:
   m_ObjectHideFlags: 1
