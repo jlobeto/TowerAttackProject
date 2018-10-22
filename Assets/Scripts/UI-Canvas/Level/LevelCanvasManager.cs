@@ -131,6 +131,9 @@ public class LevelCanvasManager : MonoBehaviour
         eventWarning.enabled = activate;
         _eventWarningText.enabled = activate;
         _eventWarningTime = initTime;
+
+        if (eventType == "dust")
+            eventType = "Static storm";
         _evtType = eventType;
     }
     void UpdateEventWarning()
