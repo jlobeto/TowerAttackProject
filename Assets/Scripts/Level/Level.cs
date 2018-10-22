@@ -21,6 +21,8 @@ public class Level : MonoBehaviour
     [HideInInspector]
     public int[] objetives;//[5, 7, 10] first the minimun, last the maximun.
     [HideInInspector]
+    public int[] currencyWinPerObjetives;
+    [HideInInspector]
     public LevelMode levelMode;
 
     GameManager _gameManager;
@@ -28,7 +30,6 @@ public class Level : MonoBehaviour
     MinionManager _minionManager;
     LevelSkillManager _lvlSkillManager;
     LevelEventManager _lvlEventManager;
-    LevelGoal _levelGoal;
     LevelCanvasManager _lvlCanvasManager;
     GameObjectSelector _goSelector;
     FloorEffect _floorEffect;
@@ -36,11 +37,13 @@ public class Level : MonoBehaviour
     bool _levelEnded;
     int _currentLevelPoints = 0;
     float _levelTimeAux;
+    int _livesRemoved;
 
     /// <summary>
     /// Used to inform CurrentLevelPoints to user on the GUI.
     /// </summary>
     public int CurrentLevelPoints { get { return _currentLevelPoints; } }
+    public int LivesRemoved { get { return _livesRemoved; } }
     public LevelCanvasManager LevelCanvasManager { get { return _lvlCanvasManager; } }
     public MinionManager MinionManager { get { return _minionManager; } }
     public TowerManager TowerManager { get { return _towerManager; } }
@@ -82,8 +85,7 @@ public class Level : MonoBehaviour
         if (_levelTimeAux < 0)
         {
             _levelEnded = true;
-            if(_gameManager.popupManager != null)
-                _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform, "Game Over !", "Try Again", "Main map");
+            CheckLevelCompletion(true);
             _towerManager.StopTowers();
             _minionManager.StopMinions();
         }
@@ -156,7 +158,6 @@ public class Level : MonoBehaviour
         _currentLevelPoints = initialLevelPoints;
         _levelTimeAux = levelTime;
         SetGameManagerData();
-        InitLevelGoal();
 
         InitLevelCanvas();
 
@@ -164,16 +165,7 @@ public class Level : MonoBehaviour
 
         _gameManager.LevelInitFinished(this);
     }
-
-    void InitLevelGoal()
-    {
-        _levelGoal = GetComponent<LevelGoal>();
-        if (_levelGoal == null)
-            throw new System.Exception("There isn't a LevelGoal object attached to this Level GO.");
-
-        _levelGoal.OnGoalComplete += GoalCompletedHandler;
-    }
-
+    
     void InitLevelCanvas()
     {
         _lvlCanvasManager = FindObjectOfType<LevelCanvasManager>();
@@ -191,13 +183,14 @@ public class Level : MonoBehaviour
         
         _lvlCanvasManager.level = this;
         _lvlCanvasManager.UpdateLevelTimer(levelTime);
-        _lvlCanvasManager.UpdateLevelLives(_levelGoal.CurrentLives, _levelGoal.lives);
+        _lvlCanvasManager.UpdateLevelLives(LivesRemoved, objetives[objetives.Length-1]);
         UpdatePoints(0);
     }
 
     void SetGameManagerData()
     {
         objetives = _gameManager.CurrentLevelInfo.objectives;
+        currencyWinPerObjetives = _gameManager.CurrentLevelInfo.currencyGainedByObjectives;
         levelMode = (LevelMode)Enum.Parse(typeof(LevelMode), _gameManager.CurrentLevelInfo.mode);
         levelID = _gameManager.CurrentLevelInfo.id;
         _towerManager.Init ();
@@ -232,9 +225,31 @@ public class Level : MonoBehaviour
 
     public void UpdateLevelGoal()
     {
-        _levelGoal.UpdateGoal(-1);
-        _lvlCanvasManager.UpdateLevelLives(_levelGoal.CurrentLives, _levelGoal.lives);
+        _livesRemoved++;
+        _lvlCanvasManager.UpdateLevelLives(LivesRemoved, objetives[objetives.Length - 1]);
         _floorEffect.InitAnimation();
+        CheckLevelCompletion(false);
+    }
+
+    void CheckLevelCompletion(bool byLevelTimer)
+    {
+        if (LivesRemoved == objetives[objetives.Length - 1])
+        {
+            GoalCompletedHandler();
+        }
+        else if (byLevelTimer)
+        {
+            if (LivesRemoved >= objetives[0])
+            {
+                GoalCompletedHandler();
+            }
+            else if (LivesRemoved < objetives[0])
+            {
+                if (_gameManager.popupManager != null)
+                    _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform, "Game Over !", "Try Again", "Main map");
+            }
+        }
+        
     }
 
     void GoalCompletedHandler()

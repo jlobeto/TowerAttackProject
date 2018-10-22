@@ -7138,7 +7138,6 @@ GameObject:
   m_Component:
   - component: {fileID: 221221715}
   - component: {fileID: 221221714}
-  - component: {fileID: 221221713}
   m_Layer: 0
   m_Name: Level6
   m_TagString: Untagged
@@ -7146,19 +7145,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &221221713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 221221712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 258d0e257f797404fb6fd1900cf68913, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goalType: 0
-  lives: 10
 --- !u!114 &221221714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7186,6 +7172,7 @@ MonoBehaviour:
   - {fileID: 114569184015996796, guid: e5163b2161ade4540b625292a49e718a, type: 2}
   - {fileID: 114309676761639494, guid: 41108b655489dab48a179dc9e81a2d3e, type: 2}
   objetives: 
+  currencyWinPerObjetives: 
   levelMode: 0
 --- !u!4 &221221715
 Transform:

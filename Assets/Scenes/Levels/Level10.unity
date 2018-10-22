@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.4964127, b: 0.57481724, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -58207,7 +58207,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1760915916}
   - component: {fileID: 1760915915}
-  - component: {fileID: 1760915914}
   m_Layer: 0
   m_Name: Level10
   m_TagString: Untagged
@@ -58215,19 +58214,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1760915914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1760915913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 258d0e257f797404fb6fd1900cf68913, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goalType: 0
-  lives: 10
 --- !u!114 &1760915915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58255,6 +58241,7 @@ MonoBehaviour:
   - {fileID: 114489970806372932, guid: b0e29c9a437a0a141b340f6351abff51, type: 2}
   - {fileID: 114309676761639494, guid: 41108b655489dab48a179dc9e81a2d3e, type: 2}
   objetives: 
+  currencyWinPerObjetives: 
   levelMode: 0
 --- !u!4 &1760915916
 Transform:
