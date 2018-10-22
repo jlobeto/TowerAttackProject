@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4108143668295556}
   - component: {fileID: 198238394410032868}
   - component: {fileID: 199441570334214030}
-  - component: {fileID: 111735332560068726}
+  - component: {fileID: 95420645413936722}
   m_Layer: 0
   m_Name: Death particles pieces
   m_TagString: Untagged
@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 4413240717129902}
   - component: {fileID: 198938297357700490}
   - component: {fileID: 199472946172520464}
+  - component: {fileID: 95648102555410652}
   m_Layer: 0
   m_Name: DeadPartilce Init (air)
   m_TagString: MinionDeathParticle
@@ -104,22 +105,40 @@ Transform:
   m_Father: {fileID: 4413240717129902}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!111 &111735332560068726
-Animation:
+--- !u!95 &95420645413936722
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1282843943425844}
   m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0fb67ecd3b64e784ca18654cf8e994a4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95648102555410652
+Animator:
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 75ab2084ecb0e6b408a4e848d2e34459, type: 2}
-  m_Animations:
-  - {fileID: 0}
-  - {fileID: 7400000, guid: 75ab2084ecb0e6b408a4e848d2e34459, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1625253912357548}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b963dd7f00537be4d8c07e4df8737fa2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!198 &198238394410032868
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -180,7 +199,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2105250582
+  randomSeed: -392098548
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3541,7 +3560,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 203509146
+  randomSeed: -648683648
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6902,7 +6921,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2131599652
+  randomSeed: 2033663631
   InitialModule:
     serializedVersion: 3
     enabled: 1
