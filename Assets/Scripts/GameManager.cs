@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public PopupManager popupManager;
     [Header("Add tower prefabs so SwapSystem can work.")]
     public List<TowerBase> allTowersPrefabs;
+    public ParticleSystem swapParticleSystem;
 
     /// <summary>
     /// This is set when a level node is clicked, When returning from a level, this is set to null.
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(this);
             _swapTowerSystem = gameObject.AddComponent<SwapTowerSystem>();
+            _swapTowerSystem.swapParticleSysPrefab = swapParticleSystem;
         }
         else
             Destroy(gameObject);

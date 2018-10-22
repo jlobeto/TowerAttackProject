@@ -6,6 +6,9 @@ using System;
 
 public class SwapTowerSystem : MonoBehaviour
 {
+
+    public ParticleSystem swapParticleSysPrefab;
+
     SwapTowerJson _swapJson;
     /// <summary>
     /// trigger : minion type
@@ -21,19 +24,19 @@ public class SwapTowerSystem : MonoBehaviour
     bool _startSystem;
     bool _isEnableForThisLevel;
 
-	void Start ()
+    void Start()
     {
         LoadSystemInfo();
         _gameManager = GetComponent<GameManager>();
         _gameManager.OnLevelInfoSet += LevelInfoSetHandler;
     }
-	
-	
-	void Update ()
+
+
+    void Update()
     {
         if (!_isEnableForThisLevel || !_startSystem) return;
 
-	}
+    }
 
 
     public void LeveInitFinished(MinionManager minionMan, TowerManager towerMan)
@@ -70,7 +73,7 @@ public class SwapTowerSystem : MonoBehaviour
         var repeatedList = GetRepeatedMinionList(_minionWalkFinishedOrder);
         var minionRep = IsAnyMinionAbuse(repeatedList);
         if (minionRep == null) return;
-        
+
         var toBeReplacedList = GetTowersTypeToSwap(minionRep);
         var currentTowers = _towerManager.GetLevelTowersByType(toBeReplacedList);
         if (currentTowers.Count == 0) return;
@@ -85,7 +88,18 @@ public class SwapTowerSystem : MonoBehaviour
     void SwapTowers(TowerBase toSwap, TowerBase newOne)
     {
         var towerTransform = toSwap.transform;
-        var newTower = Instantiate<TowerBase>(newOne, towerTransform.position, towerTransform.rotation);
+        var particle = Instantiate<ParticleSystem>(swapParticleSysPrefab, towerTransform.position, Quaternion.identity);
+        particle.transform.position = new Vector3(particle.transform.position.x, particle.transform.position.y + 3, particle.transform.position.z);
+        particle.transform.position += (Camera.main.transform.position - particle.transform.position).normalized * 2f;
+        particle.Play(true);
+        Destroy(particle.gameObject, particle.main.duration);
+        StartCoroutine(WaitToBuildNewTower(toSwap, newOne, towerTransform));
+    }
+
+    IEnumerator WaitToBuildNewTower(TowerBase toSwap, TowerBase newOne, Transform transform)
+    {
+        yield return new WaitForSeconds(2.1f);
+        var newTower = Instantiate<TowerBase>(newOne, transform.position, transform.rotation);
         _towerManager.InitSingleTower(newTower);
         _towerManager.DestroySingleTower(toSwap);
     }
