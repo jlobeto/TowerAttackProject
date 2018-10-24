@@ -12,9 +12,8 @@ public class Level : MonoBehaviour
     [Tooltip("Ones camera is set, asign to this")]
     public Transform cameraTransform;
 
-    public int initialLevelPoints;
-    [Tooltip("In seconds")]
-    public float levelTime = 60;
+    [HideInInspector] public int initialLevelPoints;
+    [HideInInspector] public float levelTime = 60;
     public int pointsPerSecond = 1;
     public List<LevelSkillManager.SkillType> levelSkills = new List<LevelSkillManager.SkillType>();
     public List<Minion> availableMinions = new List<Minion>();
@@ -155,8 +154,6 @@ public class Level : MonoBehaviour
 
         _towerManager.level = _lvlSkillManager.level = _minionManager.level = this;
         
-        _currentLevelPoints = initialLevelPoints;
-        _levelTimeAux = levelTime;
         SetGameManagerData();
 
         InitLevelCanvas();
@@ -190,6 +187,10 @@ public class Level : MonoBehaviour
     void SetGameManagerData()
     {
         objetives = _gameManager.CurrentLevelInfo.objectives;
+        initialLevelPoints = _gameManager.CurrentLevelInfo.initialLevelPoints;
+        _currentLevelPoints = initialLevelPoints;
+        levelTime = _gameManager.CurrentLevelInfo.levelTime;
+        _levelTimeAux = levelTime;
         currencyWinPerObjetives = _gameManager.CurrentLevelInfo.currencyGainedByObjectives;
         levelMode = (LevelMode)Enum.Parse(typeof(LevelMode), _gameManager.CurrentLevelInfo.mode);
         levelID = _gameManager.CurrentLevelInfo.id;

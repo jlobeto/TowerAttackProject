@@ -19,4 +19,6 @@ public class LevelInfo
     public int[] currencyGainedByObjectives;
     public bool weatherEvents;
     public bool levelEvents;
+    public float levelTime;
+    public int initialLevelPoints;
 }
