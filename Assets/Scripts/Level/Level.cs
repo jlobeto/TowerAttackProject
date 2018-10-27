@@ -97,8 +97,17 @@ public class Level : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             var selected = _goSelector.SelectGameObject(LayerMask.NameToLayer("Minion"));
-            if (selected == null) return;
-            _minionManager.OnReleasedMinionSelected(selected.GetInstanceID());
+            if (selected != null)
+                _minionManager.OnReleasedMinionSelected(selected.GetInstanceID());
+            else
+            {
+                selected = _goSelector.SelectGameObject(LayerMask.NameToLayer("Tower"));
+                if(selected != null)
+                {
+                    _towerManager.ActivateTowerAttackRange(selected.GetInstanceID());
+                }
+            }
+
         }
     }
 

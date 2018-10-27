@@ -111,6 +111,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1441069463161542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4698748352605636}
+  m_Layer: 10
+  m_Name: range point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1480135742067882
 GameObject:
   m_ObjectHideFlags: 1
@@ -255,10 +270,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1676690817777106}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.463337, y: 1.4, z: 10.489807}
+  m_LocalPosition: {x: 6.54, y: 1.4, z: -12.51}
   m_LocalScale: {x: 1.5796397, y: 1.9813832, z: 1.5796399}
   m_Children:
   - {fileID: 4945888630132114}
+  - {fileID: 4698748352605636}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -290,6 +306,19 @@ Transform:
   m_Father: {fileID: 4378682449890614}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -180, y: 0, z: 0}
+--- !u!4 &4698748352605636
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1441069463161542}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.04, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4365815457783224}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4755382528370886
 Transform:
   m_ObjectHideFlags: 1
@@ -671,6 +700,9 @@ MonoBehaviour:
   - {fileID: 114406113943285256, guid: 99b82d6f7ab4a6e40b4c33e7b0566aba, type: 2}
   spawnPoint: {fileID: 4882611420470498}
   toRotate: {fileID: 1584504777932714}
+  attackRangePS: {fileID: 198671826660939590}
+  rangeGroundPosition: {fileID: 4698748352605636}
+  rangeAirPosition: {fileID: 0}
   showGizmoRange: 0
   testRange: 6.2
   pMyStat:
@@ -696,7 +728,7 @@ ParticleSystem:
   stopAction: 0
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -744,7 +776,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 804158083
+  randomSeed: 1902650898
   InitialModule:
     serializedVersion: 3
     enabled: 1

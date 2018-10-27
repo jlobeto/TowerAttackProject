@@ -66,5 +66,13 @@ public class TowerManager : MonoBehaviour
         return list;
     }
 
+    public void ActivateTowerAttackRange(int id)
+    {
+        var selected = _towers.FirstOrDefault(i => i.Id == id);
+        if (selected == null) return;
+
+        selected.ActivateAttackRangePS();
+    }
+
 
 }
