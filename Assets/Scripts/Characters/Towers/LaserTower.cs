@@ -5,7 +5,6 @@ using UnityEngine;
 public class LaserTower : TowerBase
 {
     public Transform upSpawn;
-    public Transform secondGrounSpawn;
     public ParticleSystem laserSpawnPS;
     public ParticleSystem laserHitPS;
 
@@ -79,18 +78,11 @@ public class LaserTower : TowerBase
             Vector3 dir;
             if (_target.targetType == TargetType.Ground)
             {
-                if (_leftSpawn)
-                {
-                    laserSpawnPS.transform.position = spawnPoint.position;
-                    _lineRender.SetPosition(0, spawnPoint.position);
-                    dir = spawnPoint.position - _target.transform.position;
-                }
-                else
-                {
-                    laserSpawnPS.transform.position = secondGrounSpawn.position;
-                    _lineRender.SetPosition(0, secondGrounSpawn.position);
-                    dir = secondGrounSpawn.position - _target.transform.position;
-                }
+                
+                laserSpawnPS.transform.position = spawnPoint.position;
+                _lineRender.SetPosition(0, spawnPoint.position);
+                dir = spawnPoint.position - _target.transform.position;
+               
             }
             else
             {
