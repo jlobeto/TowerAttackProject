@@ -158,7 +158,7 @@ public class TowerBase : MonoBehaviour
 
     public void ActivateAttackRangePS()
     {
-        if (attackRangePS.isPlaying) return;
+        if (attackRangePS == null || attackRangePS.isPlaying) return;
 
         attackRangePS.Play(true);
         StartCoroutine(StopAtkRangePS());
