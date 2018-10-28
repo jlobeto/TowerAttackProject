@@ -12,6 +12,7 @@ public class EnvironmentBridge
 	/// </summary>
     public EnvironBridgeEffect bridge_A_GameObject;
     public EnvironBridgeEffect bridge_B_GameObject;
+    public BridgeClock bridgeClock;//the battery charge clock in scene;
     public bool isPointingA;
 
     public EnvironmentBridge(WalkNode p , WalkNode a=null, WalkNode b=null)

@@ -10,10 +10,9 @@ public class EnvironmentManager : MonoBehaviour, IEvent
     Level _lvl;
     EnvironmentEventItem _item;
 
-    List<EnvironmentBridge> _bridges ;
+    List<EnvironmentBridge> _bridges;
     bool _enabled;
     bool _bridgeEnabled;
-    bool _warningTimeUsed;
     float _currentTimeToChange;
 
     public void Init(EnvironmentEventItem item, Level lvl)
@@ -31,6 +30,7 @@ public class EnvironmentManager : MonoBehaviour, IEvent
             var pivots = GetWalkNodesBridge(list, "pivot");
             var dests = GetWalkNodesBridge(list, "dest");
             var bridgesGO = FindObjectsOfType<EnvironBridgeEffect>().ToList();
+            var clocksOnScene = FindObjectsOfType<BridgeClock>();
 
             foreach (var p in pivots)
             {
@@ -66,6 +66,15 @@ public class EnvironmentManager : MonoBehaviour, IEvent
 					throw new Exception ("There is not a GameObject With 'EvironBridgeEffect' for bridge " + name);
 				}
 
+                foreach (var c in clocksOnScene)
+                {
+                    if (c.bridgePivot.Contains(pivotNum.ToString()))
+                    {
+                        bridge.bridgeClock = c;
+                        break;
+                    }
+                }
+
                 _bridges.Add(bridge);
             }
         }
@@ -94,7 +103,7 @@ public class EnvironmentManager : MonoBehaviour, IEvent
 
     public void StopEvent()
     {
-        
+        _enabled = false;
     }
 
     public void UpdateEvent()
@@ -106,13 +115,13 @@ public class EnvironmentManager : MonoBehaviour, IEvent
         if (_currentTimeToChange < 0)
         {
             ManageBridge();
-            _warningTimeUsed = false;
-            _currentTimeToChange = UnityEngine.Random.Range(_item.eventTimer[0], _item.eventTimer[1]);
         }
     }
 
     void ManageBridge()
     {
+        _currentTimeToChange = UnityEngine.Random.Range(_item.eventTimer[0], _item.eventTimer[1]);
+
         foreach (var bridge in _bridges)
         {
             bridge.pivot.nexts = new List<WalkNode>();
@@ -131,6 +140,7 @@ public class EnvironmentManager : MonoBehaviour, IEvent
                 
 
             bridge.isPointingA = !bridge.isPointingA;
+            bridge.bridgeClock.StartCountdown(_currentTimeToChange);
         }
     }
 }
