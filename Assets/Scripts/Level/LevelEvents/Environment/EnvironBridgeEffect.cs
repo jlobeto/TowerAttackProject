@@ -7,47 +7,33 @@ public class EnvironBridgeEffect : MonoBehaviour
 {
     public string destination = "";
 
-    List<MeshRenderer> _renderers = new List<MeshRenderer>();
-    float _toHide;
-    float _initHide;
-    bool _hide;
-    float _discountCounter = 1;
-    bool _intermitent;
+    List<Animator> _paths = new List<Animator>();
+    float _timerToPlayNext = 0.2f;
 
     void Start()
     {
-        _renderers = GetComponentsInChildren<MeshRenderer>().ToList();
+        _paths = GetComponentsInChildren<Animator>().ToList();
     }
-
-    public void StartHidding(float timeToHide)
-    {
-        _initHide = timeToHide;
-        _toHide = timeToHide;
-        _hide = true;
-    }
-
-    public void Show()
-    {
-        affectMesh(true);
-    }
+    
 
     void Update()
     {
-        if (!_hide) return;
 
-        _toHide -= Time.deltaTime;
-        if (_toHide < 0)
+    }
+
+    public void ActivateAnimation(bool forward)
+    {
+
+        foreach (var item in _paths)
         {
-            affectMesh(false);
-            _hide = false;
+            item.SetFloat("animSpeed", forward ? 1 : -1);
+            StartCoroutine(MakeFall(item));
         }
     }
 
-    public void affectMesh(bool visible)
+    IEnumerator MakeFall(Animator item)
     {
-        foreach (var item in _renderers)
-        {
-            item.enabled = visible;
-        }
+        yield return new WaitForSeconds(_timerToPlayNext);
+        item.SetBool("startFall", true);
     }
 }

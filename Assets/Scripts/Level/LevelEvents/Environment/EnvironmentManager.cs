@@ -14,6 +14,7 @@ public class EnvironmentManager : MonoBehaviour, IEvent
     bool _enabled;
     bool _bridgeEnabled;
     float _currentTimeToChange;
+    bool _firstShow;
 
     public void Init(EnvironmentEventItem item, Level lvl)
     {
@@ -129,18 +130,28 @@ public class EnvironmentManager : MonoBehaviour, IEvent
 
             if (bridge.isPointingA)
             {
-                bridge.bridge_A_GameObject.affectMesh(false);
-                bridge.bridge_B_GameObject.affectMesh(true);
+                bridge.bridge_A_GameObject.ActivateAnimation(true);
+                if (!_firstShow)
+                    bridge.bridge_B_GameObject.ActivateAnimation(false);
+                Debug.Log("isPointingA");
+                Debug.Log(_firstShow);
             }
             else
             {
-                bridge.bridge_A_GameObject.affectMesh(true);
-                bridge.bridge_B_GameObject.affectMesh(false);
+                Debug.Log("!isPointingA");
+
+                
+                bridge.bridge_A_GameObject.ActivateAnimation(false);
+
+                
+                bridge.bridge_B_GameObject.ActivateAnimation(true);
             }
                 
 
             bridge.isPointingA = !bridge.isPointingA;
             bridge.bridgeClock.StartCountdown(_currentTimeToChange);
         }
+
+        _firstShow = true;
     }
 }

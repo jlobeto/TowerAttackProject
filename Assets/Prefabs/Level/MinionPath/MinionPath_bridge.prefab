@@ -53,9 +53,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4739364174410608}
+  - component: {fileID: 95055928189731280}
+  - component: {fileID: 114383132514805918}
   m_Layer: 0
   m_Name: MinionPath_bridge
-  m_TagString: Untagged
+  m_TagString: PathMinionGameObj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,8 +95,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1436246111023386}
   m_LocalRotation: {x: -0, y: 0.70710677, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -88, y: 0, z: 227.11}
-  m_LocalScale: {x: 3, y: 2, z: 3}
+  m_LocalPosition: {x: -0.12750053, y: 0.11999893, z: -1.7024994}
+  m_LocalScale: {x: 0.75, y: 2, z: 0.75}
   m_Children:
   - {fileID: 4005249312561148}
   - {fileID: 4194874475337282}
@@ -183,3 +185,31 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1325429058326182}
   m_Mesh: {fileID: 4300002, guid: 02225598d2cffb245ae1bb823370334c, type: 3}
+--- !u!95 &95055928189731280
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1436246111023386}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 14fe5b66e2918f64ab1de82f12acfe5a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114383132514805918
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1436246111023386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a612f969c3075d47822920bcb968954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
