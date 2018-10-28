@@ -12,13 +12,21 @@ public class Tank : Minion
 
     Minion[] _skillAffectedMinions;
     ShieldSkill _mySkill;
+    bool skillPhase;//phaseOne = user has clicked to know the skill range
 
     protected override void Start()
     {
         base.Start();
-        _mySkill = gameObject.AddComponent<ShieldSkill>();        
+        _mySkill = gameObject.AddComponent<ShieldSkill>();
         skills.Add(_mySkill);
         _mySkill.infoCanvas = infoCanvas;
+    }
+
+    public override void InitMinion(WalkNode n, Vector3 pTransform = default(Vector3))
+    {
+        base.InitMinion(n, pTransform);
+
+        InitSkillAreaEffect(skillArea);
     }
 
     public override void GetDamage(float dmg)
@@ -43,6 +51,14 @@ public class Tank : Minion
 
     public override void ActivateSelfSkill()
     {
+        if (!skillPhase)
+        {
+            skillZoneEffect.SetActive(true);
+            StartCoroutine(StopSkillZoneShow());
+            skillPhase = true;
+            return;
+        }
+
         var wasDisabled =_mySkill.Initialize(skillTime, skillCooldown ,shieldHits);
 
         //If the skill has been already enabled(because other tank has given it) return and false selfSkillEnabled
@@ -54,7 +70,13 @@ public class Tank : Minion
         foreach (var item in _skillAffectedMinions)
             SetSkillToMinion(item,true);
     }
-    
+
+    IEnumerator StopSkillZoneShow()
+    {
+        yield return new WaitForSeconds(1.5f);
+        skillZoneEffect.SetActive(false);
+        skillPhase = false;
+    }
 
     /// <summary>
     /// For the skill use. MUST delete this tank from the algorithm

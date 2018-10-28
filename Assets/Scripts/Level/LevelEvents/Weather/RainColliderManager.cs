@@ -79,7 +79,7 @@ public class RainColliderManager : MonoBehaviour
 
     void TriggerExitHandler(Collider col)
     {
-        Debug.Log(col.name);
+        //Debug.Log(col.name);
         if (col.gameObject.layer == LayerMask.NameToLayer("Minion"))
         {
             var minion = col.GetComponent<Minion>();

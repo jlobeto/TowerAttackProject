@@ -17,8 +17,9 @@ public class WarScreamer : Minion
 
 	float _timerAux = 1;
 	WarScreamSkill _mySkill;
+    bool skillPhase;//phaseOne = user has clicked to know the skill range
 
-	protected override void Start()
+    protected override void Start()
 	{
 		base.Start();
         _timerAux = timeToPassive;
@@ -27,11 +28,33 @@ public class WarScreamer : Minion
 		_mySkill.infoCanvas = infoCanvas;
 	}
 
+
+    public override void InitMinion(WalkNode n, Vector3 pTransform = default(Vector3))
+    {
+        base.InitMinion(n, pTransform);
+
+        InitSkillAreaEffect(areaOfEffect);
+    }
+
     public override void ActivateSelfSkill()
     {
+        if (!skillPhase)
+        {
+            skillZoneEffect.SetActive(true);
+            StartCoroutine(StopSkillZoneShow());
+            skillPhase = true;
+            return;
+        }
         OnSkill(true);
     }
 
+
+    IEnumerator StopSkillZoneShow()
+    {
+        yield return new WaitForSeconds(1.5f);
+        skillZoneEffect.SetActive(false);
+        skillPhase = false;
+    }
 
     protected override void PerformAction()
 	{

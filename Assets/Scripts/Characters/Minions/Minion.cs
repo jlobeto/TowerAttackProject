@@ -29,6 +29,7 @@ public class Minion : MonoBehaviour
     [HideInInspector] public float skillCooldown = 5;
     public bool hasBeenFreed;
     public ParticleSystem explotion;
+    public GameObject skillZoneEffect;
 
     protected bool pDamageDebuff;
     protected float pDamageDebuffValue;
@@ -200,6 +201,27 @@ public class Minion : MonoBehaviour
         throw new NotImplementedException("ActivateSkill() is not implemented on dependences.");
     }
 
+    protected void TurnOnSkillRangeEffect()
+    {
+        
+    }
+
+    protected void InitSkillAreaEffect(float skillArea)
+    {
+        if (skillZoneEffect == null) return;
+
+        var hemisphere = skillZoneEffect.GetComponentInChildren<MeshRenderer>();
+        if (hemisphere != null)
+            hemisphere.transform.localScale = new Vector3(skillArea / 2, skillArea / 2, skillArea / 2);
+
+        var sprites = skillZoneEffect.GetComponentsInChildren<SpriteRenderer>();
+
+        foreach (var item in sprites)
+        {
+            item.transform.localScale = new Vector3(skillArea * 2, skillArea * 2, skillArea * 2);
+        }
+    }
+
     #region Inits, Start and Update
     protected void Init()
     {
@@ -231,6 +253,7 @@ public class Minion : MonoBehaviour
                 break;
             }
         }
+
     }
     public virtual void InitMinion(WalkNode n, Vector3 pTransform = default(Vector3))
     {
@@ -241,6 +264,7 @@ public class Minion : MonoBehaviour
             transform.position = pTransform;
 
         pNextNode = n.GetNextWalkNode();
+
     }
     public void SetWalk(bool val)
     {
@@ -286,7 +310,6 @@ public class Minion : MonoBehaviour
             }
         }
     }
-
 
     IEnumerator ExplotionStopped(float t)
     {
