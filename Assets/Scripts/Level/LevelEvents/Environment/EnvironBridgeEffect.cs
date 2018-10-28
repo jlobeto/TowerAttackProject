@@ -8,32 +8,48 @@ public class EnvironBridgeEffect : MonoBehaviour
     public string destination = "";
 
     List<Animator> _paths = new List<Animator>();
-    float _timerToPlayNext = 0.2f;
+    float _timerToPlayNext = 0.1f;
+    float _timerToPlayNextAux;
+    bool _activate;
+    int _pathIndexToAnimate;
 
     void Start()
     {
         _paths = GetComponentsInChildren<Animator>().ToList();
+        //Debug.Log(destination + " ... paths count " + _paths.Count);
+        _timerToPlayNextAux = _timerToPlayNext;
     }
     
 
     void Update()
     {
+        if (!_activate) return;
 
-    }
-
-    public void ActivateAnimation(bool forward)
-    {
-
-        foreach (var item in _paths)
+        if (_pathIndexToAnimate < _paths.Count)
         {
-            item.SetFloat("animSpeed", forward ? 1 : -1);
-            StartCoroutine(MakeFall(item));
+            _timerToPlayNextAux -= Time.deltaTime;
+            if (_timerToPlayNextAux < 0)
+            {
+                _paths[_pathIndexToAnimate].SetBool("startFall", true);
+                _pathIndexToAnimate++;
+                _timerToPlayNextAux = _timerToPlayNext;
+            }
         }
     }
 
-    IEnumerator MakeFall(Animator item)
+    public void MakeAllWayDown()
     {
-        yield return new WaitForSeconds(_timerToPlayNext);
-        item.SetBool("startFall", true);
+        _activate = true;
+        _timerToPlayNextAux = _timerToPlayNext;
+        _pathIndexToAnimate = 0;
+        _paths[_pathIndexToAnimate].SetBool("startFall", true);//first active current Index
+    }
+
+    public void PushUpFloor()
+    {
+        foreach (var item in _paths)
+        {
+            item.SetBool("startUp", true);//first active current Index
+        }
     }
 }

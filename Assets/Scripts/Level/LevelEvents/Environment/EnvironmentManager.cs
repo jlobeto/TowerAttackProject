@@ -14,7 +14,7 @@ public class EnvironmentManager : MonoBehaviour, IEvent
     bool _enabled;
     bool _bridgeEnabled;
     float _currentTimeToChange;
-    bool _firstShow;
+    bool _didFirstShow;
 
     public void Init(EnvironmentEventItem item, Level lvl)
     {
@@ -22,63 +22,64 @@ public class EnvironmentManager : MonoBehaviour, IEvent
         _lvl = lvl;
         _enabled = true;
 
-        if (item.bridgeEnabled)
+        if (!item.bridgeEnabled) return;
+        
+        _bridges = new List<EnvironmentBridge>();
+        _bridgeEnabled = true;
+        _currentTimeToChange = 1f;
+        var list = GetNodeList(_lvl.initialWalkNodes[0], new List<WalkNode>());
+        var pivots = GetWalkNodesBridge(list, "pivot");
+        var dests = GetWalkNodesBridge(list, "dest");
+        var bridgesGO = FindObjectsOfType<EnvironBridgeEffect>().ToList();
+        var clocksOnScene = FindObjectsOfType<BridgeClock>();
+
+        foreach (var p in pivots)
         {
-            _bridges = new List<EnvironmentBridge>();
-            _bridgeEnabled = true;
-            _currentTimeToChange = 0.1f;
-            var list = GetNodeList(_lvl.initialWalkNodes[0], new List<WalkNode>());
-            var pivots = GetWalkNodesBridge(list, "pivot");
-            var dests = GetWalkNodesBridge(list, "dest");
-            var bridgesGO = FindObjectsOfType<EnvironBridgeEffect>().ToList();
-            var clocksOnScene = FindObjectsOfType<BridgeClock>();
+            if (_bridges.Any(i => i.pivot == p)) continue;
 
-            foreach (var p in pivots)
+            var bridge = new EnvironmentBridge(p);
+            var pivotNum = int.Parse(p.levelEventBridgeNodeName.Split('_')[1]);
+            foreach (var destination in dests)
             {
-                if (_bridges.Any(i => i.pivot == p)) continue;
-
-                var bridge = new EnvironmentBridge(p);
-                var pivotNum = int.Parse(p.levelEventBridgeNodeName.Split('_')[1]);
-                foreach (var destination in dests)
+                var splitted = destination.levelEventBridgeNodeName.Split('_');
+                if (int.Parse(splitted[1]) == pivotNum)
                 {
-                    var splitted = destination.levelEventBridgeNodeName.Split('_');
-                    if (int.Parse(splitted[1]) == pivotNum)
-                    {
                         
-                        if (splitted[2] == "a")
-                        {
-                            //Debug.Log("A");
-                            bridge.destinationA = destination;
-                            bridge.bridge_A_GameObject = bridgesGO.FirstOrDefault(i => i.destination == destination.levelEventBridgeNodeName);
-                        }
-                        else if (splitted[2] == "b")
-                        {
-                            //Debug.Log("B");
-                            bridge.destinationB = destination;
-                            bridge.bridge_B_GameObject = bridgesGO.FirstOrDefault(i => i.destination == destination.levelEventBridgeNodeName);
-                        }
-
-                    }
-                }
-
-				if (bridge.bridge_B_GameObject == null || bridge.bridge_A_GameObject == null) 
-				{
-					var name = bridge.bridge_A_GameObject == null ? "A" : "B";
-					throw new Exception ("There is not a GameObject With 'EvironBridgeEffect' for bridge " + name);
-				}
-
-                foreach (var c in clocksOnScene)
-                {
-                    if (c.bridgePivot.Contains(pivotNum.ToString()))
+                    if (splitted[2] == "a")
                     {
-                        bridge.bridgeClock = c;
-                        break;
+                        //Debug.Log("A");
+                        bridge.destinationA = destination;
+                        bridge.bridge_A_GameObject = bridgesGO.FirstOrDefault(i => i.destination == destination.levelEventBridgeNodeName);
                     }
-                }
+                    else if (splitted[2] == "b")
+                    {
+                        //Debug.Log("B");
+                        bridge.destinationB = destination;
+                        bridge.bridge_B_GameObject = bridgesGO.FirstOrDefault(i => i.destination == destination.levelEventBridgeNodeName);
+                    }
 
-                _bridges.Add(bridge);
+                }
             }
+
+			if (bridge.bridge_B_GameObject == null || bridge.bridge_A_GameObject == null) 
+			{
+				var name = bridge.bridge_A_GameObject == null ? "A" : "B";
+				throw new Exception ("There is not a GameObject With 'EvironBridgeEffect' for bridge " + name);
+			}
+
+            foreach (var c in clocksOnScene)
+            {
+                if (c.bridgePivot.Contains(pivotNum.ToString()))
+                {
+                    bridge.bridgeClock = c;
+                    break;
+                }
+            }
+
+            bridge.bridgeClock.StartCountdown(_currentTimeToChange);
+            _bridges.Add(bridge);
         }
+        
     }
 
     List<WalkNode> GetWalkNodesBridge(List<WalkNode> l, string name)
@@ -128,30 +129,25 @@ public class EnvironmentManager : MonoBehaviour, IEvent
             bridge.pivot.nexts = new List<WalkNode>();
             bridge.pivot.nexts.Add(bridge.isPointingA ? bridge.destinationB : bridge.destinationA);
 
+            bridge.bridgeClock.StartCountdown(_currentTimeToChange);
+
             if (bridge.isPointingA)
             {
-                bridge.bridge_A_GameObject.ActivateAnimation(true);
-                if (!_firstShow)
-                    bridge.bridge_B_GameObject.ActivateAnimation(false);
-                Debug.Log("isPointingA");
-                Debug.Log(_firstShow);
+                bridge.bridge_A_GameObject.MakeAllWayDown();
+                if (_didFirstShow)
+                    bridge.bridge_B_GameObject.PushUpFloor();
             }
             else
             {
-                Debug.Log("!isPointingA");
-
-                
-                bridge.bridge_A_GameObject.ActivateAnimation(false);
-
-                
-                bridge.bridge_B_GameObject.ActivateAnimation(true);
+                bridge.bridge_A_GameObject.PushUpFloor();
+                bridge.bridge_B_GameObject.MakeAllWayDown();
             }
                 
 
             bridge.isPointingA = !bridge.isPointingA;
-            bridge.bridgeClock.StartCountdown(_currentTimeToChange);
+                
         }
 
-        _firstShow = true;
+        _didFirstShow = true;
     }
 }

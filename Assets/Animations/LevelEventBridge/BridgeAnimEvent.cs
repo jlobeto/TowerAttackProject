@@ -11,8 +11,13 @@ public class BridgeAnimEvent : MonoBehaviour
         _anim = GetComponent<Animator>();
     }
 
-    public void OnStopAnim()
+    public void OnStopAnimDown()
     {
         _anim.SetBool("startFall", false);
+    }
+
+    public void OnStopAnimUp()
+    {
+        _anim.SetBool("startUp", false);
     }
 }
