@@ -8,7 +8,7 @@ public class EnvironBridgeEffect : MonoBehaviour
     public string destination = "";
 
     List<Animator> _paths = new List<Animator>();
-    float _timerToPlayNext = 0.1f;
+    float _timerToPlayNext = 0.3f;
     float _timerToPlayNextAux;
     bool _activate;
     int _pathIndexToAnimate;
@@ -16,7 +16,7 @@ public class EnvironBridgeEffect : MonoBehaviour
     void Start()
     {
         _paths = GetComponentsInChildren<Animator>().ToList();
-        //Debug.Log(destination + " ... paths count " + _paths.Count);
+        Debug.Log(destination + " ... paths count " + _paths.Count);
         _timerToPlayNextAux = _timerToPlayNext;
     }
     
@@ -35,6 +35,10 @@ public class EnvironBridgeEffect : MonoBehaviour
                 _timerToPlayNextAux = _timerToPlayNext;
             }
         }
+        else
+        {
+            _activate = false;
+        }
     }
 
     public void MakeAllWayDown()
@@ -43,6 +47,7 @@ public class EnvironBridgeEffect : MonoBehaviour
         _timerToPlayNextAux = _timerToPlayNext;
         _pathIndexToAnimate = 0;
         _paths[_pathIndexToAnimate].SetBool("startFall", true);//first active current Index
+       // Debug.Log("MakeAllWayDown");
     }
 
     public void PushUpFloor()
@@ -51,5 +56,6 @@ public class EnvironBridgeEffect : MonoBehaviour
         {
             item.SetBool("startUp", true);//first active current Index
         }
+        //Debug.Log("PushUpFloor");
     }
 }

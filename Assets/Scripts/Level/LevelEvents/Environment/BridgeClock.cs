@@ -46,14 +46,16 @@ public class BridgeClock : MonoBehaviour
                 sparks_1.Stop(true, ParticleSystemStopBehavior.StopEmitting);
                 sparks_2.Stop(true, ParticleSystemStopBehavior.StopEmitting);
                 _startCountDown = false;
+                _emissionQty = _emissionQtyStart;
             }
 
             if (_lerpCurrentTime <= _initTime)
             {
                 
-                _emissionQty = Mathf.Lerp(_emissionQtyStart, -18, _lerpCurrentTime );//puse -18 xq a partir de ahi ya se empieza a ver muy brillante
+                _emissionQty = Mathf.Lerp(_emissionQtyStart, 20, _lerpCurrentTime );//puse -18 xq a partir de ahi ya se empieza a ver muy brillante
                 clockRenderer.material.SetFloat("_EmissionQty",_emissionQty);
                 _lerpCurrentTime += Time.deltaTime / _initTime;
+                //Debug.Log(_emissionQty);
             }
             
         }
