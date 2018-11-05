@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class TowerManager : MonoBehaviour
 {
 
     public Level level;
+    public Action<TowerType> OnClickTower = delegate { };
 
     List<TowerBase> _towers;
 
@@ -51,6 +53,11 @@ public class TowerManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public TowerBase GetTowerByType(TowerType t)
+    {
+        return _towers.FirstOrDefault(i => i.towerType == t);
     }
 
     public void Init(bool isTutorial)
@@ -98,7 +105,6 @@ public class TowerManager : MonoBehaviour
         if (selected == null) return;
 
         selected.ActivateAttackRangePS();
+        OnClickTower(selected.towerType);
     }
-
-
 }
