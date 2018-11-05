@@ -24,19 +24,20 @@ public class Level : MonoBehaviour
     [HideInInspector]
     public LevelMode levelMode;
 
-    GameManager _gameManager;
-    TowerManager _towerManager;
-    MinionManager _minionManager;
-    LevelSkillManager _lvlSkillManager;
-    LevelEventManager _lvlEventManager;
-    LevelCanvasManager _lvlCanvasManager;
-    GameObjectSelector _goSelector;
-    FloorEffect _floorEffect;
+    protected GameManager _gameManager;
+    protected TowerManager _towerManager;
+    protected MinionManager _minionManager;
+    protected LevelSkillManager _lvlSkillManager;
+    protected LevelEventManager _lvlEventManager;
+    protected LevelCanvasManager _lvlCanvasManager;
+    protected GameObjectSelector _goSelector;
+    protected FloorEffect _floorEffect;
+    protected int _livesRemoved;
 
     bool _levelEnded;
     int _currentLevelPoints = 0;
     float _levelTimeAux;
-    int _livesRemoved;
+    
 
     /// <summary>
     /// Used to inform CurrentLevelPoints to user on the GUI.
@@ -117,7 +118,7 @@ public class Level : MonoBehaviour
     /// Build the minion type passed in the first parameter.
     /// Returns True if minion has been created
     /// </summary>
-    public bool BuildMinion(MinionType t)
+    public virtual bool BuildMinion(MinionType t)
     {
         if (!CheckMinionSale(t)) return false;
         var cost = _minionManager.GetMinionPrice(t);
@@ -152,7 +153,7 @@ public class Level : MonoBehaviour
     #endregion
     
     #region Inits()
-    void Init()
+    protected virtual void Init()
     {
         var gameplayManagersGO = new GameObject("GameplayManagers");
         _minionManager = gameplayManagersGO.AddComponent<MinionManager>();
@@ -172,9 +173,10 @@ public class Level : MonoBehaviour
         _gameManager.LevelInitFinished(this);
     }
     
-    void InitLevelCanvas()
+    protected virtual void InitLevelCanvas()
     {
-        _lvlCanvasManager = FindObjectOfType<LevelCanvasManager>();
+        if(_lvlCanvasManager == null)
+            _lvlCanvasManager = FindObjectOfType<LevelCanvasManager>();
 
 		foreach (var m in availableMinions) //need to get json data to show correct point value on spawn button 
 		{
@@ -203,7 +205,7 @@ public class Level : MonoBehaviour
         currencyWinPerObjetives = _gameManager.CurrentLevelInfo.currencyGainedByObjectives;
         levelMode = (LevelMode)Enum.Parse(typeof(LevelMode), _gameManager.CurrentLevelInfo.mode);
         levelID = _gameManager.CurrentLevelInfo.id;
-        _towerManager.Init ();
+        _towerManager.Init (this is LevelCeroTutorial);
     }
 
     void ConfigureLevelEvents()
@@ -262,7 +264,7 @@ public class Level : MonoBehaviour
         
     }
 
-    void GoalCompletedHandler()
+    protected virtual void GoalCompletedHandler()
     {
         Debug.Log("----- Level Completed -----");
         if(_gameManager.popupManager != null)

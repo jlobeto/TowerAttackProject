@@ -27,14 +27,40 @@ public class TowerManager : MonoBehaviour
         }
     }
 
-    public void Init()
+    public void HideAllTowers()
+    {
+        foreach (var item in _towers)
+        {
+            item.gameObject.SetActive(false);
+        }
+    }
+
+    public void ShowTowerByTypeAndName(TowerType t, string name = "")
+    {
+        foreach (var item in _towers)
+        {
+            if(item.towerType == t )
+            {
+                if(name != "" && item.towerName == name)
+                {
+                    item.gameObject.SetActive(true);
+                }
+                else if(name == "")
+                {
+                    item.gameObject.SetActive(true);
+                }
+            }
+        }
+    }
+
+    public void Init(bool isTutorial)
     {
         _towers = FindObjectsOfType<TowerBase>().ToList();
 		for (int i = 0; i < _towers.Count; i++)
 		{
 			var t = _towers [i];
-			var stat = level.GameManager.TowerLoader.GetStatByLevel (t.towerType, level.levelID);
-			t.Initialize (stat);
+			var stat = level.GameManager.TowerLoader.GetStatByLevel (t.towerType, level.levelID, isTutorial);
+			t.Initialize (stat, isTutorial);
 		}
     }
 

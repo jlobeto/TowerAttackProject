@@ -65,8 +65,33 @@ public class LevelCanvasManager : MonoBehaviour
     {
         UpdateEventWarning();
     }
-    
 
+    public void ShowHideSkillButtons(bool value)
+    {
+        _skillsButtonPanel.enabled = value;
+    }
+
+    public void EnableMinionButtons(bool value)
+    {
+        var btns = _availablesPanel.GetComponentsInChildren<Transform>().Where(i => i.GetComponent<Button>() != null);
+        var realBtns = btns.Select(i => i.GetComponent<Button>());
+        foreach (var item in realBtns)
+        {
+            item.interactable = value;
+        }
+    }
+
+    public void DeleteMinionButtons()
+    {
+        var btns = _availablesPanel.GetComponentsInChildren<Transform>().Where(i => i.GetComponent<Button>() != null);
+        var realBtns = btns.Select(i => i.GetComponent<Button>());
+        foreach (var item in realBtns)
+        {
+            Destroy(item.gameObject);
+        }
+    }
+
+    
     public void UpdateLevelTimer(float newTime)
     {
         var text = "Level Time: ";
@@ -78,18 +103,18 @@ public class LevelCanvasManager : MonoBehaviour
         _levelLives.text = newLive + " / " + initLives;
     }
 
-    public void BuildAvailableMinionButton(Minion m)
+    public void BuildAvailableMinionButton(Minion m, bool stayNotInteractuable = false)
     {        
-            var btn = Instantiate<Button>(minionSaleButtonPrefab, _availablesPanel.transform);
-            btn.GetComponentInChildren<Text>().text = m.minionType +" x"+ m.pointsValue;
-            var t = m.minionType;
-            var newBtn = btn;
-            var cooldown = m.spawnCooldown;
-            var fillImg = btn.GetComponentsInChildren<Image>();//Returns btn.image and its child.image(DONT KNOW WHY)
-            btn.onClick.AddListener(() => OnBuyMinion(newBtn,fillImg[1], t, cooldown));        
+        var btn = Instantiate<Button>(minionSaleButtonPrefab, _availablesPanel.transform);
+        btn.GetComponentInChildren<Text>().text = m.minionType +" x"+ m.pointsValue;
+        var t = m.minionType;
+        var newBtn = btn;
+        var cooldown = m.spawnCooldown;
+        var fillImg = btn.GetComponentsInChildren<Image>();//Returns btn.image and its child.image(DONT KNOW WHY)
+        btn.onClick.AddListener(() => OnBuyMinion(newBtn,fillImg[1], t, cooldown, stayNotInteractuable));
     }
 
-    void OnBuyMinion(Button btn,Image fillImg, MinionType t, float cooldown)
+    void OnBuyMinion(Button btn,Image fillImg, MinionType t, float cooldown, bool stayNotInteractuable)
     {
         if (!btn.interactable) return;
         
@@ -97,8 +122,13 @@ public class LevelCanvasManager : MonoBehaviour
         if (!created) return;
 
         btn.interactable = false;
-        fillImg.fillAmount = 1;
-        StartCoroutine(BuyMinionFreeze(cooldown, fillImg, btn));
+
+        if (!stayNotInteractuable)
+        {
+            fillImg.fillAmount = 1;
+            StartCoroutine(BuyMinionFreeze(cooldown, fillImg, btn));
+        }
+            
     }
 
 

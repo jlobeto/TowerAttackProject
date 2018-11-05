@@ -41,11 +41,12 @@ public class SwapTowerSystem : MonoBehaviour
 
     public void LeveInitFinished(MinionManager minionMan, TowerManager towerMan)
     {
+        _minionManager = minionMan;
+        _towerManager = towerMan;
+
         if (!_isEnableForThisLevel) return;
 
         _startSystem = true;
-        _minionManager = minionMan;
-        _towerManager = towerMan;
         _minionManager.OnNewMinionSpawned += NewMinionSpawnHandler;
         _minionManager.OnMinionWalkFinished += MinionWalkFinishedHandler;
     }

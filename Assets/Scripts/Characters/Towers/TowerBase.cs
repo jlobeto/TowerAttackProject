@@ -26,7 +26,9 @@ public class TowerBase : MonoBehaviour
     protected bool pSlowDebuff;
     protected GameObject pTarget;
     protected GameObject pLastTarget;
+    protected bool pIsTutoLevelCero;
 
+    bool _hasSpawnFirstBullet;
     float _fireRateAux;
     int _id;
 
@@ -43,6 +45,12 @@ public class TowerBase : MonoBehaviour
             GetTarget();
             SpawnProjectile();
         }
+
+        if(pIsTutoLevelCero && !_hasSpawnFirstBullet)
+        {
+            GetTarget();
+            //SpawnProjectile();
+        }
     }
 
     protected virtual void SpawnProjectile()
@@ -52,6 +60,8 @@ public class TowerBase : MonoBehaviour
         var random = projectilePrefabs[Random.Range(0, projectilePrefabs.Count)];
         var p = Instantiate(random, spawnPoint.transform.position, spawnPoint.transform.rotation);
         p.Init(pTarget, pMyStat.bulletDamage, pMyStat.bulletRange, targetType);
+
+        _hasSpawnFirstBullet = true;
     }
 
     protected virtual void GetTarget()
@@ -64,7 +74,7 @@ public class TowerBase : MonoBehaviour
             allMinions.AddRange(minions);
         }
         
-        if (rangeAirPosition)
+        if (rangeAirPosition != null)
         {
             var airOnes = Physics.OverlapSphere(rangeAirPosition.position, pMyStat.fireRange, 1 << LayerMask.NameToLayer("Minion"));
             airOnes = airOnes.Where(i => !allMinions.Contains(i)).ToArray();
@@ -180,12 +190,13 @@ public class TowerBase : MonoBehaviour
         _id = gameObject.GetInstanceID();
     }
 
-    public virtual void Initialize(TowerStat stat)
+    public virtual void Initialize(TowerStat stat, bool tutoLevelCero = false)
     {
         isInitialized = true;
         pMyStat = stat;
         _fireRateAux = pMyStat.fireCooldown;
         InitializeRangeParticleSys();
+        pIsTutoLevelCero = tutoLevelCero;
     }
 
     /// <summary>
@@ -216,9 +227,9 @@ public class TowerBase : MonoBehaviour
 		
         if (!pImStunned)
         {
-            MinionAiming();
             Fire();
-        }   
+            MinionAiming();
+        }
     }
 
     private void OnDrawGizmos()

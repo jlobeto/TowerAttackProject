@@ -29,7 +29,7 @@ public class ChangeTargetSkill : BaseMinionSkill
         if (_to == 0) return false;
 
         var y = transform.position.y;
-        y = Mathf.Lerp(y, _to, Time.deltaTime * 3);
+        y = Mathf.Lerp(y, _to, Time.deltaTime * 5.5f);
         
         transform.position = new Vector3(transform.position.x, y, transform.position.z);
         

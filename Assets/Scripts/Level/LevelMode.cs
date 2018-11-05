@@ -1,4 +1,5 @@
 ﻿public enum LevelMode {
     Normal,
-    Hard
+    Hard,
+    Tutorial
 }

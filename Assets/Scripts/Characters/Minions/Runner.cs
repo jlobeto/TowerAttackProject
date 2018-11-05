@@ -37,6 +37,8 @@ public class Runner : Minion
 
     public override void ActivateSelfSkill()
     {
-        _mySkill.Initialize(skillTime, skillCooldown ,skillDeltaSpeed, speed);
+        var result = _mySkill.Initialize(skillTime, skillCooldown ,skillDeltaSpeed, speed);
+        if (result)
+            OnMinionSkill(minionType);
     }
 }

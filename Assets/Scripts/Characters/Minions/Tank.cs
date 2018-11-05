@@ -51,6 +51,8 @@ public class Tank : Minion
 
     public override void ActivateSelfSkill()
     {
+        OnMinionSkill(minionType);
+
         if (!skillPhase)
         {
             skillZoneEffect.SetActive(true);

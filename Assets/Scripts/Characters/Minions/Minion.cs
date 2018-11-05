@@ -21,6 +21,7 @@ public class Minion : MonoBehaviour
     public float levelPointsToRecover = 0.75f;
     public Action<Minion> OnWalkFinished = delegate { };
     public Action<Minion> OnDeath = delegate { };
+    public Action<MinionType> OnMinionSkill = delegate { };
     public InfoCanvas infoCanvas;
     public SimpleParticleSystem sparkParticleSys;
     [HideInInspector]
@@ -30,6 +31,9 @@ public class Minion : MonoBehaviour
     public bool hasBeenFreed;
     public ParticleSystem explotion;
     public GameObject skillZoneEffect;
+
+    
+
 
     protected bool pDamageDebuff;
     protected float pDamageDebuffValue;

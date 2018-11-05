@@ -9,9 +9,7 @@ public class TestController : MonoBehaviour
     // Use this for initialization
     void Awake ()
     {
-        if (!Debug.isDebugBuild)
-            Destroy(gameObject);
-
+        
         _guiStyle.fontSize = 12;
         
     }

@@ -10,6 +10,8 @@ public class MinionManager : MonoBehaviour
     public Level level;
     public Action<MinionType> OnNewMinionSpawned = delegate { };
     public Action<MinionType> OnMinionWalkFinished = delegate { };
+    public Action<MinionType> OnMinionDeath = delegate { };
+    public Action<MinionType> OnMinionSkillSelected = delegate { };
 
 
     List<Minion> _minions = new List<Minion>();
@@ -41,6 +43,8 @@ public class MinionManager : MonoBehaviour
         minion.transform.SetParent(_allMinions.transform);
         minion.OnWalkFinished += MinionWalkFinishedHandler;
         minion.OnDeath += MinionDeathHandler;
+        minion.OnMinionSkill += MinionSkillActivatedHandler;
+
         _minions.Add(minion);
         OnNewMinionSpawned(type);
     }
@@ -162,10 +166,19 @@ public class MinionManager : MonoBehaviour
 
     void MinionDeathHandler(Minion m)
     {
+        OnMinionDeath(m.minionType);
         int toAdd = Mathf.RoundToInt(m.pointsValue * m.levelPointsToRecover * .75f);
         level.UpdatePoints(toAdd);
         _deathCount++;
         DestroyMinion(m);
+        
+    }
+
+    void MinionSkillActivatedHandler(MinionType t)
+    {
+        if (level.levelMode != LevelMode.Tutorial) return;
+
+        OnMinionSkillSelected(t);
     }
     #endregion
 

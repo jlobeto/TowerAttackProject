@@ -40,6 +40,8 @@ public class Dove : Minion
 
         if (!wasDisabled) return;
 
+        OnMinionSkill(minionType);
+
         targetType = targetType == TargetType.Air ? TargetType.Ground : TargetType.Air;
         _targetPos = targetType == TargetType.Air ? airYpos : groundYpos;
 
