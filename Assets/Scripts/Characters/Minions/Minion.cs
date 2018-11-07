@@ -214,15 +214,12 @@ public class Minion : MonoBehaviour
     {
         if (skillZoneEffect == null) return;
 
-        var hemisphere = skillZoneEffect.GetComponentInChildren<MeshRenderer>();
-        if (hemisphere != null)
-            hemisphere.transform.localScale = new Vector3(skillArea / 2, skillArea / 2, skillArea / 2);
-
+        
         var sprites = skillZoneEffect.GetComponentsInChildren<SpriteRenderer>();
-
+        skillZoneEffect.transform.localScale = new Vector3(skillArea * 2, skillArea * 2, skillArea * 2);
         foreach (var item in sprites)
         {
-            item.transform.localScale = new Vector3(skillArea * 2, skillArea * 2, skillArea * 2);
+            //item.transform.localScale = new Vector3(skillArea * 2, skillArea * 2, skillArea * 2);
         }
     }
 

@@ -25,12 +25,12 @@ public class LevelSkill : MonoBehaviour
     {
         _initialized = true;
         _skillGO = Instantiate<GameObject>(_spotPrefab);
-        var sphere = _skillGO.GetComponentInChildren<SphereCollider>();
+        var sphere = _skillGO.GetComponentInChildren<MeshRenderer>();
         sphere.transform.localScale = new Vector3(stats.areaOfEffect, stats.areaOfEffect, stats.areaOfEffect);
 
-        var light = _skillGO.GetComponentInChildren<Light>();
-        light.transform.localPosition = new Vector3(0, stats.areaOfEffect / 2, 0);
-        light.range = stats.areaOfEffect;
+        var lightSprite = _skillGO.GetComponentInChildren<SpriteRenderer>();
+        lightSprite.transform.localScale = new Vector3(stats.areaOfEffect * 2.5f, stats.areaOfEffect * 2.5f, 1);
+        
     }
 
     public void StopCasting()
@@ -65,7 +65,7 @@ public class LevelSkill : MonoBehaviour
         else if (Input.GetMouseButtonUp(0) && _canCast)
         {
             ///TODO// Filtrar por gameobjects que interesen(towers, minions y demas) crear alguna layer o tag en comun.
-            var go = Physics.OverlapSphere(_target, stats.areaOfEffect/2).Select(i => i.gameObject).ToList();
+            var go = Physics.OverlapSphere(_target, stats.areaOfEffect).Select(i => i.gameObject).ToList();
             List<GameObject> affectedOnes = null;
             switch (skillType)
             {
@@ -94,7 +94,7 @@ public class LevelSkill : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         
         if (Physics.Raycast(ray, out hit,1000, 1 << LayerMask.NameToLayer("LevelSkillFloor")))
-            return hit.point;
+            return new Vector3( hit.point.x , 0 , hit.point.z );
         else
             return Vector3.zero;
     }
@@ -113,7 +113,7 @@ public class LevelSkill : MonoBehaviour
     {
         if (_initialized)
         {
-            Gizmos.DrawWireSphere(GetTarget(), stats.areaOfEffect/2);
+            Gizmos.DrawWireSphere(GetTarget(), stats.areaOfEffect);
         }
     }
 }

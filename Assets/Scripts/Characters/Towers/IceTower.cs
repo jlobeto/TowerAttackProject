@@ -57,7 +57,7 @@ public class IceTower : TowerBase
         var m = other.GetComponent<Minion>();
         if (m != null && m.IsTargetable/*&& !_affectedMinions.Contains(m)*/)
         {
-            if (m.targetType == targetType || targetType == TargetType.Both)
+            if (m.targetType == targetType)
             {
                 //_affectedMinions.Add(m);
 				m.GetSlowDebuff(0, pMyStat.deltaSpeed);
@@ -71,7 +71,7 @@ public class IceTower : TowerBase
         if (m != null /*&& _affectedMinions.Contains(m)*/)
         {
             //_affectedMinions.Remove(m);
-            if (m.targetType == targetType || targetType == TargetType.Both)
+            if (m.targetType == targetType)
             {
                 m.StopSlowDebuff();
             }
