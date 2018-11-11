@@ -170,7 +170,8 @@ public class TowerBase : MonoBehaviour
     {
         if(attackRangePS == null)
         {
-            throw new System.Exception("There isn't a attackRange particle system on this tower");
+            //throw new System.Exception("There isn't a attackRange particle system on this tower");
+			return;
         }
         if ( attackRangePS.isPlaying) return;
 

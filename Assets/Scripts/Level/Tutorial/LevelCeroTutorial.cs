@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -8,40 +9,43 @@ using System.Linq;
 /// </summary>
 public class LevelCeroTutorial : Level
 {
+	public Action<GameObject> ExecuteStep = delegate {};
+
     public HitAreaCollider forRunner;
     public HitAreaCollider forDoveOne;
     public HitAreaCollider forDoveTwo;
     public HitAreaCollider forTankOne; // spawn more minions
     public HitAreaCollider forTankTwo; //show skill range
     public HitAreaCollider forTankThree; //spawn skill coll
+	public bool tankTutoStarted;
 
     LevelCanvasTutorial _lvlCanvasTuto;
-    List<MinionType> _toAdd = new List<MinionType>();
+	[HideInInspector]public List<MinionType> addMinionButton = new List<MinionType>();
+	TutorialCeroManager _tutoManager;
 
     bool _stopTutorial;
     bool _canShowTheOtherMinions;
-    bool _showSkillBtns;
-    bool _disableMinionSpawn = true;
     bool _builtFirstMinion;
     int _runnerCount;
     bool _runnerMinionHasDead;
     int _doveCount;
     int _tankCount;
+	bool _hasViewedFirstTowerRange;//if user saw only one tower range ps (dove part)
+	TowerType _otherTower;
+	int _spawnedAfterTank;
+
+	public LevelCanvasTutorial LevelCanvasTutorial{get{ return _lvlCanvasTuto;}}
 
     protected override void Init()
     {
-        _toAdd.Add(MinionType.Runner);
+		_lvlCanvasTuto = FindObjectOfType<LevelCanvasTutorial>();
+
         base.Init();
         _minionManager.OnMinionWalkFinished += MinionWalkFinishedHandler;
         _minionManager.OnMinionDeath += MinionDeathHandler;
         _minionManager.OnMinionSkillSelected += MinionSkillSelectedHandler;
-
+		_towerManager.OnClickTower += TowerClickedHandler;
         _towerManager.HideAllTowers();
-
-        _lvlCanvasTuto = FindObjectOfType<LevelCanvasTutorial>();
-
-        _lvlCanvasTuto.EnableArrowByName("PressFirstBtn");
-        
 
     }
 
@@ -49,160 +53,68 @@ public class LevelCeroTutorial : Level
     {
         if (_lvlCanvasManager == null)
             _lvlCanvasManager = FindObjectOfType<LevelCanvasManager>();
-
-
-        foreach (var item in _toAdd)
-        {
-            foreach (var m in availableMinions)
-            {
-                if (item != m.minionType) continue;
-
-                var minionStats = GameManager.MinionsLoader.GetStatByLevel(m.minionType, levelID);
-                m.pointsValue = minionStats.pointsValue;
-                _lvlCanvasManager.BuildAvailableMinionButton(m, true);
-
-                if(item == MinionType.Dove)
-                {
-                    forDoveOne.enabled = true;
-                    forDoveTwo.enabled = true;
-                    forRunner.enabled = false;
-                    forTankOne.enabled = false;
-                    forTankTwo.enabled = false;
-                    forTankThree.enabled = false;
-                }
-                else if(item == MinionType.Runner)
-                {
-                    forDoveOne.enabled = false;
-                    forDoveTwo.enabled = false;
-                    forTankOne.enabled = false;
-                    forTankTwo.enabled = false;
-                    forTankThree.enabled = false;
-                    forRunner.enabled = true;
-                }
-                else if(item == MinionType.Tank)
-                {
-                    forDoveOne.enabled = false;
-                    forDoveTwo.enabled = false;
-                    forRunner.enabled = false;
-                    forTankOne.enabled = true;
-                    forTankTwo.enabled = true;
-                    forTankThree.enabled = true;
-                    objetives[objetives.Length - 1] = 3;
-                }
-            }
-        }
         
-        _lvlCanvasManager.ShowHideSkillButtons(_showSkillBtns);
+        _lvlCanvasManager.ShowHideAllUI(false);
 
         _lvlCanvasManager.level = this;
-        _lvlCanvasManager.UpdateLevelTimer(levelTime);
-        _lvlCanvasManager.UpdateLevelLives(LivesRemoved, objetives[objetives.Length - 1]);
-        UpdatePoints(0);
+
+		//Add Runner;
+		ExecuteStep (gameObject);
+		//Activate Arrow
+		ExecuteStep(_lvlCanvasTuto.gameObject);
     }
 
 
     public override bool BuildMinion(MinionType t)
     {
         var result = base.BuildMinion(t);
-        if (result)
-        {
-            /*if(!_stopTutorial)
-            {*/
-                _lvlCanvasTuto.DisableAllArrows();
-            //}
-            if (t == MinionType.Dove)
-                _doveCount++;
-            if (t == MinionType.Runner && _tankCount ==1)
-                _runnerCount++;
 
-            if (t == MinionType.Tank)
-            {
-                _tankCount++;
-                Destroy(forRunner.gameObject);
-                Destroy(forDoveOne.gameObject);
-                Destroy(forDoveTwo.gameObject);
-            }
-            else if(_tankCount == 1)
-            {
-                if(_runnerCount == 3 && _doveCount == 2)
-                {
-                    Time.timeScale = 1;
-                    _stopTutorial = true;
-                    return result;
-                }
+		if (t == MinionType.Runner) 
+		{
+			_runnerCount++;
+			if(!tankTutoStarted)
+				ExecuteStep (gameObject);
+		}
+		else if (t == MinionType.Dove)
+		{
+			_doveCount++;
+		} 
+		else if (t == MinionType.Tank) 
+		{
+			_tankCount++;
+			_livesRemoved = 0;
+		}
 
-                if (t == MinionType.Dove)
-                {
-                    _lvlCanvasTuto.EnableArrowByName("PressSecondBtn");
-                }
-                else if (t == MinionType.Runner)
-                {
-                    _lvlCanvasTuto.EnableArrowByName("PressThirdBtn");
-                }
-            }
-        }
+		if (tankTutoStarted && t != MinionType.Tank) 
+		{
+			ExecuteStep (MinionManager.GetMinion(t).gameObject);
+
+			if (t == MinionType.Dove)
+			{
+				_spawnedAfterTank++;
+			}
+			else if (t == MinionType.Runner)
+			{
+				_spawnedAfterTank++;
+			}
+
+			if (_spawnedAfterTank == 2)
+			{
+				Time.timeScale = 1;
+				_stopTutorial = true;
+			}
+		}
 
         return result;
     }
 
     public void OnPopupButtonPressed()
     {
-        if(_runnerCount == 1)
-        {
-            _towerManager.ShowTowerByTypeAndName(TowerType.Cannon, "tuto1");
-            _lvlCanvasManager.EnableMinionButtons(true);
-            _livesRemoved = 0;
-            _lvlCanvasManager.UpdateLevelLives(LivesRemoved, objetives[objetives.Length - 1]);
-        }
+		//if first runner ends path.
+		//if second runner ends path > dove part triggered.
+		//Dove has arrived to end.
+		ExecuteStep (gameObject);
 
-        if (_runnerCount == 2 && _doveCount == 0)
-        {
-            _toAdd.Remove(MinionType.Runner);
-            _toAdd.Add(MinionType.Dove);
-            _towerManager.HideAllTowers();
-            _towerManager.ShowTowerByTypeAndName(TowerType.Cannon, "tuto2");
-            _towerManager.ShowTowerByTypeAndName(TowerType.Antiair, "tuto2");
-            _lvlCanvasManager.DeleteMinionButtons();
-            forDoveOne.OnTriggerEnterCallback += OnEnter;
-            forDoveTwo.OnTriggerEnterCallback += OnEnter;
-            forRunner.OnTriggerEnterCallback -= OnEnter;
-
-            _livesRemoved = 0;
-            InitLevelCanvas();
-        }
-
-        if(_doveCount == 1)
-        {
-            _toAdd = new List<MinionType>();
-            _toAdd.Add(MinionType.Tank);
-            _toAdd.Add(MinionType.Runner);
-            _toAdd.Add(MinionType.Dove);//doing this so tank is the first button so i don't have to change tuto arrow's position.
-
-            _towerManager.HideAllTowers();
-            _towerManager.ShowTowerByTypeAndName(TowerType.Cannon, "tuto1");
-            _towerManager.ShowTowerByTypeAndName(TowerType.Antiair, "tuto3");
-            _towerManager.ShowTowerByTypeAndName(TowerType.Laser);
-
-            forRunner.OnTriggerEnterCallback -= OnEnter;
-            forDoveOne.OnTriggerEnterCallback -= OnEnter;
-            forDoveTwo.OnTriggerEnterCallback -= OnEnter;
-            forTankOne.OnTriggerEnterCallback += OnTankEnterOne;
-            forTankTwo.OnTriggerEnterCallback += OnTankEnterTwo;
-            forTankThree.OnTriggerEnterCallback += OnTankEnterTwo;
-
-            _livesRemoved = 0;
-            _lvlCanvasManager.DeleteMinionButtons();
-            InitLevelCanvas();
-        }
-
-        if (!_stopTutorial)
-            _lvlCanvasTuto.EnableArrowByName("PressFirstBtn");
-
-        if (_runnerMinionHasDead)
-        {
-            _runnerMinionHasDead = false;
-            forRunner.OnTriggerEnterCallback += OnEnter;
-        }
     }
 
     protected override void GoalCompletedHandler()
@@ -215,75 +127,49 @@ public class LevelCeroTutorial : Level
     {
         if (type == MinionType.Runner)
         {
-            _runnerCount++;
-
-            if (_runnerCount == 1)
-            {
-                _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform
-                    , "Well done!"
-                    , "You arrived to the end of path."
-                    , "Continue"
-                    , "TutorialCero");
-            }
-            else if (_runnerCount == 2)
-            {
-                _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform
-                    , "Awesome!"
-                    , "You know how to use the runner skill"
-                    , "Continue"
-                    , "TutorialCero");
-            }
+			if(!tankTutoStarted)
+				ExecuteStep (gameObject);
         }
 
         if(type == MinionType.Dove)
         {
-            if(_doveCount == 1 )
-                _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform
-                    , "Well done!"
-                    , "You arrived to the end of path."
-                    , "Continue"
-                    , "TutorialCero");
+			if (_doveCount == 1) 
+			{
+				ExecuteStep (null);
+			}
         }
-
-
-    }
+	}
     
     void MinionDeathHandler(MinionType type)
     {
         if(type == MinionType.Runner)
         {
-            if(_runnerCount == 1)
-                _runnerMinionHasDead = true;
+            if(_runnerCount == 2)
+				ExecuteStep (gameObject);
         }
-
-        _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform
-                , "Ups"
-                , "Your minion has been killed. Try using his skill!"
-                , "Try Again"
-                , "TutorialCero");
     }
 
-    void OnEnter(Collider col)
+    public void OnRunnerColEnter(Collider col)
     {
-        _lvlCanvasTuto.EnableArrowByName("PointingToRunnerSkill");
-        var pos = Camera.main.WorldToScreenPoint(col.transform.position);
-        _lvlCanvasTuto.SetArrowPosition(pos, "PointingToRunnerSkill");
-        Time.timeScale = 0;
+		forRunner.OnTriggerEnterCallback -= OnRunnerColEnter;
+		
+		ExecuteStep (col.gameObject);
     }
 
-    void OnTankEnterOne(Collider col)
+	public void OnDoveColEnter(Collider col)
+	{
+		ExecuteStep (col.gameObject);
+	}
+
+    public void OnTankEnterOne(Collider col)
     {
         if(col.GetComponent<Minion>().minionType == MinionType.Tank)
         {
-            _lvlCanvasTuto.EnableArrowByName("PressSecondBtn");
-            _lvlCanvasTuto.EnableArrowByName("PressThirdBtn");
-            Time.timeScale = 0;
-            forTankOne.OnTriggerEnterCallback -= OnTankEnterOne;
-
+			ExecuteStep (null);
         }
     }
 
-    void OnTankEnterTwo(Collider col)
+    public void OnTankEnterTwo(Collider col)
     {
         if (col.GetComponent<Minion>().minionType == MinionType.Tank)
         {
@@ -291,7 +177,6 @@ public class LevelCeroTutorial : Level
             var pos = Camera.main.WorldToScreenPoint(col.transform.position);
             _lvlCanvasTuto.SetArrowPosition(pos, "PointingToRunnerSkill");
             Time.timeScale = 0;
-            
         }
     }
 
@@ -300,4 +185,17 @@ public class LevelCeroTutorial : Level
         _lvlCanvasTuto.DisableAllArrows();
         Time.timeScale = 1;
     }
+
+	void TowerClickedHandler(TowerType t)
+	{
+		_lvlCanvasTuto.DisableArrowByName (t == TowerType.Antiair ? "SecondPointer" : "ThirdPointer");
+		if (_hasViewedFirstTowerRange && _otherTower != t)
+		{
+			ExecuteStep (gameObject);
+			_towerManager.OnClickTower -= TowerClickedHandler;
+		}
+
+		_hasViewedFirstTowerRange = true;
+		_otherTower = t;
+	}
 }

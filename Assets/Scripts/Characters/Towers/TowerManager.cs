@@ -55,9 +55,23 @@ public class TowerManager : MonoBehaviour
         }
     }
 
-    public TowerBase GetTowerByType(TowerType t)
+	public TowerBase GetTowerByTypeAndName(TowerType t, string name = "")
     {
-        return _towers.FirstOrDefault(i => i.towerType == t);
+		foreach (var item in _towers)
+		{
+			if(item.towerType == t )
+			{
+				if(name != "" && item.towerName == name)
+				{
+					return item;
+				}
+				else if(name == "")
+				{
+					return 	item;
+				}
+			}
+		}
+		return null;
     }
 
     public void Init(bool isTutorial)

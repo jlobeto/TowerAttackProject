@@ -27,6 +27,18 @@ public class LevelCanvasTutorial : MonoBehaviour
         }
     }
 
+	public void DisableArrowByName(string name)
+	{
+		foreach (var item in _arrowImages)
+		{
+			if (item.gameObject.name == name)
+			{
+				item.enabled = false;
+				break;
+			}
+		}
+	}
+
     public void DisableAllArrows()
     {
         foreach (var item in _arrowImages)

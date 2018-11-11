@@ -9,8 +9,7 @@ public class Level : MonoBehaviour
 {
     public int levelID;
     public List<WalkNode> initialWalkNodes = new List<WalkNode>();
-    [Tooltip("Ones camera is set, asign to this")]
-    public Transform cameraTransform;
+	public bool isTutorial;
 
     [HideInInspector] public int initialLevelPoints;
     [HideInInspector] public float levelTime = 60;
@@ -80,6 +79,9 @@ public class Level : MonoBehaviour
 
     void OnRunLevelTimer()
     {
+		if (isTutorial)
+			return;
+		
         _levelTimeAux -= Time.deltaTime;
         _lvlCanvasManager.UpdateLevelTimer(_levelTimeAux < 0 ? 0 : _levelTimeAux);
         if (_levelTimeAux < 0)

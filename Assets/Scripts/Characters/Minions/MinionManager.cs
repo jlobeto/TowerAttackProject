@@ -132,6 +132,11 @@ public class MinionManager : MonoBehaviour
         return list;
     }
 
+	public Minion GetMinion(MinionType t)
+	{
+		return _minions.FirstOrDefault (i => i.minionType == t);
+	}
+
     public void AffectMinions(Action<Minion> action)
     {
         foreach (var m in _minions)

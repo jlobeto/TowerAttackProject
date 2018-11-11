@@ -66,9 +66,16 @@ public class LevelCanvasManager : MonoBehaviour
         UpdateEventWarning();
     }
 
-    public void ShowHideSkillButtons(bool value)
+    public void ShowHideAllUI(bool value)
     {
-        _skillsButtonPanel.enabled = value;
+		_skillsButtonPanel.gameObject.SetActive( value );
+		string tag = "";
+		foreach (Transform child in transform)
+		{
+			tag = child.tag;
+			if (tag == "CanvasLvlTimer" || tag == "CanvasLvlLives" || tag == "CanvasLvlPoints")
+				child.gameObject.SetActive (value);
+		}
     }
 
     public void EnableMinionButtons(bool value)
