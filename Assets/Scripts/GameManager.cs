@@ -68,6 +68,6 @@ public class GameManager : MonoBehaviour
 
     public void LevelInitFinished(Level level)
     {
-        _swapTowerSystem.LeveInitFinished(level.MinionManager, level.TowerManager);
+		_swapTowerSystem.LeveInitFinished(level.MinionManager, level.TowerManager, level.LevelCanvasManager);
     }
 }

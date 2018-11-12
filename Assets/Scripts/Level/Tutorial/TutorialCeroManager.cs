@@ -4,29 +4,28 @@ using UnityEngine;
 
 public class TutorialCeroManager : MonoBehaviour 
 {
-	List<StepBase> steps = new List<StepBase>();
+	protected List<StepBase> steps = new List<StepBase>();
 
 	LevelCeroTutorial _level;
 	int _currStep;
 
-	void Awake () 
+	protected virtual void Awake () 
 	{
-		_level = FindObjectOfType<LevelCeroTutorial> ();
-		_level.ExecuteStep += OnExecuteStep;
-
+		AddListener ();
 		AddSteps ();
 	}
-	
-	void Update () 
+
+	protected virtual void AddListener()
 	{
-		
+		_level = FindObjectOfType<LevelCeroTutorial> ();
+		_level.ExecuteTutorialStep += OnExecuteStep;
 	}
 
 	/// <summary>
 	/// Raises the next step event. 
 	/// </summary>
 	/// <param name="gameObject">Game object that will be affected by the next step.</param>
-	void OnExecuteStep(GameObject gameObject = null)
+	protected void OnExecuteStep(GameObject gameObject = null)
 	{
 		if (steps.Count == _currStep) {
 			Debug.Log ("there is not another step in the queue.");
@@ -37,7 +36,7 @@ public class TutorialCeroManager : MonoBehaviour
 		_currStep++;
 	}
 
-	void AddSteps()
+	protected virtual void AddSteps()
 	{
 		//first part
 		steps.Add (new AddRunner(_level));

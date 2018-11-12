@@ -22,6 +22,7 @@ public class Level : MonoBehaviour
     public int[] currencyWinPerObjetives;
     [HideInInspector]
     public LevelMode levelMode;
+	public Action<GameObject> ExecuteTutorialStep = delegate {};
 
     protected GameManager _gameManager;
     protected TowerManager _towerManager;
@@ -173,6 +174,9 @@ public class Level : MonoBehaviour
         ConfigureLevelEvents();
 
         _gameManager.LevelInitFinished(this);
+
+
+		ExecuteTutorialStep (null);
     }
     
     protected virtual void InitLevelCanvas()

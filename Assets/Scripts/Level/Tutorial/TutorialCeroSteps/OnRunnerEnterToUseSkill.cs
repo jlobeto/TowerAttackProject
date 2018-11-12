@@ -14,7 +14,7 @@ public class OnRunnerEnterToUseSkill : StepBase {
 	{
 		lvlTuto.LevelCanvasTutorial.EnableArrowByName("PointingToRunnerSkill");
 		var pos = Camera.main.WorldToScreenPoint(gameObject.transform.position);
-		lvlTuto.LevelCanvasTutorial.SetArrowPosition(pos, "PointingToRunnerSkill");
+		lvlTuto.LevelCanvasTutorial.SetArrowPosition(pos, "PointingToRunnerSkill", 40);
 		Time.timeScale = 0;
 	}
 }

@@ -18,11 +18,11 @@ public class DoveEnterCol : StepBase {
 
 		lvlTuto.LevelCanvasTutorial.EnableArrowByName("SecondPointer");
 		var pos = Camera.main.WorldToScreenPoint(antiAir.transform.position);
-		lvlTuto.LevelCanvasTutorial.SetArrowPosition(pos, "SecondPointer");
+		lvlTuto.LevelCanvasTutorial.SetArrowPosition(pos, "SecondPointer", 40);
 
 		lvlTuto.LevelCanvasTutorial.EnableArrowByName("ThirdPointer");
 		pos = Camera.main.WorldToScreenPoint(cannon.transform.position);
-		lvlTuto.LevelCanvasTutorial.SetArrowPosition(pos, "ThirdPointer");
+		lvlTuto.LevelCanvasTutorial.SetArrowPosition(pos, "ThirdPointer", 40);
 
 	}
 }

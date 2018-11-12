@@ -15,6 +15,7 @@ public class LevelCanvasManager : MonoBehaviour
     public Image levelPointBar;
     public Button minionSaleButtonPrefab;
     public Image eventWarning;
+	public RectTransform swapTowerTutorial;
 
     HorizontalLayoutGroup _skillsButtonPanel;
     /// <summary>
@@ -29,7 +30,6 @@ public class LevelCanvasManager : MonoBehaviour
     Text _levelLives;
     Text _eventWarningText;
     bool _isAnyButtonDisabled;
-    bool _pointBarLerpAnim;
 
     string _evtType;
     bool _eventWarningEnabled;
@@ -65,6 +65,21 @@ public class LevelCanvasManager : MonoBehaviour
     {
         UpdateEventWarning();
     }
+
+	public void EnableSwapTowerTutorial(Vector3 towerPos)
+	{
+		var pos = Camera.main.WorldToScreenPoint(towerPos);
+		swapTowerTutorial.position = new Vector3(pos.x, pos.y + 35 , 0);
+		Time.timeScale = 0;
+		StartCoroutine (SwapTowerTutoTimer());
+	}
+
+	IEnumerator SwapTowerTutoTimer()
+	{
+		yield return new WaitForSecondsRealtime (4f);
+		swapTowerTutorial.position = new Vector3(10000, 10000, 0);
+		Time.timeScale = 1;
+	}
 
     public void ShowHideAllUI(bool value)
     {
@@ -154,7 +169,6 @@ public class LevelCanvasManager : MonoBehaviour
 
     public void UpdateLevelPointBar(int newValue, int prevValue, int baseValue)
     {
-        _pointBarLerpAnim = true;
         float n = (float)newValue;
         float b = (float)baseValue;
         levelPointBar.fillAmount = n / b;

@@ -9,7 +9,6 @@ using System.Linq;
 /// </summary>
 public class LevelCeroTutorial : Level
 {
-	public Action<GameObject> ExecuteStep = delegate {};
 
     public HitAreaCollider forRunner;
     public HitAreaCollider forDoveOne;
@@ -59,9 +58,9 @@ public class LevelCeroTutorial : Level
         _lvlCanvasManager.level = this;
 
 		//Add Runner;
-		ExecuteStep (gameObject);
+		//ExecuteTutorialStep (gameObject);
 		//Activate Arrow
-		ExecuteStep(_lvlCanvasTuto.gameObject);
+		ExecuteTutorialStep(_lvlCanvasTuto.gameObject);
     }
 
 
@@ -73,7 +72,7 @@ public class LevelCeroTutorial : Level
 		{
 			_runnerCount++;
 			if(!tankTutoStarted)
-				ExecuteStep (gameObject);
+				ExecuteTutorialStep (gameObject);
 		}
 		else if (t == MinionType.Dove)
 		{
@@ -83,11 +82,13 @@ public class LevelCeroTutorial : Level
 		{
 			_tankCount++;
 			_livesRemoved = 0;
+			if (_tankCount == 1)
+				LevelCanvasTutorial.DisableArrowByName ("PressFirstBtn");
 		}
 
 		if (tankTutoStarted && t != MinionType.Tank) 
 		{
-			ExecuteStep (MinionManager.GetMinion(t).gameObject);
+			ExecuteTutorialStep (MinionManager.GetMinion(t).gameObject);
 
 			if (t == MinionType.Dove)
 			{
@@ -113,7 +114,7 @@ public class LevelCeroTutorial : Level
 		//if first runner ends path.
 		//if second runner ends path > dove part triggered.
 		//Dove has arrived to end.
-		ExecuteStep (gameObject);
+		ExecuteTutorialStep (gameObject);
 
     }
 
@@ -128,14 +129,14 @@ public class LevelCeroTutorial : Level
         if (type == MinionType.Runner)
         {
 			if(!tankTutoStarted)
-				ExecuteStep (gameObject);
+				ExecuteTutorialStep (gameObject);
         }
 
         if(type == MinionType.Dove)
         {
 			if (_doveCount == 1) 
 			{
-				ExecuteStep (null);
+				ExecuteTutorialStep (null);
 			}
         }
 	}
@@ -145,7 +146,7 @@ public class LevelCeroTutorial : Level
         if(type == MinionType.Runner)
         {
             if(_runnerCount == 2)
-				ExecuteStep (gameObject);
+				ExecuteTutorialStep (gameObject);
         }
     }
 
@@ -153,19 +154,19 @@ public class LevelCeroTutorial : Level
     {
 		forRunner.OnTriggerEnterCallback -= OnRunnerColEnter;
 		
-		ExecuteStep (col.gameObject);
+		ExecuteTutorialStep (col.gameObject);
     }
 
 	public void OnDoveColEnter(Collider col)
 	{
-		ExecuteStep (col.gameObject);
+		ExecuteTutorialStep (col.gameObject);
 	}
 
     public void OnTankEnterOne(Collider col)
     {
         if(col.GetComponent<Minion>().minionType == MinionType.Tank)
         {
-			ExecuteStep (null);
+			ExecuteTutorialStep (null);
         }
     }
 
@@ -175,7 +176,7 @@ public class LevelCeroTutorial : Level
         {
             _lvlCanvasTuto.EnableArrowByName("PointingToRunnerSkill");
             var pos = Camera.main.WorldToScreenPoint(col.transform.position);
-            _lvlCanvasTuto.SetArrowPosition(pos, "PointingToRunnerSkill");
+            _lvlCanvasTuto.SetArrowPosition(pos, "PointingToRunnerSkill", 40);
             Time.timeScale = 0;
         }
     }
@@ -191,7 +192,7 @@ public class LevelCeroTutorial : Level
 		_lvlCanvasTuto.DisableArrowByName (t == TowerType.Antiair ? "SecondPointer" : "ThirdPointer");
 		if (_hasViewedFirstTowerRange && _otherTower != t)
 		{
-			ExecuteStep (gameObject);
+			ExecuteTutorialStep (gameObject);
 			_towerManager.OnClickTower -= TowerClickedHandler;
 		}
 

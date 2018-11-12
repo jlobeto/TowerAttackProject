@@ -6,13 +6,17 @@ using UnityEngine.UI;
 
 public class LevelCanvasTutorial : MonoBehaviour
 {
-    List<Image> _arrowImages = new List<Image>();
+	List<Image> _arrowImages = new List<Image>();
+    List<Text> _texts = new List<Text>();
 
 	void Awake ()
     {
         _arrowImages = GetComponentsInChildren<Image>().ToList();
         DisableAllArrows();
-    }
+
+		_texts = GetComponentsInChildren<Text> ().ToList ();
+		DisableTexts ();
+	}
 	
     public void EnableArrowByName(string name)
     {
@@ -47,17 +51,37 @@ public class LevelCanvasTutorial : MonoBehaviour
         }
     }
 
-    public void SetArrowPosition(Vector3 pos, string name)
+	public void SetArrowPosition(Vector3 pos, string name, float deltaY)
     {
         foreach (var item in _arrowImages)
         {
             if (item.gameObject.name == name)
             {
-                item.rectTransform.parent.position = new Vector3(pos.x, pos.y + 40, 0); //beatifull hardcoded
+				item.rectTransform.parent.position = new Vector3(pos.x, pos.y + deltaY, 0);
                 break;
             }
         }
     }
+
+	public void DisableTexts()
+	{
+		foreach (var item in _texts)
+		{
+			item.enabled = false;
+		}
+	}
+
+	public void EnableDisableTextByName(string name, bool value)
+	{
+		foreach (var item in _texts)
+		{
+			if (item.gameObject.name == name)
+			{
+				item.enabled = value;
+				break;
+			}
+		}
+	}
 
 	void Update () {
 		

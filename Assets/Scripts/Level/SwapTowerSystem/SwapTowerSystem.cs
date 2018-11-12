@@ -19,10 +19,12 @@ public class SwapTowerSystem : MonoBehaviour
     GameManager _gameManager;
     MinionManager _minionManager;
     TowerManager _towerManager;
+	LevelCanvasManager _lvlCanvasManager;
     List<MinionType> _minionSpawnOrder = new List<MinionType>();
     List<MinionType> _minionWalkFinishedOrder = new List<MinionType>();
     bool _startSystem;
     bool _isEnableForThisLevel;
+	bool _hasSeenTutorial;
 
     void Start()
     {
@@ -39,10 +41,11 @@ public class SwapTowerSystem : MonoBehaviour
     }
 
 
-    public void LeveInitFinished(MinionManager minionMan, TowerManager towerMan)
+	public void LeveInitFinished(MinionManager minionMan, TowerManager towerMan, LevelCanvasManager lvlCanvas)
     {
         _minionManager = minionMan;
         _towerManager = towerMan;
+		_lvlCanvasManager = lvlCanvas;
 
         if (!_isEnableForThisLevel) return;
 
@@ -84,6 +87,12 @@ public class SwapTowerSystem : MonoBehaviour
 
         //If the code could arrive to this point, then a swap was made, so reset the list.
         _minionWalkFinishedOrder = new List<MinionType>();
+
+		if (!_hasSeenTutorial) 
+		{
+			_hasSeenTutorial = true;
+			_lvlCanvasManager.EnableSwapTowerTutorial (selected.transform.position);
+		}
     }
 
     void SwapTowers(TowerBase toSwap, TowerBase newOne)

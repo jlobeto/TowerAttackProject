@@ -16,6 +16,6 @@ public class ShowDovePointingArrow : StepBase
 
 		lvlTuto.LevelCanvasTutorial.EnableArrowByName("PointingToRunnerSkill");
 		var pos = Camera.main.WorldToScreenPoint(m.transform.position);
-		lvlTuto.LevelCanvasTutorial.SetArrowPosition(pos, "PointingToRunnerSkill");
+		lvlTuto.LevelCanvasTutorial.SetArrowPosition(pos, "PointingToRunnerSkill", 40);
 	}
 }

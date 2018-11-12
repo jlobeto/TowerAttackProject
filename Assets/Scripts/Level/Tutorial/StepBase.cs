@@ -5,6 +5,8 @@ using UnityEngine;
 public class StepBase : IStep
 {
 	public LevelCeroTutorial lvlTuto;
+	public TutorialOneManager tutoOneManager;
+	public Level lvl;
 
 	#region IStep implementation
 
