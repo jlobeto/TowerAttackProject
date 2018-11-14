@@ -7,6 +7,9 @@ public class Dove : Minion
 {
     public float airYpos = 7;
     public float groundYpos = 1;
+	public float shadowGroundPos = -0.32f;
+	public float shadowAirPos = -2.11f;
+	public Transform shadow;
 
     ParticleSystem _skillPS;
     ChangeTargetSkill _mySkill;
@@ -44,9 +47,10 @@ public class Dove : Minion
 
         targetType = targetType == TargetType.Air ? TargetType.Ground : TargetType.Air;
         _targetPos = targetType == TargetType.Air ? airYpos : groundYpos;
-
+		var shadowTargetPos = targetType == TargetType.Air ? shadowAirPos : shadowGroundPos;
+		shadow.transform.localPosition = new Vector3 (shadow.transform.localPosition.x, shadowTargetPos ,shadow.transform.localPosition.z);
         _skillPS.Play();
-        _mySkill.SetYDest(_targetPos);
+		_mySkill.SetYDest(_targetPos, shadowTargetPos);
     }
 
     protected override void Walk()

@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 4995001603577362}
   - component: {fileID: 212639022046368540}
   m_Layer: 0
-  m_Name: AirMinionsShadow
+  m_Name: shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -236,8 +236,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1847677882034842}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -2.85, z: 0}
-  m_LocalScale: {x: 0.4136379, y: 0.4136379, z: 0.4136379}
+  m_LocalPosition: {x: 0, y: -2.11, z: 0}
+  m_LocalScale: {x: 0.55, y: 0.58, z: 0.4136379}
   m_Children: []
   m_Father: {fileID: 4995101172068958}
   m_RootOrder: 4
@@ -248,8 +248,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1999553106696042}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -76.57326, y: -2.7, z: 162.17477}
+  m_LocalRotation: {x: -0, y: 0.7071057, z: -0, w: 0.7071079}
+  m_LocalPosition: {x: -96.68, y: 7, z: 228.1}
   m_LocalScale: {x: 3.3159988, y: 3.3159993, z: 3.3159993}
   m_Children:
   - {fileID: 4690626318537860}
@@ -259,7 +259,7 @@ Transform:
   - {fileID: 4995001603577362}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90.00001, z: 0}
 --- !u!23 &23524229990267196
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -417,6 +417,7 @@ MonoBehaviour:
   skillZoneEffect: {fileID: 0}
   airYpos: 7
   groundYpos: 1
+  shadow: {fileID: 4995001603577362}
 --- !u!135 &135976457835878604
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -489,7 +490,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1374494205
+  randomSeed: 2093923640
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3850,7 +3851,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -776425903
+  randomSeed: -1356716547
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -10572,7 +10573,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1345557073
+  randomSeed: 508071278
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -14124,7 +14125,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d9d1ee10755027d409221404f48cdfe7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.66}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

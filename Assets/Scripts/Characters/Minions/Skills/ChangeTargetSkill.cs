@@ -5,7 +5,8 @@ using UnityEngine;
 public class ChangeTargetSkill : BaseMinionSkill
 {
     float _to;
-    
+	float _shadowPosTo;
+
     protected override void Start()
     {
         base.Start();
@@ -19,9 +20,10 @@ public class ChangeTargetSkill : BaseMinionSkill
     }
 
 
-    public void SetYDest(float y)
+	public void SetYDest(float y, float shadowYPos)
     {
         _to = y;
+		_shadowPosTo = shadowYPos;
     }
 
     public override bool ExecuteSkill()
@@ -32,7 +34,10 @@ public class ChangeTargetSkill : BaseMinionSkill
         y = Mathf.Lerp(y, _to, Time.deltaTime * 5.5f);
         
         transform.position = new Vector3(transform.position.x, y, transform.position.z);
-        
+  		      
+		transform.localPosition = new Vector3 (transform.localPosition.x, transform.position.y, transform.localPosition.z);
+
+
         return true;
     }
 
