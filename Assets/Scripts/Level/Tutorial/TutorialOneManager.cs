@@ -11,7 +11,7 @@ public class TutorialOneManager : TutorialCeroManager
 
 	protected override void Awake () 
 	{
-		lvl.ExecuteTutorialStep += OnExecuteStep;//added here because on Start() ocurred after the first ExecuteTutorialStep;
+		//lvl.ExecuteTutorialStep += OnExecuteStep;//added here because on Start() ocurred after the first ExecuteTutorialStep;
 		AddSteps ();
 	}
 
