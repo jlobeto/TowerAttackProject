@@ -11,7 +11,6 @@ public class CameraMovement : MonoBehaviour
 
 	}
 
-
 	void Update ()
 	{
 		CheckFingers();
@@ -22,13 +21,13 @@ public class CameraMovement : MonoBehaviour
 	{
 		var x = Input.GetAxis("Horizontal");
 		var z = Input.GetAxis("Vertical");
-		var zoom = new Vector3(x, 0, z);
-		transform.position += Time.deltaTime * speed * zoom * 5;
+		transform.position += Time.deltaTime * speed * z * transform.forward * 5;
+		transform.position += Time.deltaTime * speed * x * transform.right * 5;
 	}
 
 	void CheckFingers()
 	{
-		if (Input.touchCount == 1) 
+		if (Input.touchCount == 1)
 		{
 			var t1 = Input.GetTouch (0);
 			//var t2 = Input.GetTouch (1);
