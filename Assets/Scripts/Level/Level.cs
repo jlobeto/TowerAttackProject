@@ -27,6 +27,7 @@ public class Level : MonoBehaviour
     protected GameManager _gameManager;
     protected TowerManager _towerManager;
     protected MinionManager _minionManager;
+	protected MinionsSkillManager _minionSkillManager;
     protected LevelSkillManager _lvlSkillManager;
     protected LevelEventManager _lvlEventManager;
     protected LevelCanvasManager _lvlCanvasManager;
@@ -47,7 +48,10 @@ public class Level : MonoBehaviour
     public LevelCanvasManager LevelCanvasManager { get { return _lvlCanvasManager; } }
     public MinionManager MinionManager { get { return _minionManager; } }
     public TowerManager TowerManager { get { return _towerManager; } }
-    public GameManager GameManager { get { return _gameManager; } }
+	public GameManager GameManager { get { return _gameManager; } }
+	public MinionsSkillManager MinionSkillManager { get { return _minionSkillManager; } }
+	public GameObjectSelector GameOBjectSelector { get { return _goSelector; } }
+
     private void Awake()
     {
         _gameManager = FindObjectOfType<GameManager>();
@@ -100,18 +104,11 @@ public class Level : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            var selected = _goSelector.SelectGameObject(LayerMask.NameToLayer("Minion"));
-            if (selected != null)
-                _minionManager.OnReleasedMinionSelected(selected.GetInstanceID());
-            else
-            {
-                selected = _goSelector.SelectGameObject(LayerMask.NameToLayer("Tower"));
-                if(selected != null)
-                {
-                    _towerManager.ActivateTowerAttackRange(selected.GetInstanceID());
-                }
-            }
-
+			var selected = _goSelector.SelectGameObject(LayerMask.NameToLayer("Tower"));
+			if(selected != null)
+			{
+				_towerManager.ActivateTowerAttackRange(selected.GetInstanceID());
+			}
         }
     }
 
@@ -162,6 +159,7 @@ public class Level : MonoBehaviour
         _minionManager = gameplayManagersGO.AddComponent<MinionManager>();
         _towerManager = gameplayManagersGO.AddComponent<TowerManager>();
         _lvlSkillManager = gameplayManagersGO.AddComponent<LevelSkillManager>();
+		_minionSkillManager = gameplayManagersGO.AddComponent<MinionsSkillManager>();
         _goSelector = FindObjectOfType<GameObjectSelector>();
         _floorEffect = FindObjectOfType<FloorEffect>();
 
@@ -174,7 +172,7 @@ public class Level : MonoBehaviour
         ConfigureLevelEvents();
 
         _gameManager.LevelInitFinished(this);
-
+		_minionSkillManager.Init (this);
 
 		ExecuteTutorialStep (null);
     }
@@ -184,18 +182,10 @@ public class Level : MonoBehaviour
         if(_lvlCanvasManager == null)
             _lvlCanvasManager = FindObjectOfType<LevelCanvasManager>();
 
-		foreach (var m in availableMinions) //need to get json data to show correct point value on spawn button 
-		{
-            if (m == null) {
-                Debug.LogError("minion item in AvailableMinions List is null ");
-                continue;
-            }
-			var minionStats = GameManager.MinionsLoader.GetStatByLevel (m.minionType, levelID);
-			m.pointsValue = minionStats.pointsValue;
-			_lvlCanvasManager.BuildAvailableMinionButton(m);
-		}
+		_lvlCanvasManager.level = this;
+
+		_lvlCanvasManager.BuildMinionSlots (availableMinions, levelID, _minionSkillManager);
         
-        _lvlCanvasManager.level = this;
         _lvlCanvasManager.UpdateLevelTimer(levelTime);
         _lvlCanvasManager.UpdateLevelLives(LivesRemoved, objetives[objetives.Length-1]);
         UpdatePoints(0);

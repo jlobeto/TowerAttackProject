@@ -145,19 +145,6 @@ public class MinionManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// When a minion is already released and is walking throught the path it can be selected to pop a number of
-    /// differents actions.
-    /// </summary>
-    public void OnReleasedMinionSelected(int instanceID)
-    {
-        var selected = _minions.FirstOrDefault(i => i.gameObject.GetInstanceID() == instanceID && !i.IsDead);
-        if (selected == null) return;
-
-        selected.ActivateSelfSkill();
-
-    }
-
     #region Handlers
     void MinionWalkFinishedHandler(Minion m)
     {

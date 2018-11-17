@@ -20,17 +20,17 @@ public class DoveTutorialStart : StepBase
 
 		lvlTuto.addMinionButton.Remove(MinionType.Runner);
 		lvlTuto.addMinionButton.Add (MinionType.Dove);
+		var list = new List<Minion> ();
 		foreach (var item in lvlTuto.addMinionButton)
 		{
 			foreach (var m in lvlTuto.availableMinions)
 			{
 				if (item != m.minionType) continue;
-
-				var minionStats = lvlTuto.GameManager.MinionsLoader.GetStatByLevel(m.minionType, 0);
-				m.pointsValue = minionStats.pointsValue;
-				lvlTuto.LevelCanvasManager.BuildAvailableMinionButton(m, true);
+				list.Add (m);
 			}
 		}
+
+		lvlTuto.LevelCanvasManager.BuildMinionSlots(list, lvlTuto.levelID,lvlTuto.MinionSkillManager, true);
 
 		lvlTuto.forDoveOne.OnTriggerEnterCallback += lvlTuto.OnDoveColEnter;
 		lvlTuto.forDoveTwo.OnTriggerEnterCallback += lvlTuto.OnDoveColEnter;

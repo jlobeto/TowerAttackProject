@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class LevelCanvasManager : MonoBehaviour
 {
+	public int minionSlots = 5;
     [HideInInspector]
     public Level level;
     [HideInInspector]
@@ -21,7 +22,8 @@ public class LevelCanvasManager : MonoBehaviour
     /// <summary>
     /// Available minions (the level will fill this ones)
     /// </summary>
-    HorizontalLayoutGroup _availablesPanel;
+	HorizontalLayoutGroup _availablesPanel;
+    HorizontalLayoutGroup _minionSkillPanel;
     //DragAndDropSystem _dragAndDropSystem;
     List<CanvasSkillLvlButton> _skillButtons = new List<CanvasSkillLvlButton>();
     Image _levelTimerBG;
@@ -31,6 +33,7 @@ public class LevelCanvasManager : MonoBehaviour
     Text _eventWarningText;
     bool _isAnyButtonDisabled;
 
+
     string _evtType;
     bool _eventWarningEnabled;
     float _eventWarningTime;
@@ -39,7 +42,9 @@ public class LevelCanvasManager : MonoBehaviour
     {
         var panels = GetComponentsInChildren<HorizontalLayoutGroup>();
         _skillsButtonPanel = panels.FirstOrDefault(i => i.tag == "LvlSkillPanel");
-        _availablesPanel = panels.FirstOrDefault(i => i.tag == "AvailablesPanel");
+		_availablesPanel = panels.FirstOrDefault(i => i.tag == "AvailablesPanel");
+		_minionSkillPanel = panels.FirstOrDefault(i => i.tag == "MinionSkillPanel");
+
         //_dragAndDropSystem = GetComponentInChildren<DragAndDropSystem>();
         //_timerBtn = GetComponentsInChildren<Button>().FirstOrDefault(i => i.tag == "BuildSquadTimer");
         //_timerText = _timerBtn.GetComponentInChildren<Text>();
@@ -112,7 +117,6 @@ public class LevelCanvasManager : MonoBehaviour
             Destroy(item.gameObject);
         }
     }
-
     
     public void UpdateLevelTimer(float newTime)
     {
@@ -125,16 +129,64 @@ public class LevelCanvasManager : MonoBehaviour
         _levelLives.text = newLive + " / " + initLives;
     }
 
-    public void BuildAvailableMinionButton(Minion m, bool stayNotInteractuable = false)
-    {        
-        var btn = Instantiate<Button>(minionSaleButtonPrefab, _availablesPanel.transform);
-        btn.GetComponentInChildren<Text>().text = m.minionType +" x"+ m.pointsValue;
-        var t = m.minionType;
-        var newBtn = btn;
-        var cooldown = m.spawnCooldown;
-        var fillImg = btn.GetComponentsInChildren<Image>();//Returns btn.image and its child.image(DONT KNOW WHY)
-        btn.onClick.AddListener(() => OnBuyMinion(newBtn,fillImg[1], t, cooldown, stayNotInteractuable));
+	public void BuildMinionSlots(List<Minion> availableMinions, int lvlId, MinionsSkillManager minionSkillsManager, bool stayNotInteractuable = false)
+    {   
+		var slots = 0;
+		foreach (var m in availableMinions) //need to get json data to show correct point value on spawn button 
+		{
+			if (m == null) {
+				Debug.LogError("minion item in AvailableMinions List is null ");
+				continue;
+			}
+			slots++;
+			var minionStats = level.GameManager.MinionsLoader.GetStatByLevel (m.minionType, lvlId);
+			m.pointsValue = minionStats.pointsValue;
+
+			var btn = Instantiate<Button>(minionSaleButtonPrefab, _availablesPanel.transform);
+			btn.GetComponentInChildren<Text>().text = m.minionType +" x"+ m.pointsValue;
+			var t = m.minionType;
+			var newBtn = btn;
+			var cooldown = m.spawnCooldown;
+			var fillImg = btn.GetComponentsInChildren<Image>();//Returns btn.image and its child.image(DONT KNOW WHY)
+			btn.onClick.AddListener(() => OnBuyMinion(newBtn,fillImg[1], t, cooldown, stayNotInteractuable));
+
+			SetMinionSkillButton (btn, m.skillType, !stayNotInteractuable, minionSkillsManager);
+		}
+
+		if (slots < minionSlots) 
+		{
+			var lefts = minionSlots - slots;
+			BuildEmptySlots (lefts, _availablesPanel.transform);
+		}
     }
+
+	void BuildEmptySlots(int quantity, Transform parent)
+	{
+		for (int i = 0; i < quantity; i++) 
+		{
+			var btn = Instantiate<Button>(minionSaleButtonPrefab, parent);
+			btn.interactable = false;
+			btn.GetComponentInChildren<Text>().text = "";
+			var fillImg = btn.GetComponentsInChildren<Image>()[1];//Returns btn.image and its child.image(DONT KNOW WHY)
+			fillImg.fillAmount = 1;
+
+			SetMinionSkillButton (btn, BaseMinionSkill.SkillType.None, false, null);
+		}	
+	}
+
+	void SetMinionSkillButton(Button baseBtn, BaseMinionSkill.SkillType skill, bool interactable, MinionsSkillManager minionSkillsManager)
+	{
+		var skillBtn = baseBtn.GetComponentInChildren<MinionSkillMouseDown> ();
+
+		if (interactable) {
+			skillBtn.InitButton (skill, minionSkillsManager.SkillButtonPressed);
+			skillBtn.GetComponentInChildren<Text>().text = skill.ToString();
+		}
+			
+		var fillImg = skillBtn.GetComponentsInChildren<Image>()[1];//Returns btn.image and its child.image(DONT KNOW WHY)
+		fillImg.fillAmount = interactable ? 0 : 1;
+		skillBtn.GetComponent<Button> ().interactable = interactable;
+	}
 
     void OnBuyMinion(Button btn,Image fillImg, MinionType t, float cooldown, bool stayNotInteractuable)
     {
@@ -150,7 +202,6 @@ public class LevelCanvasManager : MonoBehaviour
             fillImg.fillAmount = 1;
             StartCoroutine(BuyMinionFreeze(cooldown, fillImg, btn));
         }
-            
     }
 
 

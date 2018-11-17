@@ -5,7 +5,6 @@ using UnityEngine;
 public class ChangeTargetSkill : BaseMinionSkill
 {
     float _to;
-	float _shadowPosTo;
 
     protected override void Start()
     {
@@ -20,10 +19,9 @@ public class ChangeTargetSkill : BaseMinionSkill
     }
 
 
-	public void SetYDest(float y, float shadowYPos)
+	public void SetYDest(float y)
     {
         _to = y;
-		_shadowPosTo = shadowYPos;
     }
 
     public override bool ExecuteSkill()

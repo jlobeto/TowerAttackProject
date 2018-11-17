@@ -10,6 +10,8 @@ public class Minion : MonoBehaviour
     public GameObjectTypes type = GameObjectTypes.None;
     public MinionType minionType = MinionType.Runner;
     public TargetType targetType = TargetType.Both;
+	public BaseMinionSkill.SkillType skillType;
+	public SpriteRenderer skillSelectorSprite;
     [HideInInspector] public float speed = 4;
     [HideInInspector] public int pointsValue = 15;
     [HideInInspector] public float strength = 0;

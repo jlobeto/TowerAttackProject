@@ -13,16 +13,16 @@ public class AddRunner : StepBase
 	public override void ExecuteStep (GameObject gameObject = null)
 	{
 		lvlTuto.addMinionButton.Add (MinionType.Runner);
+		var list = new List<Minion> ();
 		foreach (var item in lvlTuto.addMinionButton)
 		{
 			foreach (var m in lvlTuto.availableMinions)
 			{
 				if (item != m.minionType) continue;
-
-				var minionStats = lvlTuto.GameManager.MinionsLoader.GetStatByLevel(m.minionType, 0);
-				m.pointsValue = minionStats.pointsValue;
-				lvlTuto.LevelCanvasManager.BuildAvailableMinionButton(m, true);
+				list.Add (m);
 			}
 		}
+
+		lvlTuto.LevelCanvasManager.BuildMinionSlots(list, lvlTuto.levelID,lvlTuto.MinionSkillManager, true);
 	}
 }

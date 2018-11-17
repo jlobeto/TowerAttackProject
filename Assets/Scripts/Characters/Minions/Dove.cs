@@ -50,7 +50,7 @@ public class Dove : Minion
 		var shadowTargetPos = targetType == TargetType.Air ? shadowAirPos : shadowGroundPos;
 		shadow.transform.localPosition = new Vector3 (shadow.transform.localPosition.x, shadowTargetPos ,shadow.transform.localPosition.z);
         _skillPS.Play();
-		_mySkill.SetYDest(_targetPos, shadowTargetPos);
+		_mySkill.SetYDest(_targetPos);
     }
 
     protected override void Walk()
