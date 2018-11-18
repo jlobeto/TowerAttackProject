@@ -10,14 +10,33 @@ public class GameUtils
     public const string MINION_CONFIG_PATH = "GameConfig/Minions/";
     public const string TOWER_CONFIG_PATH = "GameConfig/Towers/";
 
+	enum Target{
+		resources,
+		external
+	}
+
+	static Target _target = Target.resources;
+
     public static string GetJson(string path)
     {
         var json = "";
 
-        using (StreamReader r = new StreamReader(path))
-        {
-            json = r.ReadToEnd();
-        }
+		if (_target == Target.resources) 
+		{
+			path = path.Substring (0, path.IndexOf('.'));
+			Debug.Log (path);
+			TextAsset txtAsset = (TextAsset)Resources.Load (path, typeof(TextAsset));
+			json = txtAsset.text;
+		} 
+		else 
+		{
+			using (StreamReader r = new StreamReader(path))
+			{
+				json = r.ReadToEnd();
+			}	
+		}
+
+        
 
         if (json == "")
             throw new Exception("Cound not GetJson at path " + path);

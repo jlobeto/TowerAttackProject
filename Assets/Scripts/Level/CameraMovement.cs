@@ -5,6 +5,9 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
 	public float speed = 3;
+	public bool canMove;
+
+	
 
 	void Start () 
 	{
@@ -13,6 +16,9 @@ public class CameraMovement : MonoBehaviour
 
 	void Update ()
 	{
+		if (!canMove)
+			return;
+		
 		CheckFingers();
 		CheckButtons();
 	}

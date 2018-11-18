@@ -17,9 +17,12 @@ public class MinionsSkillManager : MonoBehaviour
 	List<Minion> _selectedOnes;
 	IEnumerable<Minion> _theOnes;
 	Dictionary<BaseMinionSkill.SkillType, Color> _skillToColor = new Dictionary<BaseMinionSkill.SkillType, Color>();
+	CameraMovement _cameraMovement;
 
 	void Start () 
 	{
+		_cameraMovement = Camera.main.GetComponentInParent<CameraMovement> ();
+
 		_rangeSprite = Resources.Load("Level/MinionSkillSelector" , typeof(SpriteRenderer)) as SpriteRenderer;
 		_rangeSprite = Instantiate<SpriteRenderer> (_rangeSprite, new Vector3(1000,1000,1000), Quaternion.identity);
 		_rangeSprite.transform.localScale = new Vector3 (_rangeRadius, _rangeRadius,1);
@@ -36,7 +39,7 @@ public class MinionsSkillManager : MonoBehaviour
 	}
 	
 
-	void Update () 
+	void FixedUpdate () 
 	{
 		if (!_pressDown)
 			return;
@@ -54,6 +57,7 @@ public class MinionsSkillManager : MonoBehaviour
 		if(Input.GetMouseButtonUp(0))//desktop and mobile
 		{
 			_pressDown = false;
+			_cameraMovement.canMove = true;
 
 			//using global variables to not create a new reference each buttonUp
 			_selectedOnes = _lvl.GameOBjectSelector.GetMinionsSelection (_rangeSprite.transform.position, _rangeRadius);
@@ -80,8 +84,11 @@ public class MinionsSkillManager : MonoBehaviour
 		var m = _lvl.availableMinions.First (i => i.skillType == skill);
 		if (m == null)
 			return;
+		
 		_typeToSelect = skill;
 		_pressDown = true;
+
+		_cameraMovement.canMove = false;
 
 		_rangeSprite.color = _skillToColor [skill];
 		var color = _ps.colorOverLifetime;
