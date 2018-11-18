@@ -15,8 +15,7 @@ public class TowerBase : MonoBehaviour
     public Transform spawnPoint;
     public GameObject toRotate;
     public ParticleSystem attackRangePS;
-    public Transform rangeGroundPosition;//position where the range of the tower will spawn;
-    public Transform rangeAirPosition;//position where the range of the tower will spawn;
+    public Transform rangeFeedbackPosition;//position where the range of the tower will spawn;
     public bool showGizmoRange;
     public float testRange = 5f;
 
@@ -68,17 +67,10 @@ public class TowerBase : MonoBehaviour
     {
         List<Collider> allMinions = new List<Collider>();
 
-        if (rangeGroundPosition != null)
+        if (rangeFeedbackPosition != null)
         {
-            var minions = Physics.OverlapSphere(rangeGroundPosition.position, pMyStat.fireRange, 1 << LayerMask.NameToLayer("Minion"));
+            var minions = Physics.OverlapSphere(rangeFeedbackPosition.position, pMyStat.fireRange, 1 << LayerMask.NameToLayer("Minion"));
             allMinions.AddRange(minions);
-        }
-        
-        if (rangeAirPosition != null)
-        {
-            var airOnes = Physics.OverlapSphere(rangeAirPosition.position, pMyStat.fireRange, 1 << LayerMask.NameToLayer("Minion"));
-            airOnes = airOnes.Where(i => !allMinions.Contains(i)).ToArray();
-            allMinions.AddRange(airOnes);
         }
 
         if (allMinions.Count == 0)
@@ -213,11 +205,8 @@ public class TowerBase : MonoBehaviour
             {
                 var shape = item.shape;
                 shape.radius = pMyStat.fireRange;
-                item.transform.position = rangeGroundPosition.position;
+                item.transform.position = rangeFeedbackPosition.position;
             }
-
-            if (particles.Length == 2)
-                particles[1].transform.position = rangeAirPosition.position;
         }
     }
 
@@ -238,11 +227,9 @@ public class TowerBase : MonoBehaviour
         Gizmos.color = Color.white;
         if (showGizmoRange)
         {
-            if (rangeGroundPosition != null)
-                Gizmos.DrawWireSphere(rangeGroundPosition.position, testRange);
+            if (rangeFeedbackPosition != null)
+                Gizmos.DrawWireSphere(rangeFeedbackPosition.position, testRange);
 
-            if (rangeAirPosition != null)
-                Gizmos.DrawWireSphere(rangeAirPosition.position, testRange);
         }
     }
 }

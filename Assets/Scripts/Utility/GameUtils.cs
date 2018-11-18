@@ -24,7 +24,6 @@ public class GameUtils
 		if (_target == Target.resources) 
 		{
 			path = path.Substring (0, path.IndexOf('.'));
-			Debug.Log (path);
 			TextAsset txtAsset = (TextAsset)Resources.Load (path, typeof(TextAsset));
 			json = txtAsset.text;
 		} 

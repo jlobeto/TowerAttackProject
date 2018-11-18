@@ -41,7 +41,7 @@ public class CameraMovement : MonoBehaviour
 			if (t1.phase == TouchPhase.Moved)// && t2.phase == TouchPhase.Moved) 
 			{
 				var deltaPos = t1.deltaPosition;
-				transform.Translate (new Vector3 (-deltaPos.x * (speed / 20), 0 , -deltaPos.y * (speed / 20)));
+				transform.Translate (new Vector3 (-deltaPos.x * (speed / 22), 0 , -deltaPos.y * (speed / 22)));
 			}
 		}
 	}
