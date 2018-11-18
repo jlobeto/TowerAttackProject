@@ -158,12 +158,13 @@ public class Level : MonoBehaviour
         var gameplayManagersGO = new GameObject("GameplayManagers");
         _minionManager = gameplayManagersGO.AddComponent<MinionManager>();
         _towerManager = gameplayManagersGO.AddComponent<TowerManager>();
-        _lvlSkillManager = gameplayManagersGO.AddComponent<LevelSkillManager>();
+        //_lvlSkillManager = gameplayManagersGO.AddComponent<LevelSkillManager>();
 		_minionSkillManager = gameplayManagersGO.AddComponent<MinionsSkillManager>();
         _goSelector = FindObjectOfType<GameObjectSelector>();
         _floorEffect = FindObjectOfType<FloorEffect>();
 
-        _towerManager.level = _lvlSkillManager.level = _minionManager.level = this;
+		//_lvlSkillManager.level = this;
+		_towerManager.level = _minionManager.level = this;
         
         SetGameManagerData();
 
