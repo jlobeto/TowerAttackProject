@@ -8,6 +8,7 @@ public class MinionsSkillManager : MonoBehaviour
 
 	Level _lvl;
 	SpriteRenderer _rangeSprite;
+	ParticleSystem _ps;
 	bool _pressDown;
 	float _rangeRadius = 5;
 	RaycastHit hit;
@@ -24,12 +25,14 @@ public class MinionsSkillManager : MonoBehaviour
 		_rangeSprite.transform.localScale = new Vector3 (_rangeRadius, _rangeRadius,1);
 		_rangeSprite.transform.Rotate (90, 0, 0);
 
-		_skillToColor.Add (BaseMinionSkill.SkillType.SpeedBoost, new Color(214/255, 2/255, 10/255));
-		_skillToColor.Add (BaseMinionSkill.SkillType.HitShield, new Color(0, 97/255, 250));
-		_skillToColor.Add (BaseMinionSkill.SkillType.ChangeTarget, new Color(212/255, 4/255, 240/255));
-		_skillToColor.Add (BaseMinionSkill.SkillType.GiveHealth, new Color(0, 1, 96/255));
-		_skillToColor.Add (BaseMinionSkill.SkillType.SmokeBomb, new Color(178/255, 1, 0));//light green
-		_skillToColor.Add (BaseMinionSkill.SkillType.WarScreamer, new Color(240/255, 170/255, 0));//light green
+		_ps = _rangeSprite.GetComponentInChildren<ParticleSystem> ();
+
+		_skillToColor.Add (BaseMinionSkill.SkillType.SpeedBoost, new Color(1, 0, 0));
+		_skillToColor.Add (BaseMinionSkill.SkillType.HitShield, new Color(0, 97f/255, 250));
+		_skillToColor.Add (BaseMinionSkill.SkillType.ChangeTarget, new Color(212f/255, 4f/255, 240f/255));
+		_skillToColor.Add (BaseMinionSkill.SkillType.GiveHealth, Color.green);
+		_skillToColor.Add (BaseMinionSkill.SkillType.SmokeBomb, new Color(163f/255, 219f/255, 94f/255));//light green
+		_skillToColor.Add (BaseMinionSkill.SkillType.WarScreamer, new Color(240f/255, 170f/255, 0));//light green
 	}
 	
 
@@ -79,10 +82,15 @@ public class MinionsSkillManager : MonoBehaviour
 			return;
 		_typeToSelect = skill;
 		_pressDown = true;
-		_rangeSprite.color = _skillToColor [skill];
-		Debug.Log (skill);
-	}
 
+		_rangeSprite.color = _skillToColor [skill];
+		var color = _ps.colorOverLifetime;
+		Gradient grad = new Gradient();
+		grad.SetKeys( new GradientColorKey[] { new GradientColorKey(_skillToColor [skill], 0.0f), new GradientColorKey(_skillToColor [skill], 1.0f) }
+					, new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(0.0f, 1.0f) } );
+
+		color.color = grad;
+	}
 
 	private void OnDrawGizmos()
 	{
