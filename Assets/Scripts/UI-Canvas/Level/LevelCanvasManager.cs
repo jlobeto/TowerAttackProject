@@ -53,9 +53,9 @@ public class LevelCanvasManager : MonoBehaviour
         foreach (Transform child in transform)
         {
             if (child.tag == "CanvasLvlTimer")
-                _levelTimerBG = child.GetComponent<Image>();
+				_levelTimerBG = child.GetComponentInChildren<Image>();
             if(child.tag == "CanvasLvlLives")
-                _levelLivesBG = child.GetComponent<Image>();
+				_levelLivesBG = child.GetComponentInChildren<Image>();
         }
 
         _levelTimer = _levelTimerBG.GetComponentInChildren<Text>();
@@ -120,13 +120,13 @@ public class LevelCanvasManager : MonoBehaviour
     
     public void UpdateLevelTimer(float newTime)
     {
-        var text = "Level Time: ";
-        _levelTimer.text = text + newTime.ToString("0.00") + " ";
+        var text = "Time: ";
+		_levelTimer.text = (text + newTime.ToString("0.0")).ToUpper();
     }
 
     public void UpdateLevelLives(int newLive, int initLives)
     {
-        _levelLives.text = newLive + " / " + initLives;
+        _levelLives.text = newLive + "/" + initLives;
     }
 
 	public void BuildMinionSlots(List<Minion> availableMinions, int lvlId, MinionsSkillManager minionSkillsManager, bool stayNotInteractuable = false)
