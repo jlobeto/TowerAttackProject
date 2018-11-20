@@ -7,7 +7,7 @@ public class TutorialCeroManager : MonoBehaviour
 	protected List<StepBase> steps = new List<StepBase>();
 
 	LevelCeroTutorial _level;
-	int _currStep;
+	protected int _currStep;
 
 	protected virtual void Awake () 
 	{
@@ -63,8 +63,6 @@ public class TutorialCeroManager : MonoBehaviour
 		steps.Add (new AddTapOnRunnerInTankTuto(_level, true)); //runner
 		steps.Add (new AddTapOnRunnerInTankTuto(_level, false));// dove button
 		steps.Add (new TankEnterFirstCollider(_level)); //actually is the second collider (did not have time to change class name).
-		//steps.Add (new SpawnedMinionAfterTank(_level));
-		//steps.Add (new SpawnedMinionAfterTank(_level));
 
 	}
 }

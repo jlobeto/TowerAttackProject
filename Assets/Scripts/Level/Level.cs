@@ -70,6 +70,7 @@ public class Level : MonoBehaviour
 
         GameObjectSelection();
         OnRunLevelTimer();
+		CheckBackButton ();
 
         if (_currentLevelPoints != initialLevelPoints)
         {
@@ -81,6 +82,15 @@ public class Level : MonoBehaviour
             }
         }
     }
+
+	void CheckBackButton()
+	{
+		if(Input.GetKeyDown(KeyCode.Escape))
+		{
+			Time.timeScale = 0;
+			GameManager.popupManager.BuildOneButtonPopup (LevelCanvasManager.transform, "Pause", "Game paused" , "Main Map");
+		}
+	}
 
     void OnRunLevelTimer()
     {

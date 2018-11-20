@@ -21,11 +21,13 @@ public class OneBtnPopup : BasePopup
 
     public override void OnCloseButton()
     {
-        OnActionButton();
+		Time.timeScale = 1;//por si esta en el popup de pausa
+		Destroy (gameObject);
     }
 
     public virtual void OnActionButton()
     {
+		Time.timeScale = 1;//por si esta en el popup de pausa
         FindObjectOfType<GameManager>().SetCurrentLevelInfo(null);
         SceneManager.LoadScene(0);
     }

@@ -12,14 +12,10 @@ public class ShowLevelSkills : StepBase {
 
 	public override void ExecuteStep (GameObject gameObject = null)
 	{
-
-		tutoOneManager.canvasTuto.EnableArrowByName ("skill1");
-		tutoOneManager.canvasTuto.EnableArrowByName ("skill2");
-		tutoOneManager.canvasTuto.EnableDisableTextByName ("skillText", true);
-
 		tutoOneManager.canvasTuto.DisableArrowByName("Lives");
 		tutoOneManager.canvasTuto.EnableDisableTextByName ("livesText", false);
+		tutoOneManager.canvasTuto.EnableArrowByName ("HoldMoveCamera");
+		tutoOneManager.canvasTuto.EnableDisableTextByName ("HoldMoveCameraText", true);
 
-		tutoOneManager.StartTimer ();
 	}
 }

@@ -14,7 +14,7 @@ public class TowerBase : MonoBehaviour
 
     public Transform spawnPoint;
     public GameObject toRotate;
-    public ParticleSystem attackRangePS;
+	public SpriteRenderer attackRangeSprite;
     public Transform rangeFeedbackPosition;//position where the range of the tower will spawn;
     public bool showGizmoRange;
     public float testRange = 5f;
@@ -158,24 +158,25 @@ public class TowerBase : MonoBehaviour
     }
     #endregion
 
-    public void ActivateAttackRangePS()
+    public void ActivateAttackRangeSprite()
     {
-        if(attackRangePS == null)
+        if(attackRangeSprite == null)
         {
             //throw new System.Exception("There isn't a attackRange particle system on this tower");
 			return;
         }
-        if ( attackRangePS.isPlaying) return;
+		if (attackRangeSprite.enabled) return;
 
-        attackRangePS.Play(true);
-        StartCoroutine(StopAtkRangePS());
+		attackRangeSprite.enabled = true;
+        StartCoroutine(StopShowingAttackRangeSprite());
     }
 
-    IEnumerator StopAtkRangePS()
+    IEnumerator StopShowingAttackRangeSprite()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
 
-        attackRangePS.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+		attackRangeSprite.enabled = false;
+        
     }
 
     protected virtual void Start()
@@ -188,25 +189,21 @@ public class TowerBase : MonoBehaviour
         isInitialized = true;
         pMyStat = stat;
         _fireRateAux = pMyStat.fireCooldown;
-        InitializeRangeParticleSys();
+        InitAtkRangeSprite();
         pIsTutoLevelCero = tutoLevelCero;
     }
 
     /// <summary>
     /// Will set the fireRange to the particles system
     /// </summary>
-    void InitializeRangeParticleSys()
+    void InitAtkRangeSprite()
     {
-        if (attackRangePS != null)
+        if (attackRangeSprite != null)
         {
-            var particles = attackRangePS.GetComponentsInChildren<ParticleSystem>();
-
-            foreach (var item in particles)
-            {
-                var shape = item.shape;
-                shape.radius = pMyStat.fireRange;
-                item.transform.position = rangeFeedbackPosition.position;
-            }
+			attackRangeSprite.drawMode = SpriteDrawMode.Sliced;
+			attackRangeSprite.size = new Vector2 (pMyStat.fireRange * 2, pMyStat.fireRange * 2);
+			attackRangeSprite.enabled = false;
+			attackRangeSprite.transform.position = rangeFeedbackPosition.position;
         }
     }
 

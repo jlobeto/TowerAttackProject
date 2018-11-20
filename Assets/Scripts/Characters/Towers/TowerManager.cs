@@ -118,7 +118,7 @@ public class TowerManager : MonoBehaviour
         var selected = _towers.FirstOrDefault(i => i.Id == id);
         if (selected == null) return;
 
-        selected.ActivateAttackRangePS();
+        selected.ActivateAttackRangeSprite();
         OnClickTower(selected.towerType);
     }
 }

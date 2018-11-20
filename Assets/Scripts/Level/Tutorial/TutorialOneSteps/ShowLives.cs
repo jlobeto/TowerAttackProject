@@ -19,6 +19,6 @@ public class ShowLives : StepBase {
 		tutoOneManager.canvasTuto.DisableArrowByName("levelTime");
 		tutoOneManager.canvasTuto.EnableDisableTextByName ("hurryUp", false);
 
-		tutoOneManager.StartTimer ();
+
 	}
 }

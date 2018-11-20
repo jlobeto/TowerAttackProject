@@ -38,8 +38,6 @@ public class PopupManager : MonoBehaviour
             .GetComponentInChildren<Text>().text = btnText;
     }
 
-
-
     float GetRandomAnimation()
     {
         return Random.Range(0f, 3.9f);

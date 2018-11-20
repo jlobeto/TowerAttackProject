@@ -11,7 +11,7 @@ public class TutorialOneManager : TutorialCeroManager
 
 	protected override void Awake () 
 	{
-		//lvl.ExecuteTutorialStep += OnExecuteStep;//added here because on Start() ocurred after the first ExecuteTutorialStep;
+		lvl.ExecuteTutorialStep += OnExecuteStep;//added here because on Start() ocurred after the first ExecuteTutorialStep;
 		AddSteps ();
 	}
 
@@ -21,10 +21,10 @@ public class TutorialOneManager : TutorialCeroManager
 
 	}
 
-	public void StartTimer()
+	/*public void StartTimer()
 	{
 		StartCoroutine ( Timer());
-	}
+	}*/
 
 	protected override void AddListener ()
 	{
@@ -37,7 +37,7 @@ public class TutorialOneManager : TutorialCeroManager
 		steps.Add (new ShowPoints(lvl, this));
 		steps.Add (new ShowTimer(this));
 		steps.Add (new ShowLives(lvl, this));
-		steps.Add (new ShowLevelSkills(lvl, this));
+		steps.Add (new ShowLevelSkills(lvl, this));//Actually this is for move the camera tutorial (did not want to create another class).
 		steps.Add (new StopFirstPartOfTuto(lvl, this));
 	}
 
@@ -50,5 +50,16 @@ public class TutorialOneManager : TutorialCeroManager
 	void MinionDeathHandler(MinionType t)
 	{
 		_minionDeathCount++;
+	}
+
+	void Update()
+	{
+		if(Input.GetMouseButtonUp(0))
+		{
+			if (_currStep == steps.Count)
+				return;
+
+			OnExecuteStep (null);
+		}
 	}
 }

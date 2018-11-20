@@ -16,6 +16,5 @@ public class ShowPoints : StepBase
 		lvl.LevelCanvasManager.EnableMinionButtons (false);
 		tutoOneManager.canvasTuto.EnableArrowByName ("PointsBar");
 		tutoOneManager.canvasTuto.EnableDisableTextByName ("pointsText", true);
-		tutoOneManager.StartTimer ();
 	}
 }

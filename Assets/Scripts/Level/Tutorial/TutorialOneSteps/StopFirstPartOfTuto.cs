@@ -13,11 +13,9 @@ public class StopFirstPartOfTuto : StepBase
 	public override void ExecuteStep (GameObject gameObject = null)
 	{
 		Time.timeScale = 1;
-
-		tutoOneManager.canvasTuto.DisableArrowByName("skill1");
-		tutoOneManager.canvasTuto.DisableArrowByName("skill2");
-		tutoOneManager.canvasTuto.EnableDisableTextByName ("skillText", false);
-
+		tutoOneManager.canvasTuto.DisableArrowByName ("HoldMoveCamera");
+		tutoOneManager.canvasTuto.EnableDisableTextByName ("HoldMoveCameraText", false);
 		lvl.LevelCanvasManager.EnableMinionButtons (true);
+		lvl.isTutorial = false;
 	}
 }
