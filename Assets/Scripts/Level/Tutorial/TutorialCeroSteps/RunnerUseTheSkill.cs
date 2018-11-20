@@ -12,6 +12,6 @@ public class RunnerUseTheSkill : StepBase
 	public override void ExecuteStep (GameObject gameObject = null)
 	{
 		lvlTuto.LevelCanvasManager.EnableMinionButtons(true);
-		lvlTuto.LevelCanvasTutorial.EnableArrowByName("PressFirstBtn");
+		lvlTuto.LevelCanvasManager.StartTapAnimation (MinionType.Runner);
 	}
 }

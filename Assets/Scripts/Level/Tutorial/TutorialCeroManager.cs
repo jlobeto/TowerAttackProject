@@ -60,9 +60,11 @@ public class TutorialCeroManager : MonoBehaviour
 
 		//third part (tank) on last popup button clicked.
 		steps.Add (new OnTankTutoStart(_level));
-		steps.Add (new TankEnterFirstCollider(_level));
-		steps.Add (new SpawnedMinionAfterTank(_level));
-		steps.Add (new SpawnedMinionAfterTank(_level));
+		steps.Add (new AddTapOnRunnerInTankTuto(_level, true)); //runner
+		steps.Add (new AddTapOnRunnerInTankTuto(_level, false));// dove button
+		steps.Add (new TankEnterFirstCollider(_level)); //actually is the second collider (did not have time to change class name).
+		//steps.Add (new SpawnedMinionAfterTank(_level));
+		//steps.Add (new SpawnedMinionAfterTank(_level));
 
 	}
 }

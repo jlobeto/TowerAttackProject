@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 114156766711255624}
   - component: {fileID: 114461471381338798}
   - component: {fileID: 114546030114311052}
+  - component: {fileID: 114448768858729688}
   m_Layer: 5
   m_Name: MinionSaleButton
   m_TagString: Untagged
@@ -110,6 +111,7 @@ GameObject:
   - component: {fileID: 224805690244768760}
   - component: {fileID: 222095715479114988}
   - component: {fileID: 114375470966793292}
+  - component: {fileID: 114487056453111064}
   m_Layer: 5
   m_Name: Btn Forground
   m_TagString: Untagged
@@ -130,7 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -156,7 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -176,7 +178,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: 
 --- !u!114 &114354878769344322
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -231,6 +233,19 @@ MonoBehaviour:
   m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114448768858729688
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1829918161085156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 677d6585c64e546ae9a54aa9fabaeabe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minionType: 0
+  minionSkill: 0
 --- !u!114 &114461471381338798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -272,6 +287,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114487056453111064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1927248657684250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 677d6585c64e546ae9a54aa9fabaeabe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minionType: 0
+  minionSkill: 0
 --- !u!114 &114493961696748876
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -285,7 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -474,7 +502,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.39499903, y: 4.0200047}
+  m_AnchoredPosition: {x: -0.39499664, y: 4.0200043}
   m_SizeDelta: {x: -39.229996, y: -43.39999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224584183364140422
@@ -547,8 +575,8 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 160}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}

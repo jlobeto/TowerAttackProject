@@ -38,13 +38,13 @@ public class WarScreamer : Minion
 
     public override void ActivateSelfSkill()
     {
-        if (!skillPhase)
+        /*if (!skillPhase)
         {
             skillZoneEffect.SetActive(true);
             StartCoroutine(StopSkillZoneShow());
             skillPhase = true;
             return;
-        }
+        }*/
         OnSkill(true);
     }
 

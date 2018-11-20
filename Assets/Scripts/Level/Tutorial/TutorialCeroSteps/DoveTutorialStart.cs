@@ -30,9 +30,12 @@ public class DoveTutorialStart : StepBase
 			}
 		}
 
-		lvlTuto.LevelCanvasManager.BuildMinionSlots(list, lvlTuto.levelID,lvlTuto.MinionSkillManager, true);
+		lvlTuto.LevelCanvasManager.BuildMinionSlots(list, lvlTuto.levelID, lvlTuto.MinionSkillManager, true);
 
 		lvlTuto.forDoveOne.OnTriggerEnterCallback += lvlTuto.OnDoveColEnter;
 		lvlTuto.forDoveTwo.OnTriggerEnterCallback += lvlTuto.OnDoveColEnter;
+
+		lvlTuto.LevelCanvasManager.StartTapAnimation (MinionType.Dove);
+
 	}
 }

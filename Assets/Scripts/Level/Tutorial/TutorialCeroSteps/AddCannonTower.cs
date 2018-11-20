@@ -13,6 +13,6 @@ public class AddCannonTower : StepBase
 	{
 		lvlTuto.TowerManager.ShowTowerByTypeAndName(TowerType.Cannon, "tuto1");
 		lvlTuto.LevelCanvasManager.EnableMinionButtons(true);
-		lvlTuto.LevelCanvasTutorial.EnableArrowByName("PressFirstBtn");
+		lvlTuto.LevelCanvasManager.StartTapAnimation (MinionType.Runner);
 	}
 }

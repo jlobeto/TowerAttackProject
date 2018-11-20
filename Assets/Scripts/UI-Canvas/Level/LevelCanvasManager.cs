@@ -17,6 +17,11 @@ public class LevelCanvasManager : MonoBehaviour
     public Button minionSaleButtonPrefab;
     public Image eventWarning;
 	public RectTransform swapTowerTutorial;
+	public Image tapUpImage;
+	public Image tapDownImage;
+	public Image holdMoveImage;
+	public Image secondHoldMoveImage;
+	public List<MinionSaleButton> minionSaleButtons = new List<MinionSaleButton>();
 
     HorizontalLayoutGroup _skillsButtonPanel;
     /// <summary>
@@ -32,14 +37,21 @@ public class LevelCanvasManager : MonoBehaviour
     Text _levelLives;
     Text _eventWarningText;
     bool _isAnyButtonDisabled;
-
+	bool _isUpFinger;
+	bool _stopTapAnimation;
+	Canvas _thisCanvas;
 
     string _evtType;
     bool _eventWarningEnabled;
     float _eventWarningTime;
 
+	bool _startTutorialHoldAnimation;
+	Vector3 _holdImageTargetPosition;
+	Vector3 _holdImageInitPosition;
+
     void Awake()
     {
+		_thisCanvas = GetComponent<Canvas> ();
         var panels = GetComponentsInChildren<HorizontalLayoutGroup>();
         _skillsButtonPanel = panels.FirstOrDefault(i => i.tag == "LvlSkillPanel");
 		_availablesPanel = panels.FirstOrDefault(i => i.tag == "AvailablesPanel");
@@ -64,11 +76,15 @@ public class LevelCanvasManager : MonoBehaviour
         _eventWarningText = eventWarning.GetComponentInChildren<Text>();
         eventWarning.enabled = false;
         _eventWarningText.enabled = false;
+
+		tapUpImage.gameObject.SetActive (false);
+		tapDownImage.gameObject.SetActive (false);
     }
 
     void Update()
     {
         UpdateEventWarning();
+		HoldDownAndMoveTutorialAnim();
     }
 
 	public void EnableSwapTowerTutorial(Vector3 towerPos)
@@ -108,6 +124,16 @@ public class LevelCanvasManager : MonoBehaviour
         }
     }
 
+	public void EnableMinionSaleSpecific(bool value, MinionType type)
+	{
+		foreach (Transform item in _availablesPanel.transform) 
+		{
+			var b = item.GetComponent<MinionSaleButton> ();
+			if (b.minionType == type)
+				item.GetComponent<Button> ().interactable = value;
+		}
+	}
+
     public void DeleteMinionButtons()
     {
         var btns = _availablesPanel.GetComponentsInChildren<Transform>().Where(i => i.GetComponent<Button>() != null);
@@ -144,6 +170,9 @@ public class LevelCanvasManager : MonoBehaviour
 
 			var btn = Instantiate<Button>(minionSaleButtonPrefab, _availablesPanel.transform);
 			btn.GetComponentInChildren<Text>().text = m.minionType +" x"+ m.pointsValue;
+			minionSaleButtons.Add (btn.GetComponent<MinionSaleButton> ());
+			minionSaleButtons[minionSaleButtons.Count-1].minionType = m.minionType;
+			minionSaleButtons[minionSaleButtons.Count-1].minionSkill = m.skillType;
 			var t = m.minionType;
 			var newBtn = btn;
 			var cooldown = m.spawnCooldown;
@@ -174,7 +203,7 @@ public class LevelCanvasManager : MonoBehaviour
 		}	
 	}
 
-	void SetMinionSkillButton(Button baseBtn, BaseMinionSkill.SkillType skill, bool interactable, MinionsSkillManager minionSkillsManager)
+	public void SetMinionSkillButton(Button baseBtn, BaseMinionSkill.SkillType skill, bool interactable, MinionsSkillManager minionSkillsManager)
 	{
 		var skillBtn = baseBtn.GetComponentInChildren<MinionSkillMouseDown> ();
 
@@ -186,6 +215,17 @@ public class LevelCanvasManager : MonoBehaviour
 		var fillImg = skillBtn.GetComponentsInChildren<Image>()[1];//Returns btn.image and its child.image(DONT KNOW WHY)
 		fillImg.fillAmount = interactable ? 0 : 1;
 		skillBtn.GetComponent<Button> ().interactable = interactable;
+	}
+
+	public MinionSaleButton GetSpecificMinionSaleBtn(MinionType t)
+	{
+		foreach (var item in minionSaleButtons) 
+		{
+			if (item.minionType == t)
+				return item;
+		}
+
+		return null;
 	}
 
     void OnBuyMinion(Button btn,Image fillImg, MinionType t, float cooldown, bool stayNotInteractuable)
@@ -318,30 +358,91 @@ public class LevelCanvasManager : MonoBehaviour
         }
     }
     #endregion
+	int tapAnimationCount;
+	public void StartTapAnimation(MinionType t, bool setPosition = false)
+	{
+		_stopTapAnimation = false;
+		tapAnimationCount++;
 
-    #region CommentedFunctions
-    /*void OnTimerButtonClicked()
-    {
-    if (_buildTimerHasEnded)
-    {
-        _timerBtn.onClick.RemoveAllListeners();
-        return;
-    }
+		var btn = GetSpecificMinionSaleBtn (t).GetComponent<Image>();
+		var anchor = btn.rectTransform.anchoredPosition;
 
-    BuildSquadTimeStops();
-    _timerBtn.onClick.RemoveAllListeners();
-    }*/
-    /*
-    public void MinionOrderUpdated(int from, int to)
-    {
-        level.MinionOrderHasChanged(from, to);
-    }
+		if (tapAnimationCount == 1 || setPosition)
+		{
+			tapUpImage.rectTransform.position = new Vector3(anchor.x + 80,  anchor.y + (_availablesPanel.transform.position.y * .2f));
+			tapDownImage.rectTransform.position = new Vector3(anchor.x + 80,  anchor.y + (_availablesPanel.transform.position.y * .2f));
+		}
+	
+		tapUpImage.gameObject.SetActive (true);
 
-    public void MinionDeleted(int index)
-    {
-        level.MinionDeletedByDandD(index);
-    }
-    */
-    #endregion
+		StartCoroutine (OnTapChange());
+	}
 
+	IEnumerator OnTapChange()
+	{
+		yield return new WaitForSeconds (.5f);
+
+		if (_stopTapAnimation) 
+		{
+			tapDownImage.gameObject.SetActive (false);
+			tapUpImage.gameObject.SetActive (false);
+		}
+			
+		tapDownImage.gameObject.SetActive (_isUpFinger);
+		tapUpImage.gameObject.SetActive (!_isUpFinger);
+
+		_isUpFinger = !_isUpFinger;
+
+		if (!_stopTapAnimation)
+			StartCoroutine (OnTapChange ());
+		else 
+		{
+			tapDownImage.gameObject.SetActive (false);
+			tapUpImage.gameObject.SetActive (false);
+		}
+	}
+
+	public void StopTapAnimation()
+	{
+		_stopTapAnimation = true;
+		_isUpFinger = true;
+	}
+
+	public void StartSkillTapAnimation (MinionType t, Vector3 toPosition)
+	{
+		holdMoveImage.gameObject.SetActive (true);
+
+		var btn = GetSpecificMinionSaleBtn (t).GetComponent<Image>();
+
+		var anchor = tapUpImage.rectTransform.position;
+		time = 0;
+		holdMoveImage.rectTransform.position = new Vector3(anchor.x ,  anchor.y + _availablesPanel.transform.position.y + 230);
+		_startTutorialHoldAnimation = true;
+		_holdImageTargetPosition = toPosition;
+		_holdImageInitPosition = holdMoveImage.rectTransform.position;
+	}
+
+	float time;
+	/// <summary>
+	/// Holds down and move tutorial animation (minion skill selector.
+	/// </summary>
+	void HoldDownAndMoveTutorialAnim ()
+	{
+		if (!_startTutorialHoldAnimation)
+			return;
+		
+		time += (Time.unscaledDeltaTime * 0.5f);
+		holdMoveImage.rectTransform.position = Vector3.Lerp (_holdImageInitPosition, _holdImageTargetPosition, time);
+		if (Mathf.Abs (Vector3.Distance (holdMoveImage.rectTransform.position, _holdImageTargetPosition)) < 0.5f) 
+		{
+			holdMoveImage.rectTransform.position = _holdImageInitPosition;
+			time = 0;
+		}
+	}
+
+	public void StopHoldDownMoveAnim()
+	{
+		_startTutorialHoldAnimation = false;
+		holdMoveImage.gameObject.SetActive (false);
+	}
 }

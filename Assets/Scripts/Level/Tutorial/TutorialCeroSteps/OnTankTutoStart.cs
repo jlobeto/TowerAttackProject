@@ -23,6 +23,8 @@ public class OnTankTutoStart : StepBase
 		lvlTuto.addMinionButton.Add(MinionType.Runner);
 		lvlTuto.addMinionButton.Add(MinionType.Dove);
 
+		lvlTuto.LevelCanvasManager.minionSaleButtons = new List<MinionSaleButton> ();
+
 		var list = new List<Minion> ();
 		foreach (var item in lvlTuto.addMinionButton)
 		{
@@ -35,14 +37,16 @@ public class OnTankTutoStart : StepBase
 
 		lvlTuto.LevelCanvasManager.BuildMinionSlots(list, lvlTuto.levelID,lvlTuto.MinionSkillManager, true);
 
+		lvlTuto.LevelCanvasManager.EnableMinionSaleSpecific (false, MinionType.Runner);
+		lvlTuto.LevelCanvasManager.EnableMinionSaleSpecific (false, MinionType.Dove);
+
 		lvlTuto.forTankOne.OnTriggerEnterCallback += lvlTuto.OnTankEnterOne;
 		lvlTuto.forTankTwo.OnTriggerEnterCallback += lvlTuto.OnTankEnterTwo;
-		lvlTuto.forTankThree.OnTriggerEnterCallback += lvlTuto.OnTankEnterTwo;
 
 		lvlTuto.objetives [0] = 3;
 
 		lvlTuto.tankTutoStarted = true;
 
-		lvlTuto.LevelCanvasTutorial.EnableArrowByName("PressFirstBtn");
+		lvlTuto.LevelCanvasManager.StartTapAnimation (MinionType.Tank);
 	}
 }

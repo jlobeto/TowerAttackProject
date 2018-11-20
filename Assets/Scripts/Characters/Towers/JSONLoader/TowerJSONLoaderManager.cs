@@ -26,10 +26,9 @@ public class TowerJSONLoaderManager
 		}
 	}
 
-	public TowerStat GetStatByLevel(TowerType type, int lvlId, bool useDefault = false)
+	public TowerStat GetStatByLevel(TowerType type, int lvlId)
 	{
-        var id = useDefault ? 1 : lvlId;
-		var stat = _allJsons[type].list.FirstOrDefault(i => i.levelId == id);
+		var stat = _allJsons[type].list.FirstOrDefault(i => i.levelId == lvlId);
 		if (stat == null)
 			throw new Exception("GetStatByLevel > JSON Object does not exist. There isn't a tower type : "
 				+ type.ToString() + " with a levelID : "+ lvlId);

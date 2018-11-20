@@ -11,6 +11,6 @@ public class RemoveFirstMinionBtnArrow : StepBase{
 
 	public override void ExecuteStep (GameObject gameObject)
 	{
-		lvlTuto.LevelCanvasTutorial.DisableArrowByName("PressFirstBtn");		
+		lvlTuto.LevelCanvasManager.StopTapAnimation ();
 	}
 }

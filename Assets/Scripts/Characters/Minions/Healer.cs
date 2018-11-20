@@ -36,13 +36,13 @@ public class Healer : Minion
 
     public override void ActivateSelfSkill()
     {
-        if (!skillPhase)
+        /*if (!skillPhase)
         {
             skillZoneEffect.SetActive(true);
             StartCoroutine(StopSkillZoneShow());
             skillPhase = true;
             return;
-        }
+        }*/
 
         if (_mySkill.IsLocked) return;//check this so we don't run GetMinions if we don't have to.
 

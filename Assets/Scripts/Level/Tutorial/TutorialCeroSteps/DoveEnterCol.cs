@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DoveEnterCol : StepBase {
 
@@ -11,18 +12,21 @@ public class DoveEnterCol : StepBase {
 
 	public override void ExecuteStep (GameObject gameObject = null)
 	{
-		Time.timeScale = 0;
+		//Time.timeScale = 0;
+
+		var m = lvlTuto.MinionManager.GetMinion (MinionType.Dove);
+		m.SetWalk (false);
 
 		var antiAir = lvlTuto.TowerManager.GetTowerByTypeAndName (TowerType.Antiair, "tuto2");
 		var cannon = lvlTuto.TowerManager.GetTowerByTypeAndName (TowerType.Cannon, "tuto2");
 
-		lvlTuto.LevelCanvasTutorial.EnableArrowByName("SecondPointer");
 		var pos = Camera.main.WorldToScreenPoint(antiAir.transform.position);
-		lvlTuto.LevelCanvasTutorial.SetArrowPosition(pos, "SecondPointer", 40);
+		lvlTuto.LevelCanvasManager.holdMoveImage.gameObject.SetActive (true);
+		lvlTuto.LevelCanvasManager.holdMoveImage.rectTransform.position = pos;
 
-		lvlTuto.LevelCanvasTutorial.EnableArrowByName("ThirdPointer");
 		pos = Camera.main.WorldToScreenPoint(cannon.transform.position);
-		lvlTuto.LevelCanvasTutorial.SetArrowPosition(pos, "ThirdPointer", 40);
+		lvlTuto.LevelCanvasManager.secondHoldMoveImage.rectTransform.position = pos;
+
 
 	}
 }

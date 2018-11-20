@@ -80,7 +80,7 @@ public class TowerManager : MonoBehaviour
 		for (int i = 0; i < _towers.Count; i++)
 		{
 			var t = _towers [i];
-			var stat = level.GameManager.TowerLoader.GetStatByLevel (t.towerType, level.levelID, isTutorial);
+			var stat = level.GameManager.TowerLoader.GetStatByLevel (t.towerType, level.levelID);
 			t.Initialize (stat, isTutorial);
 		}
     }

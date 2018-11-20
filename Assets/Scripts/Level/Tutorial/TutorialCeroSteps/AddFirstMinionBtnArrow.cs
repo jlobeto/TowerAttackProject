@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//step 2 - 
+//step 2 - Add finger tap animation
 public class AddFirstMinionBtnArrow : StepBase
 {
 	public AddFirstMinionBtnArrow(LevelCeroTutorial tuto)
@@ -12,6 +12,6 @@ public class AddFirstMinionBtnArrow : StepBase
 
 	public override void ExecuteStep (GameObject gameObject = null)
 	{
-		lvlTuto.LevelCanvasTutorial.EnableArrowByName("PressFirstBtn");		
+		lvlTuto.LevelCanvasManager.StartTapAnimation (MinionType.Runner);
 	}
 }

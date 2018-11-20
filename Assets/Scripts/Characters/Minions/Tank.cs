@@ -53,13 +53,14 @@ public class Tank : Minion
     {
         OnMinionSkill(minionType);
 
-        if (!skillPhase)
+        /*this make the user to turn skill on again.
+         * if (!skillPhase)
         {
             skillZoneEffect.SetActive(true);
             StartCoroutine(StopSkillZoneShow());
             skillPhase = true;
             return;
-        }
+        }*/
 
         var wasDisabled =_mySkill.Initialize(skillTime, skillCooldown ,shieldHits);
 
