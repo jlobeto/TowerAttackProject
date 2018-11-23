@@ -7,11 +7,12 @@ public class CameraMovement : MonoBehaviour
 	public float speed = 3;
 	public bool canMove;
 
-	
 
 	void Start () 
 	{
-
+		var gameMan = FindObjectOfType<GameManager> ();
+		if (gameMan.CurrentLevelInfo.id == 0)
+			canMove = false;
 	}
 
 	void Update ()
