@@ -19,7 +19,8 @@ public class LevelCanvasTutorial : MonoBehaviour
 		_texts = GetComponentsInChildren<Text> ().ToList ();
 		DisableTexts ();
 
-		transform.SetParent (lvlCanvas.transform);
+		if(lvlCanvas != null)
+			transform.SetParent (lvlCanvas.transform);
 	}
 	
     public void EnableArrowByName(string name)
