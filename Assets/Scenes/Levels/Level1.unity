@@ -289,7 +289,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4095426389722492, guid: 10f92c54e0525da4ba3084ec0437064d, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10f92c54e0525da4ba3084ec0437064d, type: 2}
@@ -989,6 +989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da2e8be7ed79c6a47bff08e9e40ce60d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lvlCanvas: {fileID: 1218809871}
 --- !u!114 &540880782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1059,7 +1060,7 @@ RectTransform:
   - {fileID: 1758403682}
   - {fileID: 1430404180}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1900,6 +1901,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4499558312845220, guid: 991f9b0e49b51f44e85fac7ca947faba,
     type: 2}
   m_PrefabInternal: {fileID: 1217674678}
+--- !u!223 &1218809871 stripped
+Canvas:
+  m_PrefabParentObject: {fileID: 223469969638090494, guid: 54e792e26c1399644943d1269048cf7f,
+    type: 2}
+  m_PrefabInternal: {fileID: 766789605}
 --- !u!1 &1294540237
 GameObject:
   m_ObjectHideFlags: 0
