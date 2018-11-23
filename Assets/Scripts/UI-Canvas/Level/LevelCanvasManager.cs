@@ -31,6 +31,8 @@ public class LevelCanvasManager : MonoBehaviour
     HorizontalLayoutGroup _minionSkillPanel;
     //DragAndDropSystem _dragAndDropSystem;
     List<CanvasSkillLvlButton> _skillButtons = new List<CanvasSkillLvlButton>();
+	CameraMovement _cameraMove;
+
     Image _levelTimerBG;
     Image _levelLivesBG;
     Text _levelTimer;
@@ -79,6 +81,8 @@ public class LevelCanvasManager : MonoBehaviour
 
 		tapUpImage.gameObject.SetActive (false);
 		tapDownImage.gameObject.SetActive (false);
+
+		_cameraMove = Camera.main.GetComponentInParent<CameraMovement> ();
     }
 
     void Update()
@@ -90,14 +94,25 @@ public class LevelCanvasManager : MonoBehaviour
 	public void EnableSwapTowerTutorial(Vector3 towerPos)
 	{
 		var pos = Camera.main.WorldToScreenPoint(towerPos);
-		swapTowerTutorial.position = new Vector3(pos.x, pos.y + 35 , 0);
+		var timeShowingTuto = 1f;
+		_cameraMove.StartSwapTutorial (pos, timeShowingTuto);
 		Time.timeScale = 0;
-		StartCoroutine (SwapTowerTutoTimer());
+		StartCoroutine (SwapTowerTutoTimer(timeShowingTuto, towerPos));
 	}
 
-	IEnumerator SwapTowerTutoTimer()
+	IEnumerator SwapTowerTutoTimer(float timeShowingTuto, Vector3 towerPos)
 	{
-		yield return new WaitForSecondsRealtime (4f);
+		yield return new WaitForSecondsRealtime (timeShowingTuto);
+
+		StartCoroutine (WaitToFinishSwap ());
+
+		var pos = Camera.main.WorldToScreenPoint(towerPos);
+		swapTowerTutorial.position = new Vector3(pos.x, pos.y + 35 , 0);
+	}
+
+	IEnumerator WaitToFinishSwap()
+	{
+		yield return new WaitForSecondsRealtime (6f);
 		swapTowerTutorial.position = new Vector3(10000, 10000, 0);
 		Time.timeScale = 1;
 	}

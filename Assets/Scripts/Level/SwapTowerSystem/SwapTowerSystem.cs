@@ -100,7 +100,7 @@ public class SwapTowerSystem : MonoBehaviour
         var towerTransform = toSwap.transform;
         var particle = Instantiate<ParticleSystem>(swapParticleSysPrefab, towerTransform.position, Quaternion.identity);
         particle.transform.position = new Vector3(particle.transform.position.x, particle.transform.position.y + 3, particle.transform.position.z);
-        particle.transform.position += (Camera.main.transform.position - particle.transform.position).normalized * 2f;
+        //particle.transform.position += (Camera.main.transform.position - particle.transform.position).normalized * 2f;
         particle.Play(true);
         Destroy(particle.gameObject, particle.main.duration);
         StartCoroutine(WaitToBuildNewTower(toSwap, newOne, towerTransform));
@@ -108,7 +108,7 @@ public class SwapTowerSystem : MonoBehaviour
 
     IEnumerator WaitToBuildNewTower(TowerBase toSwap, TowerBase newOne, Transform transform)
     {
-        yield return new WaitForSeconds(2.1f);
+		yield return new WaitForSecondsRealtime(2.5f);
         var newTower = Instantiate<TowerBase>(newOne, transform.position, transform.rotation);
         _towerManager.InitSingleTower(newTower);
         _towerManager.DestroySingleTower(toSwap);

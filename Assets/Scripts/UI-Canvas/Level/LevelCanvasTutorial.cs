@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class LevelCanvasTutorial : MonoBehaviour
 {
 	public Canvas lvlCanvas;
+	public RectTransform pointsBar;
 
 	List<Image> _arrowImages = new List<Image>();
     List<Text> _texts = new List<Text>();
@@ -19,8 +20,8 @@ public class LevelCanvasTutorial : MonoBehaviour
 		_texts = GetComponentsInChildren<Text> ().ToList ();
 		DisableTexts ();
 
-		if(lvlCanvas != null)
-			transform.SetParent (lvlCanvas.transform);
+		if(lvlCanvas != null && pointsBar != null)
+			pointsBar.SetParent (lvlCanvas.transform);
 	}
 	
     public void EnableArrowByName(string name)
