@@ -76,7 +76,7 @@ public class LevelCanvasManager : MonoBehaviour
         _levelLives = _levelLivesBG.GetComponentInChildren<Text>();
 
         _eventWarningText = eventWarning.GetComponentInChildren<Text>();
-        eventWarning.enabled = false;
+        eventWarning.gameObject.SetActive(false);
         _eventWarningText.enabled = false;
 
 		tapUpImage.gameObject.SetActive (false);
@@ -285,7 +285,7 @@ public class LevelCanvasManager : MonoBehaviour
     public void TriggerEventWarning(bool activate, float initTime , string eventType)
     {
         _eventWarningEnabled = activate;
-        eventWarning.enabled = activate;
+        eventWarning.gameObject.SetActive(activate);
         _eventWarningText.enabled = activate;
         _eventWarningTime = initTime;
 
