@@ -378,22 +378,35 @@ public class LevelCanvasManager : MonoBehaviour
 	{
 		_stopTapAnimation = false;
 		tapAnimationCount++;
+        var btn = GetSpecificMinionSaleBtn(t).GetComponent<Image>();
 
-		var btn = GetSpecificMinionSaleBtn (t).GetComponent<Image>();
-		var anchor = btn.rectTransform.anchoredPosition;
+        StartCoroutine(WaitForEndOfFrame(btn.rectTransform, tapUpImage, tapDownImage));
 
-		if (tapAnimationCount == 1 || setPosition)
-		{
-			tapUpImage.rectTransform.position = new Vector3(anchor.x + 80,  anchor.y + (_availablesPanel.transform.position.y * .2f));
-			tapDownImage.rectTransform.position = new Vector3(anchor.x + 80,  anchor.y + (_availablesPanel.transform.position.y * .2f));
-		}
-	
-		tapUpImage.gameObject.SetActive (true);
+        tapUpImage.gameObject.SetActive (true);
 
 		StartCoroutine (OnTapChange());
 	}
 
-	IEnumerator OnTapChange()
+    IEnumerator WaitForEndOfFrame(RectTransform pRectTransform, Image img1, Image img2 = null, bool isHoldImage = false)
+    {
+        yield return new WaitForEndOfFrame();
+
+        var pos = pRectTransform.position;
+
+        img1.rectTransform.position = pos;
+
+        if (img2 != null)
+            tapDownImage.rectTransform.position = pos;
+
+        if(isHoldImage)
+        {
+            _startTutorialHoldAnimation = true;
+            _holdImageInitPosition = pos;
+        }
+
+    }
+
+    IEnumerator OnTapChange()
 	{
 		yield return new WaitForSeconds (.5f);
 
@@ -421,20 +434,18 @@ public class LevelCanvasManager : MonoBehaviour
 	{
 		_stopTapAnimation = true;
 		_isUpFinger = true;
-	}
+        tapDownImage.gameObject.SetActive(false);
+        tapUpImage.gameObject.SetActive(false);
+    }
 
 	public void StartSkillTapAnimation (MinionType t, Vector3 toPosition)
 	{
 		holdMoveImage.gameObject.SetActive (true);
-
-		var btn = GetSpecificMinionSaleBtn (t).GetComponent<Image>();
-
-		var anchor = tapUpImage.rectTransform.position;
-		time = 0;
-		holdMoveImage.rectTransform.position = new Vector3(anchor.x ,  anchor.y + _availablesPanel.transform.position.y + 230);
-		_startTutorialHoldAnimation = true;
+        var btn = GetSpecificMinionSaleBtn(t).GetComponentInChildren<MinionSkillMouseDown>(); //skill btn
+        
+        time = 0;
+        StartCoroutine(WaitForEndOfFrame(btn.GetComponent<Image>().rectTransform, holdMoveImage, null, true));
 		_holdImageTargetPosition = toPosition;
-		_holdImageInitPosition = holdMoveImage.rectTransform.position;
 	}
 
 	float time;
