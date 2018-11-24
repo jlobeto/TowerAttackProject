@@ -23,6 +23,7 @@ public class Level : MonoBehaviour
     [HideInInspector]
     public LevelMode levelMode;
 	public Action<GameObject> ExecuteTutorialStep = delegate {};
+    public LevelPortalEffect levelPortal;
 
     protected GameManager _gameManager;
     protected TowerManager _towerManager;
@@ -247,6 +248,10 @@ public class Level : MonoBehaviour
         _livesRemoved++;
         _lvlCanvasManager.UpdateLevelLives(LivesRemoved, objetives[objetives.Length - 1]);
         _floorEffect.InitAnimation();
+
+        if (levelPortal != null)
+            levelPortal.UpdateGoal(LivesRemoved, objetives);
+
         CheckLevelCompletion(false);
     }
 
