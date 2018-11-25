@@ -39,7 +39,7 @@ public class OverchargeEventManager : MonoBehaviour
                 if (item.gameObject.GetInstanceID() != selected.GetInstanceID())
                     continue;
 
-                Debug.Log("pilar selected");
+                //Debug.Log("pilar selected");
 
                 item.StunTowers();
                 StopCoroutine(WaitToDeactivatePilars());
@@ -56,7 +56,7 @@ public class OverchargeEventManager : MonoBehaviour
 
         if (_minionsAmountAux > 0) return;
 
-        Debug.Log("activating pilars");
+       //Debug.Log("activating pilars");
         _pilarsEnabled = true;
         _minionsAmountAux = minionsAmount;
         foreach (var item in _pilars)
@@ -75,7 +75,7 @@ public class OverchargeEventManager : MonoBehaviour
 
     void DisabledAllPilars()
     {
-        Debug.Log("-deactivating pilars");
+        //Debug.Log("-deactivating pilars");
 
         _pilarsEnabled = false;
 

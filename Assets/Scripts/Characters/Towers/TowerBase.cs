@@ -127,7 +127,9 @@ public class TowerBase : MonoBehaviour
         pImStunned = true;
 
         if (stunEffectPS != null)
+        {
             stunEffectPS.Play(true);
+        }
 
         StartCoroutine(StoppingStunDebuff(time));
     }
@@ -186,7 +188,13 @@ public class TowerBase : MonoBehaviour
     protected virtual void Start()
     {
         _id = gameObject.GetInstanceID();
-        stunEffectPS = Instantiate<ParticleSystem>(stunEffectPS, transform);
+
+        if(stunEffectPS !=null)
+        {
+            stunEffectPS = Instantiate<ParticleSystem>(stunEffectPS, transform);
+            stunEffectPS.transform.localPosition = new Vector3(0, 3.5f, 0);
+        }
+        
     }
 
     public virtual void Initialize(TowerStat stat, bool tutoLevelCero = false)

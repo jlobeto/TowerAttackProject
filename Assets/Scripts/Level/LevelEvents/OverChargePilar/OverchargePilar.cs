@@ -8,6 +8,7 @@ public class OverchargePilar : MonoBehaviour
     public Transform trailSpawnPoint;
     public LineRenderer line;
     public MeshRenderer ballRenderer;
+    public ParticleSystem activatePS;
 
     Color activatedLineColor = new Color(0, 200f / 255f, 255);
     Color deactivatedLineColor;
@@ -19,6 +20,7 @@ public class OverchargePilar : MonoBehaviour
 	void Start ()
     {
         _linesToTower = new List<LineRenderer>();
+        _linesToTower.Add(line);
         line.SetPosition(0, trailSpawnPoint.position);
         line.SetPosition(1, affected[0].transform.position);
         deactivatedLineColor = line.startColor;
@@ -50,19 +52,22 @@ public class OverchargePilar : MonoBehaviour
         _isActive = true;
         ballRenderer.material.SetColor("_EmissionColor", Color.green);
         ballRenderer.material.SetFloat("EmissionQty", 1f);
+
+        activatePS.Play(true);
     }
 
     public void DeactivatePilar()
     {
         ballRenderer.material.SetColor("_EmissionColor", Color.black);
         ballRenderer.material.SetFloat("EmissionQty", 0f);
-        
+        activatePS.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+
         _isActive = false;
+
     }
 
     public void StunTowers()
     {
-
         foreach (var item in affected)
         {
             item.ReceiveStun(_effectTimeAux);
@@ -73,6 +78,8 @@ public class OverchargePilar : MonoBehaviour
             item.startColor = activatedLineColor;
             item.endColor = activatedLineColor;
         }
+
+        StartCoroutine(WaitUntilEffectTimeEnd());
     }
 
     IEnumerator WaitUntilEffectTimeEnd()
