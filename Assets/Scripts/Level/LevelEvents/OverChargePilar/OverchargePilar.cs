@@ -7,6 +7,7 @@ public class OverchargePilar : MonoBehaviour
     public List<TowerBase> affected;
     public Transform trailSpawnPoint;
     public LineRenderer line;
+    public MeshRenderer ballRenderer;
 
     Color activatedLineColor = new Color(0, 200f / 255f, 255);
     Color deactivatedLineColor;
@@ -29,10 +30,13 @@ public class OverchargePilar : MonoBehaviour
             line.SetPosition(1, affected[i].transform.position);
             _linesToTower.Add(l);
         }
+
+        ballRenderer.material.SetColor("_EmissionColor", Color.black);
+        ballRenderer.material.SetFloat("EmissionQty", 0f);
     }
-	
-	
-	void Update ()
+
+
+    void Update ()
     {
 
     }
@@ -44,11 +48,15 @@ public class OverchargePilar : MonoBehaviour
     {
         _effectTimeAux = effectTime;
         _isActive = true;
-
+        ballRenderer.material.SetColor("_EmissionColor", Color.green);
+        ballRenderer.material.SetFloat("EmissionQty", 1f);
     }
 
     public void DeactivatePilar()
     {
+        ballRenderer.material.SetColor("_EmissionColor", Color.black);
+        ballRenderer.material.SetFloat("EmissionQty", 0f);
+        
         _isActive = false;
     }
 
