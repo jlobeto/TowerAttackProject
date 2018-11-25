@@ -24,6 +24,15 @@ public class LaserTower : TowerBase
         
     }
 
+    public override void ReceiveStun(float time)
+    {
+        base.ReceiveStun(time);
+
+        laserHitPS.Stop();
+        laserSpawnPS.Stop();
+        _lineRender.enabled = false;
+    }
+
     protected override void Update()
     {
         if (!isInitialized)

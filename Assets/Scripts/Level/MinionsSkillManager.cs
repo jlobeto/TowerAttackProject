@@ -60,7 +60,7 @@ public class MinionsSkillManager : MonoBehaviour
 			_cameraMovement.canMove = true;
 
 			//using global variables to not create a new reference each buttonUp
-			_selectedOnes = _lvl.GameOBjectSelector.GetMinionsSelection (_rangeSprite.transform.position, _rangeRadius);
+			_selectedOnes = _lvl.GameObjectSelector.GetMinionsSelection (_rangeSprite.transform.position, _rangeRadius);
 			_theOnes = _selectedOnes.Where (i => i.skillType == _typeToSelect);
 
 			foreach (var m in _theOnes)

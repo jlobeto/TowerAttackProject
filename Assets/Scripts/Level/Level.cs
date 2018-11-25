@@ -51,7 +51,7 @@ public class Level : MonoBehaviour
     public TowerManager TowerManager { get { return _towerManager; } }
 	public GameManager GameManager { get { return _gameManager; } }
 	public MinionsSkillManager MinionSkillManager { get { return _minionSkillManager; } }
-	public GameObjectSelector GameOBjectSelector { get { return _goSelector; } }
+	public GameObjectSelector GameObjectSelector { get { return _goSelector; } }
 
     private void Awake()
     {

@@ -19,7 +19,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4701399213740248}
-  m_Layer: 0
+  - component: {fileID: 65887765343908116}
+  - component: {fileID: 114745634624539078}
+  m_Layer: 14
   m_Name: OverCharge Event Pilar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +38,7 @@ GameObject:
   - component: {fileID: 4802386766523692}
   - component: {fileID: 33516598147489256}
   - component: {fileID: 23668104969295364}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Ball Protection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +56,7 @@ GameObject:
   - component: {fileID: 33152937974483832}
   - component: {fileID: 23097992622049126}
   - component: {fileID: 95434377663072266}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Wires D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +74,7 @@ GameObject:
   - component: {fileID: 33388719603818350}
   - component: {fileID: 23559179146023196}
   - component: {fileID: 95964503007008400}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Wires R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +92,7 @@ GameObject:
   - component: {fileID: 33065576899131278}
   - component: {fileID: 23551389502982374}
   - component: {fileID: 95891193641330216}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Wires U
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +109,7 @@ GameObject:
   - component: {fileID: 4490153092074888}
   - component: {fileID: 33259384066238030}
   - component: {fileID: 23676811708266368}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Details
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +127,7 @@ GameObject:
   - component: {fileID: 33907513856852442}
   - component: {fileID: 23014733163535638}
   - component: {fileID: 95099822761166196}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Wires L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +144,7 @@ GameObject:
   - component: {fileID: 4047157252965714}
   - component: {fileID: 33986963396522534}
   - component: {fileID: 23032194574077670}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +159,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4206051537173914}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Wires
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +176,7 @@ GameObject:
   - component: {fileID: 4111058870907620}
   - component: {fileID: 33112989634339598}
   - component: {fileID: 23345382200914172}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,9 +297,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1003887033658198}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.49, y: -0.8, z: 177.67}
-  m_LocalScale: {x: 15.052594, y: 15.052599, z: 15.052599}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.6999359, y: 19.527468, z: 11.056381}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 4490153092074888}
   - {fileID: 4047157252965714}
@@ -648,6 +650,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1721606792068268}
   m_Mesh: {fileID: 4300000, guid: 1da5e26e5b8e68441adc52ecfcd93be5, type: 3}
+--- !u!65 &65887765343908116
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1003887033658198}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5026497, y: 1.1362606, z: 0.6184723}
+  m_Center: {x: 0.0034053803, y: 0.4973509, z: 0.013624573}
 --- !u!95 &95099822761166196
 Animator:
   serializedVersion: 3
@@ -716,3 +730,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114745634624539078
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1003887033658198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a22b81491c912c049b215e8c22cefb3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  affected:
+  - {fileID: 0}
+  - {fileID: 0}

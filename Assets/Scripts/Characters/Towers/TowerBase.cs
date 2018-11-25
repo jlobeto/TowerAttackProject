@@ -16,6 +16,7 @@ public class TowerBase : MonoBehaviour
     public GameObject toRotate;
 	public SpriteRenderer attackRangeSprite;
     public Transform rangeFeedbackPosition;//position where the range of the tower will spawn;
+    public ParticleSystem stunEffectPS;
     public bool showGizmoRange;
     public float testRange = 5f;
 
@@ -124,6 +125,10 @@ public class TowerBase : MonoBehaviour
     public virtual void ReceiveStun(float time)
     {
         pImStunned = true;
+
+        if (stunEffectPS != null)
+            stunEffectPS.Play(true);
+
         StartCoroutine(StoppingStunDebuff(time));
     }
 
@@ -140,9 +145,8 @@ public class TowerBase : MonoBehaviour
 
         pImStunned = false;
         //visual effect for feedback
-        var effect = GetComponentsInChildren<ParticleSystem>().FirstOrDefault(i => i.tag == "LevelSkillEffect");
-        if (effect != null)
-            Destroy(effect.gameObject);
+        if (stunEffectPS != null)
+            stunEffectPS.Stop(true, ParticleSystemStopBehavior.StopEmitting);
     }
 
     IEnumerator StoppingSlowDebuff(float time)
@@ -182,6 +186,7 @@ public class TowerBase : MonoBehaviour
     protected virtual void Start()
     {
         _id = gameObject.GetInstanceID();
+        stunEffectPS = Instantiate<ParticleSystem>(stunEffectPS, transform);
     }
 
     public virtual void Initialize(TowerStat stat, bool tutoLevelCero = false)
