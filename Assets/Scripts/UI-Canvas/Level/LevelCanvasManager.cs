@@ -33,7 +33,7 @@ public class LevelCanvasManager : MonoBehaviour
     List<CanvasSkillLvlButton> _skillButtons = new List<CanvasSkillLvlButton>();
 	CameraMovement _cameraMove;
 
-    Image _levelTimerBG;
+    Image _levelTimerFillBar;
     Image _levelLivesFillBar;
     Text _levelTimer;
     //Text _levelLives;
@@ -67,12 +67,14 @@ public class LevelCanvasManager : MonoBehaviour
         foreach (Transform child in transform)
         {
             if (child.tag == "CanvasLvlTimer")
-				_levelTimerBG = child.GetComponentInChildren<Image>();
-            /*if(child.tag == "CanvasLvlLives")
-                SetLivesUI(child);*/
+            {
+                _levelTimerFillBar = child.GetComponentsInChildren<Image>().FirstOrDefault(i => i.type == Image.Type.Filled);
+                _levelTimerFillBar.fillAmount = 1;
+            }
+				
         }
 
-        _levelTimer = _levelTimerBG.GetComponentInChildren<Text>();
+        _levelTimer = _levelTimerFillBar.transform.parent.GetComponentInChildren<Text>();
         //_levelLives = _levelLivesBG.GetComponentInChildren<Text>();
 
         _eventWarningText = eventWarning.GetComponentInChildren<Text>();
@@ -159,10 +161,11 @@ public class LevelCanvasManager : MonoBehaviour
         }
     }
     
-    public void UpdateLevelTimer(float newTime)
+    public void UpdateLevelTimer(float newTime, float initTime)
     {
         var text = "Time: ";
 		_levelTimer.text = (text + newTime.ToString("0.0")).ToUpper();
+        _levelTimerFillBar.fillAmount = newTime / initTime;
     }
 
     public void UpdateLevelLives(int newLive, int initLives)

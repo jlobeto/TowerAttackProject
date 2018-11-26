@@ -99,7 +99,7 @@ public class Level : MonoBehaviour
 			return;
 		
         _levelTimeAux -= Time.deltaTime;
-        _lvlCanvasManager.UpdateLevelTimer(_levelTimeAux < 0 ? 0 : _levelTimeAux);
+        _lvlCanvasManager.UpdateLevelTimer(_levelTimeAux < 0 ? 0 : _levelTimeAux, levelTime);
         if (_levelTimeAux < 0)
         {
             _levelEnded = true;
@@ -198,7 +198,7 @@ public class Level : MonoBehaviour
 
 		_lvlCanvasManager.BuildMinionSlots (availableMinions, levelID, _minionSkillManager);
         
-        _lvlCanvasManager.UpdateLevelTimer(levelTime);
+        _lvlCanvasManager.UpdateLevelTimer(levelTime, levelTime);
         _lvlCanvasManager.UpdateLevelLives(LivesRemoved, objetives[objetives.Length-1]);
         UpdatePoints(0);
     }
