@@ -21,7 +21,6 @@ public class OverchargeEventManager : MonoBehaviour
         _minionsAmountAux = minionsAmount;
         _lvl = FindObjectOfType<Level>();
         _lvl.MinionManager.OnNewMinionSpawned += NewMinionSpawnedHandler;
-        
     }
 
 
