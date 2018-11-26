@@ -37,7 +37,7 @@ public class LevelPortalEffect : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Minion"))
         {
-            portalPS.Emit(15);
+            portalPS.Emit(10);
         }
     }
 
