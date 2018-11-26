@@ -12,7 +12,7 @@ public class StepBase : IStep
 
 	public virtual void ExecuteStep (GameObject gameObject = null)
 	{
-		throw new System.NotImplementedException ();
+		//throw new System.NotImplementedException ();
 	}
 
 

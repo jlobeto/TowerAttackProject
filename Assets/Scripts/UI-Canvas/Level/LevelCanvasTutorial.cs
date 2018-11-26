@@ -57,7 +57,7 @@ public class LevelCanvasTutorial : MonoBehaviour
         }
     }
 
-	public void SetArrowPosition(Vector3 pos, string name, float deltaY)
+	public void SetArrowParentPosition(Vector3 pos, string name, float deltaY)
     {
         foreach (var item in _arrowImages)
         {
@@ -73,7 +73,8 @@ public class LevelCanvasTutorial : MonoBehaviour
 	{
 		foreach (var item in _texts)
 		{
-			item.enabled = false;
+            if(item.enabled)
+                item.enabled = false;
 		}
 	}
 

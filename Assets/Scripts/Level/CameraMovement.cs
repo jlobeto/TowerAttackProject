@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +11,10 @@ public class CameraMovement : MonoBehaviour
 	Vector3 _initPosition;
 	Vector3 _targetPosition;
 	float _swapTutorialAnimationCurrentTime = 0 ;//this is the unscaledTime to lerp from curr position to target, for the swap tutorial.
-	float _initSwapAnimTime;
-	bool _startSwapTutorial;
+	float _initTimeShowingTuto;
+	bool _startTutorialMovement;
 	float _yPos = 35f;
-
+    Action<GameObject> _onFinishTutoMove;
 
 	void Start () 
 	{
@@ -34,34 +35,39 @@ public class CameraMovement : MonoBehaviour
 	}
 
 
-	public void StartSwapTutorial(Vector3 screenPoint, float timeShowingTuto)
+	public void StartCameraMoveForTutorial(Vector3 screenPoint, float timeShowingTuto, Action<GameObject> func = null)
 	{
 		canMove = false;
-		_startSwapTutorial = true;
+		_startTutorialMovement = true;
 		_initPosition = transform.position;
 		var worldPos = Camera.main.ScreenToWorldPoint (screenPoint);
 		var exactPos = new Vector3 (worldPos.x, _yPos, worldPos.z);
 		var dir = (exactPos - transform.position).normalized;
 		var tuSum = exactPos + (transform.forward * -1 * 35);
-		Debug.Log (tuSum);
+		//Debug.Log (tuSum);
 		_targetPosition = tuSum;
-		_initSwapAnimTime = timeShowingTuto;
+		_initTimeShowingTuto = timeShowingTuto;
+        _onFinishTutoMove = func;
 
-	}
+    }
 
 	void CameraAnimationLerpForTutorial ()
 	{
-		if (!_startSwapTutorial)
+		if (!_startTutorialMovement)
 			return;
 
-		_swapTutorialAnimationCurrentTime += Time.unscaledDeltaTime / _initSwapAnimTime;
+		_swapTutorialAnimationCurrentTime += Time.unscaledDeltaTime / _initTimeShowingTuto;
 		transform.position = Vector3.Lerp (_initPosition, _targetPosition, _swapTutorialAnimationCurrentTime);
 		if (Mathf.Abs (Vector3.Distance (transform.position, _targetPosition)) < 0.2f) 
 		{
 			_swapTutorialAnimationCurrentTime = 0;
-			_startSwapTutorial = false;
+			_startTutorialMovement = false;
 			canMove = true;
-		}
+
+            if (_onFinishTutoMove != null)
+                _onFinishTutoMove(null);
+
+        }
 	}
 
 	void CheckButtons()

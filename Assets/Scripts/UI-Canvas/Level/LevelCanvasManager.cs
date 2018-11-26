@@ -97,7 +97,7 @@ public class LevelCanvasManager : MonoBehaviour
 	{
 		var pos = Camera.main.WorldToScreenPoint(towerPos);
 		var timeShowingTuto = 1f;
-		_cameraMove.StartSwapTutorial (pos, timeShowingTuto);
+		_cameraMove.StartCameraMoveForTutorial (pos, timeShowingTuto);
 		Time.timeScale = 0;
 		StartCoroutine (SwapTowerTutoTimer(timeShowingTuto, towerPos));
 	}

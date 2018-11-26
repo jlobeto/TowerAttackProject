@@ -18,7 +18,6 @@ public class TutorialOneManager : TutorialCeroManager
 	void Start() 
 	{
 		AddListener ();
-
 	}
 
 	/*public void StartTimer()
@@ -27,8 +26,7 @@ public class TutorialOneManager : TutorialCeroManager
 	}*/
 
 	protected override void AddListener ()
-	{
-		
+	{	
 		lvl.MinionManager.OnMinionDeath += MinionDeathHandler;
 	}
 
