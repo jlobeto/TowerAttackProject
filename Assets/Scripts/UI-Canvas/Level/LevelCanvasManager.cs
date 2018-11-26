@@ -34,9 +34,9 @@ public class LevelCanvasManager : MonoBehaviour
 	CameraMovement _cameraMove;
 
     Image _levelTimerBG;
-    Image _levelLivesBG;
+    Image _levelLivesFillBar;
     Text _levelTimer;
-    Text _levelLives;
+    //Text _levelLives;
     Text _eventWarningText;
     bool _isAnyButtonDisabled;
 	bool _isUpFinger;
@@ -68,12 +68,12 @@ public class LevelCanvasManager : MonoBehaviour
         {
             if (child.tag == "CanvasLvlTimer")
 				_levelTimerBG = child.GetComponentInChildren<Image>();
-            if(child.tag == "CanvasLvlLives")
-				_levelLivesBG = child.GetComponentInChildren<Image>();
+            /*if(child.tag == "CanvasLvlLives")
+                SetLivesUI(child);*/
         }
 
         _levelTimer = _levelTimerBG.GetComponentInChildren<Text>();
-        _levelLives = _levelLivesBG.GetComponentInChildren<Text>();
+        //_levelLives = _levelLivesBG.GetComponentInChildren<Text>();
 
         _eventWarningText = eventWarning.GetComponentInChildren<Text>();
         eventWarning.gameObject.SetActive(false);
@@ -167,7 +167,17 @@ public class LevelCanvasManager : MonoBehaviour
 
     public void UpdateLevelLives(int newLive, int initLives)
     {
-        _levelLives.text = newLive + "/" + initLives;
+        if (level.levelID == 0) return;
+
+        if(_levelLivesFillBar == null )
+        {
+            SetLivesUI();
+        }
+
+        //_levelLives.text = newLive + "/" + initLives;
+        float newL = (float)newLive;
+        float initL = (float)initLives;
+        _levelLivesFillBar.fillAmount = newL / initL;
     }
 
 	public void BuildMinionSlots(List<Minion> availableMinions, int lvlId, MinionsSkillManager minionSkillsManager, bool stayNotInteractuable = false)
@@ -373,11 +383,11 @@ public class LevelCanvasManager : MonoBehaviour
         }
     }
     #endregion
-	int tapAnimationCount;
+
 	public void StartTapAnimation(MinionType t, bool setPosition = false)
 	{
 		_stopTapAnimation = false;
-		tapAnimationCount++;
+
         var btn = GetSpecificMinionSaleBtn(t).GetComponent<Image>();
 
         StartCoroutine(WaitForEndOfFrame(btn.rectTransform, tapUpImage, tapDownImage));
@@ -408,7 +418,7 @@ public class LevelCanvasManager : MonoBehaviour
 
     IEnumerator OnTapChange()
 	{
-		yield return new WaitForSeconds (.5f);
+		yield return new WaitForSeconds (.4f);
 
 		if (_stopTapAnimation) 
 		{
@@ -471,4 +481,46 @@ public class LevelCanvasManager : MonoBehaviour
 		_startTutorialHoldAnimation = false;
 		holdMoveImage.gameObject.SetActive (false);
 	}
+
+
+    /// <summary>
+    /// Don't touch this, is awfull but it works xD
+    /// </summary>
+    void SetLivesUI()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.tag != "CanvasLvlLives") continue;
+
+            var imgs = child.GetComponentsInChildren<Image>();
+            _levelLivesFillBar = imgs.FirstOrDefault(i => i.type == Image.Type.Filled);
+            break;
+        }
+
+        var parent = _levelLivesFillBar.rectTransform.parent.GetComponent<RectTransform>();
+        var width = parent.sizeDelta.x;
+        Image min, mid, max;
+
+        var stars = parent.GetComponentsInChildren<Image>();
+        min = stars.FirstOrDefault(i => i.name.Contains("min"));
+        mid = stars.FirstOrDefault(i => i.name.Contains("mid"));
+        max = stars.FirstOrDefault(i => i.name.Contains("max"));
+
+        float livesToWin = (float)level.objetives[2];
+
+        var yPosForAll = min.rectTransform.position.y;
+
+        var percent = (float)level.objetives[0] / livesToWin;
+        var posX_1 = percent * width ; 
+        
+        min.rectTransform.localPosition = new Vector3(width - posX_1, 0);
+
+        percent = (float)level.objetives[1] / livesToWin;
+        var posX_2 = percent * width ;
+        mid.rectTransform.localPosition = new Vector3(width - posX_2 , 0);
+
+        max.rectTransform.localPosition = new Vector3(3, 0);
+        
+    }
+    
 }
