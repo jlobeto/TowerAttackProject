@@ -22,6 +22,7 @@ public class LevelCanvasManager : MonoBehaviour
 	public Image holdMoveImage;
 	public Image secondHoldMoveImage;
 	public List<MinionSaleButton> minionSaleButtons = new List<MinionSaleButton>();
+    public LiveRayEffect liveRaySprite;
 
     HorizontalLayoutGroup _skillsButtonPanel;
     /// <summary>
@@ -176,11 +177,15 @@ public class LevelCanvasManager : MonoBehaviour
         {
             SetLivesUI();
         }
+        else
+            SendRaySpriteToLiveBar();
 
         //_levelLives.text = newLive + "/" + initLives;
         float newL = (float)newLive;
         float initL = (float)initLives;
         _levelLivesFillBar.fillAmount = newL / initL;
+
+        
     }
 
 	public void BuildMinionSlots(List<Minion> availableMinions, int lvlId, MinionsSkillManager minionSkillsManager, bool stayNotInteractuable = false)
@@ -525,5 +530,13 @@ public class LevelCanvasManager : MonoBehaviour
         max.rectTransform.localPosition = new Vector3(width-27, 0);
         
     }
+
     
+    void SendRaySpriteToLiveBar()
+    {
+        var spawnWorldPos = level.levelPortal.raySpawnPoint.position;
+        var spawnScreenPos = Camera.main.WorldToScreenPoint(spawnWorldPos);
+        var ray = Instantiate<LiveRayEffect>(liveRaySprite, transform);
+        ray.Init(spawnScreenPos, _levelLivesFillBar.transform.parent.position);
+    }
 }

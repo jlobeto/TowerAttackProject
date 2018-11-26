@@ -7,6 +7,7 @@ public class LevelPortalEffect : MonoBehaviour
 
     public ParticleSystem portalPS;
     public List<Renderer> cubes;
+    public Transform raySpawnPoint;
 
     Color _cubeEmisColor = new Color(0, 0.6f, 0.05f);
     int _cubeIndex;
