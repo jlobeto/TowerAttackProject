@@ -516,13 +516,13 @@ public class LevelCanvasManager : MonoBehaviour
         var percent = (float)level.objetives[0] / livesToWin;
         var posX_1 = percent * width ; 
         
-        min.rectTransform.localPosition = new Vector3(width - posX_1, 0);
+        min.rectTransform.localPosition = new Vector3(posX_1, 0);
 
         percent = (float)level.objetives[1] / livesToWin;
         var posX_2 = percent * width ;
-        mid.rectTransform.localPosition = new Vector3(width - posX_2 , 0);
+        mid.rectTransform.localPosition = new Vector3(posX_2 , 0);
 
-        max.rectTransform.localPosition = new Vector3(3, 0);
+        max.rectTransform.localPosition = new Vector3(width-27, 0);
         
     }
     
