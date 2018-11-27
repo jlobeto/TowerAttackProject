@@ -7,8 +7,9 @@ public class CameraMovement : MonoBehaviour
 {
 	public float speed = 3;
 	public bool canMove;
+    public float perspectiveZoomSpeed = 0.5f;// The rate of change of the field of view in perspective mode.
 
-	Vector3 _initPosition;
+    Vector3 _initPosition;
 	Vector3 _targetPosition;
 	float _swapTutorialAnimationCurrentTime = 0 ;//this is the unscaledTime to lerp from curr position to target, for the swap tutorial.
 	float _initTimeShowingTuto;
@@ -28,8 +29,10 @@ public class CameraMovement : MonoBehaviour
 		if (canMove)
 		{
 			CheckFingers();
-			CheckButtons();	
-		}
+			CheckButtons();
+            Zooming();
+
+        }
 		
 		CameraAnimationLerpForTutorial ();
 	}
@@ -91,6 +94,33 @@ public class CameraMovement : MonoBehaviour
 				transform.Translate (new Vector3 (-deltaPos.x * (speed / 22), 0 , -deltaPos.y * (speed / 22)));
 			}
 		}
-	}
+        else if(Input.touchCount == 2)
+        {
+            Zooming();
+        }
+    }
+
+    void Zooming()
+    {
+        if (Input.touchCount == 2)
+        {
+            Touch touchZero = Input.GetTouch(0);
+            Touch touchOne = Input.GetTouch(1);
+            
+            Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
+            Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+            
+            float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+            float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
+            
+            float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
+            
+            // Otherwise change the field of view based on the change in distance between the touches.
+            Camera.main.fieldOfView += deltaMagnitudeDiff * perspectiveZoomSpeed;
+
+            // Clamp the field of view to make sure it's between 0 and 180.
+            Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, 30f, 80f);
+        }
+    }
 
 }

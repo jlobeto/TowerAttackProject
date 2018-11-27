@@ -27,9 +27,11 @@ public class OverchargePilar : MonoBehaviour
 
         for (int i = 1; i < affected.Count; i++)
         {
+            if (affected[i] == null) continue;
+
             var l = Instantiate<LineRenderer>(line, trailSpawnPoint);
-            line.SetPosition(0, trailSpawnPoint.position);
-            line.SetPosition(1, affected[i].transform.position);
+            l.SetPosition(0, trailSpawnPoint.position);
+            l.SetPosition(1, affected[i].transform.position);
             _linesToTower.Add(l);
         }
 
