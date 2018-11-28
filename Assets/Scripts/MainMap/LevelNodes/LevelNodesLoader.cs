@@ -6,14 +6,14 @@ using UnityEngine;
 public class LevelNodesLoader
 {
 
-    public LevelNodeList LevelInfoList { get { return _levelNodeList; } }
+    public GenericListJsonLoader<LevelInfo> LevelInfoList { get { return _levelNodeList; } }
 
-    LevelNodeList _levelNodeList;
+    GenericListJsonLoader<LevelInfo> _levelNodeList;
 
     string jsonName = "LevelInfoConfig.json";
 
     public LevelNodesLoader()
     {
-        _levelNodeList = GameUtils.LoadConfig<LevelNodeList>(jsonName);
+        _levelNodeList = GameUtils.LoadConfig <GenericListJsonLoader<LevelInfo>>(jsonName);
     }
 }

@@ -17,7 +17,7 @@ public class GameUtils
 
 	static Target _target = Target.resources;
 
-    public static string GetJson(string path)
+    static string GetJson(string path)
     {
         var json = "";
 

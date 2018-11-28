@@ -28,7 +28,7 @@ public class MainMap : MonoBehaviour
 
     void CreateLevelNodes()
     {
-        foreach (var lvlInfo in _levelInfoLoader.LevelInfoList.levelsInfo)
+        foreach (var lvlInfo in _levelInfoLoader.LevelInfoList.list)
         {
             _mainMapCanvas.AddLevelButton(lvlInfo, OnLevelNodeClick);
         }
