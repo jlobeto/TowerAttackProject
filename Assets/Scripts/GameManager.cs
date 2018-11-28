@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
 	TowerJSONLoaderManager _towerJSONLoader;
     SwapTowerSystem _swapTowerSystem;
 
+    
+
     public LevelEventLoader LevelEventsLoader { get { return _levelEventsLoader; } }
 	public MinionsJsonLoaderManager MinionsLoader { get { return _minionJSONLoader; } }
 	public TowerJSONLoaderManager TowerLoader { get { return _towerJSONLoader; } }
