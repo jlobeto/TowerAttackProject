@@ -29,7 +29,7 @@ public class LevelProgress
         _levelId = lvlId;
         _firstAttemptAt = GameUtils.GetTimestampUTC();
 
-        MadeProgress();
+		LevelStarted ();
     }
 
     /// <summary>
@@ -37,9 +37,16 @@ public class LevelProgress
     /// </summary>
     public void MadeProgress(bool pWin = false, int starsWon = 0)
     {
-        _lastAttemptAt = GameUtils.GetTimestampUTC();
-        _tries++;
+		Debug.Log("made progress on lvlprogress");
         _won = pWin;
         _starsWon = starsWon;
     }
+
+	public void LevelStarted()
+	{
+		Debug.Log("level started");
+
+		_lastAttemptAt = GameUtils.GetTimestampUTC();
+		_tries++;
+	}
 }

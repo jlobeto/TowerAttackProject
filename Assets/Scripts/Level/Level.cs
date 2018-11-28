@@ -23,6 +23,7 @@ public class Level : MonoBehaviour
     [HideInInspector]
     public LevelMode levelMode;
 	public Action<GameObject> ExecuteTutorialStep = delegate {};
+	public Action<int, bool, int> OnLevelFinish = delegate {}; //lvlid, win ?, stars
     public LevelPortalEffect levelPortal;
 
     protected GameManager _gameManager;
@@ -269,11 +270,12 @@ public class Level : MonoBehaviour
             }
             else if (LivesRemoved < objetives[0])
             {
+				OnLevelFinish (levelID, false, GetCurrentStarsWinning());
+
                 if (_gameManager.popupManager != null)
                     _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform, "Game Over !", "Try Again", "Main map");
             }
         }
-        
     }
 
     protected virtual void GoalCompletedHandler()
@@ -286,6 +288,8 @@ public class Level : MonoBehaviour
         _levelEnded = true;
         if (_lvlEventManager != null)
             _lvlEventManager.StopEvents();
+
+		OnLevelFinish (levelID, true, GetCurrentStarsWinning());
     }
     
     public void UpdatePoints(int points)
@@ -298,4 +302,12 @@ public class Level : MonoBehaviour
         _lvlCanvasManager.UpdateLevelPointBar(_currentLevelPoints, prevPoints, initialLevelPoints);
     }
     
+
+	public int GetCurrentStarsWinning()
+	{
+		if (LivesRemoved < objetives [0])
+			return 0;
+		
+		return LivesRemoved >= objetives [0] && LivesRemoved < objetives [1] ? 1 : LivesRemoved >= objetives [1] && LivesRemoved < objetives [2] ? 2 : 3;
+	}
 }

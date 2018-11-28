@@ -15,6 +15,8 @@ public class User
 
     LevelProgressManager _levelProgressManager;
 
+	public LevelProgressManager LevelProgressManager { get { return _levelProgressManager; } }
+
     public User()
     {
         _deviceId = SystemInfo.deviceUniqueIdentifier;
@@ -31,4 +33,6 @@ public class User
     {
         _levelProgressManager.LevelEnded(lvlId, won, stars);
     }
+
+
 }

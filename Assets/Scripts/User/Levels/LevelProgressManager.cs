@@ -13,7 +13,7 @@ public class LevelProgressManager
 
     public void LevelStarted(int lvlId)
     {
-        CreateLevelProgress(lvlId);
+        SetLevelProgress(lvlId);
     }
 
     public void LevelEnded(int lvlId, bool won , int stars )
@@ -24,6 +24,16 @@ public class LevelProgressManager
             progress.MadeProgress(won, stars);
     }
 
+	public LevelProgress GetProgress(int lvlId)
+	{
+		foreach (var item in _lvlProgressList)
+		{
+			if (item.LevelId == lvlId)
+				return item;
+		}
+
+		return null;
+	}
 
     /*
      * ////////////////////////////////////////////////
@@ -31,18 +41,8 @@ public class LevelProgressManager
      * ////////////////////////////////////////////////
      */
 
-    LevelProgress GetProgress(int lvlId)
-    {
-        foreach (var item in _lvlProgressList)
-        {
-            if (item.LevelId == lvlId)
-                return item;
-        }
 
-        return null;
-    }
-
-    LevelProgress CreateLevelProgress(int lvlId)
+    LevelProgress SetLevelProgress(int lvlId)
     {
         var existed = GetProgress(lvlId);
 
@@ -50,6 +50,11 @@ public class LevelProgressManager
         {
             existed = new LevelProgress(lvlId);
             _lvlProgressList.Add(existed);
+            Debug.Log("creating new lvl progress");
+        }
+        else
+        {
+        	existed.LevelStarted();
         }
 
         return existed;

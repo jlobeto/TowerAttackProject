@@ -30,18 +30,13 @@ public class MainMap : MonoBehaviour
     {
         foreach (var lvlInfo in _levelInfoLoader.LevelInfoList.list)
         {
-            _mainMapCanvas.AddLevelButton(lvlInfo, OnLevelNodeClick);
+			_mainMapCanvas.AddLevelButton(lvlInfo, OnLevelNodeClick, GetRealGameManager());
         }
     }
 
     void OnLevelNodeClick(LevelInfo lvlInfo)
     {
-
-        for (int i = 0; i < _gameManagers.Length; i++)
-        {
-            if (_gameManagers[i] == null) continue;
-            _gameManagers[i].SetCurrentLevelInfo(lvlInfo);
-        }
+		GetRealGameManager().SetCurrentLevelInfo(lvlInfo);
 
         try
         {
@@ -53,4 +48,16 @@ public class MainMap : MonoBehaviour
         }
         
     }
+
+	GameManager GetRealGameManager()
+	{
+		for (int i = 0; i < _gameManagers.Length; i++)
+		{
+			if (_gameManagers[i] == null) continue;
+
+			return _gameManagers [i];
+		}
+
+		return null;
+	}
 }
