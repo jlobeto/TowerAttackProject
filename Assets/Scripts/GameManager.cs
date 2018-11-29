@@ -29,8 +29,9 @@ public class GameManager : MonoBehaviour
 	MinionsJsonLoaderManager _minionJSONLoader;
 	TowerJSONLoaderManager _towerJSONLoader;
     SwapTowerSystem _swapTowerSystem;
+    LevelNodesLoader _levelInfoLoader;
 
-	User _user;
+    User _user;
 
     
 
@@ -38,8 +39,9 @@ public class GameManager : MonoBehaviour
 	public MinionsJsonLoaderManager MinionsLoader { get { return _minionJSONLoader; } }
 	public TowerJSONLoaderManager TowerLoader { get { return _towerJSONLoader; } }
     public LevelInfo CurrentLevelInfo { get { return _currentLevelInfo; } }
+    public LevelNodesLoader LevelInfoLoader { get { return _levelInfoLoader; } }
 
-	public User User { get { return _user; } }
+    public User User { get { return _user; } }
 
     public Action<bool> OnLevelInfoSet = delegate { };
 
@@ -59,14 +61,15 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        _levelInfoLoader = new LevelNodesLoader();
+
         popupManager = FindObjectOfType<PopupManager>();
 
         _levelEventsLoader = new LevelEventLoader();
         _minionJSONLoader = new MinionsJsonLoaderManager();
 		_towerJSONLoader = new TowerJSONLoaderManager ();
 
-		_user = new User ();
-
+		_user = new User (this);
     }
 
     public void SetCurrentLevelInfo(LevelInfo lvlinfo)
@@ -80,5 +83,6 @@ public class GameManager : MonoBehaviour
 		_swapTowerSystem.LeveInitFinished(level.MinionManager, level.TowerManager, level.LevelCanvasManager);
 
 		_user.LevelStarted (level.levelID);
+        level.OnLevelFinish += _user.LevelEnded;
     }
 }

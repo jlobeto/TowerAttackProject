@@ -40,6 +40,12 @@ public class TestController : MonoBehaviour
         {
             FindObjectOfType<Level>().UpdatePoints(10000);
         }
+
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            FindObjectOfType<Level>().ForceLevelWin();
+        }
+
         /*if (Input.GetKeyDown(KeyCode.A))
         {
             var _lvlCanvasManager = FindObjectOfType<LevelCanvasManager>();

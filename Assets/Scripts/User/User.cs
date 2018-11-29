@@ -14,14 +14,15 @@ public class User
     string _deviceId;
 
     LevelProgressManager _levelProgressManager;
+    GameManager _gameManager;
 
 	public LevelProgressManager LevelProgressManager { get { return _levelProgressManager; } }
 
-    public User()
+    public User(GameManager gameManager)
     {
         _deviceId = SystemInfo.deviceUniqueIdentifier;
-
-        _levelProgressManager = new LevelProgressManager();
+        _gameManager = gameManager;
+        _levelProgressManager = new LevelProgressManager(_gameManager);
     }
 
     public void LevelStarted(int lvlId)

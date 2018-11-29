@@ -7,11 +7,9 @@ public class MainMap : MonoBehaviour
 {
 
     GameManager[] _gameManagers;
-    LevelNodesLoader _levelInfoLoader;
     MainMapCanvasManager _mainMapCanvas;
 
 	void Awake () {
-        _levelInfoLoader = new LevelNodesLoader();
 	}
 
     void Start()
@@ -22,15 +20,18 @@ public class MainMap : MonoBehaviour
         CreateLevelNodes();
     }
 
-    void Update () {
-		
+    void Update ()
+    {
+	    	
 	}
 
-    void CreateLevelNodes()
+    public void CreateLevelNodes()
     {
-        foreach (var lvlInfo in _levelInfoLoader.LevelInfoList.list)
+        var gm = GetRealGameManager();
+
+        foreach (var lvlInfo in gm.LevelInfoLoader.LevelInfoList.list)
         {
-			_mainMapCanvas.AddLevelButton(lvlInfo, OnLevelNodeClick, GetRealGameManager());
+			_mainMapCanvas.AddLevelButton(lvlInfo, OnLevelNodeClick, gm);
         }
     }
 
@@ -49,11 +50,19 @@ public class MainMap : MonoBehaviour
         
     }
 
-	GameManager GetRealGameManager()
+	public GameManager GetRealGameManager()
 	{
 		for (int i = 0; i < _gameManagers.Length; i++)
 		{
-			if (_gameManagers[i] == null) continue;
+			if (_gameManagers[i] == null ) continue;
+
+            //Have to do this to check if it is the correct gamemanager.
+            //Look for something on the internet to not do that and only create one gamemanager (that use dont destroy onload)
+            if (_gameManagers[i].User == null)
+            {
+                Destroy(_gameManagers[i].gameObject);
+                continue;
+            }
 
 			return _gameManagers [i];
 		}

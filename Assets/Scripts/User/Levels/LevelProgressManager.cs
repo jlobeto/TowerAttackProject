@@ -5,10 +5,12 @@ using UnityEngine;
 public class LevelProgressManager
 {
     List<LevelProgress> _lvlProgressList;
+    GameManager _gameManager;
 
-    public LevelProgressManager()
+    public LevelProgressManager(GameManager gameManager)
     {
         _lvlProgressList = new List<LevelProgress>();
+        _gameManager = gameManager;
     }
 
     public void LevelStarted(int lvlId)
@@ -34,6 +36,16 @@ public class LevelProgressManager
 
 		return null;
 	}
+
+    public void ForceWinAllLevels()
+    {
+        _lvlProgressList = new List<LevelProgress>();
+        foreach (var item in _gameManager.LevelInfoLoader.LevelInfoList.list)
+        {
+            LevelStarted(item.id);
+            LevelEnded(item.id, true, 3);
+        }
+    }
 
     /*
      * ////////////////////////////////////////////////

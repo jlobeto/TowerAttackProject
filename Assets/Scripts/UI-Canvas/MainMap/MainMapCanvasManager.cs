@@ -7,8 +7,10 @@ using UnityEngine.UI;
 public class MainMapCanvasManager : MonoBehaviour
 {
     public Button levelNodeButton;
+    public MainMap mainMap;
 
     GridLayoutGroup _levelNodesContainer;
+    bool _forceUnlockAll;
 
 	void Awake () {
         _levelNodesContainer = GetComponentInChildren<GridLayoutGroup>();
@@ -26,6 +28,22 @@ public class MainMapCanvasManager : MonoBehaviour
         btn.onClick.AddListener(() => onClick(lazyLvlInfo));
         btn.GetComponentInChildren<Text>().text = "Level " + lazyLvlInfo.id;
 		var node = btn.GetComponent<LevelNode> ();
-		node.Init (lazyLvlInfo , gm);
+		node.Init (lazyLvlInfo , gm, btn);
+    }
+
+    public void ForceUnlockAllLevels()
+    {
+        foreach (Transform item in _levelNodesContainer.transform)
+        {
+            Destroy(item.gameObject);
+        }
+
+        mainMap.GetRealGameManager().User.LevelProgressManager.ForceWinAllLevels();
+        mainMap.CreateLevelNodes();
+    }
+
+    public void ForceUnlockNextLevel()
+    {
+
     }
 }

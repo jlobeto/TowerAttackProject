@@ -130,6 +130,13 @@ public class LevelCeroTutorial : Level
             base.GoalCompletedHandler();
     }
 
+    public override void ForceLevelWin()
+    {
+        _livesRemoved = objetives[0];
+        _stopTutorial = true;
+        base.GoalCompletedHandler();
+    }
+
     void MinionWalkFinishedHandler(MinionType type)
     {
         if (type == MinionType.Runner)

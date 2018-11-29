@@ -23,7 +23,7 @@ public class Level : MonoBehaviour
     [HideInInspector]
     public LevelMode levelMode;
 	public Action<GameObject> ExecuteTutorialStep = delegate {};
-	public Action<int, bool, int> OnLevelFinish = delegate {}; //lvlid, win ?, stars
+	public Action<int, bool, int> OnLevelFinish = delegate {}; //lvlid, win ?, stars - User.LevelEnded();
     public LevelPortalEffect levelPortal;
 
     protected GameManager _gameManager;
@@ -278,6 +278,15 @@ public class Level : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// For testing
+    /// </summary>
+    public virtual void ForceLevelWin()
+    {
+        _livesRemoved = objetives[0];
+        GoalCompletedHandler();
+    }
+
     protected virtual void GoalCompletedHandler()
     {
         Debug.Log("----- Level Completed -----");
@@ -305,9 +314,6 @@ public class Level : MonoBehaviour
 
 	public int GetCurrentStarsWinning()
 	{
-		if (LivesRemoved < objetives [0])
-			return 0;
-		
-		return LivesRemoved >= objetives [0] && LivesRemoved < objetives [1] ? 1 : LivesRemoved >= objetives [1] && LivesRemoved < objetives [2] ? 2 : 3;
+        return GameplayUtils.StarsWon(LivesRemoved, objetives);
 	}
 }
