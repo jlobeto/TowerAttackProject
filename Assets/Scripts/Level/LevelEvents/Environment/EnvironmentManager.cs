@@ -27,7 +27,7 @@ public class EnvironmentManager : MonoBehaviour, IEvent
         _bridges = new List<EnvironmentBridge>();
         _bridgeEnabled = true;
         _currentTimeToChange = 1f;
-        var list = GetNodeList(_lvl.initialWalkNodes[0], new List<WalkNode>());
+        var list = GetNodeList(_lvl.GetInitWalkNode(), new List<WalkNode>());
         var pivots = GetWalkNodesBridge(list, "pivot");
         var dests = GetWalkNodesBridge(list, "dest");
         var bridgesGO = FindObjectsOfType<EnvironBridgeEffect>().ToList();

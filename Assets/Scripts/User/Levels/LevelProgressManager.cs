@@ -62,7 +62,7 @@ public class LevelProgressManager
         {
             existed = new LevelProgress(lvlId);
             _lvlProgressList.Add(existed);
-            Debug.Log("creating new lvl progress");
+            //Debug.Log("creating new lvl progress");
         }
         else
         {

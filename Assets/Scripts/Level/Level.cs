@@ -135,9 +135,9 @@ public class Level : MonoBehaviour
         if (!CheckMinionSale(t)) return false;
         var cost = _minionManager.GetMinionPrice(t);
         UpdatePoints(-cost);
-        _minionManager.SpawnMinion(t, initialWalkNodes[0].transform.position
+        _minionManager.SpawnMinion(t, GetInitWalkNode().transform.position
             , availableMinions.FirstOrDefault(m => m.minionType == t));
-        _minionManager.SetNextMinionFree(initialWalkNodes[0]);
+        _minionManager.SetNextMinionFree(GetInitWalkNode());
 
         return true;
     }
@@ -316,4 +316,22 @@ public class Level : MonoBehaviour
 	{
         return GameplayUtils.StarsWon(LivesRemoved, objetives);
 	}
+
+    public WalkNode GetInitWalkNode()
+    {
+        if (initialWalkNodes[0] != null)
+            return initialWalkNodes[0];
+
+        var walkNodes = FindObjectsOfType<WalkNode>();
+        foreach (var item in walkNodes)
+        {
+            if(item.isInitial)
+            {
+                initialWalkNodes[0] = item;
+                return item;
+            }
+        }
+
+        return null;
+    }
 }
