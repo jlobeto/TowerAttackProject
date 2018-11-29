@@ -30,7 +30,8 @@ public class MiniZeppelin : Minion
         if (IsDead)
         {
             if (infoCanvas != null)
-                Destroy(infoCanvas.gameObject);
+                infoCanvas.transform.position = new Vector3(5000, 5000, 5000);
+                //Destroy(infoCanvas.gameObject);
             GetComponent<Collider>().enabled = false;
             pCanWalk = false;
             OnDeath(this);
