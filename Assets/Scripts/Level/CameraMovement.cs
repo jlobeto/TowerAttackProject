@@ -16,11 +16,12 @@ public class CameraMovement : MonoBehaviour
 	bool _startTutorialMovement;
 	float _yPos = 35f;
     Action<GameObject> _onFinishTutoMove;
+    GameManager _gm;
 
 	void Start () 
 	{
-		var gameMan = FindObjectOfType<GameManager> ();
-		if (gameMan.CurrentLevelInfo.id == 0)
+        _gm = FindObjectOfType<GameManager> ();
+		if (_gm.CurrentLevelInfo.id == 0)
 			canMove = false;
 	}
 
@@ -37,6 +38,14 @@ public class CameraMovement : MonoBehaviour
 		CameraAnimationLerpForTutorial ();
 	}
 
+    public void SetCameraMovement(bool value)
+    {
+        if(value && _gm.CurrentLevelInfo.id == 0)
+        {
+            return;
+        }
+        canMove = value;
+    }
 
 	public void StartCameraMoveForTutorial(Vector3 screenPoint, float timeShowingTuto, Action<GameObject> func = null)
 	{

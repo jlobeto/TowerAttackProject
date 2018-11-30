@@ -57,7 +57,7 @@ public class MinionsSkillManager : MonoBehaviour
 		if(Input.GetMouseButtonUp(0))//desktop and mobile
 		{
 			_pressDown = false;
-			_cameraMovement.canMove = true;
+			_cameraMovement.SetCameraMovement(true);
 
 			//using global variables to not create a new reference each buttonUp
 			_selectedOnes = _lvl.GameObjectSelector.GetMinionsSelection (_rangeSprite.transform.position, _rangeRadius);
@@ -88,7 +88,7 @@ public class MinionsSkillManager : MonoBehaviour
 		_typeToSelect = skill;
 		_pressDown = true;
 
-		_cameraMovement.canMove = false;
+		_cameraMovement.SetCameraMovement(false);
 
 		_rangeSprite.color = _skillToColor [skill];
 		var color = _ps.colorOverLifetime;
