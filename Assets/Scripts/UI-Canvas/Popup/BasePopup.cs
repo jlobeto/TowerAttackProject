@@ -5,16 +5,18 @@ using UnityEngine.UI;
 
 public class BasePopup : MonoBehaviour
 {
-    public string popupId;
-    public Button closeButton;
+    public PopupsID popupId;
+    //public Button closeButton;
     //these texts will be loaded from JSON, using popupId;
     public Text title;
     public Text description;
-	
-	protected virtual void Start ()
+    public Button actionButton;
+
+
+    protected virtual void Start ()
     {
-        title.text = "Title Text";
-        description.text = "Description Text";
+        //title.text = "Title Text";
+        //description.text = "Description Text";
     }
 	
 	

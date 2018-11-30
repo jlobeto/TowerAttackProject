@@ -16,7 +16,7 @@ public class OnDoveArrivedToEnd : StepBase
 			, "Well done!"
 			, "You arrived to the end of path."
 			, "Continue"
-			, "TutorialCero");
+			, PopupsID.TutorialCero);
 
 		lvlTuto.forDoveOne.OnTriggerEnterCallback -= lvlTuto.OnDoveColEnter;
 		lvlTuto.forDoveTwo.OnTriggerEnterCallback -= lvlTuto.OnDoveColEnter;

@@ -108,9 +108,9 @@ GameObject:
   - component: {fileID: 222976110380427606}
   - component: {fileID: 95705970274076856}
   - component: {fileID: 114494533411052436}
-  - component: {fileID: 114370835475445474}
+  - component: {fileID: 114413008106488258}
   m_Layer: 5
-  m_Name: RetryLevel
+  m_Name: PauseGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,8 +256,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114370835475445474}
-        m_MethodName: OnActionButton
+      - m_Target: {fileID: 114413008106488258}
+        m_MethodName: OnAction
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -329,7 +329,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114370835475445474
+--- !u!114 &114413008106488258
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -337,14 +337,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1859382087726514}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d4e41174f1091549875aa21fba33ed9, type: 3}
+  m_Script: {fileID: 11500000, guid: fb6760c0ec59d01458a14f3a210a1a40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupId: OneButton
-  closeButton: {fileID: 114480764393861614}
+  popupId: 1
   title: {fileID: 114900634221085756}
   description: {fileID: 114091113930446270}
-  actionButton: {fileID: 0}
+  actionButton: {fileID: 114133484505500894}
 --- !u!114 &114480764393861614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -384,7 +383,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114370835475445474}
+      - m_Target: {fileID: 114413008106488258}
         m_MethodName: OnCloseButton
         m_Mode: 1
         m_Arguments:

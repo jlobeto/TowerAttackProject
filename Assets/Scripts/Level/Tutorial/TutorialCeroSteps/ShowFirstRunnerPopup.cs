@@ -15,6 +15,6 @@ public class ShowFirstRunnerPopup : StepBase
 			, "Well done!"
 			, "You arrived to the end of path."
 			, "Continue"
-			, "TutorialCero");
+			, PopupsID.TutorialCero);
 	}
 }

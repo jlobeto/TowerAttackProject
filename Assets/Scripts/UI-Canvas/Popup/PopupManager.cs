@@ -26,16 +26,17 @@ public class PopupManager : MonoBehaviour
 		
 	}
 
-    public void BuildOneButtonPopup(Transform parent, string title, string descript, string btnText, string popupId = "OneButton")
+    public void BuildOneButtonPopup(Transform parent, string title, string descript, string btnText, PopupsID popupId = PopupsID.OneButton)
     {
         var popup = Instantiate<BasePopup>(popupPrefabs.FirstOrDefault(i => i.popupId == popupId), parent);
         popup.title.text = title;
         popup.description.text = descript;
         popup.GetComponent<Animator>().SetFloat("EntryAnim", GetRandomAnimation());
 
-        popup.GetComponentsInChildren<Button>()
-            .FirstOrDefault(i => i.tag == "PopupOneButton")
-            .GetComponentInChildren<Text>().text = btnText;
+        if (popup.actionButton != null)
+        {
+            popup.actionButton.GetComponentInChildren<Text>().text = btnText;
+        }
     }
 
     float GetRandomAnimation()

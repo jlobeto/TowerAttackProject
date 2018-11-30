@@ -90,7 +90,7 @@ public class Level : MonoBehaviour
 		if(Input.GetKeyDown(KeyCode.Escape))
 		{
 			Time.timeScale = 0;
-			GameManager.popupManager.BuildOneButtonPopup (LevelCanvasManager.transform, "Pause", "Game paused" , "Main Map");
+			GameManager.popupManager.BuildOneButtonPopup (LevelCanvasManager.transform, "Pause", "Game paused" , "Main Map", PopupsID.Pause);
 		}
 	}
 
@@ -289,7 +289,7 @@ public class Level : MonoBehaviour
 
     protected virtual void GoalCompletedHandler()
     {
-        Debug.Log("----- Level Completed -----");
+        //Debug.Log("----- Level Completed -----");
         if(_gameManager.popupManager != null)
             _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform, "You won!" , "Continue...", "Main map");
         _towerManager.StopTowers();

@@ -16,7 +16,7 @@ public class RunnerHasBeenKilled : StepBase {
 			, "Ups"
 			, "Your minion has been killed. Try using his skill!"
 			, "Try Again"
-			, "TutorialCero");
+			, PopupsID.TutorialCero);
 
 	}
 }

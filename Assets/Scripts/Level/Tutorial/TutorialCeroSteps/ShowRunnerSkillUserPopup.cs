@@ -16,6 +16,6 @@ public class ShowRunnerSkillUserPopup : StepBase
 			, "Awesome!"
 			, "You know how to use the runner skill"
 			, "Continue"
-			, "TutorialCero");
+			, PopupsID.TutorialCero);
 	}
 }

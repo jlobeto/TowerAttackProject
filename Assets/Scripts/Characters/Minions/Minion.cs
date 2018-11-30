@@ -236,6 +236,9 @@ public class Minion : MonoBehaviour
         else
             infoCanvas.Init(hp, skillTime, skillCooldown);
 
+        if (minionType == MinionType.Runner)//bugfix of next node when using runner skill.
+            pDistanceToNextNode = 0.5f;
+
         _initHP = hp;
         _normalSpeed = speed;
         if (Debug.isDebugBuild)
