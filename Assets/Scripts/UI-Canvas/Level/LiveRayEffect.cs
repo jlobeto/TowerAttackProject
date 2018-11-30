@@ -34,7 +34,7 @@ public class LiveRayEffect : MonoBehaviour
             _img.color = Color.Lerp(Color.white, _endColor, _currTime);
         }
         
-        if (Mathf.Abs(Vector3.Distance(transform.position, _to)) < 0.1f)
+        if (Mathf.Abs(Vector3.Distance(transform.position, _to)) < 0.3f)
         {
             transform.position = new Vector3(1000, 1000, 1000);
             _active = false;

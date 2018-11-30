@@ -5,10 +5,12 @@ using UnityEngine;
 public class StopPilarTutotial : StepBase
 {
     TutorialPilarManager tutoPilarManager;
+    CameraMovement _camMovement;
 
     public StopPilarTutotial(TutorialPilarManager tutoOne)
     {
         tutoPilarManager = tutoOne;
+        _camMovement = GameObject.FindObjectOfType<CameraMovement>();
     }
 
     public override void ExecuteStep(GameObject gameObject = null)
@@ -20,5 +22,7 @@ public class StopPilarTutotial : StepBase
         tutoPilarManager.canvasTuto.DisableAllArrows();
 
         tutoPilarManager.CanClick = false;
+
+        _camMovement.SetCameraMovement(true);
     }
 }

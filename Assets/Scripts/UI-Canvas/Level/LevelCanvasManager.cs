@@ -117,6 +117,7 @@ public class LevelCanvasManager : MonoBehaviour
 	{
 		yield return new WaitForSecondsRealtime (6f);
 		swapTowerTutorial.position = new Vector3(10000, 10000, 0);
+        _cameraMove.SetCameraMovement(true);
 		Time.timeScale = 1;
 	}
 

@@ -74,7 +74,6 @@ public class CameraMovement : MonoBehaviour
 		{
 			_swapTutorialAnimationCurrentTime = 0;
 			_startTutorialMovement = false;
-			canMove = true;
 
             if (_onFinishTutoMove != null)
                 _onFinishTutoMove(null);
