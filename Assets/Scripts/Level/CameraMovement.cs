@@ -8,6 +8,8 @@ public class CameraMovement : MonoBehaviour
 	public float speed = 3;
 	public bool canMove;
     public float perspectiveZoomSpeed = 0.5f;// The rate of change of the field of view in perspective mode.
+    public Transform constraintA;
+    public Transform constraintB;
 
     Vector3 _initPosition;
 	Vector3 _targetPosition;
@@ -23,6 +25,8 @@ public class CameraMovement : MonoBehaviour
         _gm = FindObjectOfType<GameManager> ();
 		if (_gm.CurrentLevelInfo.id == 0)
 			canMove = false;
+
+        
 	}
 
 	void Update ()
@@ -87,9 +91,11 @@ public class CameraMovement : MonoBehaviour
 		var z = Input.GetAxis("Vertical");
 		transform.position += Time.deltaTime * speed * z * transform.forward * 10;
 		transform.position += Time.deltaTime * speed * x * transform.right * 10;
-	}
 
-	void CheckFingers()
+        LimitCameraMovement();
+    }
+
+    void CheckFingers()
 	{
 		if (Input.touchCount == 1)
 		{
@@ -100,7 +106,8 @@ public class CameraMovement : MonoBehaviour
 			{
 				var deltaPos = t1.deltaPosition;
 				transform.Translate (new Vector3 (-deltaPos.x * (speed / 22), 0 , -deltaPos.y * (speed / 22)));
-			}
+                LimitCameraMovement();
+            }
 		}
         else if(Input.touchCount == 2)
         {
@@ -131,4 +138,31 @@ public class CameraMovement : MonoBehaviour
         }
     }
 
+    void LimitCameraMovement()
+    {
+        if (constraintA == null || constraintB == null) return;
+        
+        var xClamp = Mathf.Clamp(transform.position.x, constraintB.position.x, constraintA.position.x);
+        var zClamp = Mathf.Clamp(transform.position.z, constraintB.position.z, constraintA.position.z);
+        var clampedPos = new Vector3(xClamp, transform.position.y, zClamp);
+
+        transform.position = clampedPos;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (constraintA == null || constraintB == null) return;
+        Gizmos.color = Color.yellow;
+
+        var x_a = constraintA.position.x;
+        var x_b = constraintB.position.x;
+        var z_a = constraintA.position.z;
+        var z_b = constraintB.position.z;
+
+        Gizmos.DrawLine(new Vector3(x_a, 0, z_a), new Vector3(x_a, 0, z_b));
+        Gizmos.DrawLine(new Vector3(x_a, 0, z_a), new Vector3(x_b, 0, z_a));
+
+        Gizmos.DrawLine(new Vector3(x_b, 0, z_b), new Vector3(x_a, 0, z_b));
+        Gizmos.DrawLine(new Vector3(x_b, 0, z_b), new Vector3(x_b, 0, z_a));
+    }
 }
