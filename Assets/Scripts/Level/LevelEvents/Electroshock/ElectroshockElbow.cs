@@ -45,7 +45,7 @@ public class ElectroshockElbow : MonoBehaviour
 
         if (m.minionType == MinionType.MiniZeppelin) return;
 
-        m.MainSkill.GetElectroshock(true);
+        m.MainSkill.GetElectroshock(true, m.skillCooldown);
     }
 
     void OnExitZone(Collider col)
@@ -57,7 +57,7 @@ public class ElectroshockElbow : MonoBehaviour
 
         if (m.minionType == MinionType.MiniZeppelin) return;
 
-        m.MainSkill.GetElectroshock(false);
+        m.MainSkill.GetElectroshock(false, m.skillCooldown);
     }
 
     void Update ()

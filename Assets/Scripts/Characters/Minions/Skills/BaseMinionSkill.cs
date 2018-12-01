@@ -120,13 +120,16 @@ public class BaseMinionSkill : MonoBehaviour
     /// If enable true > get the electroshock
     /// if enable false> turn of electroshock and continue with normal skill flow.
     /// </summary>
-    public void GetElectroshock(bool enable)
+    public void GetElectroshock(bool enable, float skillCooldown)
     {
         pIsAffectedByElectroshock = enable;
-        if(enable && !pIsActivated)
+
+        pSkillCooldown = skillCooldown;
+
+        if (enable && !pIsActivated)
         {
             pIsActivated = true;
-            pSkillTime = 0;
+            pSkillTime = 0;    
         }
     }
 
