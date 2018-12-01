@@ -27,6 +27,7 @@ public class Dove : Minion
         skills.Add(_mySkill);
         _targetPos = airYpos;
         _mySkill.infoCanvas = infoCanvas;
+        pMainSkill = _mySkill;
     }
 
     public override void InitMinion(WalkNode n, Vector3 position=default(Vector3))

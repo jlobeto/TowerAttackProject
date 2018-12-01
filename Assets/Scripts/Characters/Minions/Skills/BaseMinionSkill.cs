@@ -20,6 +20,7 @@ public class BaseMinionSkill : MonoBehaviour
     public InfoCanvas infoCanvas;
     public bool useCanvas = true;//If useCanvas, it will call all the functions to run the infoCanvas and add more feedback
 
+    protected bool pIsAffectedByElectroshock;
     protected bool pIsActivated;
     protected bool pIsLocked;
     protected float pSkillTime;
@@ -38,7 +39,7 @@ public class BaseMinionSkill : MonoBehaviour
 
     public virtual bool Initialize(float time, float cooldown)
     {
-        if (pIsLocked)
+        if (pIsLocked || pIsAffectedByElectroshock)
             return false;
 
         if (pIsActivated)
@@ -97,7 +98,7 @@ public class BaseMinionSkill : MonoBehaviour
             }
         }
 
-        if (pIsLocked)
+        if (pIsLocked && !pIsAffectedByElectroshock)
         {
             pSkillCooldown -= Time.deltaTime;
             if (useCanvas) infoCanvas.UpdateSkillTimes(pSkillCooldown, false);
@@ -115,6 +116,20 @@ public class BaseMinionSkill : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// If enable true > get the electroshock
+    /// if enable false> turn of electroshock and continue with normal skill flow.
+    /// </summary>
+    public void GetElectroshock(bool enable)
+    {
+        pIsAffectedByElectroshock = enable;
+        if(enable && !pIsActivated)
+        {
+            pIsActivated = true;
+            pSkillTime = 0;
+        }
+    }
+
     public static BaseMinionSkill GetSkillByType(SkillType type, List<BaseMinionSkill> minionSkills)
     {
         foreach (var item in minionSkills)
@@ -125,4 +140,5 @@ public class BaseMinionSkill : MonoBehaviour
 
         return null;
     }
+
 }

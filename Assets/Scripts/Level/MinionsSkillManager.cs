@@ -1,10 +1,16 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MinionsSkillManager : MonoBehaviour 
 {
+    /// <summary>
+    /// Used when the user triggers a skills after pressing skill button AND the range is affected
+    /// by any minion.
+    /// </summary>
+    public Action OnSkillTriggered = delegate { };
 
 	Level _lvl;
 	SpriteRenderer _rangeSprite;
@@ -63,8 +69,18 @@ public class MinionsSkillManager : MonoBehaviour
 			_selectedOnes = _lvl.GameObjectSelector.GetMinionsSelection (_rangeSprite.transform.position, _rangeRadius);
 			_theOnes = _selectedOnes.Where (i => i.skillType == _typeToSelect);
 
-			foreach (var m in _theOnes)
-				m.ActivateSelfSkill ();
+            
+            
+
+            foreach (var m in _theOnes)
+            {
+                //don't change the execution order of this foreach.
+                if(!m.IsMainSkillLockedOrActive())
+                    OnSkillTriggered();
+
+                m.ActivateSelfSkill();
+            }
+				
 
 			_rangeSprite.transform.position = new Vector3 (1000, 1000, 1000);
 		}

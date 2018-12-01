@@ -13,7 +13,7 @@ public class Runner : Minion
         _mySkill = gameObject.AddComponent<RunnerSkill>();
         skills.Add(_mySkill);
         _mySkill.infoCanvas = infoCanvas;
-
+        pMainSkill = _mySkill;
     }
 
     public override void GetDamage(float dmg)

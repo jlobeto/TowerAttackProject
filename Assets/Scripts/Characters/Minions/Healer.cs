@@ -25,6 +25,7 @@ public class Healer : Minion
         _mySkill = gameObject.AddComponent<HealerSkill>();
         skills.Add(_mySkill);
         _mySkill.infoCanvas = infoCanvas;
+        pMainSkill = _mySkill;
     }
     
     public override void InitMinion(WalkNode n, Vector3 pTransform = default(Vector3))

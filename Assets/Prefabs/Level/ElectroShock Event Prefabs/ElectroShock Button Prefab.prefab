@@ -19,12 +19,14 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4273700531844570}
-  m_Layer: 0
+  - component: {fileID: 65769501164750564}
+  - component: {fileID: 114775287136465370}
+  m_Layer: 15
   m_Name: ElectroShock Button Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1887658970198336
 GameObject:
@@ -36,13 +38,12 @@ GameObject:
   - component: {fileID: 4753205504917720}
   - component: {fileID: 33536451239311028}
   - component: {fileID: 23066562795832178}
-  - component: {fileID: 95544247053323728}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ElectroShock Event Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4273700531844570
 Transform:
@@ -50,9 +51,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1095681403771716}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.734665, y: -6.160636, z: 3.4357147}
-  m_LocalScale: {x: 2.677228, y: 2.6772275, z: 2.6772275}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -41.33, y: 14.57, z: 19.26}
+  m_LocalScale: {x: 6.409672, y: 6.4096656, z: 6.4096656}
   m_Children:
   - {fileID: 4753205504917720}
   m_Father: {fileID: 0}
@@ -112,20 +113,28 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1887658970198336}
   m_Mesh: {fileID: 4300000, guid: 1f5fe6e76f6100948b6b93a719661a14, type: 3}
---- !u!95 &95544247053323728
-Animator:
-  serializedVersion: 3
+--- !u!65 &65769501164750564
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1887658970198336}
+  m_GameObject: {fileID: 1095681403771716}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 1f5fe6e76f6100948b6b93a719661a14, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1054544, y: 0.6133459, z: 1.2460535}
+  m_Center: {x: 1.8102643, y: -1.2654262, z: -0.75574464}
+--- !u!114 &114775287136465370
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1095681403771716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e06f06fb4d37ec42b63f02c199c37f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectZone: {fileID: 0}
+  pathEffectPS: {fileID: 0}

@@ -9,6 +9,14 @@ public class HitAreaCollider : MonoBehaviour
     public Action<Collider> OnTriggerExitCallback = delegate { };
     public Action<Collider> OnTriggerStayCallback = delegate { };
 
+    public Collider thisCollider { get { return _col; } }
+    Collider _col;
+
+    private void Start()
+    {
+        _col = GetComponent<Collider>();
+    }
+
     void Update () {
 		
 	}

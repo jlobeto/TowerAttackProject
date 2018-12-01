@@ -45,10 +45,10 @@ public class Minion : MonoBehaviour
     protected bool pIceDebuff;
     protected bool pBuffInvisible;//like runner run boost skill.
     protected bool pCanWalk;
+    protected BaseMinionSkill pMainSkill;
 
     float _initHP;
     int _currentLevel = 1;//Level of the minion, ///TODO manage this when buying an upgrade of lvl;
-    int _spawnOrder;
     float _normalSpeed;
     int _id;
     bool _hasSparkEffect;
@@ -58,6 +58,7 @@ public class Minion : MonoBehaviour
     public GameObject ShieldBubble { get { return pShieldBubble; } }
     public bool IsDead { get { return hp <= 0; } }
     public float InitialHP { get { return _initHP; } }
+    public BaseMinionSkill MainSkill { get { return pMainSkill; } }
 
     #region Damage to Minion
     public virtual void GetDamage(float dmg)
@@ -341,5 +342,15 @@ public class Minion : MonoBehaviour
             ps.IncrementBurst();
     }
 
-    
+    /// <summary>
+    /// Main skill, the one at index 0. 
+    /// return true if it is beeing regenerated or is active, false if both aren't.
+    /// </summary>
+    public bool IsMainSkillLockedOrActive()
+    {
+        if (pMainSkill == null)
+            return false;
+
+        return pMainSkill.IsLocked || pMainSkill.IsActivated;
+    }
 }

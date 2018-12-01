@@ -8,7 +8,7 @@ public class WarScreamSkill : BaseMinionSkill
 
 	public override bool Initialize(float lastingTime,float cooldown, float speedDelta, float prevSpeed)
 	{
-		if (pIsLocked)
+		if (pIsLocked || pIsAffectedByElectroshock)
 			return false;
 
 		if(pThisMinion == null)

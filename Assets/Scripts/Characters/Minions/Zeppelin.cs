@@ -30,6 +30,7 @@ public class Zeppelin : Minion
 
         skills.Add(_mySkill);
         _mySkill.infoCanvas = infoCanvas;
+        pMainSkill = _mySkill;
     }
     public override void InitMinion(WalkNode n, Vector3 pos = default(Vector3))
     {
