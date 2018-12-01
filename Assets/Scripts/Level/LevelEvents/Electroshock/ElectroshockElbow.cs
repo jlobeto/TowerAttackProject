@@ -5,7 +5,7 @@ using UnityEngine;
 public class ElectroshockElbow : MonoBehaviour
 {
     public HitAreaCollider effectZone;
-    public ParticleSystem pathEffectPS;
+    public List<ElectroshockElectricity> electricityFeedbacks;
     public List<ElectroshockWire> wires;
 
     /// <summary>
@@ -13,7 +13,7 @@ public class ElectroshockElbow : MonoBehaviour
     /// </summary>
     bool _disabledByUser = false;
     Material _material;
-    Color _activateColor = new Color(0.1f, 0.46f, 0.74f);
+    Color _activateColor = Color.red;
     Collider _myCollider;
 
     int _minionAmountInsideAOE;
@@ -108,6 +108,10 @@ public class ElectroshockElbow : MonoBehaviour
         if(effectZone.thisCollider.enabled)
         {
             effectZone.transform.position = _initPosOfAOE;
+            foreach (var item in electricityFeedbacks)
+            {
+                item.EnableElectricity();
+            }
         }
 
         StartCoroutine(DeactivatingElectroshock(time));
@@ -121,6 +125,11 @@ public class ElectroshockElbow : MonoBehaviour
         effectZone.transform.position = new Vector3(1000, 1000, 1000);
         _material.SetColor("_EmissionColor", Color.black);
         SetWireColors(false);
+
+        foreach (var item in electricityFeedbacks)
+        {
+            item.DisableElectricity();
+        }
     }
 
     void SetWireColors(bool activate)

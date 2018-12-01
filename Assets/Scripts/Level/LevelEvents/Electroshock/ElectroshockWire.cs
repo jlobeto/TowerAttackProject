@@ -7,7 +7,7 @@ public class ElectroshockWire : MonoBehaviour {
     public bool toPath;
 
     Material _mat;
-    Color _activateColor = new Color(0.1f, 0.46f, 0.74f);
+    Color _activateColor = Color.red;
 
     void Start()
     {

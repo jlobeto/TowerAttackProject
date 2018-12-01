@@ -21,9 +21,10 @@ public class ElectroshockManager : MonoBehaviour
     int _currentChargeLvlIndex;
     int _amountOfSkillsAux;
     int _availableToPressAux;
-    Color _activateFeedbackColor = new Color(0, 0.91f, 0.61f);
+    Color _activateFeedbackColor = Color.red;//new Color(0, 0.91f, 0.61f);
     bool _canTurnOffElbow;
     bool _isActive;//when the user has triggered the event and false when the electroshock finish;
+    float _toTurnOn;
 
 	void Start ()
     {
@@ -93,12 +94,20 @@ public class ElectroshockManager : MonoBehaviour
 
         _amountOfSkillsAux--;
 
-        float toTurnOn = (float)_chargeLevels.Length / amountOfSkillTriggered;
+        var aux = (float)_chargeLevels.Length / amountOfSkillTriggered;
+        if (aux < 1)
+            _toTurnOn += aux;
+        else
+            _toTurnOn = aux;
 
-        for (int i = 0; i < toTurnOn; i++)
+        if(_toTurnOn >= 1)
         {
-            SetChargeLevelFeedback();
+            for (int i = 0; i < _toTurnOn; i++)
+                SetChargeLevelFeedback();
+
+            _toTurnOn = 0;
         }
+            
 
         if(_amountOfSkillsAux == 0)
         {
@@ -109,7 +118,7 @@ public class ElectroshockManager : MonoBehaviour
             {
                 item.RiceEvent();
             }
-
+            _toTurnOn = 0;
             StartCoroutine(OnWaitUntilActivateEvent());
         }
     }
