@@ -24,19 +24,23 @@ public class ElectroshockManager : MonoBehaviour
     Color _activateFeedbackColor = Color.red;//new Color(0, 0.91f, 0.61f);
     bool _canTurnOffElbow;
     bool _isActive;//when the user has triggered the event and false when the electroshock finish;
-    float _toTurnOn;
+    float _currentPercentOn;//for charges lvls feedback;
+    float _percentOfEachChargeLvl;//for charges lvls feedback;
 
-	void Start ()
+    void Start ()
     {
         _chargeLevels = GetComponentsInChildren<MeshRenderer>().Where(i => i.name.Contains("Charge lvl")).ToArray();
         _lvl = FindObjectOfType<Level>();
         _lvl.MinionSkillManager.OnSkillTriggered += SkillSelectedHandler;
         _amountOfSkillsAux = amountOfSkillTriggered;
         _availableToPressAux = availableToPress;
+
+        _percentOfEachChargeLvl = (float)_chargeLevels.Length / amountOfSkillTriggered;
+
     }
-	
-	
-	void Update ()
+
+
+    void Update ()
     {
         if (Input.GetMouseButtonUp(0))
         {
@@ -93,21 +97,17 @@ public class ElectroshockManager : MonoBehaviour
         if (_isActive) return;
 
         _amountOfSkillsAux--;
+        _currentPercentOn += _percentOfEachChargeLvl;
+        var currLevel = _amountOfSkillsAux - amountOfSkillTriggered;
 
-        var aux = (float)_chargeLevels.Length / amountOfSkillTriggered;
-        if (aux < 1)
-            _toTurnOn += aux;
-        else
-            _toTurnOn = aux;
-
-        if(_toTurnOn >= 1)
+        if (_currentPercentOn >= 1)
         {
-            for (int i = 0; i < _toTurnOn; i++)
+            int count = (int)_currentPercentOn;
+            for (int i = 0; i < _currentPercentOn; i++)
                 SetChargeLevelFeedback();
 
-            _toTurnOn = 0;
+            _currentPercentOn = 0;
         }
-            
 
         if(_amountOfSkillsAux == 0)
         {
@@ -118,7 +118,7 @@ public class ElectroshockManager : MonoBehaviour
             {
                 item.RiceEvent();
             }
-            _toTurnOn = 0;
+            _currentPercentOn = 0;
             StartCoroutine(OnWaitUntilActivateEvent());
         }
     }
