@@ -24,7 +24,7 @@ public class ShowFirstText : StepBase
 
         _tutoMan.canvasTuto.EnableArrowByName("arrow_1");
         var pos = Camera.main.WorldToScreenPoint(_tutoMan.electroshockManager.position);
-        _tutoMan.canvasTuto.SetArrowParentPosition(pos, "arrow_1", 20);
+        _tutoMan.canvasTuto.SetArrowParentPosition(pos, "arrow_1", 35);
 
         _tutoMan.canvasTuto.DisableTexts();
 
