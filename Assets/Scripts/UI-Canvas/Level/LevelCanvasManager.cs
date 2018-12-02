@@ -253,11 +253,11 @@ public class LevelCanvasManager : MonoBehaviour
         skillBtn.SetOnPointerDown(interactable);
 	}
 
-    public void DisableMinionSkillButtons()
+    public void EnableDisableMinionSkillButtons(bool value)
     {
         foreach (var item in minionSaleButtons)
         {
-            SetMinionSkillButton(item.GetComponent<Button>(), item.minionSkill, false, level.MinionSkillManager);
+            SetMinionSkillButton(item.GetComponent<Button>(), item.minionSkill, value, level.MinionSkillManager);
         }
     }
 

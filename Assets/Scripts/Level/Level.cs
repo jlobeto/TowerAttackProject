@@ -90,7 +90,9 @@ public class Level : MonoBehaviour
 		if(Input.GetKeyDown(KeyCode.Escape))
 		{
 			Time.timeScale = 0;
-			GameManager.popupManager.BuildOneButtonPopup (LevelCanvasManager.transform, "Pause", "Game paused" , "Main Map", PopupsID.Pause);
+            _lvlCanvasManager.EnableMinionButtons(false);
+            _lvlCanvasManager.EnableDisableMinionSkillButtons(false);
+            GameManager.popupManager.BuildOneButtonPopup (LevelCanvasManager.transform, "Pause", "Game paused" , "Main Map", PopupsID.Pause);
 		}
 	}
 
@@ -271,7 +273,7 @@ public class Level : MonoBehaviour
             else if (LivesRemoved < objetives[0])
             {
                 _lvlCanvasManager.EnableMinionButtons(false);
-                _lvlCanvasManager.DisableMinionSkillButtons();
+                _lvlCanvasManager.EnableDisableMinionSkillButtons(false);
 
                 OnLevelFinish (levelID, false, GetCurrentStarsWinning());
 
@@ -302,7 +304,7 @@ public class Level : MonoBehaviour
             _lvlEventManager.StopEvents();
 
         _lvlCanvasManager.EnableMinionButtons(false);
-        _lvlCanvasManager.DisableMinionSkillButtons();
+        _lvlCanvasManager.EnableDisableMinionSkillButtons(false);
         OnLevelFinish (levelID, true, GetCurrentStarsWinning());
     }
     

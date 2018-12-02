@@ -9,7 +9,10 @@ public class PausePopup : BasePopup
 	public override void OnCloseButton()
     {
 		Time.timeScale = 1;//por si esta en el popup de pausa
-		Destroy (gameObject);
+        var lvl = FindObjectOfType<Level>();
+        lvl.LevelCanvasManager.EnableMinionButtons(true);
+        lvl.LevelCanvasManager.EnableDisableMinionSkillButtons(true);
+        Destroy (gameObject);
     }
 
     public void OnAction()
