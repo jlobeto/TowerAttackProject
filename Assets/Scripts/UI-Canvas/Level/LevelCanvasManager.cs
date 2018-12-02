@@ -23,6 +23,7 @@ public class LevelCanvasManager : MonoBehaviour
 	public Image secondHoldMoveImage;
     [HideInInspector] public List<MinionSaleButton> minionSaleButtons = new List<MinionSaleButton>();
     public LiveRayEffect liveRaySprite;
+    public Sprite starOnSprite;
 
     HorizontalLayoutGroup _skillsButtonPanel;
     /// <summary>
@@ -51,6 +52,8 @@ public class LevelCanvasManager : MonoBehaviour
 	bool _startTutorialHoldAnimation;
 	Vector3 _holdImageTargetPosition;
 	Vector3 _holdImageInitPosition;
+
+    int _currentStarsOn;
 
     void Awake()
     {
@@ -186,7 +189,31 @@ public class LevelCanvasManager : MonoBehaviour
         float initL = (float)initLives;
         _levelLivesFillBar.fillAmount = newL / initL;
 
-        
+        UpdateStarsUI();
+    }
+
+    void UpdateStarsUI()
+    {
+        var starsWon = level.GetCurrentStarsWinning();
+
+        if (_currentStarsOn == starsWon) return;
+
+        _currentStarsOn = starsWon;
+        var parent = _levelLivesFillBar.rectTransform.parent.GetComponent<RectTransform>();
+        var stars = parent.GetComponentsInChildren<Image>();
+        var min = stars.FirstOrDefault(i => i.name.Contains("min"));
+        var mid = stars.FirstOrDefault(i => i.name.Contains("mid"));
+        var max = stars.FirstOrDefault(i => i.name.Contains("max"));
+
+        if (_currentStarsOn == 1)
+            min.sprite = starOnSprite;
+
+        if(_currentStarsOn == 2)
+            mid.sprite = starOnSprite;
+
+        if(_currentStarsOn == 3)
+            max.sprite = starOnSprite;
+
     }
 
 	public void BuildMinionSlots(List<Minion> availableMinions, int lvlId, MinionsSkillManager minionSkillsManager, bool stayNotInteractuable = false)
