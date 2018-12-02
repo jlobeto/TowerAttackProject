@@ -321,6 +321,8 @@ public class Level : MonoBehaviour
 
 	public int GetCurrentStarsWinning()
 	{
+        if (levelID == 0) return 3;
+
         return GameplayUtils.StarsWon(LivesRemoved, objetives);
 	}
 

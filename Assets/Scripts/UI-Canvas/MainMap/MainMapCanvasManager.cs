@@ -144,10 +144,14 @@ public class MainMapCanvasManager : MonoBehaviour
     /// </summary>
     public void ForceUnlockAllLevels()
     {
-        foreach (var item in _gridLayouts)
+        for (int i = 0; i < _gridLayouts.Count; i++)
         {
-            DeleteAllChildren(item);
+            if (i == 0) continue;
+
+            Destroy(_gridLayouts[i].gameObject);
         }
+        _gridLayouts = new List<GridLayoutGroup>();
+        //_gridLayouts.Add(_levelNodesContainer);
 
         mainMap.GetRealGameManager().User.LevelProgressManager.ForceWinAllLevels();
         mainMap.CreateLevelNodes();
