@@ -34,12 +34,12 @@ public class GameplayUtils
         if (currLives == 0) return 0;
 
         if (currLives >= objetives[0] && objetives.Length > 1 && currLives < objetives[1]) return 1;
-        else if (currLives >= objetives[0]) return 1;
+        
 
         if (objetives.Length > 1 && currLives >= objetives[1] && currLives < objetives[2])
             return 2;
 
-        if (objetives.Length > 2 && currLives > objetives[2])
+        if (objetives.Length > 2 && currLives >= objetives[2])
             return 3;
 
         return 0;
