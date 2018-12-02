@@ -12,16 +12,18 @@ public class MainMapCanvasManager : MonoBehaviour
     public RectTransform worldsNameContainer;
     public RectTransform worldsArrowsContainer;
     public Text worldOne_NameText;
-    public Image toLeftArrow;
-    public Image toRightArrow;
+    public Image selectedScreenUI;
+    public Sprite unselectedScreenUISprite;
+    public Sprite selectedScreenUISprite;
 
     Canvas _canvas;
     GridLayoutGroup _currentBuilding;
     GridLayoutGroup _levelNodesContainer;
     
     List<GridLayoutGroup> _gridLayouts = new List<GridLayoutGroup>();
+    List<Image> _screenSelectorsUI = new List<Image>();
+
     Vector3 _toPosition;//for grids movements;
-    Vector3 _fromPosition;//for grids movements;
     bool _isMovingGrid;
     bool _forceUnlockAll;
     int _lvlBtn_lastWorldId;//to know when it changes de worldId
@@ -38,7 +40,7 @@ public class MainMapCanvasManager : MonoBehaviour
         _gridLayouts.Add(_levelNodesContainer);
         _toPosition = _currentBuilding.transform.position;
 
-        toLeftArrow.enabled = false;
+        _screenSelectorsUI.Add(selectedScreenUI);
     }
 	
 	void Update ()
@@ -100,13 +102,11 @@ public class MainMapCanvasManager : MonoBehaviour
         if(Mathf.Abs(Vector3.Distance(worldsBtnContainer.position, _toPosition)) < 1f)
         {
             worldsBtnContainer.position = worldsNameContainer.position = _toPosition;
-            if (_currentWorldOnScreen == 0)
-                toLeftArrow.enabled = false;
-            else if(_currentWorldOnScreen == _gridLayouts.Count-1)
-                toRightArrow.enabled = false;
-            else
-                toRightArrow.enabled = toLeftArrow.enabled = true;
 
+            foreach (var item in _screenSelectorsUI)
+                item.sprite = unselectedScreenUISprite;
+
+            _screenSelectorsUI[_currentWorldOnScreen].sprite = selectedScreenUISprite;
             _isMovingGrid = false;
         }
     }
@@ -126,7 +126,11 @@ public class MainMapCanvasManager : MonoBehaviour
             worldName.transform.position += Vector3.right * _canvas.pixelRect.width * lvlInfo.worldId;
             worldName.text = "WORLD " + (lvlInfo.worldId + 1);
             worldName.name = "world_"+ lvlInfo.worldId + "_text";
-            
+
+            var screenPoint = Instantiate<Image>(selectedScreenUI, selectedScreenUI.transform.parent);
+            screenPoint.sprite = unselectedScreenUISprite;
+            screenPoint.name = "SelectedScreen_" + lvlInfo.worldId;
+            _screenSelectorsUI.Add(screenPoint);
         }
 
         var btn = Instantiate<Button>(levelNodeButton, _currentBuilding.transform);
