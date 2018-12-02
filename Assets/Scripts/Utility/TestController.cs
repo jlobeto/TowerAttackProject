@@ -16,7 +16,7 @@ public class TestController : MonoBehaviour
 
     private void OnGUI()
     {
-        GUILayout.BeginVertical();
+        /*GUILayout.BeginVertical();
         GUILayout.BeginHorizontal();
         GUILayout.Space(250);
         GUILayout.Label("Q: Quit To MainMap", _guiStyle);
@@ -25,7 +25,7 @@ public class TestController : MonoBehaviour
         GUILayout.Space(250);
         GUILayout.Label("P: Add Points", _guiStyle);
         GUILayout.BeginHorizontal();
-        GUILayout.EndVertical();
+        GUILayout.EndVertical();*/
     }
 
     void Update ()

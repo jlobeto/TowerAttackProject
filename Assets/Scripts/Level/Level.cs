@@ -270,7 +270,10 @@ public class Level : MonoBehaviour
             }
             else if (LivesRemoved < objetives[0])
             {
-				OnLevelFinish (levelID, false, GetCurrentStarsWinning());
+                _lvlCanvasManager.EnableMinionButtons(false);
+                _lvlCanvasManager.DisableMinionSkillButtons();
+
+                OnLevelFinish (levelID, false, GetCurrentStarsWinning());
 
                 if (_gameManager.popupManager != null)
                     _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform, "Game Over !", "Try Again", "Main map");
@@ -298,7 +301,9 @@ public class Level : MonoBehaviour
         if (_lvlEventManager != null)
             _lvlEventManager.StopEvents();
 
-		OnLevelFinish (levelID, true, GetCurrentStarsWinning());
+        _lvlCanvasManager.EnableMinionButtons(false);
+        _lvlCanvasManager.DisableMinionSkillButtons();
+        OnLevelFinish (levelID, true, GetCurrentStarsWinning());
     }
     
     public void UpdatePoints(int points)

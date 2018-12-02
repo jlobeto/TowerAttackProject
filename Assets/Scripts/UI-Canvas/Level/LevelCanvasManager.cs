@@ -21,7 +21,7 @@ public class LevelCanvasManager : MonoBehaviour
 	public Image tapDownImage;
 	public Image holdMoveImage;
 	public Image secondHoldMoveImage;
-	public List<MinionSaleButton> minionSaleButtons = new List<MinionSaleButton>();
+    [HideInInspector] public List<MinionSaleButton> minionSaleButtons = new List<MinionSaleButton>();
     public LiveRayEffect liveRaySprite;
 
     HorizontalLayoutGroup _skillsButtonPanel;
@@ -241,7 +241,8 @@ public class LevelCanvasManager : MonoBehaviour
 	{
 		var skillBtn = baseBtn.GetComponentInChildren<MinionSkillMouseDown> ();
 
-		if (interactable) {
+		if (interactable)
+        {
 			skillBtn.InitButton (skill, minionSkillsManager.SkillButtonPressed);
 			skillBtn.GetComponentInChildren<Text>().text = skill.ToString();
 		}
@@ -249,7 +250,16 @@ public class LevelCanvasManager : MonoBehaviour
 		var fillImg = skillBtn.GetComponentsInChildren<Image>()[1];//Returns btn.image and its child.image(DONT KNOW WHY)
 		fillImg.fillAmount = interactable ? 0 : 1;
 		skillBtn.GetComponent<Button> ().interactable = interactable;
+        skillBtn.SetOnPointerDown(interactable);
 	}
+
+    public void DisableMinionSkillButtons()
+    {
+        foreach (var item in minionSaleButtons)
+        {
+            SetMinionSkillButton(item.GetComponent<Button>(), item.minionSkill, false, level.MinionSkillManager);
+        }
+    }
 
 	public MinionSaleButton GetSpecificMinionSaleBtn(MinionType t)
 	{

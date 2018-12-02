@@ -16,6 +16,11 @@ public class MinionSkillMouseDown : MonoBehaviour , IPointerDownHandler
 		OnSkillButtonDown += callback;
 	}
 
+    public void SetOnPointerDown(bool value)
+    {
+        _init = value;
+    }
+
 	//Do this when the mouse is clicked over the selectable object this script is attached to.
 	public void OnPointerDown(PointerEventData eventData)
 	{
