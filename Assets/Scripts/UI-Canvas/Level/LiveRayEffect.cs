@@ -16,7 +16,6 @@ public class LiveRayEffect : MonoBehaviour
     {
         _img = GetComponent<Image>();
     }
-	
 
 	void Update ()
     {
@@ -36,8 +35,9 @@ public class LiveRayEffect : MonoBehaviour
         
         if (Mathf.Abs(Vector3.Distance(transform.position, _to)) < 0.3f)
         {
-            transform.position = new Vector3(1000, 1000, 1000);
+            //transform.position = new Vector3(1000, 1000, 1000);
             _active = false;
+            _img.enabled = false;
         }
     }
 
