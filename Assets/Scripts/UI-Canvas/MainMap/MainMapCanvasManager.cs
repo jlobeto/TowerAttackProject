@@ -10,7 +10,10 @@ public class MainMapCanvasManager : MonoBehaviour
     public MainMap mainMap;
     public RectTransform worldsBtnContainer;
     public RectTransform worldsNameContainer;
+    public RectTransform worldsArrowsContainer;
     public Text worldOne_NameText;
+    public Image toLeftArrow;
+    public Image toRightArrow;
 
     Canvas _canvas;
     GridLayoutGroup _currentBuilding;
@@ -24,6 +27,7 @@ public class MainMapCanvasManager : MonoBehaviour
     int _lvlBtn_lastWorldId;//to know when it changes de worldId
     float _mouseOnPressXPos;
     float _mouseOnReleaseXPos;
+    int _currentWorldOnScreen;
 
 
     void Awake ()
@@ -33,6 +37,8 @@ public class MainMapCanvasManager : MonoBehaviour
         _currentBuilding = _levelNodesContainer;
         _gridLayouts.Add(_levelNodesContainer);
         _toPosition = _currentBuilding.transform.position;
+
+        toLeftArrow.enabled = false;
     }
 	
 	void Update ()
@@ -64,19 +70,24 @@ public class MainMapCanvasManager : MonoBehaviour
         if (delta < 70)
             return;
 
-
-        _isMovingGrid = true;
-
+        
         //right to left
         if (_mouseOnPressXPos > _mouseOnReleaseXPos)
         {
+            if (_currentWorldOnScreen == _gridLayouts.Count - 1) return;
+
             _toPosition = worldsBtnContainer.position - Vector3.right * _canvas.pixelRect.width;
-            
+            _currentWorldOnScreen++;
         }
         else //left to right
         {
+            if (_currentWorldOnScreen == 0) return;
+
             _toPosition = worldsBtnContainer.position + Vector3.right * _canvas.pixelRect.width;
+            _currentWorldOnScreen--;
         }
+
+        _isMovingGrid = true;
     }
 
     void GridMovement()
@@ -89,6 +100,13 @@ public class MainMapCanvasManager : MonoBehaviour
         if(Mathf.Abs(Vector3.Distance(worldsBtnContainer.position, _toPosition)) < 1f)
         {
             worldsBtnContainer.position = worldsNameContainer.position = _toPosition;
+            if (_currentWorldOnScreen == 0)
+                toLeftArrow.enabled = false;
+            else if(_currentWorldOnScreen == _gridLayouts.Count-1)
+                toRightArrow.enabled = false;
+            else
+                toRightArrow.enabled = toLeftArrow.enabled = true;
+
             _isMovingGrid = false;
         }
     }
@@ -107,6 +125,8 @@ public class MainMapCanvasManager : MonoBehaviour
             var worldName = Instantiate<Text>(worldOne_NameText, worldsNameContainer);
             worldName.transform.position += Vector3.right * _canvas.pixelRect.width * lvlInfo.worldId;
             worldName.text = "WORLD " + (lvlInfo.worldId + 1);
+            worldName.name = "world_"+ lvlInfo.worldId + "_text";
+            
         }
 
         var btn = Instantiate<Button>(levelNodeButton, _currentBuilding.transform);
