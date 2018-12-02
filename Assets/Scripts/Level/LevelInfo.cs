@@ -21,4 +21,5 @@ public class LevelInfo
     public bool levelEvents;
     public float levelTime;
     public int initialLevelPoints;
+    public int worldId;
 }
