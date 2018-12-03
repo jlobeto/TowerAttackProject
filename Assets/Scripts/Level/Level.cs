@@ -286,9 +286,9 @@ public class Level : MonoBehaviour
     /// <summary>
     /// For testing
     /// </summary>
-    public virtual void ForceLevelWin()
+    public virtual void ForceLevelWin(int stars)
     {
-        _livesRemoved = objetives[0];
+        _livesRemoved = objetives[stars-1];
         GoalCompletedHandler();
     }
 
@@ -321,7 +321,7 @@ public class Level : MonoBehaviour
 
 	public int GetCurrentStarsWinning()
 	{
-        if (levelID == 0) return 3;
+        if (levelID == 0) return 0;
 
         return GameplayUtils.StarsWon(LivesRemoved, objetives);
 	}

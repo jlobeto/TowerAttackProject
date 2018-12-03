@@ -130,7 +130,7 @@ public class LevelCeroTutorial : Level
             base.GoalCompletedHandler();
     }
 
-    public override void ForceLevelWin()
+    public override void ForceLevelWin(int stars)
     {
         _livesRemoved = objetives[0];
         _stopTutorial = true;

@@ -8,37 +8,34 @@ public class MainMapCanvasManager : MonoBehaviour
 {
     public Button levelNodeButton;
     public MainMap mainMap;
-    public RectTransform worldsBtnContainer;
-    public RectTransform worldsNameContainer;
-    public RectTransform worldsArrowsContainer;
-    public Text worldOne_NameText;
+    public RectTransform worldsTransform;
+    public WorldUI world_0_container;
     public Image selectedScreenUI;
     public Sprite unselectedScreenUISprite;
     public Sprite selectedScreenUISprite;
 
     Canvas _canvas;
-    GridLayoutGroup _currentBuilding;
-    GridLayoutGroup _levelNodesContainer;
+    WorldUI _currentBuildingWorld;
     
-    List<GridLayoutGroup> _gridLayouts = new List<GridLayoutGroup>();
+    List<WorldUI> _worldsCreated = new List<WorldUI>();
     List<Image> _screenSelectorsUI = new List<Image>();
 
     Vector3 _toPosition;//for grids movements;
+    Vector3 _toLocksPosition;//for padlocks (UI) movements;
+    Vector3 _toNamesPosition;//for title movements;
     bool _isMovingGrid;
     bool _forceUnlockAll;
     int _lvlBtn_lastWorldId;//to know when it changes de worldId
     float _mouseOnPressXPos;
     float _mouseOnReleaseXPos;
+    int _amountOfWorlds = 1;
     int _currentWorldOnScreen;
 
 
     void Awake ()
     {
         _canvas = GetComponent<Canvas>();
-        _levelNodesContainer = GetComponentInChildren<GridLayoutGroup>();
-        _currentBuilding = _levelNodesContainer;
-        _gridLayouts.Add(_levelNodesContainer);
-        _toPosition = _currentBuilding.transform.position;
+        _currentBuildingWorld = world_0_container;
 
         _screenSelectorsUI.Add(selectedScreenUI);
     }
@@ -76,16 +73,16 @@ public class MainMapCanvasManager : MonoBehaviour
         //right to left
         if (_mouseOnPressXPos > _mouseOnReleaseXPos)
         {
-            if (_currentWorldOnScreen == _gridLayouts.Count - 1) return;
+            if (_currentWorldOnScreen == _amountOfWorlds-1) return;
 
-            _toPosition = worldsBtnContainer.position - Vector3.right * _canvas.pixelRect.width;
+            _toPosition = worldsTransform.position - Vector3.right * _canvas.pixelRect.width;
             _currentWorldOnScreen++;
         }
         else //left to right
         {
             if (_currentWorldOnScreen == 0) return;
 
-            _toPosition = worldsBtnContainer.position + Vector3.right * _canvas.pixelRect.width;
+            _toPosition = worldsTransform.position + Vector3.right * _canvas.pixelRect.width;
             _currentWorldOnScreen--;
         }
 
@@ -96,12 +93,11 @@ public class MainMapCanvasManager : MonoBehaviour
     {
         if (!_isMovingGrid) return;
 
-        worldsBtnContainer.position = Vector3.Lerp(worldsBtnContainer.position, _toPosition, Time.deltaTime * 10);
-        worldsNameContainer.position = Vector3.Lerp(worldsNameContainer.position, _toPosition, Time.deltaTime * 10);
+        worldsTransform.position = Vector3.Lerp(worldsTransform.position, _toPosition, Time.deltaTime * 10);
 
-        if(Mathf.Abs(Vector3.Distance(worldsBtnContainer.position, _toPosition)) < 1f)
+        if (Mathf.Abs(Vector3.Distance(worldsTransform.position, _toPosition)) < 1f)
         {
-            worldsBtnContainer.position = worldsNameContainer.position = _toPosition;
+            worldsTransform.position = _toPosition;
 
             foreach (var item in _screenSelectorsUI)
                 item.sprite = unselectedScreenUISprite;
@@ -111,29 +107,26 @@ public class MainMapCanvasManager : MonoBehaviour
         }
     }
 
-    public void AddLevelButton(LevelInfo lvlInfo, Action<LevelInfo> onClick, GameManager gm)
+    public void AddLevelButton(LevelInfo lvlInfo, Action<LevelInfo> onClick, GameManager gm, bool worldUnlocked, int neededToUnlock)
     {
         if(lvlInfo.worldId != _lvlBtn_lastWorldId)
         {
-            var grid = Instantiate<GridLayoutGroup>(_levelNodesContainer, worldsBtnContainer);
-            DeleteAllChildren(grid);
-            _currentBuilding = grid;
-            _gridLayouts.Add(grid);
-            grid.transform.position += Vector3.right * _canvas.pixelRect.width * lvlInfo.worldId;
-            grid.name = "world_" + lvlInfo.worldId;
+            var newWorldUI = Instantiate<WorldUI>(world_0_container, worldsTransform);
+            newWorldUI.transform.position += Vector3.right * _canvas.pixelRect.width * lvlInfo.worldId;
+            newWorldUI.name = "world_" + lvlInfo.worldId;
+            _worldsCreated.Add(newWorldUI);
 
-            var worldName = Instantiate<Text>(worldOne_NameText, worldsNameContainer);
-            worldName.transform.position += Vector3.right * _canvas.pixelRect.width * lvlInfo.worldId;
-            worldName.text = "WORLD " + (lvlInfo.worldId + 1);
-            worldName.name = "world_"+ lvlInfo.worldId + "_text";
+            
+            newWorldUI.Init(lvlInfo.worldId, worldUnlocked, neededToUnlock);
 
-            var screenPoint = Instantiate<Image>(selectedScreenUI, selectedScreenUI.transform.parent);
-            screenPoint.sprite = unselectedScreenUISprite;
-            screenPoint.name = "SelectedScreen_" + lvlInfo.worldId;
-            _screenSelectorsUI.Add(screenPoint);
+            _currentBuildingWorld = newWorldUI;
+
+            _amountOfWorlds++;
+
+            CreateScreenPointUI(lvlInfo.worldId);
         }
 
-        var btn = Instantiate<Button>(levelNodeButton, _currentBuilding.transform);
+        var btn = Instantiate<Button>(levelNodeButton, _currentBuildingWorld.grid.transform);
         LevelInfo lazyLvlInfo = new LevelInfo();
         lazyLvlInfo = lvlInfo;
         btn.onClick.AddListener(() => onClick(lazyLvlInfo));
@@ -144,29 +137,37 @@ public class MainMapCanvasManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Build the bottom circle UI to know how many worlds are.
+    /// </summary>
+    void CreateScreenPointUI(int worldId)
+    {
+        if (_amountOfWorlds > _screenSelectorsUI.Count)
+        {
+            var screenPoint = Instantiate<Image>(selectedScreenUI, selectedScreenUI.transform.parent);
+            screenPoint.sprite = unselectedScreenUISprite;
+            screenPoint.name = "SelectedScreen_" + worldId;
+            _screenSelectorsUI.Add(screenPoint);
+        }
+    }
+
+    /// <summary>
     /// USed by the dev button at the upper left corner.
     /// </summary>
     public void ForceUnlockAllLevels()
     {
-        for (int i = 0; i < _gridLayouts.Count; i++)
-        {
-            if (i == 0) continue;
-
-            Destroy(_gridLayouts[i].gameObject);
-        }
-        _gridLayouts = new List<GridLayoutGroup>();
-        //_gridLayouts.Add(_levelNodesContainer);
-
-        mainMap.GetRealGameManager().User.LevelProgressManager.ForceWinAllLevels();
-        mainMap.CreateLevelNodes();
-    }
-
-    void DeleteAllChildren(GridLayoutGroup grid)
-    {
-        foreach (Transform item in grid.transform)
+        foreach (var item in _worldsCreated)
         {
             Destroy(item.gameObject);
         }
+
+        _lvlBtn_lastWorldId = 0;
+        _currentBuildingWorld = world_0_container;
+        world_0_container.DeleteGridChildren();
+        
+
+        _amountOfWorlds = 1;
+        mainMap.GetRealGameManager().User.LevelProgressManager.ForceWinAllLevels();
+        mainMap.CreateLevelNodes();
     }
     
 }

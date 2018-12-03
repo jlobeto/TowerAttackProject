@@ -16,17 +16,9 @@ public class TestController : MonoBehaviour
 
     private void OnGUI()
     {
-        /*GUILayout.BeginVertical();
-        GUILayout.BeginHorizontal();
-        GUILayout.Space(250);
-        GUILayout.Label("Q: Quit To MainMap", _guiStyle);
-        GUILayout.BeginHorizontal();
-        GUILayout.BeginHorizontal();
-        GUILayout.Space(250);
-        GUILayout.Label("P: Add Points", _guiStyle);
-        GUILayout.BeginHorizontal();
-        GUILayout.EndVertical();*/
+
     }
+
 
     void Update ()
     {
@@ -43,7 +35,7 @@ public class TestController : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            FindObjectOfType<Level>().ForceLevelWin();
+            FindObjectOfType<Level>().ForceLevelWin(1);
         }
 
         /*if (Input.GetKeyDown(KeyCode.A))

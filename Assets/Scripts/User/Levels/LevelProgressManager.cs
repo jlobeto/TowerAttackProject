@@ -37,6 +37,17 @@ public class LevelProgressManager
 		return null;
 	}
 
+    public int GetStarsAccumulated()
+    {
+        int amount = 0;
+        foreach (var item in _lvlProgressList)
+        {
+            amount += item.StarsWon;
+        }
+
+        return amount;
+    }
+
     public void ForceWinAllLevels()
     {
         _lvlProgressList = new List<LevelProgress>();

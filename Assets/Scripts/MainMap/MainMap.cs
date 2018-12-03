@@ -8,8 +8,10 @@ public class MainMap : MonoBehaviour
 
     GameManager[] _gameManagers;
     MainMapCanvasManager _mainMapCanvas;
+    WorldsManager _worldsManager;
+	void Awake ()
+    {
 
-	void Awake () {
 	}
 
     void Start()
@@ -17,21 +19,38 @@ public class MainMap : MonoBehaviour
         _mainMapCanvas = FindObjectOfType<MainMapCanvasManager>();
         _gameManagers = FindObjectsOfType<GameManager>();
 
+        _worldsManager = new WorldsManager(GetRealGameManager().User);
+        
+
         CreateLevelNodes();
+
     }
 
     void Update ()
     {
-	    	
+        
 	}
+
 
     public void CreateLevelNodes()
     {
         var gm = GetRealGameManager();
 
+        var worldsUnlocked = _worldsManager.GetUnlockWorlds();
+
         foreach (var lvlInfo in gm.LevelInfoLoader.LevelInfoList.list)
         {
-			_mainMapCanvas.AddLevelButton(lvlInfo, OnLevelNodeClick, gm);
+            bool unlocked = false;
+            foreach (var worldId in worldsUnlocked)
+            {
+                if(worldId == lvlInfo.worldId)
+                {
+                    unlocked = true;
+                    break;
+                }
+            }
+            var starsLeft = _worldsManager.GetStarsLeftAmount(lvlInfo.worldId);
+			_mainMapCanvas.AddLevelButton(lvlInfo, OnLevelNodeClick, gm, unlocked, starsLeft);
         }
     }
 
