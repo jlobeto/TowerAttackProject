@@ -52,15 +52,19 @@ public class LevelProgressManager
 
     public bool AreLevelsWonByWorld(int worldId)
     {
+		var levelProgressCountByWorld = 0;
         foreach (var item in _lvlProgressList)
         {
             if(item.WorldId == worldId)
             {
+				levelProgressCountByWorld++;
                 if (!item.Won)
                     return false;
             }
         }
-        return true;
+		var levelsInWorld = _gameManager.LevelInfoLoader.LevelInfoList.list.Count (i => i.worldId == worldId);
+
+		return levelsInWorld == levelProgressCountByWorld;
     }
 
     public void ForceWinAllLevels()

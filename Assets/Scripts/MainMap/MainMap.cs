@@ -49,9 +49,16 @@ public class MainMap : MonoBehaviour
                     break;
                 }
             }
+			if (lvlInfo.worldId == 0) 
+			{
+				_mainMapCanvas.AddLevelButton (lvlInfo, OnLevelNodeClick, gm, true, 0);	
+				continue;
+			}
+
             var starsLeft = _worldsManager.GetStarsLeftAmount(lvlInfo.worldId);
-            var allLevelsWon = gm.User.LevelProgressManager.AreLevelsWonByWorld(lvlInfo.worldId);
-            _mainMapCanvas.AddLevelButton(lvlInfo, OnLevelNodeClick, gm, unlocked && allLevelsWon, starsLeft);
+            var allLevelsWon = gm.User.LevelProgressManager.AreLevelsWonByWorld(lvlInfo.worldId-1);
+
+			_mainMapCanvas.AddLevelButton (lvlInfo, OnLevelNodeClick, gm, unlocked && allLevelsWon, starsLeft);	
         }
     }
 

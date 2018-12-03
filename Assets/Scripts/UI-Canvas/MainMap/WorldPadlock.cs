@@ -49,14 +49,23 @@ public class WorldPadlock : MonoBehaviour
             _worldLockedText.enabled = _padlock.enabled = _blackScreen.enabled = true;
             _needText.enabled = true;
             _star.enabled = true;
+			_mustWinLvls.enabled = false;
+
         }
-        else
+		else if (!unlock)
         {
-            _worldLockedText.enabled = _padlock.enabled = _blackScreen.enabled = !unlock;
-            _mustWinLvls.enabled = !unlock;
-            _needText.enabled = !unlock;
-            _star.enabled = !unlock;
+            _worldLockedText.enabled = _padlock.enabled = _blackScreen.enabled = true;
+            _mustWinLvls.enabled = true;
+            _needText.enabled = false;
+            _star.enabled = false;
         }
+		else
+		{
+			_worldLockedText.enabled = _padlock.enabled = _blackScreen.enabled = false;
+			_mustWinLvls.enabled = false;
+			_needText.enabled = false;
+			_star.enabled = false;
+		}
         
     }
 	
