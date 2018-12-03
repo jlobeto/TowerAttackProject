@@ -29,13 +29,13 @@ public class PopupManager : MonoBehaviour
     public void BuildOneButtonPopup(Transform parent, string title, string descript, string btnText, PopupsID popupId = PopupsID.OneButton)
     {
         var popup = Instantiate<BasePopup>(popupPrefabs.FirstOrDefault(i => i.popupId == popupId), parent);
-        popup.title.text = title;
-        popup.description.text = descript;
+        popup.title.text = title.ToUpper();
+        popup.description.text = descript.ToUpper();
         popup.GetComponent<Animator>().SetFloat("EntryAnim", GetRandomAnimation());
 
         if (popup.actionButton != null)
         {
-            popup.actionButton.GetComponentInChildren<Text>().text = btnText;
+            popup.actionButton.GetComponentInChildren<Text>().text = btnText.ToUpper();
         }
     }
 
