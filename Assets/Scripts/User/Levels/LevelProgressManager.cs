@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,6 +37,7 @@ public class LevelProgressManager
 
 		return null;
 	}
+    
 
     public int GetStarsAccumulated()
     {
@@ -46,6 +48,19 @@ public class LevelProgressManager
         }
 
         return amount;
+    }
+
+    public bool AreLevelsWonByWorld(int worldId)
+    {
+        foreach (var item in _lvlProgressList)
+        {
+            if(item.WorldId == worldId)
+            {
+                if (!item.Won)
+                    return false;
+            }
+        }
+        return true;
     }
 
     public void ForceWinAllLevels()
@@ -71,7 +86,8 @@ public class LevelProgressManager
 
         if (existed == null)
         {
-            existed = new LevelProgress(lvlId);
+            var world = _gameManager.LevelInfoLoader.LevelInfoList.list.FirstOrDefault(i => i.id == lvlId).worldId;
+            existed = new LevelProgress(lvlId, world);
             _lvlProgressList.Add(existed);
             //Debug.Log("creating new lvl progress");
         }

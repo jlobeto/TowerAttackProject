@@ -50,7 +50,8 @@ public class MainMap : MonoBehaviour
                 }
             }
             var starsLeft = _worldsManager.GetStarsLeftAmount(lvlInfo.worldId);
-			_mainMapCanvas.AddLevelButton(lvlInfo, OnLevelNodeClick, gm, unlocked, starsLeft);
+            var allLevelsWon = gm.User.LevelProgressManager.AreLevelsWonByWorld(lvlInfo.worldId);
+            _mainMapCanvas.AddLevelButton(lvlInfo, OnLevelNodeClick, gm, unlocked && allLevelsWon, starsLeft);
         }
     }
 

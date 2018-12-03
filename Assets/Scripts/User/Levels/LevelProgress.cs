@@ -9,9 +9,11 @@ using UnityEngine;
 public class LevelProgress
 {
     public int LevelId { get { return _levelId; } }
+    public int WorldId { get { return _worldId; } }
     public int StarsWon { get { return _starsWon; } }
     public bool Won { get { return _won; } }
 
+    int _worldId;
     int _levelId;
     bool _won;
     int _starsWon;
@@ -24,9 +26,10 @@ public class LevelProgress
     double _lastAttemptAt;
 
 
-    public LevelProgress(int lvlId)
+    public LevelProgress(int lvlId, int worldId)
     {
         _levelId = lvlId;
+        _worldId = worldId;
         _firstAttemptAt = GameUtils.GetTimestampUTC();
 
 		LevelStarted ();
