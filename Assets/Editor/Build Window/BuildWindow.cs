@@ -63,7 +63,8 @@ public class BuildWindow : EditorWindow
         buildPlayerOptions.target = !_targetWindows ? BuildTarget.StandaloneOSX : BuildTarget.StandaloneWindows64;
         buildPlayerOptions.options = _targetDev ? BuildOptions.Development : BuildOptions.None;
 
-        string report = BuildPipeline.BuildPlayer(buildPlayerOptions);
+        var report = BuildPipeline.BuildPlayer(buildPlayerOptions);
+        report.ToString();
         Debug.Log(report);
     }
 }
