@@ -89,11 +89,13 @@ public class Level : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.Escape))
 		{
-			Time.timeScale = 0;
+			Time.timeScale = 0;//TODO:: // SACAR ESTO A LA MIERDA
             _lvlCanvasManager.EnableMinionButtons(false);
             _lvlCanvasManager.EnableDisableMinionSkillButtons(false);
-            GameManager.popupManager.BuildOneButtonPopup (LevelCanvasManager.transform, "Pause", "Game paused" , "Main Map", PopupsID.Pause);
-		}
+            var popup = GameManager.popupManager.BuildPopup (LevelCanvasManager.transform, "Pause", "Game paused" , "Main Map", PopupsID.AcceptOrDecline);
+            if (popup != null)
+                popup.AddFunction(BasePopup.FunctionTypes.ok, OnFinishLevelCallback);
+        }
 	}
 
     void OnRunLevelTimer()
@@ -278,7 +280,12 @@ public class Level : MonoBehaviour
                 OnLevelFinish (levelID, false, GetCurrentStarsWinning());
 
                 if (_gameManager.popupManager != null)
-                    _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform, "Game Over !", "Try Again", "Main map");
+                {
+                    var popup = _gameManager.popupManager.BuildPopup(_lvlCanvasManager.transform, "Game Over !", "Try Again", "Main Map");
+                    if (popup != null)
+                        popup.AddFunction(BasePopup.FunctionTypes.ok, OnFinishLevelCallback);
+                }
+                    
             }
         }
     }
@@ -296,7 +303,12 @@ public class Level : MonoBehaviour
     {
         //Debug.Log("----- Level Completed -----");
         if(_gameManager.popupManager != null)
-            _gameManager.popupManager.BuildOneButtonPopup(_lvlCanvasManager.transform, "You won!" , "Continue...", "Main map");
+        {
+            var popup =_gameManager.popupManager.BuildPopup(_lvlCanvasManager.transform, "You won!", "Continue...", "Main Map");
+            if (popup != null)
+                popup.AddFunction(BasePopup.FunctionTypes.ok, OnFinishLevelCallback);
+        }
+            
         _towerManager.StopTowers();
         _minionManager.StopMinions();
         _levelEnded = true;
@@ -342,5 +354,15 @@ public class Level : MonoBehaviour
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// This will execute when the button in lose or win popups is pressed.
+    /// </summary>
+    void OnFinishLevelCallback()
+    {
+        Time.timeScale = 1;//TODO:: // SACAR ESTO A LA MIERDA
+        _gameManager.SetCurrentLevelInfo(null);
+        SceneManager.LoadScene(1);
     }
 }

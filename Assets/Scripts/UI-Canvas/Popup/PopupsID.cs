@@ -1,7 +1,9 @@
-﻿public enum PopupsID
+﻿/// <summary>
+/// AcceptOrDecline > 1 ok button and one close(or cancel)
+/// BasePopup > 1 button (ok)
+/// </summary>
+public enum PopupsID
 {
-    OneButton,
-    Pause,
-    TutorialCero,
+    AcceptOrDecline,
     BasePopup
 }

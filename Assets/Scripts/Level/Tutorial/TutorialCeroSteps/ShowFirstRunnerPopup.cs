@@ -11,10 +11,9 @@ public class ShowFirstRunnerPopup : StepBase
 
 	public override void ExecuteStep (GameObject gameObject = null)
 	{
-		lvlTuto.GameManager.popupManager.BuildOneButtonPopup(lvlTuto.LevelCanvasManager.transform
+		lvlTuto.GameManager.popupManager.BuildPopup(lvlTuto.LevelCanvasManager.transform
 			, "Well done!"
 			, "You arrived to the end of path."
-			, "Continue"
-			, PopupsID.TutorialCero);
+			, "Continue");
 	}
 }

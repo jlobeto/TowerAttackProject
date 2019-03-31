@@ -12,10 +12,9 @@ public class ShowRunnerSkillUserPopup : StepBase
 
 	public override void ExecuteStep (GameObject gameObject = null)
 	{
-		lvlTuto.GameManager.popupManager.BuildOneButtonPopup(lvlTuto.LevelCanvasManager.transform
+		lvlTuto.GameManager.popupManager.BuildPopup(lvlTuto.LevelCanvasManager.transform
 			, "Awesome!"
 			, "You know how to use the runner skill"
-			, "Continue"
-			, PopupsID.TutorialCero);
+			, "Continue");
 	}
 }
