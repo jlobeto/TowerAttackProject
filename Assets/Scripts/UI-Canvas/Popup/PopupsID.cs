@@ -5,5 +5,6 @@
 public enum PopupsID
 {
     AcceptOrDecline,
-    BasePopup
+    BasePopup,
+    Shop
 }

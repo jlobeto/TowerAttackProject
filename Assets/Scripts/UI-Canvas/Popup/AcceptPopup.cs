@@ -21,7 +21,7 @@ public class AcceptPopup : BasePopup
         var lvl = FindObjectOfType<Level>();
         lvl.LevelCanvasManager.EnableMinionButtons(true);
         lvl.LevelCanvasManager.EnableDisableMinionSkillButtons(true);
-        ExecuteFunctions(FunctionTypes.closePopup);
+        ExecuteFunctions(FunctionTypes.cancel);
         Destroy(gameObject);
     }
 }

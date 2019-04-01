@@ -12,21 +12,26 @@ public class BasePopup : MonoBehaviour
     public Button okButton;
     public bool isShowing;
 
+    protected RectTransform _rect;
+
     /// <summary>
     /// from string (type of action like close or play press btn) to Actions.
     /// </summary>
     Dictionary<FunctionTypes, List<Action>> _functions;
+    
 
     public enum FunctionTypes
     {
         ok,
-        closePopup
+        display,
+        cancel
     }
 
     private void Awake()
     {
         _functions = new Dictionary<FunctionTypes, List<Action>>();
         okButton.onClick.AddListener(() => OkButtonPressed());
+        _rect = GetComponent<RectTransform>();
     }
 
     protected virtual void Start ()
@@ -40,6 +45,14 @@ public class BasePopup : MonoBehaviour
             _functions.Add(type, new List<Action>());
 
         _functions[type].Add(func);
+    }
+
+    public virtual void DisplayPopup()
+    {
+        if (isShowing) return;
+
+        isShowing = true;
+        ExecuteFunctions(FunctionTypes.display);
     }
 	
     protected virtual void ExecuteFunctions(FunctionTypes type)
