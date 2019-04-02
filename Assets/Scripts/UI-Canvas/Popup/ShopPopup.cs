@@ -1,9 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopPopup : BasePopup
 {
+    public MinionInShop minionInShopPrefab;
+    GridLayoutGroup _gridGroup;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _gridGroup = GetComponentInChildren<GridLayoutGroup>();
+    }
+
+
     public override void DisplayPopup()
     {
         if (isShowing) return;
@@ -21,4 +32,18 @@ public class ShopPopup : BasePopup
         gameObject.SetActive(false);
         isShowing = false;
     }
+
+    public void AddMinionToShop(MinionType type, string description)
+    {
+        var m = Instantiate<MinionInShop>(minionInShopPrefab, _gridGroup.transform);
+        m.SetButton(type.ToString());
+        m.SetDescription(description);
+        m.onMinionClick += ChangeMinionInfo;
+    }
+
+    void ChangeMinionInfo(string info)
+    {
+        description.text = info;
+    }
+
 }

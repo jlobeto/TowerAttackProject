@@ -27,7 +27,7 @@ public class BasePopup : MonoBehaviour
         cancel
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _functions = new Dictionary<FunctionTypes, List<Action>>();
         okButton.onClick.AddListener(() => OkButtonPressed());
