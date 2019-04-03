@@ -23,7 +23,7 @@ public class BasePopup : MonoBehaviour
     public enum FunctionTypes
     {
         ok,
-        display,
+        displayCallback,
         cancel
     }
 
@@ -52,7 +52,7 @@ public class BasePopup : MonoBehaviour
         if (isShowing) return;
 
         isShowing = true;
-        ExecuteFunctions(FunctionTypes.display);
+        ExecuteFunctions(FunctionTypes.displayCallback);
     }
 	
     protected virtual void ExecuteFunctions(FunctionTypes type)

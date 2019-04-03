@@ -8,15 +8,15 @@ public class ShopManager : MonoBehaviour
 
     Dictionary<MinionType, MinionStoreInfo> _storeInfo;
     ShopPopup _popup;
+    GameManager _gm;
     char _descriptionBullet = '\u25A0';
 
     void Start()
     {
         _popup = GetComponent<ShopPopup>();
-        for (int i = 0; i < 6; i++)
-        {
-            
-        }
+        _popup.AddFunction(BasePopup.FunctionTypes.displayCallback, OnPopupDisplayCallback);
+
+        _gm = FindObjectOfType<GameManager>();
 
         _storeInfo = new Dictionary<MinionType, MinionStoreInfo>();
         var config = GameUtils.LoadConfig<GenericListJsonLoader<MinionStoreInfo>>
@@ -47,5 +47,10 @@ public class ShopManager : MonoBehaviour
         }
 
         return result;
+    }
+
+    void OnPopupDisplayCallback()
+    {
+        _popup.SetCurrency(_gm.User.Currency);
     }
 }

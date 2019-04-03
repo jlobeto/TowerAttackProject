@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// This will contain all the data to be stored, or the be accessed by the entire game.
@@ -8,15 +9,17 @@ using UnityEngine;
 /// </summary>
 public class User
 {
+    int _currency = 100;
+
     /// <summary>
     /// Set as the UserId at the moment...
     /// </summary>
     string _deviceId;
-
     LevelProgressManager _levelProgressManager;
     GameManager _gameManager;
 
 	public LevelProgressManager LevelProgressManager { get { return _levelProgressManager; } }
+    public int Currency { get { return _currency; } }
 
     public User(GameManager gameManager)
     {
@@ -33,6 +36,8 @@ public class User
     public void LevelEnded(int lvlId, bool won = false, int stars = 0)
     {
         _levelProgressManager.LevelEnded(lvlId, won, stars);
+        var info = _gameManager.LevelInfoLoader.LevelInfoList.list.First(i => i.id == lvlId);
+        _currency += stars > 0 ? info.currencyGainedByObjectives[stars - 1] : 0;
     }
 
 

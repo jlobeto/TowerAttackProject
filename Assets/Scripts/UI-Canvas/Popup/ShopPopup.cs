@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ShopPopup : BasePopup
 {
     public MinionInShop minionInShopPrefab;
+    public Text currency;
     GridLayoutGroup _gridGroup;
 
     protected override void Awake()
@@ -39,6 +40,11 @@ public class ShopPopup : BasePopup
         m.SetButton(type.ToString());
         m.SetDescription(description);
         m.onMinionClick += ChangeMinionInfo;
+    }
+
+    public void SetCurrency(int c)
+    {
+        currency.text = "CHIPS: " + c; 
     }
 
     void ChangeMinionInfo(string info)

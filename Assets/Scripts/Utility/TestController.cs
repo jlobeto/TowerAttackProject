@@ -25,7 +25,7 @@ public class TestController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             FindObjectOfType<GameManager>().SetCurrentLevelInfo(null);
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         }
 
         if (Input.GetKeyDown(KeyCode.P))
