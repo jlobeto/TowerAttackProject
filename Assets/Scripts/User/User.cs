@@ -10,7 +10,7 @@ using System.Linq;
 public class User
 {
     int _currency = 100;
-
+    Inventory _inventory;
     /// <summary>
     /// Set as the UserId at the moment...
     /// </summary>
@@ -26,6 +26,7 @@ public class User
         _deviceId = SystemInfo.deviceUniqueIdentifier;
         _gameManager = gameManager;
         _levelProgressManager = new LevelProgressManager(_gameManager);
+        _inventory = new Inventory();
     }
 
     public void LevelStarted(int lvlId)

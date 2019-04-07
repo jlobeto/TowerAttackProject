@@ -35,8 +35,6 @@ public class GameUtils
 			}	
 		}
 
-        
-
         if (json == "")
             throw new Exception("Cound not GetJson at path " + path);
 
