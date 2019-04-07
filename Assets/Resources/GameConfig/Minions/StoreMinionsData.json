@@ -3,6 +3,8 @@
   [
   	{
   		"type": "Runner",
+      	"currencyValue": 0,
+      	"starsNeedToUnlock":0,
   		"info": [	"Fast, Low Health.", 
 					"Weak against Cannon Towers.", 
 					"Skill: Is invisible for enemies and has a speed boost"
@@ -10,13 +12,17 @@
     },
     {
   		"type": "Tank",
-  		"info": [	"Slow , High Health.", 
+      	"currencyValue": 10,
+      	"starsNeedToUnlock": 1,
+  		"info": [	"Slow, High Health.", 
   					"Weak against Laser Towers",
   					"Skill: Gives shield to all nearby allies"
   				]
     },
     {
   		"type": "Dove",
+      	"currencyValue": 10,
+      	"starsNeedToUnlock": 1,
   		"info": [	"Flying, Low Health.", 
   					"Weak against AntiAir Towers",
   					"Change the height, making some towers drop aggro"
@@ -24,6 +30,8 @@
     },
     {
   		"type": "Healer",
+      	"currencyValue": 20,
+      	"starsNeedToUnlock": 10,
   		"info": [	"Slow, Low Health.", 
   					"Weak against Cannon Towers",
   					"Skill: Heals nearby allies"
@@ -31,6 +39,8 @@
     },
     {
   		"type": "Zeppelin",
+      	"currencyValue": 30,
+      	"starsNeedToUnlock": 20,
   		"info": [	"Slow, High Health.", 
   					"Weak against Laser Towers",
   					"Skill: Summons planes, to lose aggro"
@@ -38,9 +48,11 @@
     },
     {
   		"type": "WarScreamer",
+      	"currencyValue": 50,
+      	"starsNeedToUnlock": 20,
   		"info": [	"Slow, High Health.", 
   					"Weak against Cannon Towers",
-  					"Skill: nearby allies gets and boost of speed, but take more damage"
+  					"Skill: nearby allies gets a boost of speed, but take more damage"
   				]
     }
   ]

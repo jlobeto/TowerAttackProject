@@ -226,7 +226,7 @@ public class LevelCanvasManager : MonoBehaviour
 				continue;
 			}
 			slots++;
-			var minionStats = level.GameManager.MinionsLoader.GetStatByLevel (m.minionType, lvlId);
+			var minionStats = level.GameManager.MinionsJsonLoader.GetStatByLevel (m.minionType, lvlId);
 			m.pointsValue = minionStats.pointsValue;
 
 			var btn = Instantiate<Button>(minionSaleButtonPrefab, _availablesPanel.transform);

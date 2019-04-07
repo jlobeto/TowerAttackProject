@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     User _user;
 
     public LevelEventLoader LevelEventsLoader { get { return _levelEventsLoader; } }
-	public MinionsJsonLoaderManager MinionsLoader { get { return _minionJSONLoader; } }
+	public MinionsJsonLoaderManager MinionsJsonLoader { get { return _minionJSONLoader; } }
 	public TowerJSONLoaderManager TowerLoader { get { return _towerJSONLoader; } }
     public LevelInfo CurrentLevelInfo { get { return _currentLevelInfo; } }
     public LevelNodesLoader LevelInfoLoader { get { return _levelInfoLoader; } }

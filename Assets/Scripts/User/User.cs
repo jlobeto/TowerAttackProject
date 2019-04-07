@@ -36,8 +36,11 @@ public class User
     public void LevelEnded(int lvlId, bool won = false, int stars = 0)
     {
         _levelProgressManager.LevelEnded(lvlId, won, stars);
-        var info = _gameManager.LevelInfoLoader.LevelInfoList.list.First(i => i.id == lvlId);
-        _currency += stars > 0 ? info.currencyGainedByObjectives[stars - 1] : 0;
+        if(stars > 0)
+        {
+            var info = _gameManager.LevelInfoLoader.LevelInfoList.list.First(i => i.id == lvlId);
+            _currency += info.currencyGainedByObjectives[stars - 1];
+        }
     }
 
 

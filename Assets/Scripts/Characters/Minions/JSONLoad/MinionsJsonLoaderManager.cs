@@ -4,6 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Get all the info about the minions base stats (the original ones on fresh install)
+/// </summary>
 public class MinionsJsonLoaderManager
 {
     Dictionary<MinionType, GenericListJsonLoader<BaseMinionStat>> _allJsons;

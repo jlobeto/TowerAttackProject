@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [Serializable]
-public class MinionStoreInfo
+public class StatCurrencyPerLevelDef 
 {
-    public string type;
-    public string[] info;
+    public int[] levels;
+    public float toAdd;
 }

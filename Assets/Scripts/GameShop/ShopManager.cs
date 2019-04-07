@@ -6,7 +6,8 @@ using UnityEngine;
 public class ShopManager : MonoBehaviour
 {
 
-    Dictionary<MinionType, MinionStoreInfo> _storeInfo;
+    Dictionary<MinionType, MinionStoreData> _storeInfoData;
+    Dictionary<MinionType, MinionsStatsCurrencyDef> _storeStatsCurrencyDef;
     ShopPopup _popup;
     GameManager _gm;
     char _descriptionBullet = '\u25A0';
@@ -18,16 +19,26 @@ public class ShopManager : MonoBehaviour
 
         _gm = FindObjectOfType<GameManager>();
 
-        _storeInfo = new Dictionary<MinionType, MinionStoreInfo>();
-        var config = GameUtils.LoadConfig<GenericListJsonLoader<MinionStoreInfo>>
-                        ("StoreMinionsInfo.json"
+        _storeInfoData = new Dictionary<MinionType, MinionStoreData>();
+        var config = GameUtils.LoadConfig<GenericListJsonLoader<MinionStoreData>>
+                        ("StoreMinionsData.json"
                         , GameUtils.MINION_CONFIG_PATH);
 
+        MinionType minionType;
         foreach (var item in config.list)
         {
-            MinionType type = (MinionType)Enum.Parse(typeof(MinionType), item.type);
-            _storeInfo.Add(type, item);
-            _popup.AddMinionToShop(type, CreateDescriptionString(item));
+            minionType = (MinionType)Enum.Parse(typeof(MinionType), item.type);
+            _storeInfoData.Add(minionType, item);
+            _popup.AddMinionToShop(minionType, CreateDescriptionString(item));
+        }
+
+        _storeStatsCurrencyDef = new Dictionary<MinionType, MinionsStatsCurrencyDef>();
+        var config2 = GameUtils.LoadConfig<GenericListJsonLoader<MinionsStatsCurrencyDef>>("StoreMinionsStatsUpgrade.json", GameUtils.MINION_CONFIG_PATH);
+
+        foreach (var item2 in config2.list)
+        {
+            minionType = (MinionType)Enum.Parse(typeof(MinionType), item2.type);
+            _storeStatsCurrencyDef.Add(minionType, item2);
         }
     }
 
@@ -37,7 +48,7 @@ public class ShopManager : MonoBehaviour
         
     }
 
-    string CreateDescriptionString(MinionStoreInfo info)
+    string CreateDescriptionString(MinionStoreData info)
     {
         var result = "";
         string bullet = _descriptionBullet.ToString();
@@ -51,6 +62,7 @@ public class ShopManager : MonoBehaviour
 
     void OnPopupDisplayCallback()
     {
+        //TODO :: Setear tambien al Runner como seleccionado default (asi muestra la info de este).
         _popup.SetCurrency(_gm.User.Currency);
     }
 }

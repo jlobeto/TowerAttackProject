@@ -184,9 +184,9 @@ public class MinionManager : MonoBehaviour
     {
         BaseMinionStat stats;
         if(minion.minionType != MinionType.MiniZeppelin)
-            stats = level.GameManager.MinionsLoader.GetStatByLevel(minion.minionType, levelId);
+            stats = level.GameManager.MinionsJsonLoader.GetStatByLevel(minion.minionType, levelId);
         else
-            stats = level.GameManager.MinionsLoader.GetStatByLevel(MinionType.Zeppelin, levelId);
+            stats = level.GameManager.MinionsJsonLoader.GetStatByLevel(MinionType.Zeppelin, levelId);
         
         minion.hp = stats.hp;
         minion.pointsValue = stats.pointsValue;
@@ -197,6 +197,7 @@ public class MinionManager : MonoBehaviour
         minion.skillTime = stats.skillTime;
         minion.skillCooldown = stats.skillCooldown;
 
+        //TODO::// CHANGE THIS SWITCH
         switch (minion.minionType)
         {
             case MinionType.Runner:
