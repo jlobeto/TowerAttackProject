@@ -15,10 +15,16 @@ public class SaveSystem
 
     public static T Load<T>(string path)
     {
-        using (StreamReader streamReader = File.OpenText(path))
+
+        if(File.Exists(path))
         {
-            string jsonString = streamReader.ReadToEnd();
-            return JsonUtility.FromJson<T>(jsonString);
+            using (StreamReader streamReader = File.OpenText(path))
+            {
+                string jsonString = streamReader.ReadToEnd();
+                return JsonUtility.FromJson<T>(jsonString);
+            }
         }
+
+        return default(T);
     }
 }

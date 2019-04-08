@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,12 +8,15 @@ public class ShopPopup : BasePopup
 {
     public MinionInShop minionInShopPrefab;
     public Text currency;
+
     GridLayoutGroup _gridGroup;
+    List<MinionInShop> _scrollContentList;
 
     protected override void Awake()
     {
         base.Awake();
         _gridGroup = GetComponentInChildren<GridLayoutGroup>();
+        _scrollContentList = new List<MinionInShop>();
     }
 
 
@@ -37,9 +41,20 @@ public class ShopPopup : BasePopup
     public void AddMinionToShop(MinionType type, string description)
     {
         var m = Instantiate<MinionInShop>(minionInShopPrefab, _gridGroup.transform);
-        m.SetButton(type.ToString());
-        m.SetDescription(description);
+        m.SetButton(type, description);
         m.onMinionClick += ChangeMinionInfo;
+        _scrollContentList.Add(m);
+    }
+
+    public void CheckMinionAvailability(MinionType type, bool isBlocked)
+    {
+        var minionBtn = _scrollContentList.FirstOrDefault(i => i.minionType == type);
+        if (!minionBtn) return;
+
+        if (isBlocked)
+            minionBtn.LockButton();
+        else
+            minionBtn.UnlockButton();
     }
 
     public void SetCurrency(int c)

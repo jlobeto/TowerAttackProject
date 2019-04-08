@@ -20,25 +20,29 @@ public class ShopManager : MonoBehaviour
         _gm = FindObjectOfType<GameManager>();
 
         _storeInfoData = new Dictionary<MinionType, MinionStoreData>();
+        _storeStatsCurrencyDef = new Dictionary<MinionType, MinionsStatsCurrencyDef>();
         var config = GameUtils.LoadConfig<GenericListJsonLoader<MinionStoreData>>
                         ("StoreMinionsData.json"
                         , GameUtils.MINION_CONFIG_PATH);
 
-        MinionType minionType;
-        foreach (var item in config.list)
-        {
-            minionType = (MinionType)Enum.Parse(typeof(MinionType), item.type);
-            _storeInfoData.Add(minionType, item);
-            _popup.AddMinionToShop(minionType, CreateDescriptionString(item));
-        }
+        var config2 = GameUtils.LoadConfig<GenericListJsonLoader<MinionsStatsCurrencyDef>>
+                        ("StoreMinionsStatsUpgrade.json"
+                        , GameUtils.MINION_CONFIG_PATH);
 
-        _storeStatsCurrencyDef = new Dictionary<MinionType, MinionsStatsCurrencyDef>();
-        var config2 = GameUtils.LoadConfig<GenericListJsonLoader<MinionsStatsCurrencyDef>>("StoreMinionsStatsUpgrade.json", GameUtils.MINION_CONFIG_PATH);
+
+        MinionType minionType;
 
         foreach (var item2 in config2.list)
         {
             minionType = (MinionType)Enum.Parse(typeof(MinionType), item2.type);
             _storeStatsCurrencyDef.Add(minionType, item2);
+        }
+
+        foreach (var item in config.list)
+        {
+            minionType = (MinionType)Enum.Parse(typeof(MinionType), item.type);
+            _storeInfoData.Add(minionType, item);
+            _popup.AddMinionToShop(minionType, CreateDescriptionString(item));
         }
     }
 
@@ -64,5 +68,14 @@ public class ShopManager : MonoBehaviour
     {
         //TODO :: Setear tambien al Runner como seleccionado default (asi muestra la info de este).
         _popup.SetCurrency(_gm.User.Currency);
+        foreach (var item in _storeInfoData)
+        {
+            _popup.CheckMinionAvailability(item.Key, GetUserTotalStars() < item.Value.starsNeedToUnlock);
+        }
+    }
+
+    int GetUserTotalStars()
+    {
+        return _gm.User.LevelProgressManager.GetStarsAccumulated();
     }
 }
