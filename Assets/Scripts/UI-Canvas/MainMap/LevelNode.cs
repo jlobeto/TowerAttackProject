@@ -45,11 +45,6 @@ public class LevelNode : MonoBehaviour
 
 	void RealInit()
 	{
-        if (_lvlInfo.id == 0)
-        {
-            _txt.text = "" + _lvlInfo.id;
-            return;
-        }
 
         var lastLevelProgress = _gm.User.LevelProgressManager.GetProgress(_lvlInfo.id -1);
         if(lastLevelProgress != null)
@@ -58,7 +53,7 @@ public class LevelNode : MonoBehaviour
                 _btn.interactable = false;
                 
         }
-        else
+        else if (_lvlInfo.id != 1)
             _btn.interactable = false;
 
         var currentLevelProgress = _gm.User.LevelProgressManager.GetProgress(_lvlInfo.id);
