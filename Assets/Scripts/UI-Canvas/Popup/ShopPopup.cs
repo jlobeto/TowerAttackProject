@@ -8,6 +8,8 @@ public class ShopPopup : BasePopup
 {
     public MinionInShop minionInShopPrefab;
     public Text currency;
+    public Button buyButton;
+    public MinionType selected;
 
     GridLayoutGroup _gridGroup;
     List<MinionInShop> _scrollContentList;
@@ -24,7 +26,8 @@ public class ShopPopup : BasePopup
     {
         if (isShowing) return;
 
-        _rect.position = new Vector3(_rect.parent.position.x, _rect.parent.position.y);
+        _rect.position = new Vector3(_rect.parent.position.x - 10, _rect.parent.position.y);
+
         gameObject.SetActive(true);
         base.DisplayPopup();
     }
@@ -42,11 +45,11 @@ public class ShopPopup : BasePopup
     {
         var m = Instantiate<MinionInShop>(minionInShopPrefab, _gridGroup.transform);
         m.SetButton(type, description);
-        m.onMinionClick += ChangeMinionInfo;
+        m.onMinionClick += OnClickMinionButton;
         _scrollContentList.Add(m);
     }
 
-    public void CheckMinionAvailability(MinionType type, bool isBlocked)
+    public void CheckMinionAvailability(MinionType type, bool isBlocked, bool isBought)
     {
         var minionBtn = _scrollContentList.FirstOrDefault(i => i.minionType == type);
         if (!minionBtn) return;
@@ -54,7 +57,11 @@ public class ShopPopup : BasePopup
         if (isBlocked)
             minionBtn.LockButton();
         else
+        {
             minionBtn.UnlockButton();
+            minionBtn.IsBought = isBought;
+        }
+            
     }
 
     public void SetCurrency(int c)
@@ -62,9 +69,26 @@ public class ShopPopup : BasePopup
         currency.text = "CHIPS: " + c; 
     }
 
-    void ChangeMinionInfo(string info)
+    public void CheckBuyButton(bool isBlocked, bool isBought)
+    {
+        if (isBlocked)
+        {
+            buyButton.gameObject.SetActive(true);
+            buyButton.interactable = false;
+        }
+        else
+        {
+            buyButton.interactable = true;
+            buyButton.gameObject.SetActive(!isBought);
+        }
+    }
+
+    void OnClickMinionButton(string info, bool isBlocked, bool isBought, MinionType type)
     {
         description.text = info;
+        selected = type;
+
+        CheckBuyButton(isBlocked, isBought);
     }
 
 }

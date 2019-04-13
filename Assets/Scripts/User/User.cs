@@ -44,5 +44,14 @@ public class User
         }
     }
 
+    public bool MinionIsInInvetory(MinionType t)
+    {
+        return _inventory.IsBought(t);
+    }
 
+    public void BuyMinion(MinionType t, int valueOfMinion)
+    {
+        _currency -= valueOfMinion;
+        _inventory.AddNewMinionToInventory(t);
+    }
 }

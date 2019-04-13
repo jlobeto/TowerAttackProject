@@ -25,6 +25,10 @@ public class Inventory
             Debug.Log("There was a file already saved");
     }
 
+    /// <summary>
+    /// This will add to the inventory a new minion of type 'type'.
+    /// And then save it locally
+    /// </summary>
     public void AddNewMinionToInventory(MinionType type)
     {
         var minion = CreateMinionDefInstance(type);

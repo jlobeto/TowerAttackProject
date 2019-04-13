@@ -8,13 +8,15 @@ public class MinionInShop : MonoBehaviour
 {
 
     public Button button;
-    public Button buyButton;
-    public Action<string> onMinionClick = delegate { };
+    public Action<string, bool, bool, MinionType> onMinionClick = delegate { };
     public MinionType minionType;
 
+    bool _isBought;
     bool _isBlocked;
     Text _buttonText;
     string _description;
+
+    public bool IsBought { get { return _isBought; } set { _isBought = value; } }
 
     void Awake()
     {
@@ -43,8 +45,7 @@ public class MinionInShop : MonoBehaviour
     public void LockButton()
     {
         if (_isBlocked) return;
-
-        buyButton.interactable = false;
+        
         _isBlocked = true;
     }
 
@@ -52,13 +53,12 @@ public class MinionInShop : MonoBehaviour
     {
         if (!_isBlocked) return;
 
-        buyButton.interactable = true;
         _isBlocked = false;
     }
 
 
     void MinionInShopClick()
     {
-        onMinionClick(_description);
+        onMinionClick(_description, _isBlocked, IsBought, minionType);
     }
 }

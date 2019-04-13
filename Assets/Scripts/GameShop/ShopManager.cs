@@ -52,6 +52,29 @@ public class ShopManager : MonoBehaviour
         
     }
 
+    public void BuyMinion()
+    {
+        if (_gm.User.MinionIsInInvetory(_popup.selected))
+            return;
+
+        var currency = _gm.User.Currency;
+        var minionValue = _storeInfoData[_popup.selected].currencyValue;
+
+        var dif = currency - minionValue;
+
+        if (dif < 0)
+        {
+            Debug.Log("You don't have currency for this buy.");
+            return;
+        }
+
+        _gm.User.BuyMinion(_popup.selected, minionValue);
+
+        //Call again to refresh data.
+        OnPopupDisplayCallback();
+        _popup.CheckBuyButton(false, true);
+    }
+
     string CreateDescriptionString(MinionStoreData info)
     {
         var result = "";
@@ -70,12 +93,17 @@ public class ShopManager : MonoBehaviour
         _popup.SetCurrency(_gm.User.Currency);
         foreach (var item in _storeInfoData)
         {
-            _popup.CheckMinionAvailability(item.Key, GetUserTotalStars() < item.Value.starsNeedToUnlock);
+            _popup.CheckMinionAvailability(item.Key, GetUserTotalStars() < item.Value.starsNeedToUnlock, IsMinionBought(item.Key));
         }
     }
 
     int GetUserTotalStars()
     {
         return _gm.User.LevelProgressManager.GetStarsAccumulated();
+    }
+
+    bool IsMinionBought(MinionType type)
+    {
+        return _gm.User.MinionIsInInvetory(type);
     }
 }
