@@ -11,12 +11,10 @@ public class MinionsStatsCurrencyDef
     //Common variables.
     public int baseHPCurrencyValue;
     public int baseSpeedCurrencyValue;
-    public int baseCooldownCurrencyValue;
     public int baseSkillCurrencyValue;
 
     public StatCurrencyPerLevelDef[] hpCurrencyAddPerLevel;
     public StatCurrencyPerLevelDef[] speedCurrencyAddPerLevel;
-    public StatCurrencyPerLevelDef[] cooldownCurrencyAddPerLevel;
     public StatCurrencyPerLevelDef[] skillCurrencyAddPerLevel;
 
     //

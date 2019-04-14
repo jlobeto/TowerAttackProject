@@ -41,6 +41,11 @@ public class Inventory
         return _minionsBoughts.list.Any(i => i.type == type.ToString());
     }
 
+    public MinionBoughtDef GetMinionBought(MinionType type)
+    {
+        return _minionsBoughts.list.FirstOrDefault(i => i.type == type.ToString());
+    }
+
     GenericListJsonLoader<MinionBoughtDef> CreateNewBoughtDefData()
     {
         var list = new GenericListJsonLoader<MinionBoughtDef>();
@@ -55,7 +60,7 @@ public class Inventory
     MinionBoughtDef CreateMinionDefInstance(MinionType t)
     {
         var minion = new MinionBoughtDef();
-        minion.cooldown = minion.hp = minion.skill = minion.speed = 1;
+        minion.hp = minion.skill = minion.speed = 1;
         minion.type = t.ToString();
         return minion;
     }

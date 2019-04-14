@@ -54,4 +54,9 @@ public class User
         _currency -= valueOfMinion;
         _inventory.AddNewMinionToInventory(t);
     }
+
+    public MinionBoughtDef GetMinionBought(MinionType t)
+    {
+        return _inventory.GetMinionBought(t);
+    }
 }

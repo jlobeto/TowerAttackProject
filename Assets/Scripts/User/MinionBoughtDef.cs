@@ -13,7 +13,6 @@ public class MinionBoughtDef
     public string type;
     public int hp;
     public int speed;
-    public int cooldown;
     public int skill;
     public int passiveSkill;
 }
