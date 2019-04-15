@@ -28,6 +28,11 @@ public class MinionsJsonLoaderManager
         }
     }
 
+    public GenericListJsonLoader<BaseMinionStat> GetMinionStats(MinionType type)
+    {
+        return _allJsons[type];
+    }
+
     public BaseMinionStat GetStatByLevel(MinionType type, int lvlId)
     {
         var stat = _allJsons[type].list.FirstOrDefault(i => i.levelId == lvlId);

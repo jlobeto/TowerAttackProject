@@ -44,6 +44,8 @@ public class ShopManager : MonoBehaviour
             _storeInfoData.Add(minionType, item);
             _popup.AddMinionToShop(minionType, CreateDescriptionString(item));
         }
+
+        _popup.onMinionClick += OnMinionShopClick;
     }
 
     
@@ -73,6 +75,21 @@ public class ShopManager : MonoBehaviour
         //Call again to refresh data.
         OnPopupDisplayCallback();
         _popup.CheckBuyButton(false, true);
+    }
+
+    void OnMinionShopClick(MinionType t)
+    {
+        var boughtInfo = _gm.User.GetMinionBought(t);
+        if (boughtInfo == null)
+        {
+            _popup.skillsUpgradePanel.HideAllStats();
+            return;
+        }
+
+        var statsCurr = _storeStatsCurrencyDef[t];
+        var minionStats = _gm.MinionsJsonLoader.GetMinionStats(t);
+
+        _popup.skillsUpgradePanel.SetUpgradeItems(boughtInfo, statsCurr, minionStats);
     }
 
     string CreateDescriptionString(MinionStoreData info)

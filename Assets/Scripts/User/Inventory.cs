@@ -60,7 +60,12 @@ public class Inventory
     MinionBoughtDef CreateMinionDefInstance(MinionType t)
     {
         var minion = new MinionBoughtDef();
-        minion.hp = minion.skill = minion.speed = 1;
+
+        if (t != MinionType.Healer && t != MinionType.WarScreamer)
+            minion.hp = minion.skill = minion.speed = 1;
+        else
+            minion.passiveSkill = minion.skill = minion.speed = 1;
+
         minion.type = t.ToString();
         return minion;
     }

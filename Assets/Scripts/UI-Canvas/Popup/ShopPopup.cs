@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class ShopPopup : BasePopup
 {
@@ -10,6 +11,8 @@ public class ShopPopup : BasePopup
     public Text currency;
     public Button buyButton;
     public MinionType selected;
+    public SkillsUpgradePanel skillsUpgradePanel;
+    public Action<MinionType> onMinionClick = delegate { };
 
     GridLayoutGroup _gridGroup;
     List<MinionInShop> _scrollContentList;
@@ -87,8 +90,8 @@ public class ShopPopup : BasePopup
     {
         description.text = info;
         selected = type;
-
         CheckBuyButton(isBlocked, isBought);
+        onMinionClick(type);
     }
 
 }
