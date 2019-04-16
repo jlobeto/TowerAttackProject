@@ -11,17 +11,19 @@ public class ShopPopup : BasePopup
     public Text currency;
     public Button buyButton;
     public MinionType selected;
-    public SkillsUpgradePanel skillsUpgradePanel;
-    public Action<MinionType> onMinionClick = delegate { };
 
+    SkillsUpgradePanel _skillsUpgradePanel;
     GridLayoutGroup _gridGroup;
     List<MinionInShop> _scrollContentList;
+    ShopManager _shopManager;
 
     protected override void Awake()
     {
         base.Awake();
         _gridGroup = GetComponentInChildren<GridLayoutGroup>();
         _scrollContentList = new List<MinionInShop>();
+        _shopManager = GetComponent<ShopManager>();
+        _skillsUpgradePanel = GetComponentInChildren<SkillsUpgradePanel>();
     }
 
 
@@ -69,7 +71,7 @@ public class ShopPopup : BasePopup
 
     public void SetCurrency(int c)
     {
-        currency.text = "CHIPS: " + c; 
+        currency.text = "CHIPS: " + c;
     }
 
     public void CheckBuyButton(bool isBlocked, bool isBought)
@@ -91,7 +93,11 @@ public class ShopPopup : BasePopup
         description.text = info;
         selected = type;
         CheckBuyButton(isBlocked, isBought);
-        onMinionClick(type);
+        var data = _shopManager.OnMinionShopClick(type);
+        if (data != null)
+            _skillsUpgradePanel.SetUpgradeItems(data.Item1, data.Item2, data.Item3);
+        else
+            _skillsUpgradePanel.HideAllStats();
     }
 
 }

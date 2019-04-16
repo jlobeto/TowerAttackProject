@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class SkillsUpgradePanel : MonoBehaviour
 {
@@ -48,27 +49,26 @@ public class SkillsUpgradePanel : MonoBehaviour
 
     void GenerateItemsFromScratch()
     {
-        var hasHPStat = _statsCurrency.baseHPCurrencyValue != 0;
-
-        BaseMinionStat currStat = _minionStats.list.First(i => i.levelId == _boughtInfo.hp);
-        BaseMinionStat nextStat = _minionStats.list.First(i => i.levelId == _boughtInfo.hp + 1);
+        var currAndNext = GetCurrentAndNextStat(_boughtInfo.hp);
 
         var item = Instantiate<StatUpgradeItem>(itemGO, transform);
-        var name = hasHPStat ? "HP :" : "Passive :";
-        float curr = currStat.hp;
-        float next = nextStat.hp;
+        var name = GetStatName();
+
+        float curr = currAndNext.Item1.hp;
+        float next = currAndNext.Item2.hp;
 
         if (_boughtInfo.type == MinionType.Healer.ToString())
         {
-            curr = _minionStats.list.First(i => i.levelId == _boughtInfo.passiveSkill).healPerSecond;
-            next = _minionStats.list.First(i => i.levelId == _boughtInfo.passiveSkill + 1).healPerSecond;
+            currAndNext = GetCurrentAndNextStat(_boughtInfo.passiveSkill);
+            curr = currAndNext.Item1.healPerSecond;
+            next = currAndNext.Item2.healPerSecond;
         }
         else if(_boughtInfo.type == MinionType.WarScreamer.ToString())
         {
-            curr = _minionStats.list.First(i => i.levelId == _boughtInfo.passiveSkill).passiveSpeedDelta;
-            next = _minionStats.list.First(i => i.levelId == _boughtInfo.passiveSkill + 1).passiveSpeedDelta;
+            currAndNext = GetCurrentAndNextStat(_boughtInfo.passiveSkill);
+            curr = currAndNext.Item1.passiveSpeedDelta;
+            next = currAndNext.Item2.passiveSpeedDelta;
         }
-
         
         item.SetItem(_boughtInfo.hp, curr, next, name);
 
@@ -77,8 +77,10 @@ public class SkillsUpgradePanel : MonoBehaviour
 
         item = Instantiate<StatUpgradeItem>(itemGO, transform);
         name = "SPD :";
-        curr = _minionStats.list.First(i => i.levelId == _boughtInfo.speed).speed;
-        next = _minionStats.list.First(i => i.levelId == _boughtInfo.speed+1).speed;
+        currAndNext = GetCurrentAndNextStat(_boughtInfo.speed);
+
+        curr = currAndNext.Item1.speed;
+        next = currAndNext.Item2.speed;
         item.SetItem(_boughtInfo.speed, curr, next, name);
         _list.Add(item);
 
@@ -87,34 +89,33 @@ public class SkillsUpgradePanel : MonoBehaviour
 
         item = Instantiate<StatUpgradeItem>(itemGO, transform);
         name = "SKILL :";
-
-        BaseMinionStat skillStat = _minionStats.list.First(i => i.levelId == _boughtInfo.skill);
-        BaseMinionStat skillStatNext = _minionStats.list.First(i => i.levelId == _boughtInfo.skill + 1);
+        
+        currAndNext = GetCurrentAndNextStat(_boughtInfo.skill);
 
         if (_boughtInfo.type == MinionType.Runner.ToString())
         {
-            curr = skillStat.skillDeltaSpeed;
-            next = skillStatNext.skillDeltaSpeed;
+            curr = currAndNext.Item1.skillDeltaSpeed;
+            next = currAndNext.Item2.skillDeltaSpeed;
         }
         else if (_boughtInfo.type == MinionType.Tank.ToString())
         {
-            curr = skillStat.skillArea;
-            next = skillStatNext.skillArea;
+            curr = currAndNext.Item1.skillArea;
+            next = currAndNext.Item2.skillArea;
         }
         else if (_boughtInfo.type == MinionType.Zeppelin.ToString())
         {
-            curr = skillStat.miniZeppelinStat.hitsToDie;
-            next = skillStatNext.miniZeppelinStat.hitsToDie;
+            curr = currAndNext.Item1.miniZeppelinStat.hitsToDie;
+            next = currAndNext.Item2.miniZeppelinStat.hitsToDie;
         }
         else if (_boughtInfo.type == MinionType.Healer.ToString())
         {
-            curr = skillStat.skillHealAmount;
-            next = skillStatNext.skillHealAmount;
+            curr = currAndNext.Item1.skillHealAmount;
+            next = currAndNext.Item2.skillHealAmount;
         }
         else if (_boughtInfo.type == MinionType.WarScreamer.ToString())
         {
-            curr = skillStat.activeSpeedDelta;
-            next = skillStatNext.activeSpeedDelta;
+            curr = currAndNext.Item1.activeSpeedDelta;
+            next = currAndNext.Item2.activeSpeedDelta;
         }
 
         item.SetItem(_boughtInfo.speed, curr, next, name);
@@ -123,7 +124,27 @@ public class SkillsUpgradePanel : MonoBehaviour
 
     void ReloadItems()
     {
+        foreach (var item in _list)
+        {
+            Destroy(item.gameObject);
+        }
 
+        ///THIS MUST CHANGE SO IT DOES NOT CREATE AN INSTANCE EACH TIME
+        GenerateItemsFromScratch();
+            
+    }
+
+
+    string GetStatName()
+    {
+        return _statsCurrency.baseHPCurrencyValue != 0 ? "HP :" : "Passive :";
+    }
+
+    Tuple<BaseMinionStat, BaseMinionStat> GetCurrentAndNextStat(int lvl)
+    {
+        var curr = _minionStats.list.FirstOrDefault(i => i.levelId == lvl);
+        var next = _minionStats.list.FirstOrDefault(i => i.levelId == lvl + 1);
+        return Tuple.Create(curr, next);
     }
 
 }
