@@ -12,6 +12,7 @@ public class ShopPopup : BasePopup
     public Button buyButton;
     public MinionType selected;
 
+
     SkillsUpgradePanel _skillsUpgradePanel;
     GridLayoutGroup _gridGroup;
     List<MinionInShop> _scrollContentList;
@@ -33,7 +34,7 @@ public class ShopPopup : BasePopup
     {
         if (isShowing) return;
 
-        _rect.position = new Vector3(_rect.parent.position.x - 10, _rect.parent.position.y);
+        _rect.position = new Vector3(_rect.parent.position.x - 12, _rect.parent.position.y);
 
         gameObject.SetActive(true);
         base.DisplayPopup();
