@@ -237,8 +237,8 @@ public class LevelCanvasManager : MonoBehaviour
 			var t = m.minionType;
 			var newBtn = btn;
 			var cooldown = m.spawnCooldown;
-			var fillImg = btn.GetComponentsInChildren<Image>();//Returns btn.image and its child.image(DONT KNOW WHY)
-			btn.onClick.AddListener(() => OnBuyMinion(newBtn,fillImg[1], t, cooldown, stayNotInteractuable));
+			var fillImg = minionSaleButtons[minionSaleButtons.Count - 1].offButtonImg;
+			btn.onClick.AddListener(() => OnBuyMinion(newBtn,fillImg, t, cooldown, stayNotInteractuable));
 
 			SetMinionSkillButton (btn, m.skillType, !stayNotInteractuable, minionSkillsManager);
 		}
