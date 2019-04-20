@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameplayUtils
+public static class GameplayUtils
 {
     public static TargetType GetTargetTypeByMinionType(MinionType type)
     {
@@ -25,6 +25,33 @@ public class GameplayUtils
         }
 
         return TargetType.Both;
+    }
+
+    public static MinionType GetMinionTypeBySkill(BaseMinionSkill.SkillType type)
+    {
+        switch (type)
+        {
+            case BaseMinionSkill.SkillType.None:
+                return MinionType.Runner;
+            case BaseMinionSkill.SkillType.HitShield:
+                return MinionType.Tank;
+            case BaseMinionSkill.SkillType.SpeedBoost:
+                return MinionType.Runner;
+            case BaseMinionSkill.SkillType.GiveHealth:
+                return MinionType.Healer;
+               
+            case BaseMinionSkill.SkillType.ChangeTarget:
+                return MinionType.Dove;
+               
+            case BaseMinionSkill.SkillType.SmokeBomb:
+                return MinionType.Zeppelin;
+
+            case BaseMinionSkill.SkillType.WarScreamer:
+                return MinionType.WarScreamer;
+
+        }
+
+        return MinionType.Runner;
     }
 
     public static int StarsWon(int currLives, int[] objetives)

@@ -136,13 +136,13 @@ public class LevelCanvasManager : MonoBehaviour
 		}
     }
 
-    public void EnableMinionButtons(bool value)
+    public void EnableMinionButtons(bool value, bool forceValue = false)
     {
-        var btns = _availablesPanel.GetComponentsInChildren<Transform>().Where(i => i.GetComponent<Button>() != null);
-        var realBtns = btns.Select(i => i.GetComponent<Button>());
-        foreach (var item in realBtns)
+        var btns = _availablesPanel.GetComponentsInChildren<MinionSaleButton>().ToList();
+
+        foreach (var item in btns)
         {
-            item.interactable = value;
+            item.SetInteractability(forceValue, value);
         }
     }
 
@@ -230,7 +230,7 @@ public class LevelCanvasManager : MonoBehaviour
 			m.pointsValue = minionStats.pointsValue;
 
 			var btn = Instantiate<Button>(minionSaleButtonPrefab, _availablesPanel.transform);
-			btn.GetComponentInChildren<Text>().text = m.minionType +" x"+ m.pointsValue;
+			btn.GetComponentInChildren<Text>().text = m.pointsValue.ToString();
 			minionSaleButtons.Add (btn.GetComponent<MinionSaleButton> ());
 			minionSaleButtons[minionSaleButtons.Count-1].minionType = m.minionType;
 			minionSaleButtons[minionSaleButtons.Count-1].minionSkill = m.skillType;
@@ -256,9 +256,8 @@ public class LevelCanvasManager : MonoBehaviour
 		{
 			var btn = Instantiate<Button>(minionSaleButtonPrefab, parent);
 			btn.interactable = false;
-			btn.GetComponentInChildren<Text>().text = "";
-			var fillImg = btn.GetComponentsInChildren<Image>()[1];//Returns btn.image and its child.image(DONT KNOW WHY)
-			fillImg.fillAmount = 1;
+            Debug.Log("init button");
+            btn.GetComponentInChildren<Text>().text = "";
 
 			SetMinionSkillButton (btn, BaseMinionSkill.SkillType.None, false, null);
 		}	
@@ -271,12 +270,16 @@ public class LevelCanvasManager : MonoBehaviour
 		if (interactable)
         {
 			skillBtn.InitButton (skill, minionSkillsManager.SkillButtonPressed);
-			skillBtn.GetComponentInChildren<Text>().text = skill.ToString();
+			//skillBtn.GetComponentInChildren<Text>().text = skill.ToString();
 		}
-			
-		var fillImg = skillBtn.GetComponentsInChildren<Image>()[1];//Returns btn.image and its child.image(DONT KNOW WHY)
-		fillImg.fillAmount = interactable ? 0 : 1;
-		skillBtn.GetComponent<Button> ().interactable = interactable;
+        else
+        {
+            skillBtn.img.gameObject.SetActive(false);
+        }
+
+        /*var fillImg = skillBtn.GetComponentsInChildren<Image>()[1];//Returns btn.image and its child.image(DONT KNOW WHY)
+		fillImg.fillAmount = interactable ? 0 : 1;*/
+        skillBtn.GetComponent<Button> ().interactable = interactable;
         skillBtn.SetOnPointerDown(interactable);
 	}
 
