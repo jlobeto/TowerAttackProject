@@ -34,8 +34,6 @@ public class StatUpgradeItem : MonoBehaviour
         this.nextValue.text = nextValue.ToString();
 
         levelBar.fillAmount = float.Parse(statLvl.ToString()) / MAX_LEVEL;
-        Debug.Log("----");
-        Debug.Log(levelBar.fillAmount);
     }
 
     bool IsDove()

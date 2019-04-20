@@ -76,19 +76,25 @@ public class ShopManager : MonoBehaviour
         _popup.CheckBuyButton(false, true);
     }
 
-    public Tuple<MinionBoughtDef, MinionsStatsCurrencyDef, GenericListJsonLoader<BaseMinionStat>> 
-        OnMinionShopClick(MinionType t)
+    public Tuple<MinionBoughtDef, MinionsStatsCurrencyDef, GenericListJsonLoader<BaseMinionStat>, int, int> 
+        GetMinionShopInfo(MinionType t)
     {
         var boughtInfo = _gm.User.GetMinionBought(t);
+        var needToUnlockBuy = _storeInfoData[t].starsNeedToUnlock - GetUserTotalStars();
+        var price = _storeInfoData[t].currencyValue;
+
         if (boughtInfo == null)
         {
-            return null;
+            return Tuple.Create(boughtInfo
+            , default(MinionsStatsCurrencyDef)
+            , default(GenericListJsonLoader<BaseMinionStat>)
+            , needToUnlockBuy, price);
         }
 
         var statsCurr = _storeStatsCurrencyDef[t];
         var minionStats = _gm.MinionsJsonLoader.GetMinionStats(t);
 
-        return Tuple.Create(boughtInfo, statsCurr, minionStats);
+        return Tuple.Create(boughtInfo, statsCurr, minionStats, needToUnlockBuy, price);
     }
 
     string CreateDescriptionString(MinionStoreData info)

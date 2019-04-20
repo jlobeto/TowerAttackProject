@@ -10,11 +10,14 @@ public class MinionInShop : MonoBehaviour
     public Button button;
     public Action<string, bool, bool, MinionType> onMinionClick = delegate { };
     public MinionType minionType;
+    public Color unableToPurchaseColor;
 
     bool _isBought;
     bool _isBlocked;
     Text _buttonText;
     string _description;
+    ColorBlock _colorBlock;
+
 
     public bool IsBought { get { return _isBought; } set { _isBought = value; } }
 
@@ -22,6 +25,7 @@ public class MinionInShop : MonoBehaviour
     {
         _buttonText = button.GetComponentInChildren<Text>();
         button.onClick.AddListener(MinionInShopClick);
+        _colorBlock = button.colors;
     }
 
 
@@ -47,6 +51,9 @@ public class MinionInShop : MonoBehaviour
         if (_isBlocked) return;
         
         _isBlocked = true;
+        _colorBlock.normalColor = unableToPurchaseColor;
+        _colorBlock.highlightedColor = unableToPurchaseColor;
+        button.colors = _colorBlock;
     }
 
     public void UnlockButton()
@@ -54,6 +61,9 @@ public class MinionInShop : MonoBehaviour
         if (!_isBlocked) return;
 
         _isBlocked = false;
+        _colorBlock.normalColor = Color.white;
+        _colorBlock.highlightedColor = Color.white;
+        button.colors = _colorBlock;
     }
 
 

@@ -16,6 +16,7 @@ public class ShopPopup : BasePopup
     GridLayoutGroup _gridGroup;
     List<MinionInShop> _scrollContentList;
     ShopManager _shopManager;
+    Text _buyButtonText;
 
     protected override void Awake()
     {
@@ -24,6 +25,7 @@ public class ShopPopup : BasePopup
         _scrollContentList = new List<MinionInShop>();
         _shopManager = GetComponent<ShopManager>();
         _skillsUpgradePanel = GetComponentInChildren<SkillsUpgradePanel>();
+        _buyButtonText = buyButton.GetComponentInChildren<Text>();
     }
 
 
@@ -74,17 +76,21 @@ public class ShopPopup : BasePopup
         currency.text = "CHIPS: " + c;
     }
 
-    public void CheckBuyButton(bool isBlocked, bool isBought)
+    public void CheckBuyButton(bool isBlocked, bool isBought, int starsToUnlock = 0, int price = 0)
     {
         if (isBlocked)
         {
             buyButton.gameObject.SetActive(true);
             buyButton.interactable = false;
+            _buyButtonText.text = "NEED " + starsToUnlock.ToString() + " STARS";
         }
         else
         {
             buyButton.interactable = true;
             buyButton.gameObject.SetActive(!isBought);
+
+            if(!isBought)
+                _buyButtonText.text = "BUY FOR " + price + " CHIPS";
         }
     }
 
@@ -92,12 +98,19 @@ public class ShopPopup : BasePopup
     {
         description.text = info;
         selected = type;
-        CheckBuyButton(isBlocked, isBought);
-        var data = _shopManager.OnMinionShopClick(type);
-        if (data != null)
+
+        var data = _shopManager.GetMinionShopInfo(type);
+        if (data.Item1 != null)
+        {
             _skillsUpgradePanel.SetUpgradeItems(data.Item1, data.Item2, data.Item3);
+            CheckBuyButton(isBlocked, isBought, data.Item4, data.Item5);
+        }
         else
+        {
             _skillsUpgradePanel.HideAllStats();
+            CheckBuyButton(isBlocked, isBought, data.Item4, data.Item5);
+        }
+
     }
 
 }

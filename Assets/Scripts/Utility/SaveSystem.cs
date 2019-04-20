@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using UnityEngine;
 
-public class SaveSystem
+public static class SaveSystem
 {
     public static void Save<T>(T data, string path)
     {
