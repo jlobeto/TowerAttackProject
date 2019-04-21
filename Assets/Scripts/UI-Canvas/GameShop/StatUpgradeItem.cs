@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,13 +14,17 @@ public class StatUpgradeItem : MonoBehaviour
     public Text currValue;
     public Text nextValue;
     public Image levelBar;
+    public SkillsUpgradePanel.StatNames id;
+    public Action<SkillsUpgradePanel.StatNames> OnBuyClick = delegate { };
+
 
     const int MAX_LEVEL = 15;
 
-    MinionsStatsCurrencyDef _statsCurrencyDef;
+    MinionsStatsCurrencyDef _statsCurrencyDef = new MinionsStatsCurrencyDef();
 
     void Start()
     {
+
     }
     
     void Update()
@@ -27,13 +32,21 @@ public class StatUpgradeItem : MonoBehaviour
         
     }
 
-    public void SetItem(int statLvl, float currValue, float nextValue, string name)
+    public void SetItem(int statLvl, float currValue, float nextValue, SkillsUpgradePanel.StatNames id)
     {
-        statName.text = name;
+        this.id = id;
+        statName.text = id.ToString() + " :";
         this.currValue.text = currValue.ToString();
         this.nextValue.text = nextValue.ToString();
 
         levelBar.fillAmount = float.Parse(statLvl.ToString()) / MAX_LEVEL;
+
+        buyButton.onClick.AddListener(() => BuyPressed());
+    }
+
+    void BuyPressed()
+    {
+        OnBuyClick(id);
     }
 
     bool IsDove()

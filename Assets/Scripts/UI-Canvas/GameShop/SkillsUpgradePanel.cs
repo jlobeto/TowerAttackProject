@@ -6,12 +6,23 @@ using System;
 
 public class SkillsUpgradePanel : MonoBehaviour
 {
+
     public StatUpgradeItem itemGO;
+    [HideInInspector]public PopupManager popupManager;
 
     List<StatUpgradeItem> _list;
     MinionBoughtDef _boughtInfo;
     MinionsStatsCurrencyDef _statsCurrency;
     GenericListJsonLoader<BaseMinionStat> _minionStats;
+
+
+    public enum StatNames
+    {
+        HP,
+        SPD,
+        PASSIVE,
+        SKILL
+    }
 
     void Start()
     {
@@ -47,12 +58,18 @@ public class SkillsUpgradePanel : MonoBehaviour
             ReloadItems();
     }
 
+    public void StatBuyPressed(StatNames id)
+    {
+
+    }
+
     void GenerateItemsFromScratch()
     {
         var currAndNext = GetCurrentAndNextStat(_boughtInfo.hp);
 
-        var item = Instantiate<StatUpgradeItem>(itemGO, transform);
-        var name = GetStatName();
+        var item = Instantiate<StatUpgradeItem>(itemGO, transform); 
+        var name = GetFirstStatName();
+        item.OnBuyClick += StatBuyPressed;
 
         float curr = currAndNext.Item1.hp;
         float next = currAndNext.Item2.hp;
@@ -76,7 +93,8 @@ public class SkillsUpgradePanel : MonoBehaviour
         _list.Add(item);
 
         item = Instantiate<StatUpgradeItem>(itemGO, transform);
-        name = "SPD :";
+        item.OnBuyClick += StatBuyPressed;
+        name = StatNames.SPD;
         currAndNext = GetCurrentAndNextStat(_boughtInfo.speed);
 
         curr = currAndNext.Item1.speed;
@@ -88,7 +106,8 @@ public class SkillsUpgradePanel : MonoBehaviour
             return;
 
         item = Instantiate<StatUpgradeItem>(itemGO, transform);
-        name = "SKILL :";
+        item.OnBuyClick += StatBuyPressed;
+        name = StatNames.SKILL;
         
         currAndNext = GetCurrentAndNextStat(_boughtInfo.skill);
 
@@ -118,7 +137,7 @@ public class SkillsUpgradePanel : MonoBehaviour
             next = currAndNext.Item2.activeSpeedDelta;
         }
 
-        item.SetItem(_boughtInfo.speed, curr, next, name);
+        item.SetItem(_boughtInfo.skill, curr, next, name);
         _list.Add(item);
     }
 
@@ -126,6 +145,7 @@ public class SkillsUpgradePanel : MonoBehaviour
     {
         foreach (var item in _list)
         {
+            item.OnBuyClick -= StatBuyPressed;
             Destroy(item.gameObject);
         }
 
@@ -135,9 +155,9 @@ public class SkillsUpgradePanel : MonoBehaviour
     }
 
 
-    string GetStatName()
+    StatNames GetFirstStatName()
     {
-        return _statsCurrency.baseHPCurrencyValue != 0 ? "HP :" : "Passive :";
+        return _statsCurrency.baseHPCurrencyValue != 0 ? StatNames.HP : StatNames.PASSIVE;
     }
 
     Tuple<BaseMinionStat, BaseMinionStat> GetCurrentAndNextStat(int lvl)
@@ -146,5 +166,7 @@ public class SkillsUpgradePanel : MonoBehaviour
         var next = _minionStats.list.FirstOrDefault(i => i.levelId == lvl + 1);
         return Tuple.Create(curr, next);
     }
+
+    
 
 }

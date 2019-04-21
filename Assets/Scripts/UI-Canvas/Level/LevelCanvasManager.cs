@@ -256,7 +256,6 @@ public class LevelCanvasManager : MonoBehaviour
 		{
 			var btn = Instantiate<Button>(minionSaleButtonPrefab, parent);
 			btn.interactable = false;
-            Debug.Log("init button");
             btn.GetComponentInChildren<Text>().text = "";
 
 			SetMinionSkillButton (btn, BaseMinionSkill.SkillType.None, false, null);

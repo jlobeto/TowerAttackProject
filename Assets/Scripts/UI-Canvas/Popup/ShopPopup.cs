@@ -11,7 +11,7 @@ public class ShopPopup : BasePopup
     public Text currency;
     public Button buyButton;
     public MinionType selected;
-
+    public PopupManager popupManager;
 
     SkillsUpgradePanel _skillsUpgradePanel;
     GridLayoutGroup _gridGroup;
@@ -26,6 +26,7 @@ public class ShopPopup : BasePopup
         _scrollContentList = new List<MinionInShop>();
         _shopManager = GetComponent<ShopManager>();
         _skillsUpgradePanel = GetComponentInChildren<SkillsUpgradePanel>();
+        _skillsUpgradePanel.popupManager = popupManager;
         _buyButtonText = buyButton.GetComponentInChildren<Text>();
     }
 

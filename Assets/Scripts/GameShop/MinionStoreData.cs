@@ -13,4 +13,6 @@ public class MinionStoreData
     /// </summary>
     public int starsNeedToUnlock;
     public string[] info;
+    public string skillInfo;
+    public string passiveInfo;
 }

@@ -12,7 +12,6 @@ public class ShowPoints : StepBase
 
 	public override void ExecuteStep (GameObject gameObject = null)
 	{
-        Debug.Log("tutorial");
 		Time.timeScale = 0;
 		lvl.LevelCanvasManager.EnableMinionButtons (false);
 		tutoOneManager.canvasTuto.EnableArrowByName ("PointsBar");
