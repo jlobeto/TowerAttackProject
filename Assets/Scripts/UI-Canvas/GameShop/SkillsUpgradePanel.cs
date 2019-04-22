@@ -14,19 +14,15 @@ public class SkillsUpgradePanel : MonoBehaviour
     MinionBoughtDef _boughtInfo;
     MinionsStatsCurrencyDef _statsCurrency;
     GenericListJsonLoader<BaseMinionStat> _minionStats;
+    PopupManager _popManager;
+    ShopManager _shopManager;
 
 
-    public enum StatNames
-    {
-        HP,
-        SPD,
-        PASSIVE,
-        SKILL
-    }
 
     void Start()
     {
-
+        _popManager = FindObjectOfType<PopupManager>();
+        _shopManager = GetComponentInParent<ShopManager>();
     }
 
 
@@ -58,9 +54,12 @@ public class SkillsUpgradePanel : MonoBehaviour
             ReloadItems();
     }
 
-    public void StatBuyPressed(StatNames id)
+    void StatBuyPressed(MinionBoughtDef.StatNames  id)
     {
+        var desc = _shopManager.GetMinionUpgradeDescription(_boughtInfo.type);
+        var btnText = _statsCurrency.GetPrice(id, _boughtInfo.GetStatLevel(id)) + " CHIPS";
 
+        _popManager.BuildPopup(transform.parent, _boughtInfo.type , desc, btnText, PopupsID.StatUpgradeShop);
     }
 
     void GenerateItemsFromScratch()
@@ -94,7 +93,7 @@ public class SkillsUpgradePanel : MonoBehaviour
 
         item = Instantiate<StatUpgradeItem>(itemGO, transform);
         item.OnBuyClick += StatBuyPressed;
-        name = StatNames.SPD;
+        name = MinionBoughtDef.StatNames.SPD;
         currAndNext = GetCurrentAndNextStat(_boughtInfo.speed);
 
         curr = currAndNext.Item1.speed;
@@ -107,7 +106,7 @@ public class SkillsUpgradePanel : MonoBehaviour
 
         item = Instantiate<StatUpgradeItem>(itemGO, transform);
         item.OnBuyClick += StatBuyPressed;
-        name = StatNames.SKILL;
+        name = MinionBoughtDef.StatNames.SKILL;
         
         currAndNext = GetCurrentAndNextStat(_boughtInfo.skill);
 
@@ -155,9 +154,9 @@ public class SkillsUpgradePanel : MonoBehaviour
     }
 
 
-    StatNames GetFirstStatName()
+    MinionBoughtDef.StatNames GetFirstStatName()
     {
-        return _statsCurrency.baseHPCurrencyValue != 0 ? StatNames.HP : StatNames.PASSIVE;
+        return _statsCurrency.baseHPCurrencyValue > 0 ? MinionBoughtDef.StatNames.HP : MinionBoughtDef.StatNames.PASSIVE;
     }
 
     Tuple<BaseMinionStat, BaseMinionStat> GetCurrentAndNextStat(int lvl)

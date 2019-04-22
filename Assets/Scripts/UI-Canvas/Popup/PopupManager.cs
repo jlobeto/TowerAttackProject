@@ -36,7 +36,7 @@ public class PopupManager : MonoBehaviour
         var popup = Instantiate<BasePopup>(popupPrefabs.FirstOrDefault(i => i.popupId == popupId), parent);
         popup.title.text = title.ToUpper();
         popup.description.text = descript.ToUpper();
-        popup.GetComponent<Animator>().SetFloat("EntryAnim", GetRandomAnimation());
+        //popup.GetComponent<Animator>().SetFloat("EntryAnim", GetRandomAnimation());
         popup.isShowing = true;
         if (popup.okButton != null)
             popup.okButton.GetComponentInChildren<Text>().text = btnText.ToUpper();

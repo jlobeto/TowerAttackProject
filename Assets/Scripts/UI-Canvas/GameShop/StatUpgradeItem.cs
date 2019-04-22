@@ -14,11 +14,8 @@ public class StatUpgradeItem : MonoBehaviour
     public Text currValue;
     public Text nextValue;
     public Image levelBar;
-    public SkillsUpgradePanel.StatNames id;
-    public Action<SkillsUpgradePanel.StatNames> OnBuyClick = delegate { };
-
-
-    const int MAX_LEVEL = 15;
+    public MinionBoughtDef.StatNames id;
+    public Action<MinionBoughtDef.StatNames> OnBuyClick = delegate { };
 
     MinionsStatsCurrencyDef _statsCurrencyDef = new MinionsStatsCurrencyDef();
 
@@ -32,14 +29,14 @@ public class StatUpgradeItem : MonoBehaviour
         
     }
 
-    public void SetItem(int statLvl, float currValue, float nextValue, SkillsUpgradePanel.StatNames id)
+    public void SetItem(int statLvl, float currValue, float nextValue, MinionBoughtDef.StatNames id)
     {
         this.id = id;
         statName.text = id.ToString() + " :";
         this.currValue.text = currValue.ToString();
         this.nextValue.text = nextValue.ToString();
 
-        levelBar.fillAmount = float.Parse(statLvl.ToString()) / MAX_LEVEL;
+        levelBar.fillAmount = float.Parse(statLvl.ToString()) / ShopManager.MAX_MINION_LEVEL;
 
         buyButton.onClick.AddListener(() => BuyPressed());
     }

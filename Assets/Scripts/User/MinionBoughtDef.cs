@@ -15,4 +15,35 @@ public class MinionBoughtDef
     public int speed;
     public int skill;
     public int passiveSkill;
+
+    public enum StatNames
+    {
+        HP,
+        SPD,
+        PASSIVE,
+        SKILL
+    }
+
+    public int GetStatLevel(StatNames id)
+    {
+        switch (id)
+        {
+            case StatNames.HP:
+                return hp;
+                break;
+            case StatNames.SPD:
+                return speed;
+                break;
+            case StatNames.PASSIVE:
+                return passiveSkill;
+                break;
+            case StatNames.SKILL:
+                return skill;
+                break;
+            default:
+                break;
+        }
+
+        return 1;
+    }
 }

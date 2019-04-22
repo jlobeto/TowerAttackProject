@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ShopManager : MonoBehaviour
 {
+    public const int MAX_MINION_LEVEL = 15;
 
     Dictionary<MinionType, MinionStoreData> _storeInfoData;
     Dictionary<MinionType, MinionsStatsCurrencyDef> _storeStatsCurrencyDef;
@@ -95,6 +96,15 @@ public class ShopManager : MonoBehaviour
         var minionStats = _gm.MinionsJsonLoader.GetMinionStats(t);
 
         return Tuple.Create(boughtInfo, statsCurr, minionStats, needToUnlockBuy, price);
+    }
+
+    public string GetMinionUpgradeDescription(string minionType)
+    {
+        MinionType type = GameUtils.ToEnum(minionType, MinionType.Runner);
+        var list = new List<string>();
+        var storeData = _storeInfoData[type];
+
+        return storeData.skillInfo;
     }
 
     string CreateDescriptionString(MinionStoreData info)

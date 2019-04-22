@@ -52,4 +52,15 @@ public class GameUtils
     {
         return (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
     }
+
+    public static TEnum ToEnum<TEnum>(string value, TEnum defaultValue) where TEnum : struct
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return defaultValue;
+        }
+
+        TEnum result;
+        return Enum.TryParse<TEnum>(value, out result) ? result : defaultValue;
+    }
 }

@@ -15,7 +15,7 @@ public class AcceptPopup : BasePopup
         closeButton.onClick.AddListener(() => CloseButton());
     }
 
-    void CloseButton()
+    protected virtual void CloseButton()
     {
         Time.timeScale = 1;//TODO:: // SACAR ESTO A LA MIERDA
         var lvl = FindObjectOfType<Level>();
