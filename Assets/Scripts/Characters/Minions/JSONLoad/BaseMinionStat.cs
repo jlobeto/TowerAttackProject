@@ -43,4 +43,48 @@ public class BaseMinionStat
     public float lifePercentThresholdToActivatePassive;
     public float passiveSkillDurationOnAffectedMinion;
     public float timeToPassive;
+
+    public float GetStatByStatId(MinionBoughtDef.StatNames id, MinionType minionType)
+    {
+        var result = -1f;
+        switch (id)
+        {
+            case MinionBoughtDef.StatNames.HP:
+                result = hp;
+                break;
+            case MinionBoughtDef.StatNames.SPD:
+                result = speed;
+                break;
+            case MinionBoughtDef.StatNames.PASSIVE:
+                if (minionType == MinionType.Healer)
+                    result = healPerSecond;
+                else if (minionType == MinionType.WarScreamer)
+                    result = passiveSpeedDelta;
+
+                break;
+            case MinionBoughtDef.StatNames.SKILL:
+
+                switch (minionType)
+                {
+                    case MinionType.Runner:
+                        result = skillDeltaSpeed;
+                        break;
+                    case MinionType.Tank:
+                        result = skillArea;
+                        break;
+                    case MinionType.Healer:
+                        result = skillHealAmount;
+                        break;
+                    case MinionType.Zeppelin:
+                        result = miniZeppelinStat.hitsToDie;
+                        break;
+                    case MinionType.WarScreamer:
+                        result = activeSpeedDelta;
+                        break;
+                }
+                break;
+        }
+
+        return result;
+    }
 }

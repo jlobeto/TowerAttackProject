@@ -21,6 +21,10 @@ public class StatUpgradePopup : AcceptPopup
         var currInfo = CURR_LEVEL.Replace("%", statId.ToString()) + currLevelVal;
         var nextInfo = NEXT_LEVEL.Replace("%", statId.ToString()) + nextLevelVal;
 
+        if (description.text == "")
+            description.text = statId == MinionBoughtDef.StatNames.HP ? ShopManager.HP_STAT_DESC : ShopManager.SPEED_STAT_DESC;
+        description.text += '\n';
+        description.text += '\n' + currInfo + '\n' + nextInfo;
     }
 
 

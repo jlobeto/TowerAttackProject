@@ -9,7 +9,12 @@
 					"Weak against Cannon Towers.", 
 					"Skill: Is invisible for enemies and has a speed boost."
 				],
-        "skillInfo": "Gain Speed boost and be invisible for a time! '\n' Upgrade to increment speed!"
+        "statsInfo":[
+          {
+            "type": "SKILL", 
+            "info": "Gain Speed boost and be invisible for a time! \n Upgrade to increment speed!"
+          }
+        ]
     },
     {
   		"type": "Tank",
@@ -19,7 +24,12 @@
   					"Weak against Laser Towers",
   					"Skill: Gives shield to all nearby allies"
   				],
-        "skillInfo": "Tank Information."
+        "statsInfo":[
+          {
+            "type": "SKILL", 
+            "info": "Gain Speed boost and be invisible for a time! \n Upgrade to increment speed!"
+          }
+        ]
     },
     {
   		"type": "Dove",
@@ -29,7 +39,12 @@
   					"Weak against AntiAir Towers",
   					"Change the height, making some towers drop aggro"
   				],
-        "skillInfo": "Dove Information."
+        "statsInfo":[
+          {
+            "type": "SKILL", 
+            "info": "Gain Speed boost and be invisible for a time! \n Upgrade to increment speed!"
+          }
+        ]
 
     },
     {
@@ -40,8 +55,16 @@
   					"Weak against Cannon Towers",
   					"Skill: Heals nearby allies"
   				],
-        "passiveInfo": "Heals per time to near allies.",
-        "skillInfo": "Healer Information."
+        "statsInfo":[
+          {
+            "type": "SKILL", 
+            "info": "Gain Speed boost and be invisible for a time! \n Upgrade to increment speed!"
+          },
+          {
+            "type": "PASSIVE", 
+            "info": "Heals per time to near allies."
+          }
+        ]
     },
     {
   		"type": "Zeppelin",
@@ -51,8 +74,12 @@
   					"Weak against Laser Towers",
   					"Skill: Summons planes, to lose aggro"
   				],
-        "passiveInfo": "",
-        "skillInfo": ""
+        "statsInfo":[
+          {
+            "type": "SKILL", 
+            "info": "Gain Speed boost and be invisible for a time! \n Upgrade to increment speed!"
+          }
+        ]
     },
     {
   		"type": "WarScreamer",
@@ -62,8 +89,12 @@
   					"Weak against Cannon Towers",
   					"Skill: nearby allies gets a boost of speed, but take more damage"
   				],
-        "passiveInfo": "",
-        "skillInfo": ""
+        "statsInfo":[
+          {
+            "type": "SKILL", 
+            "info": "Gain Speed boost and be invisible for a time! \n Upgrade to increment speed!"
+          }
+        ]
     }
   ]
 }

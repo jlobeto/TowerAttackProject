@@ -56,14 +56,19 @@ public class SkillsUpgradePanel : MonoBehaviour
 
     void StatBuyPressed(MinionBoughtDef.StatNames  id)
     {
-        var desc = _shopManager.GetMinionUpgradeDescription(_boughtInfo.type);
-        var btnText = _statsCurrency.GetPrice(id, _boughtInfo.GetStatLevel(id)) + " CHIPS";
+        var statLvl = _boughtInfo.GetStatLevel(id);
+        var desc = _shopManager.GetMinionUpgradeDescription(_boughtInfo.type, id);
+        var btnText = _statsCurrency.GetPrice(id, statLvl) + " CHIPS";
+        var values = GetCurrentAndNextStat(statLvl);
+        var popup = _popManager.BuildPopup(transform.parent, _boughtInfo.type , desc, btnText, PopupsID.StatUpgradeShop) as StatUpgradePopup;
+        var minionType = GameUtils.ToEnum(_boughtInfo.type, MinionType.Runner);
+        popup.SetPopup(id, values.Item1.GetStatByStatId(id, minionType).ToString(), values.Item2.GetStatByStatId(id, minionType).ToString(), statLvl);
 
-        _popManager.BuildPopup(transform.parent, _boughtInfo.type , desc, btnText, PopupsID.StatUpgradeShop);
     }
 
     void GenerateItemsFromScratch()
     {
+        ////TODO>>>> Eliminar los ifs por lo que esta en BaseMinionStat
         var currAndNext = GetCurrentAndNextStat(_boughtInfo.hp);
 
         var item = Instantiate<StatUpgradeItem>(itemGO, transform); 

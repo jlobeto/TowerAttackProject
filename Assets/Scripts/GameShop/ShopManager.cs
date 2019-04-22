@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ using UnityEngine;
 public class ShopManager : MonoBehaviour
 {
     public const int MAX_MINION_LEVEL = 15;
+    public const string SPEED_STAT_DESC = "Increment your minion's speed!";
+    public const string HP_STAT_DESC = "More health means easy match!";
 
     Dictionary<MinionType, MinionStoreData> _storeInfoData;
     Dictionary<MinionType, MinionsStatsCurrencyDef> _storeStatsCurrencyDef;
@@ -98,13 +101,16 @@ public class ShopManager : MonoBehaviour
         return Tuple.Create(boughtInfo, statsCurr, minionStats, needToUnlockBuy, price);
     }
 
-    public string GetMinionUpgradeDescription(string minionType)
+    public string GetMinionUpgradeDescription(string minionType, MinionBoughtDef.StatNames statId)
     {
         MinionType type = GameUtils.ToEnum(minionType, MinionType.Runner);
         var list = new List<string>();
         var storeData = _storeInfoData[type];
+        var statInfo = storeData.statsInfo.FirstOrDefault(i => i.type == statId.ToString());
+        if (statInfo != null)
+            return statInfo.info;
 
-        return storeData.skillInfo;
+        return ""; 
     }
 
     string CreateDescriptionString(MinionStoreData info)
