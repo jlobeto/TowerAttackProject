@@ -20,7 +20,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void GoToMainMap()
     {
-        SceneManager.LoadScene("NewMainMap");
+        SceneManager.LoadScene("World Selector Screen");
     }
 
     public void ExitApp()
