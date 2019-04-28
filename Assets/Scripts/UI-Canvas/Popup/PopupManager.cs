@@ -9,14 +9,13 @@ public class PopupManager : MonoBehaviour
     static PopupManager _instance;
     public List<BasePopup> popupPrefabs = new List<BasePopup>();
 
-    List<BasePopup> _popupQueue;
+    int _popupStack = 0;
 
     void Start()
     {
         if (_instance == null)
         {
             _instance = this;
-            _popupQueue = new List<BasePopup>();
             DontDestroyOnLoad(this);
         }
         else
@@ -41,7 +40,25 @@ public class PopupManager : MonoBehaviour
         if (popup.okButton != null)
             popup.okButton.GetComponentInChildren<Text>().text = btnText.ToUpper();
 
+        popup.AddFunction(BasePopup.FunctionTypes.close, DisplayedPopupWasClosed);
+        _popupStack++;
+
         return popup;
+    }
+
+    public bool IsAnyPopupDisplayed()
+    {
+        return _popupStack > 0;
+    }
+
+    public void ShopPopupDisplayed()
+    {
+        _popupStack++;
+    }
+
+    public void DisplayedPopupWasClosed()
+    {
+        _popupStack--;
     }
 
     float GetRandomAnimation()

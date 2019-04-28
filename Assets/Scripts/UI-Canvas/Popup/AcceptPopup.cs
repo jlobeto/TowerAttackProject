@@ -22,6 +22,6 @@ public class AcceptPopup : BasePopup
         lvl.LevelCanvasManager.EnableMinionButtons(true);
         lvl.LevelCanvasManager.EnableDisableMinionSkillButtons(true);
         ExecuteFunctions(FunctionTypes.cancel);
-        Destroy(gameObject);
+        OnClosePopup();
     }
 }

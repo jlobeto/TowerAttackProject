@@ -30,7 +30,7 @@ public class StatUpgradePopup : AcceptPopup
 
     protected override void CloseButton()
     {
-        Destroy(gameObject);
+        OnClosePopup();
     }
 
 }

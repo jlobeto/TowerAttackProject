@@ -36,6 +36,8 @@ public class ShopPopup : BasePopup
     {
         if (isShowing) return;
 
+        popupManager.ShopPopupDisplayed();
+
         _rect.position = new Vector3(_rect.parent.position.x - 12, _rect.parent.position.y);
 
         gameObject.SetActive(true);
@@ -47,6 +49,7 @@ public class ShopPopup : BasePopup
         if (!isShowing) return;
 
         ExecuteFunctions(FunctionTypes.ok);
+        popupManager.DisplayedPopupWasClosed();
         gameObject.SetActive(false);
         isShowing = false;
     }

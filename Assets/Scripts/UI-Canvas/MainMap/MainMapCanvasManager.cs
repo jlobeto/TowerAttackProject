@@ -49,7 +49,8 @@ public class MainMapCanvasManager : MonoBehaviour
         else if(Input.GetMouseButtonUp(0))
         {
             _mouseOnReleaseXPos = Input.mousePosition.x;
-            CheckMovement();
+            if(! mainMap.GetRealGameManager().popupManager.IsAnyPopupDisplayed())
+                CheckMovement();
         }
 
         GridMovement();

@@ -24,7 +24,8 @@ public class BasePopup : MonoBehaviour
     {
         ok,
         displayCallback,
-        cancel
+        cancel,
+        close
     }
 
     protected virtual void Awake()
@@ -54,7 +55,13 @@ public class BasePopup : MonoBehaviour
         isShowing = true;
         ExecuteFunctions(FunctionTypes.displayCallback);
     }
-	
+
+    protected virtual void OnClosePopup()
+    {
+        ExecuteFunctions(FunctionTypes.close);
+        Destroy(gameObject);
+    }
+
     protected virtual void ExecuteFunctions(FunctionTypes type)
     {
         if (!_functions.ContainsKey(type))
@@ -74,6 +81,8 @@ public class BasePopup : MonoBehaviour
     public virtual void OkButtonPressed()
     {
         ExecuteFunctions(FunctionTypes.ok);
-        Destroy(gameObject);
+        OnClosePopup();
     }
+
+    
 }
