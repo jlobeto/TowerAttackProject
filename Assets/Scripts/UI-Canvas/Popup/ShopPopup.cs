@@ -74,7 +74,6 @@ public class ShopPopup : BasePopup
             minionBtn.UnlockButton();
             minionBtn.IsBought = isBought;
         }
-            
     }
 
     public void SetCurrency(int c)
