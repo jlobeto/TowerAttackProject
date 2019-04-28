@@ -9,6 +9,7 @@ public class ShopPopup : BasePopup
 {
     public MinionInShop minionInShopPrefab;
     public Text currency;
+    public Text starsText;
     public Button buyButton;
     public MinionType selected;
     public PopupManager popupManager;
@@ -76,6 +77,11 @@ public class ShopPopup : BasePopup
     public void SetCurrency(int c)
     {
         currency.text = "CHIPS: " + c;
+    }
+
+    public void SetStars(int s)
+    {
+        starsText.text = "STARS: " + s;
     }
 
     public void CheckBuyButton(bool isBlocked, bool isBought, int starsToUnlock = 0, int price = 0)
