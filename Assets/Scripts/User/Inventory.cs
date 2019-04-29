@@ -36,6 +36,16 @@ public class Inventory
         SaveSystem.Save(_minionsBoughts, _pathToMinionsSaved);
     }
 
+    public void IncrementMinionStat(MinionType type, MinionBoughtDef.StatNames statName)
+    {
+        var saved = _minionsBoughts.list.FirstOrDefault(i => i.type == type.ToString());
+        if(saved != null)
+        {
+            saved.IncrementLevelToStat(statName);
+            SaveSystem.Save(_minionsBoughts, _pathToMinionsSaved);
+        }
+    }
+
     public bool IsBought(MinionType type)
     {
         return _minionsBoughts.list.Any(i => i.type == type.ToString());

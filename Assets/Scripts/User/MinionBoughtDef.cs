@@ -46,4 +46,25 @@ public class MinionBoughtDef
 
         return 1;
     }
+
+    public void IncrementLevelToStat(StatNames id)
+    {
+        switch (id)
+        {
+            case StatNames.HP:
+                hp++;
+                break;
+            case StatNames.SPD:
+                speed++;
+                break;
+            case StatNames.PASSIVE:
+                passiveSkill++;
+                break;
+            case StatNames.SKILL:
+                skill++;
+                break;
+        }
+
+
+    }
 }

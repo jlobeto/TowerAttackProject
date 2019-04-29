@@ -58,11 +58,17 @@ public class SkillsUpgradePanel : MonoBehaviour
     {
         var statLvl = _boughtInfo.GetStatLevel(id);
         var desc = _shopManager.GetMinionUpgradeDescription(_boughtInfo.type, id);
-        var btnText = _statsCurrency.GetPrice(id, statLvl) + " CHIPS";
+        var btnText = _statsCurrency.GetPrice(id, statLvl+1) + " CHIPS";
         var values = GetCurrentAndNextStat(statLvl);
         var popup = _popManager.BuildPopup(transform.parent, _boughtInfo.type , desc, btnText, PopupsID.StatUpgradeShop) as StatUpgradePopup;
         var minionType = GameUtils.ToEnum(_boughtInfo.type, MinionType.Runner);
         popup.SetPopup(id, values.Item1.GetStatByStatId(id, minionType).ToString(), values.Item2.GetStatByStatId(id, minionType).ToString(), statLvl);
+        popup.OnUpgradeClick += RequestStatUpgrade;
+    }
+
+    bool RequestStatUpgrade(MinionBoughtDef.StatNames  id)
+    {
+        return _shopManager.BuyStat(id);
 
     }
 

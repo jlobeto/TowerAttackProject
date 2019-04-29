@@ -71,8 +71,6 @@ public class MinionsStatsCurrencyDef
             }
         }
 
-        Debug.Log(result);
-
         return result;
     }
 }

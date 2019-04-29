@@ -104,23 +104,27 @@ public class ShopPopup : BasePopup
         }
     }
 
+    public void UpdateSkillsPanel()
+    {
+        var data = _shopManager.GetMinionShopInfo(selected);
+        if (data.Item1 != null)
+        {
+            _skillsUpgradePanel.SetUpgradeItems(data.Item1, data.Item2, data.Item3);
+        }
+        else
+        {
+            _skillsUpgradePanel.HideAllStats();
+        }
+    }
+
     void OnClickMinionButton(string info, bool isBlocked, bool isBought, MinionType type)
     {
         description.text = info;
         selected = type;
 
-        var data = _shopManager.GetMinionShopInfo(type);
-        if (data.Item1 != null)
-        {
-            _skillsUpgradePanel.SetUpgradeItems(data.Item1, data.Item2, data.Item3);
-            CheckBuyButton(isBlocked, isBought, data.Item4, data.Item5);
-        }
-        else
-        {
-            _skillsUpgradePanel.HideAllStats();
-            CheckBuyButton(isBlocked, isBought, data.Item4, data.Item5);
-        }
-
+        var data = _shopManager.GetCurrencies(type);
+        UpdateSkillsPanel();
+        CheckBuyButton(isBlocked, isBought, data.Item1, data.Item2);
     }
-
+    
 }

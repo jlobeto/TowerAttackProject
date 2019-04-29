@@ -80,25 +80,45 @@ public class ShopManager : MonoBehaviour
         _popup.CheckBuyButton(false, true);
     }
 
-    public Tuple<MinionBoughtDef, MinionsStatsCurrencyDef, GenericListJsonLoader<BaseMinionStat>, int, int> 
+    public bool BuyStat(MinionBoughtDef.StatNames  id)
+    {
+        var currency = _gm.User.Currency;
+        var currLevel = _gm.User.GetMinionBought(_popup.selected).GetStatLevel(id);
+        var statPrice = _storeStatsCurrencyDef[_popup.selected].GetPrice(id, currLevel+1);
+        if (currency - statPrice < 0)
+            return false;
+
+        _gm.User.BuyMinionStat(_popup.selected, id, Mathf.CeilToInt( statPrice));
+        //Call again to refresh data.
+        _popup.SetCurrency(_gm.User.Currency);
+        _popup.UpdateSkillsPanel();
+
+        return true;
+    }
+
+    public Tuple<MinionBoughtDef, MinionsStatsCurrencyDef, GenericListJsonLoader<BaseMinionStat>> 
         GetMinionShopInfo(MinionType t)
     {
         var boughtInfo = _gm.User.GetMinionBought(t);
-        var needToUnlockBuy = _storeInfoData[t].starsNeedToUnlock - GetUserTotalStars();
-        var price = _storeInfoData[t].currencyValue;
 
         if (boughtInfo == null)
         {
             return Tuple.Create(boughtInfo
             , default(MinionsStatsCurrencyDef)
-            , default(GenericListJsonLoader<BaseMinionStat>)
-            , needToUnlockBuy, price);
+            , default(GenericListJsonLoader<BaseMinionStat>));
         }
 
         var statsCurr = _storeStatsCurrencyDef[t];
         var minionStats = _gm.MinionsJsonLoader.GetMinionStats(t);
 
-        return Tuple.Create(boughtInfo, statsCurr, minionStats, needToUnlockBuy, price);
+        return Tuple.Create(boughtInfo, statsCurr, minionStats);
+    }
+
+    public Tuple<int,int> GetCurrencies(MinionType t)
+    {
+        var needToUnlockBuy = _storeInfoData[t].starsNeedToUnlock - GetUserTotalStars();
+        var price = _storeInfoData[t].currencyValue;
+        return Tuple.Create(needToUnlockBuy, price);
     }
 
     public string GetMinionUpgradeDescription(string minionType, MinionBoughtDef.StatNames statId)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,9 +11,13 @@ public class StatUpgradePopup : AcceptPopup
 
     public Image currLevelFill;
     public Image nextLevelFill;
+    public Func<MinionBoughtDef.StatNames, bool> OnUpgradeClick;
+
+    MinionBoughtDef.StatNames _statId;
 
     public void SetPopup(MinionBoughtDef.StatNames statId, string currLevelVal, string nextLevelVal, int currLevel)
     {
+        _statId = statId;
         var currLevelFloat = float.Parse(currLevel.ToString());
         currLevelFill.fillAmount = currLevelFloat / ShopManager.MAX_MINION_LEVEL;
         currLevelFloat++;
@@ -33,4 +38,10 @@ public class StatUpgradePopup : AcceptPopup
         OnClosePopup();
     }
 
+    public override void OkButtonPressed()
+    {
+        var result = OnUpgradeClick(_statId);
+        if(result)
+            base.OkButtonPressed();
+    }
 }
