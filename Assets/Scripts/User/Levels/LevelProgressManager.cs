@@ -2,15 +2,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class LevelProgressManager
 {
-    List<LevelProgress> _lvlProgressList;
-    GameManager _gameManager;
+    const string SAVE_FILE = "LevelProgressData.txt";
 
+    GenericListJsonLoader<LevelProgress> _lvlProgressList;
+    GameManager _gameManager;
+    string _pathToSave;
     public LevelProgressManager(GameManager gameManager)
     {
-        _lvlProgressList = new List<LevelProgress>();
+        _pathToSave = Path.Combine(Application.persistentDataPath, SAVE_FILE);
+
+        _lvlProgressList = SaveSystem.Load<GenericListJsonLoader<LevelProgress>>(_pathToSave);
+        if (_lvlProgressList == null)
+        {
+            _lvlProgressList = new GenericListJsonLoader<LevelProgress>();
+            _lvlProgressList.list = new List<LevelProgress>();//have to init this because other scripts are using it.
+            Save();
+        }
+            
         _gameManager = gameManager;
     }
 
@@ -24,14 +36,18 @@ public class LevelProgressManager
         var progress = GetProgress(lvlId);
 
         if (progress != null)
+        {
             progress.MadeProgress(won, stars);
+            Save();
+        }
+            
     }
 
 	public LevelProgress GetProgress(int lvlId)
 	{
-		foreach (var item in _lvlProgressList)
+		foreach (var item in _lvlProgressList.list)
 		{
-			if (item.LevelId == lvlId)
+			if (item.levelId == lvlId)
 				return item;
 		}
 
@@ -42,9 +58,9 @@ public class LevelProgressManager
     public int GetStarsAccumulated()
     {
         int amount = 0;
-        foreach (var item in _lvlProgressList)
+        foreach (var item in _lvlProgressList.list)
         {
-            amount += item.StarsWon;
+            amount += item.starsWon;
         }
 
         return amount;
@@ -53,12 +69,12 @@ public class LevelProgressManager
     public bool AreLevelsWonByWorld(int worldId)
     {
 		var levelProgressCountByWorld = 0;
-        foreach (var item in _lvlProgressList)
+        foreach (var item in _lvlProgressList.list)
         {
-            if(item.WorldId == worldId)
+            if(item.worldId == worldId)
             {
 				levelProgressCountByWorld++;
-                if (!item.Won)
+                if (!item.won)
                     return false;
             }
         }
@@ -69,7 +85,7 @@ public class LevelProgressManager
 
     public void ForceWinAllLevels()
     {
-        _lvlProgressList = new List<LevelProgress>();
+        _lvlProgressList = new GenericListJsonLoader<LevelProgress>();
         foreach (var item in _gameManager.LevelInfoLoader.LevelInfoList.list)
         {
             LevelStarted(item.id);
@@ -92,14 +108,21 @@ public class LevelProgressManager
         {
             var world = _gameManager.LevelInfoLoader.LevelInfoList.list.FirstOrDefault(i => i.id == lvlId).worldId;
             existed = new LevelProgress(lvlId, world);
-            _lvlProgressList.Add(existed);
-            //Debug.Log("creating new lvl progress");
+            _lvlProgressList.list.Add(existed);
+
+            Save();
         }
         else
         {
         	existed.LevelStarted();
+            Save();
         }
 
         return existed;
+    }
+
+    void Save()
+    {
+        SaveSystem.Save(_lvlProgressList, _pathToSave);
     }
 }

@@ -49,7 +49,7 @@ public class LevelNode : MonoBehaviour
         var lastLevelProgress = _gm.User.LevelProgressManager.GetProgress(_lvlInfo.id -1);
         if(lastLevelProgress != null)
         {
-            if (!lastLevelProgress.Won)
+            if (!lastLevelProgress.won)
                 _btn.interactable = false;
                 
         }
@@ -58,7 +58,7 @@ public class LevelNode : MonoBehaviour
 
         var currentLevelProgress = _gm.User.LevelProgressManager.GetProgress(_lvlInfo.id);
         if(currentLevelProgress != null)
-            for (int i = 0; i < currentLevelProgress.StarsWon; i++)
+            for (int i = 0; i < currentLevelProgress.starsWon; i++)
                 _stars[i].sprite = starOnSprite;
 
         if (!_btn.interactable)//change to lock.

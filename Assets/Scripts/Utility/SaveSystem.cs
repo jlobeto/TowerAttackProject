@@ -7,10 +7,10 @@ public static class SaveSystem
     {
         string jsonString = JsonUtility.ToJson(data);
 
-        /*using (StreamWriter streamWriter = File.CreateText(path))
+        using (StreamWriter streamWriter = File.CreateText(path))
         {
             streamWriter.Write(jsonString);
-        }*/
+        }
     }
 
     public static T Load<T>(string path)

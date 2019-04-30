@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,31 +7,27 @@ using UnityEngine;
 /// This will be instantiated only when the user plays the level FOR THE FIRST TIME,
 /// then it will update the current data if the user retry the lvl.
 /// </summary>
+[Serializable]
 public class LevelProgress
 {
-    public int LevelId { get { return _levelId; } }
-    public int WorldId { get { return _worldId; } }
-    public int StarsWon { get { return _starsWon; } }
-    public bool Won { get { return _won; } }
-
-    int _worldId;
-    int _levelId;
-    bool _won;
-    int _starsWon;
+    public int worldId;
+    public int levelId;
+    public bool won;
+    public int starsWon;
     /// <summary>
     /// Amount of minions that the user used to win the level
     /// </summary>
-    int _minionAmountUsedToWin;
-    int _tries;
-    double _firstAttemptAt;
-    double _lastAttemptAt;
+    public int minionAmountUsedToWin;
+    public int tries;
+    public double firstAttemptAt;
+    public double lastAttemptAt;
 
 
     public LevelProgress(int lvlId, int worldId)
     {
-        _levelId = lvlId;
-        _worldId = worldId;
-        _firstAttemptAt = GameUtils.GetTimestampUTC();
+        levelId = lvlId;
+        this.worldId = worldId;
+        firstAttemptAt = GameUtils.GetTimestampUTC();
 
 		LevelStarted ();
     }
@@ -41,15 +38,15 @@ public class LevelProgress
     public void MadeProgress(bool pWin = false, int starsWon = 0)
     {
 		//Debug.Log("made progress on lvlprogress");
-        _won = pWin;
-        _starsWon = starsWon;
+        won = pWin;
+        this.starsWon = starsWon;
     }
 
 	public void LevelStarted()
 	{
 		//Debug.Log("level started");
 
-		_lastAttemptAt = GameUtils.GetTimestampUTC();
-		_tries++;
+		lastAttemptAt = GameUtils.GetTimestampUTC();
+		tries++;
 	}
 }
