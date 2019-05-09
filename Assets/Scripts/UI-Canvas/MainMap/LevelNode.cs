@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class LevelNode : MonoBehaviour 
 {
-    public Sprite unlocked;
     public Sprite locked;
     public Sprite starOnSprite;
 
