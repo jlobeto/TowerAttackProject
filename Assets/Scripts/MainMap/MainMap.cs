@@ -32,6 +32,8 @@ public class MainMap : MonoBehaviour
 	}
 
 
+
+
     public void CreateLevelNodes()
     {
         var gm = GetRealGameManager();
@@ -96,4 +98,12 @@ public class MainMap : MonoBehaviour
 
 		return null;
 	}
+
+    void CheckBackButton()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+
+        }
+    }
 }
