@@ -12,8 +12,8 @@ public class ShopPopup : BasePopup
     public Text starsText;
     public Button buyButton;
     public MinionType selected;
-    public PopupManager popupManager;
 
+    PopupManager _popupManager;
     SkillsUpgradePanel _skillsUpgradePanel;
     GridLayoutGroup _gridGroup;
     List<MinionInShop> _scrollContentList;
@@ -23,11 +23,12 @@ public class ShopPopup : BasePopup
     protected override void Awake()
     {
         base.Awake();
+        _popupManager = FindObjectOfType<PopupManager>();
         _gridGroup = GetComponentInChildren<GridLayoutGroup>();
         _scrollContentList = new List<MinionInShop>();
         _shopManager = GetComponent<ShopManager>();
         _skillsUpgradePanel = GetComponentInChildren<SkillsUpgradePanel>();
-        _skillsUpgradePanel.popupManager = popupManager;
+        _skillsUpgradePanel.popupManager = _popupManager;
         _buyButtonText = buyButton.GetComponentInChildren<Text>();
     }
 
@@ -36,7 +37,7 @@ public class ShopPopup : BasePopup
     {
         if (isShowing) return;
 
-        popupManager.ShopPopupDisplayed();
+        _popupManager.ShopPopupDisplayed();
 
         _rect.position = new Vector3(_rect.parent.position.x - 12, _rect.parent.position.y);
 
@@ -49,7 +50,7 @@ public class ShopPopup : BasePopup
         if (!isShowing) return;
 
         ExecuteFunctions(FunctionTypes.ok);
-        popupManager.DisplayedPopupWasClosed();
+        _popupManager.DisplayedPopupWasClosed();
         gameObject.SetActive(false);
         isShowing = false;
     }

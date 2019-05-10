@@ -6,20 +6,13 @@ using UnityEngine.UI;
 
 public class PopupManager : MonoBehaviour
 {
-    static PopupManager _instance;
     public List<BasePopup> popupPrefabs = new List<BasePopup>();
 
     int _popupStack = 0;
 
     void Start()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else
-            Destroy(gameObject);
+        DontDestroyOnLoad(this);
     }
 
 

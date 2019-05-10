@@ -9,8 +9,10 @@ public class MainMenuManager : MonoBehaviour
 
 	void Start ()
     {
-		
-	}
+        var _gameManager = FindObjectOfType<GameManager>();
+        if (_gameManager == null)
+            SceneManager.LoadScene(0);
+    }
 	
 
 	void Update ()

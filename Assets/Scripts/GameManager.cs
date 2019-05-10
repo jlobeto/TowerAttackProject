@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    static GameManager _instance;
 
     public enum CurrentScene {
         MainMap,
@@ -13,7 +12,7 @@ public class GameManager : MonoBehaviour
     }
 
     
-    public CurrentScene currentScene = CurrentScene.MainMap;
+    //public CurrentScene currentScene = CurrentScene.MainMap;
     public PopupManager popupManager;
     [Header("Add tower prefabs so SwapSystem can work.")]
     public List<TowerBase> allTowersPrefabs;
@@ -45,16 +44,9 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(this);
-            _swapTowerSystem = gameObject.AddComponent<SwapTowerSystem>();
-            _swapTowerSystem.swapParticleSysPrefab = swapParticleSystem;
-        }
-        else
-            Destroy(gameObject);
-
+        DontDestroyOnLoad(this);
+        _swapTowerSystem = gameObject.AddComponent<SwapTowerSystem>();
+        _swapTowerSystem.swapParticleSysPrefab = swapParticleSystem;
     }
 
     private void Start()

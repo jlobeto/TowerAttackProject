@@ -6,18 +6,20 @@ using UnityEngine.SceneManagement;
 public class MainMap : MonoBehaviour
 {
 
-    GameManager[] _gameManagers;
+    GameManager _gameManager;
     MainMapCanvasManager _mainMapCanvas;
     WorldsManager _worldsManager;
 	void Awake ()
     {
-
-	}
+        _gameManager = FindObjectOfType<GameManager>();
+        if (_gameManager == null)
+            SceneManager.LoadScene(0);
+    }
 
     void Start()
     {
         _mainMapCanvas = FindObjectOfType<MainMapCanvasManager>();
-        _gameManagers = FindObjectsOfType<GameManager>();
+        
 
         _worldsManager = new WorldsManager(GetRealGameManager().User);
         
@@ -28,8 +30,9 @@ public class MainMap : MonoBehaviour
 
     void Update ()
     {
-        
-	}
+        CheckBackButton();
+
+    }
 
 
 
@@ -81,29 +84,14 @@ public class MainMap : MonoBehaviour
 
 	public GameManager GetRealGameManager()
 	{
-		for (int i = 0; i < _gameManagers.Length; i++)
-		{
-			if (_gameManagers[i] == null ) continue;
-
-            //Have to do this to check if it is the correct gamemanager.
-            //Look for something on the internet to not do that and only create one gamemanager (that use dont destroy onload)
-            if (_gameManagers[i].User == null)
-            {
-                Destroy(_gameManagers[i].gameObject);
-                continue;
-            }
-
-			return _gameManagers [i];
-		}
-
-		return null;
+		return _gameManager;
 	}
 
     void CheckBackButton()
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-
+            SceneManager.LoadScene("MenuScreen");
         }
     }
 }
