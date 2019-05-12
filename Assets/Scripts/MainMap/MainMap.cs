@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMap : MonoBehaviour
 {
+    public GameLoadingScreen loadingJob;
 
     GameManager _gameManager;
     MainMapCanvasManager _mainMapCanvas;
@@ -14,6 +15,8 @@ public class MainMap : MonoBehaviour
         _gameManager = FindObjectOfType<GameManager>();
         if (_gameManager == null)
             SceneManager.LoadScene(0);
+
+        loadingJob.transform.parent.gameObject.SetActive(false);
     }
 
     void Start()
@@ -72,7 +75,9 @@ public class MainMap : MonoBehaviour
 
         try
         {
-            SceneManager.LoadScene("Level" + lvlInfo.id);
+            _mainMapCanvas.gameObject.SetActive(false);
+            loadingJob.transform.parent.gameObject.SetActive(true);
+            StartCoroutine(loadingJob.Loading("Level" + lvlInfo.id));
         }
         catch (System.Exception)
         {

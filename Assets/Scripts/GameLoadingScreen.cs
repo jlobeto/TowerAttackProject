@@ -6,16 +6,18 @@ using UnityEngine.SceneManagement;
 
 public class GameLoadingScreen : MonoBehaviour
 {
+    public bool isLevelLoading;
     public Slider slider;
 
     void Start()
     {
-        StartCoroutine(Loading());
+        if(!isLevelLoading)
+            StartCoroutine(Loading());
     }
 
-    IEnumerator Loading()
+    public IEnumerator Loading(string name = "MenuScreen")
     {
-        AsyncOperation op = SceneManager.LoadSceneAsync(1);
+        AsyncOperation op = SceneManager.LoadSceneAsync(name);
 
         while (!op.isDone)
         {
