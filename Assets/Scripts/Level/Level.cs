@@ -363,6 +363,6 @@ public class Level : MonoBehaviour
     {
         Time.timeScale = 1;//TODO:: // SACAR ESTO A LA MIERDA
         _gameManager.SetCurrentLevelInfo(null);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 }

@@ -30,6 +30,7 @@ public class ShopPopup : BasePopup
         _skillsUpgradePanel = GetComponentInChildren<SkillsUpgradePanel>();
         _skillsUpgradePanel.popupManager = _popupManager;
         _buyButtonText = buyButton.GetComponentInChildren<Text>();
+        gameObject.SetActive(false);
     }
 
 

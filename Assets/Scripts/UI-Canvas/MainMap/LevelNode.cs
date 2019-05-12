@@ -8,18 +8,17 @@ public class LevelNode : MonoBehaviour
 {
     public Sprite locked;
     public Sprite starOnSprite;
+    public Text txt;
+    public List<Image> stars;
 
-	LevelInfo _lvlInfo;
-	GameManager _gm;
-    Text _txt;
+    LevelInfo _lvlInfo;
+    GameManager _gm;
     Button _btn;
-    List<Image> _stars;
+    
 
 
 	void Awake () 
 	{
-        _txt = GetComponentInChildren<Text>();
-        _stars = GetComponentsInChildren<Image>().Skip(1).ToList();
     }
 	
 
@@ -31,7 +30,7 @@ public class LevelNode : MonoBehaviour
     public void Init(LevelInfo lvlInfo, GameManager gm, Button btn)
     {
         if (lvlInfo.id == 0)
-            foreach (var item in _stars)
+            foreach (var item in stars)
                 item.enabled = false;
 
 		_lvlInfo = lvlInfo;
@@ -58,13 +57,13 @@ public class LevelNode : MonoBehaviour
         var currentLevelProgress = _gm.User.LevelProgressManager.GetProgress(_lvlInfo.id);
         if(currentLevelProgress != null)
             for (int i = 0; i < currentLevelProgress.starsWon; i++)
-                _stars[i].sprite = starOnSprite;
+                stars[i].sprite = starOnSprite;
 
         if (!_btn.interactable)//change to lock.
         {
             GetComponent<Image>().sprite = locked;
         }
 
-        _txt.text = _btn.interactable ? "" + _lvlInfo.id : "";
+        txt.text = _btn.interactable ? "" + _lvlInfo.id : "";
     }
 }

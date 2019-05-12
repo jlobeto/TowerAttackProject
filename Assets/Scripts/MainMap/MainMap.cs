@@ -31,7 +31,6 @@ public class MainMap : MonoBehaviour
     void Update ()
     {
         CheckBackButton();
-
     }
 
 

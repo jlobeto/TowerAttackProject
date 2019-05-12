@@ -38,9 +38,10 @@ public class MainMapCanvasManager : MonoBehaviour
         _currentBuildingWorld = world_0_container;
 
         _screenSelectorsUI.Add(selectedScreenUI);
+        _worldsCreated.Add(world_0_container);
     }
-	
-	void Update ()
+
+    void Update ()
     {
         if(Input.GetMouseButtonDown(0))
         {
@@ -69,7 +70,6 @@ public class MainMapCanvasManager : MonoBehaviour
 
         if (delta < 70)
             return;
-
         
         //right to left
         if (_mouseOnPressXPos > _mouseOnReleaseXPos)
@@ -86,6 +86,8 @@ public class MainMapCanvasManager : MonoBehaviour
             _toPosition = worldsTransform.position + Vector3.right * _canvas.pixelRect.width;
             _currentWorldOnScreen--;
         }
+
+        _worldsCreated[_currentWorldOnScreen].gameObject.SetActive(true);
 
         _isMovingGrid = true;
     }
@@ -104,6 +106,8 @@ public class MainMapCanvasManager : MonoBehaviour
                 item.sprite = unselectedScreenUISprite;
 
             _screenSelectorsUI[_currentWorldOnScreen].sprite = selectedScreenUISprite;
+            HideNonSelectedWorlds();
+
             _isMovingGrid = false;
         }
     }
@@ -116,10 +120,8 @@ public class MainMapCanvasManager : MonoBehaviour
             newWorldUI.transform.position += Vector3.right * _canvas.pixelRect.width * lvlInfo.worldId;
             newWorldUI.name = "world_" + lvlInfo.worldId;
             _worldsCreated.Add(newWorldUI);
-
-            
             newWorldUI.Init(lvlInfo.worldId, worldUnlocked, neededToUnlock);
-
+            newWorldUI.gameObject.SetActive(false);
             _currentBuildingWorld = newWorldUI;
 
             _amountOfWorlds++;
@@ -135,6 +137,18 @@ public class MainMapCanvasManager : MonoBehaviour
 		node.Init (lazyLvlInfo , gm, btn);
 
         _lvlBtn_lastWorldId = lvlInfo.worldId;
+    }
+    
+    void HideNonSelectedWorlds()
+    {
+        int i=0;
+        foreach (var item in _worldsCreated)
+        {
+            if (_currentWorldOnScreen != i && item.gameObject.activeSelf )
+                item.gameObject.SetActive(false);
+
+            i++;
+        }
     }
 
     /// <summary>
@@ -158,8 +172,12 @@ public class MainMapCanvasManager : MonoBehaviour
     {
         foreach (var item in _worldsCreated)
         {
-            Destroy(item.gameObject);
+            if(item.GetInstanceID() != world_0_container.GetInstanceID())
+                Destroy(item.gameObject);
         }
+
+        _worldsCreated = new List<WorldUI>();
+        _worldsCreated.Add(world_0_container);
 
         _lvlBtn_lastWorldId = 0;
         _currentBuildingWorld = world_0_container;

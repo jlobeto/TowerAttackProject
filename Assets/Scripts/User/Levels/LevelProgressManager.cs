@@ -86,6 +86,7 @@ public class LevelProgressManager
     public void ForceWinAllLevels()
     {
         _lvlProgressList = new GenericListJsonLoader<LevelProgress>();
+        _lvlProgressList.list = new List<LevelProgress>();
         foreach (var item in _gameManager.LevelInfoLoader.LevelInfoList.list)
         {
             LevelStarted(item.id);
