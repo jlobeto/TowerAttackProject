@@ -9,6 +9,7 @@ public class PopupManager : MonoBehaviour
     public List<BasePopup> popupPrefabs = new List<BasePopup>();
 
     int _popupStack = 0;
+    bool _isPauseActivated;
 
     void Start()
     {
@@ -20,10 +21,15 @@ public class PopupManager : MonoBehaviour
 
     }
 
-    public BasePopup BuildPopup(Transform parent, string title, string descript, string btnText, PopupsID popupId = PopupsID.BasePopup)
+    public BasePopup BuildPopup(Transform parent, string title, string descript, string btnText, PopupsID popupId = PopupsID.BasePopup, bool isPause = false)
     {
         if (popupPrefabs.All(i => i.popupId != popupId))
             return null;
+
+        if (isPause && _isPauseActivated)
+            return null;
+        else if (isPause)
+            _isPauseActivated = true;
 
         var popup = Instantiate<BasePopup>(popupPrefabs.FirstOrDefault(i => i.popupId == popupId), parent);
         popup.title.text = title.ToUpper();
@@ -52,6 +58,9 @@ public class PopupManager : MonoBehaviour
     public void DisplayedPopupWasClosed()
     {
         _popupStack--;
+
+        if(_isPauseActivated)
+            _isPauseActivated = false;
     }
 
     float GetRandomAnimation()

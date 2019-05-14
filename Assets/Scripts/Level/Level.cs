@@ -89,12 +89,14 @@ public class Level : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.Escape))
 		{
-			Time.timeScale = 0;//TODO:: // SACAR ESTO A LA MIERDA
-            _lvlCanvasManager.EnableMinionButtons(false);
-            _lvlCanvasManager.EnableDisableMinionSkillButtons(false);
-            var popup = GameManager.popupManager.BuildPopup (LevelCanvasManager.transform, "Pause", "Game paused" , "Main Map", PopupsID.AcceptOrDecline);
+            var popup = GameManager.popupManager.BuildPopup(LevelCanvasManager.transform, "Pause", "Game paused", "Main Map", PopupsID.AcceptOrDecline, true);
             if (popup != null)
+            {
+                Time.timeScale = 0;//TODO:: // SACAR ESTO A LA MIERDA
+                _lvlCanvasManager.EnableMinionButtons(false);
+                _lvlCanvasManager.EnableDisableMinionSkillButtons(false);
                 popup.AddFunction(BasePopup.FunctionTypes.ok, OnFinishLevelCallback);
+            }
         }
 	}
 
