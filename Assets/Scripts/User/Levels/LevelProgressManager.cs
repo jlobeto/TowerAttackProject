@@ -37,8 +37,9 @@ public class LevelProgressManager
 
         if (progress != null)
         {
-            progress.MadeProgress(won, stars);
-            Save();
+            var result = progress.MadeProgress(won, stars);
+            if(result)
+                Save();
         }
             
     }

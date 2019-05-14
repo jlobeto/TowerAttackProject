@@ -34,12 +34,16 @@ public class LevelProgress
 
     /// <summary>
     /// When the user finish the level this func is called (either win or lose)
+    /// returns if the a progress has been made.
     /// </summary>
-    public void MadeProgress(bool pWin = false, int starsWon = 0)
+    public bool MadeProgress(bool pWin = false, int starsWon = 0)
     {
-		//Debug.Log("made progress on lvlprogress");
+        if (won && this.starsWon >= starsWon)
+            return false;
+
         won = pWin;
         this.starsWon = starsWon;
+        return true;
     }
 
 	public void LevelStarted()
