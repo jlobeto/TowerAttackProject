@@ -11,7 +11,9 @@ public class GameManager : MonoBehaviour
         Gameplay
     }
 
-    
+    [Header("Show DevTools.")]
+    public bool showDevTools = true;
+
     //public CurrentScene currentScene = CurrentScene.MainMap;
     public PopupManager popupManager;
     [Header("Add tower prefabs so SwapSystem can work.")]

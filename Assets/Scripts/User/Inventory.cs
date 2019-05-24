@@ -6,13 +6,12 @@ using UnityEngine;
 
 public class Inventory
 {
-    const string MINIONS_SAVE_NAME = "minionsSavedData.txt";
     GenericListJsonLoader<MinionBoughtDef> _minionsBoughts;
     string _pathToMinionsSaved;
 
     public Inventory()
     {
-        _pathToMinionsSaved = Path.Combine(Application.persistentDataPath, MINIONS_SAVE_NAME);
+        _pathToMinionsSaved = Path.Combine(Application.persistentDataPath, SaveSystem.MINIONS_SAVE_NAME);
 
         _minionsBoughts = SaveSystem.Load<GenericListJsonLoader<MinionBoughtDef>>(_pathToMinionsSaved);
 

@@ -6,17 +6,16 @@ using System.IO;
 
 public class LevelProgressManager
 {
-    const string SAVE_FILE = "LevelProgressData.txt";
 
     GenericListJsonLoader<LevelProgress> _lvlProgressList;
     GameManager _gameManager;
     string _pathToSave;
     public LevelProgressManager(GameManager gameManager)
     {
-        _pathToSave = Path.Combine(Application.persistentDataPath, SAVE_FILE);
+        _pathToSave = Path.Combine(Application.persistentDataPath, SaveSystem.LEVEL_PROGRESS_SAVE_NAME);
 
         _lvlProgressList = SaveSystem.Load<GenericListJsonLoader<LevelProgress>>(_pathToSave);
-        if (_lvlProgressList == null)
+        if (_lvlProgressList == null || _lvlProgressList.list == null)
         {
             _lvlProgressList = new GenericListJsonLoader<LevelProgress>();
             _lvlProgressList.list = new List<LevelProgress>();//have to init this because other scripts are using it.
@@ -94,6 +93,8 @@ public class LevelProgressManager
             LevelEnded(item.id, true, 3);
         }
     }
+
+
 
     /*
      * ////////////////////////////////////////////////
