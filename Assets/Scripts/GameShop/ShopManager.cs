@@ -48,7 +48,8 @@ public class ShopManager : MonoBehaviour
             _storeInfoData.Add(minionType, item);
             _popup.AddMinionToShop(minionType, CreateDescriptionString(item));
         }
-        
+
+        OnPopupDisplayCallback();
     }
 
     

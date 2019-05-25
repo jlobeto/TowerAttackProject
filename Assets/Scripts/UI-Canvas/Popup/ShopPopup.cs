@@ -25,11 +25,12 @@ public class ShopPopup : BasePopup
         base.Awake();
         _popupManager = FindObjectOfType<PopupManager>();
         _gridGroup = GetComponentInChildren<GridLayoutGroup>();
-        _scrollContentList = new List<MinionInShop>();
         _shopManager = GetComponent<ShopManager>();
         _skillsUpgradePanel = GetComponentInChildren<SkillsUpgradePanel>();
         _skillsUpgradePanel.popupManager = _popupManager;
         _buyButtonText = buyButton.GetComponentInChildren<Text>();
+
+        _scrollContentList = new List<MinionInShop>();
         gameObject.SetActive(false);
     }
 
