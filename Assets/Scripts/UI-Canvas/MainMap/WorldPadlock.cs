@@ -15,34 +15,17 @@ public class WorldPadlock : MonoBehaviour
 
     void Awake ()
     {
-        var imgs = GetComponentsInChildren<Image>();
-        foreach (var item in imgs)
-        {
-            if (item.name == "padlock")
-                _padlock = item;
-            else if (item.name == "blackScreen")
-                _blackScreen = item;
-            else if (item.name == "star")
-                _star = item;
-        }
-
-        var txts = GetComponentsInChildren<Text>();
-        foreach (var item in txts)
-        {
-            if (item.name == "worldLockedText")
-                _worldLockedText = item;
-            else if (item.name == "quantity")
-                _neededToUnlockText = item;
-            else if (item.name == "needText")
-                _needText = item;
-            else if (item.name == "mustWinLevels")
-                _mustWinLvls = item;
-        }
-	}
+        SetData();
+    }
 
     public void SetLockUI(bool unlock, int toUnlock )
     {
-        if(toUnlock != 0)
+        //if this is null, all of the variables are.
+        //this happend when forcing al leves and the awake does not execute (this instance already exists
+        if (_padlock == null)
+            SetData();
+
+        if (toUnlock != 0)
         {
             _neededToUnlockText.text = toUnlock.ToString();
             _neededToUnlockText.enabled = true;
@@ -67,6 +50,33 @@ public class WorldPadlock : MonoBehaviour
 			_star.enabled = false;
 		}
         
+    }
+
+    void SetData()
+    {
+        var imgs = GetComponentsInChildren<Image>();
+        foreach (var item in imgs)
+        {
+            if (item.name == "padlock")
+                _padlock = item;
+            else if (item.name == "blackScreen")
+                _blackScreen = item;
+            else if (item.name == "star")
+                _star = item;
+        }
+
+        var txts = GetComponentsInChildren<Text>();
+        foreach (var item in txts)
+        {
+            if (item.name == "worldLockedText")
+                _worldLockedText = item;
+            else if (item.name == "quantity")
+                _neededToUnlockText = item;
+            else if (item.name == "needText")
+                _needText = item;
+            else if (item.name == "mustWinLevels")
+                _mustWinLvls = item;
+        }
     }
 	
 }

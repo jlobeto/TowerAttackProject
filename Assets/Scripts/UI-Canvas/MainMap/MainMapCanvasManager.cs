@@ -187,9 +187,12 @@ public class MainMapCanvasManager : MonoBehaviour
         _amountOfWorlds = 1;
         mainMap.GetRealGameManager().User.LevelProgressManager.ForceWinAllLevels();
         mainMap.CreateLevelNodes();
+
+        _worldsCreated[_currentWorldOnScreen].gameObject.SetActive(true);
+        
     }
 
 
-    
+
 }
 
