@@ -151,6 +151,7 @@ public class ShopManager : MonoBehaviour
         //TODO :: Setear tambien al Runner como seleccionado default (asi muestra la info de este).
         _popup.SetCurrency(_gm.User.Currency);
         _popup.SetStars(GetUserTotalStars());
+        _popup.SelectMinion();
         foreach (var item in _storeInfoData)
         {
             _popup.CheckMinionAvailability(item.Key, GetUserTotalStars() < item.Value.starsNeedToUnlock, IsMinionBought(item.Key));

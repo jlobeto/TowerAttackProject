@@ -44,6 +44,7 @@ public class ShopPopup : BasePopup
         _rect.position = new Vector3(_rect.parent.position.x - 12, _rect.parent.position.y);
 
         gameObject.SetActive(true);
+
         base.DisplayPopup();
     }
 
@@ -118,6 +119,14 @@ public class ShopPopup : BasePopup
         {
             _skillsUpgradePanel.HideAllStats();
         }
+    }
+
+    public void SelectMinion(MinionType type = MinionType.Runner)
+    {
+        var m = _scrollContentList.FirstOrDefault(i => i.minionType == type);
+        if (m == null) return;
+
+        m.button.onClick.Invoke();
     }
 
     void OnClickMinionButton(string info, bool isBlocked, bool isBought, MinionType type)
