@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     public List<TowerBase> allTowersPrefabs;
     public ParticleSystem swapParticleSystem;
 
+    int _currentViewingWorld;
+
     /// <summary>
     /// This is set when a level node is clicked, When returning from a level, this is set to null.
     /// Using this to set some variables to the Level Object on Level Scene
@@ -39,8 +41,9 @@ public class GameManager : MonoBehaviour
 	public TowerJSONLoaderManager TowerLoader { get { return _towerJSONLoader; } }
     public LevelInfo CurrentLevelInfo { get { return _currentLevelInfo; } }
     public LevelNodesLoader LevelInfoLoader { get { return _levelInfoLoader; } }
-
     public User User { get { return _user; } }
+
+    public int CurrentViewingWorld { get { return _currentViewingWorld; } }
 
     public Action<bool> OnLevelInfoSet = delegate { };
 
@@ -67,6 +70,10 @@ public class GameManager : MonoBehaviour
     public void SetCurrentLevelInfo(LevelInfo lvlinfo)
     {
         _currentLevelInfo = lvlinfo;
+
+        if (lvlinfo != null)
+            _currentViewingWorld = lvlinfo.worldId;
+
         OnLevelInfoSet(_currentLevelInfo != null);
     }
 

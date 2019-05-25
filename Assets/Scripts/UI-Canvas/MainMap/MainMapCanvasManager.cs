@@ -50,7 +50,7 @@ public class MainMapCanvasManager : MonoBehaviour
         else if(Input.GetMouseButtonUp(0))
         {
             _mouseOnReleaseXPos = Input.mousePosition.x;
-            if(! mainMap.GetRealGameManager().popupManager.IsAnyPopupDisplayed())
+            if(! mainMap.GetGameManager().popupManager.IsAnyPopupDisplayed())
                 CheckMovement();
         }
 
@@ -76,14 +76,14 @@ public class MainMapCanvasManager : MonoBehaviour
         {
             if (_currentWorldOnScreen == _amountOfWorlds-1) return;
 
-            _toPosition = worldsTransform.position - Vector3.right * _canvas.pixelRect.width;
+            _toPosition = worldsTransform.position - Vector3.right * GetCanvasWidth();
             _currentWorldOnScreen++;
         }
         else //left to right
         {
             if (_currentWorldOnScreen == 0) return;
 
-            _toPosition = worldsTransform.position + Vector3.right * _canvas.pixelRect.width;
+            _toPosition = worldsTransform.position + Vector3.right * GetCanvasWidth();
             _currentWorldOnScreen--;
         }
 
@@ -139,6 +139,20 @@ public class MainMapCanvasManager : MonoBehaviour
         _lvlBtn_lastWorldId = lvlInfo.worldId;
     }
     
+    public void ShowWorld(int id)
+    {
+        if (id == 0) return;
+
+        if(_worldsCreated.Count > id)
+        {
+            _currentWorldOnScreen = id;
+            _worldsCreated[_currentWorldOnScreen].gameObject.SetActive(true);
+            HideNonSelectedWorlds();
+
+            worldsTransform.position = worldsTransform.position - Vector3.right * GetCanvasWidth() * (id);
+        }
+    }
+
     void HideNonSelectedWorlds()
     {
         int i=0;
@@ -165,6 +179,11 @@ public class MainMapCanvasManager : MonoBehaviour
         }
     }
 
+    float GetCanvasWidth()
+    {
+        return _canvas.pixelRect.width;
+    }
+
     /// <summary>
     /// USed by the dev button at the upper left corner.
     /// </summary>
@@ -185,14 +204,11 @@ public class MainMapCanvasManager : MonoBehaviour
         
 
         _amountOfWorlds = 1;
-        mainMap.GetRealGameManager().User.LevelProgressManager.ForceWinAllLevels();
+        mainMap.GetGameManager().User.LevelProgressManager.ForceWinAllLevels();
         mainMap.CreateLevelNodes();
 
         _worldsCreated[_currentWorldOnScreen].gameObject.SetActive(true);
         
     }
-
-
-
 }
 

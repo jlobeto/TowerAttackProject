@@ -24,11 +24,11 @@ public class MainMap : MonoBehaviour
         _mainMapCanvas = FindObjectOfType<MainMapCanvasManager>();
         
 
-        _worldsManager = new WorldsManager(GetRealGameManager().User);
+        _worldsManager = new WorldsManager(GetGameManager().User);
         
 
         CreateLevelNodes();
-
+        _mainMapCanvas.ShowWorld(_gameManager.CurrentViewingWorld);
     }
 
     void Update ()
@@ -36,12 +36,10 @@ public class MainMap : MonoBehaviour
         CheckBackButton();
     }
 
-
-
-
+    
     public void CreateLevelNodes()
     {
-        var gm = GetRealGameManager();
+        var gm = GetGameManager();
 
         var worldsUnlocked = _worldsManager.GetUnlockWorlds();
 
@@ -71,7 +69,7 @@ public class MainMap : MonoBehaviour
 
     void OnLevelNodeClick(LevelInfo lvlInfo)
     {
-		GetRealGameManager().SetCurrentLevelInfo(lvlInfo);
+		GetGameManager().SetCurrentLevelInfo(lvlInfo);
 
         try
         {
@@ -86,7 +84,7 @@ public class MainMap : MonoBehaviour
         
     }
 
-	public GameManager GetRealGameManager()
+	public GameManager GetGameManager()
 	{
 		return _gameManager;
 	}
