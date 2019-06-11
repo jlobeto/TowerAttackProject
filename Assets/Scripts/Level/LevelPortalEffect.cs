@@ -22,7 +22,7 @@ public class LevelPortalEffect : MonoBehaviour
 
     public void UpdateGoal(int livesRemoved, int[] objetives)
     {
-        if (livesRemoved >= objetives[objetives.Length - 1])
+        /*if (livesRemoved >= objetives[objetives.Length - 1])
         {
             SetEmissionColor(_cubeEmisColor, cubes[cubes.Count - 1].material);
             return;
@@ -31,7 +31,7 @@ public class LevelPortalEffect : MonoBehaviour
         if(livesRemoved >= objetives[0] && livesRemoved < objetives[1])
             SetEmissionColor(_cubeEmisColor, cubes[0].material);
         else if(livesRemoved >= objetives[1] && livesRemoved < objetives[2])
-            SetEmissionColor(_cubeEmisColor, cubes[1].material);
+            SetEmissionColor(_cubeEmisColor, cubes[1].material);*/
     }
 
     private void OnTriggerEnter(Collider other)
