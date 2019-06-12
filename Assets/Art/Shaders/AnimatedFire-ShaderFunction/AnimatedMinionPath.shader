@@ -1,6 +1,4 @@
-// Made with Amplify Shader Editor
-// Available at the Unity Asset Store - http://u3d.as/y3X 
-Shader "ASESampleShaders/AnimatedFireShaderFunction"
+Shader "AnimatedMinionPath"
 {
 	Properties
 	{
@@ -59,7 +57,7 @@ Shader "ASESampleShaders/AnimatedFireShaderFunction"
 		ENDCG
 	}
 	Fallback "Diffuse"
-	CustomEditor "ASEMaterialInspector"
+	//CustomEditor "ASEMaterialInspector"
 }
 /*ASEBEGIN
 Version=7206

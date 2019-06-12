@@ -1,6 +1,4 @@
-// Made with Amplify Shader Editor
-// Available at the Unity Asset Store - http://u3d.as/y3X 
-Shader "ASESampleShaders/Community/TFHC/Force Shield"
+Shader "Force Shield"
 {
 	Properties
 	{
@@ -262,7 +260,7 @@ Shader "ASESampleShaders/Community/TFHC/Force Shield"
 		}
 	}
 	Fallback "Diffuse"
-	CustomEditor "ASEMaterialInspector"
+	//CustomEditor "ASEMaterialInspector"
 }
 /*ASEBEGIN
 Version=10011

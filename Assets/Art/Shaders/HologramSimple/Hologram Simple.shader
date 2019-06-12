@@ -1,6 +1,4 @@
-// Made with Amplify Shader Editor
-// Available at the Unity Asset Store - http://u3d.as/y3X 
-Shader "ASESampleShaders/Community/TFHC/Hologram Simple"
+Shader "Hologram Simple"
 {
 	Properties
 	{
@@ -191,7 +189,7 @@ Shader "ASESampleShaders/Community/TFHC/Hologram Simple"
 		}
 	}
 	Fallback "Diffuse"
-	CustomEditor "ASEMaterialInspector"
+	//CustomEditor "ASEMaterialInspector"
 }
 /*ASEBEGIN
 Version=13201
