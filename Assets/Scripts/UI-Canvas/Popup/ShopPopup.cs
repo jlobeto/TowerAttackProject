@@ -19,19 +19,39 @@ public class ShopPopup : BasePopup
     List<MinionInShop> _scrollContentList;
     ShopManager _shopManager;
     Text _buyButtonText;
+    ScrollRect _scrollRect;
+    bool _goingToItemInScroller;
+    float _showItemInScrollerResult;
 
     protected override void Awake()
     {
         base.Awake();
         _popupManager = FindObjectOfType<PopupManager>();
         _gridGroup = GetComponentInChildren<GridLayoutGroup>();
+        _scrollRect = GetComponentInChildren<ScrollRect>();
         _shopManager = GetComponent<ShopManager>();
         _skillsUpgradePanel = GetComponentInChildren<SkillsUpgradePanel>();
         _skillsUpgradePanel.popupManager = _popupManager;
         _buyButtonText = buyButton.GetComponentInChildren<Text>();
 
         _scrollContentList = new List<MinionInShop>();
+    }
+
+    protected override void Start()
+    {
         gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        //To move the selected item to the middle of the scroller
+        if(_goingToItemInScroller)
+        {
+            _scrollRect.horizontalNormalizedPosition = Mathf.Lerp(_scrollRect.horizontalNormalizedPosition, _showItemInScrollerResult, Time.deltaTime * 8);
+            if (Mathf.Abs(_scrollRect.horizontalNormalizedPosition  - _showItemInScrollerResult) < 0.005f)
+                _goingToItemInScroller = false;
+        }
+
     }
 
 
@@ -121,22 +141,66 @@ public class ShopPopup : BasePopup
         }
     }
 
-    public void SelectMinion(MinionType type = MinionType.Runner)
+    public void SelectMinionByCode(MinionType type = MinionType.Runner)
     {
-        var m = _scrollContentList.FirstOrDefault(i => i.minionType == type);
+        MinionInShop m = null;
+        
+        float i = 0;
+        foreach (var item in _scrollContentList)
+        {
+            if (item.minionType == type)
+            {
+                m = item;
+                break;
+            }
+
+            i += 1;
+        }
+
         if (m == null) return;
 
         m.button.onClick.Invoke();
+        ShowItemInScroller(i);
     }
 
-    void OnClickMinionButton(string info, bool isBlocked, bool isBought, MinionType type)
+    void OnClickMinionButton(string info, bool isBlocked, bool isBought, MinionType newSelectedType)
     {
-        description.text = info;
-        selected = type;
+        var newSelected = _scrollContentList.FirstOrDefault(i => i.minionType == newSelectedType);
+        var lastSelected = _scrollContentList.FirstOrDefault(i => i.minionType == selected);
+        newSelected.ChangeToColor(true);
 
-        var data = _shopManager.GetCurrencies(type);
+        if (selected != newSelectedType)
+            lastSelected.ChangeToColor(false);
+
+        description.text = info;
+        selected = newSelectedType;
+
+        var data = _shopManager.GetCurrencies(newSelectedType);
         UpdateSkillsPanel();
         CheckBuyButton(isBlocked, isBought, data.Item1, data.Item2);
     }
-    
+
+    void ShowItemInScroller(float i)
+    {
+        float scrollNewValue = 0;
+        if (i == _scrollContentList.Count - 1)
+            scrollNewValue = 1;
+        else if (i != 0)
+        {
+            scrollNewValue = i / _scrollContentList.Count;
+            if (scrollNewValue > 0.5f)
+                scrollNewValue += (1.0f / 6);
+            else if (scrollNewValue < 0.4f)
+                scrollNewValue -= (1.0f / 6);
+
+            if (scrollNewValue > 1.0f) scrollNewValue = 1f;
+            if (scrollNewValue < 0.0f) scrollNewValue = 0f;
+
+        }
+
+        _showItemInScrollerResult = scrollNewValue;
+        _goingToItemInScroller = true;
+    }
+
+
 }

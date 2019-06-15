@@ -77,8 +77,9 @@ public class ShopManager : MonoBehaviour
         _gm.User.BuyMinion(_popup.selected, minionValue);
 
         //Call again to refresh data.
-        OnPopupDisplayCallback();
+        UpdatePopupVisualData(true);
         _popup.CheckBuyButton(false, true);
+        _popup.SelectMinionByCode(_popup.selected);
     }
 
     public bool BuyStat(MinionBoughtDef.StatNames  id)
@@ -148,14 +149,21 @@ public class ShopManager : MonoBehaviour
 
     void OnPopupDisplayCallback()
     {
-        //TODO :: Setear tambien al Runner como seleccionado default (asi muestra la info de este).
+        UpdatePopupVisualData();
+    }
+
+    void UpdatePopupVisualData(bool boughtUpdate = false)
+    {
         _popup.SetCurrency(_gm.User.Currency);
         _popup.SetStars(GetUserTotalStars());
-        _popup.SelectMinion();
+
         foreach (var item in _storeInfoData)
         {
             _popup.CheckMinionAvailability(item.Key, GetUserTotalStars() < item.Value.starsNeedToUnlock, IsMinionBought(item.Key));
         }
+
+        if (!boughtUpdate)
+            _popup.SelectMinionByCode();//this goes after the check minion availability due the the selection feedback on runner.
     }
 
     int GetUserTotalStars()

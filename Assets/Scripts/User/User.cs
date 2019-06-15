@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 /// <summary>
 /// This will contain all the data to be stored, or the be accessed by the entire game.
@@ -20,6 +21,7 @@ public class User
 
 	public LevelProgressManager LevelProgressManager { get { return _levelProgressManager; } }
     public int Currency { get { return _currency; } }
+    public Action OnMinionBought = delegate { };
 
     public User(GameManager gameManager)
     {
@@ -53,6 +55,7 @@ public class User
     {
         _currency -= valueOfMinion;
         _inventory.AddNewMinionToInventory(t);
+        OnMinionBought();
     }
 
     public void BuyMinionStat(MinionType type, MinionBoughtDef.StatNames statName, int price)

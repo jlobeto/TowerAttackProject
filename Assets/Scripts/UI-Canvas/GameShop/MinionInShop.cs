@@ -15,6 +15,7 @@ public class MinionInShop : MonoBehaviour
     public MinionType minionType;
     public Color unableToPurchaseColor;
     public Color nameTextColor;
+    public Color selectedColor;
 
     bool _isBought;
     bool _isBlocked;
@@ -29,6 +30,7 @@ public class MinionInShop : MonoBehaviour
         get { return _isBought; }
         set
         {
+            
             _isBought = value;
 
             if (_isBought)
@@ -83,6 +85,25 @@ public class MinionInShop : MonoBehaviour
 
         _isBlocked = false;
         padLock.enabled = false;
+    }
+
+    public void ChangeToColor(bool isSelected)
+    {
+        if (isSelected)
+        {
+            _colorBlock.normalColor = selectedColor;
+            _colorBlock.highlightedColor = selectedColor;
+            button.colors = _colorBlock;
+
+            _buttonText.color = selectedColor;
+        }
+        else
+        {
+            if (_isBlocked || !_isBought)
+                SetNotBoughtColors();
+            else
+                SetBoughtColors();
+        }
     }
 
     void SetNotBoughtColors()
