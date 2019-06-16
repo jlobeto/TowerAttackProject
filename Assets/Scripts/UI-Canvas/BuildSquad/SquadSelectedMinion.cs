@@ -14,9 +14,13 @@ public class SquadSelectedMinion : MonoBehaviour
     public Action<string, bool, bool, MinionType> onMinionClick = delegate { };
     public MinionType minionType = MinionType.Runner;
 
+    public bool IsEmpty { get { return _isEmpty; } }
+
     bool _isEmpty = true;
 
-    void Start()
+
+
+    void Awake()
     {
         minionPic.enabled = false;
         text.text = UNSELECTED;
@@ -30,7 +34,13 @@ public class SquadSelectedMinion : MonoBehaviour
 
     public void SetMinion(MinionType type)
     {
+        text.text = type.ToString();
 
+        minionPic.enabled = true;
+        minionPic.sprite = Resources.Load<Sprite>("UIMinionsPictures/" + text.text + "/" + text.text);
+
+        _isEmpty = false;
+        minionType = type;
     }
 
 }

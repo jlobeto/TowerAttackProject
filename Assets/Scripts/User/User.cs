@@ -68,4 +68,14 @@ public class User
     {
         return _inventory.GetMinionBought(t);
     }
+
+    public List<string> GetSquadMinionsOrder()
+    {
+        return _inventory.GetSquadOrder();
+    }
+
+    public void SetSquadMinionItem(MinionType t)
+    {
+        _inventory.SetSquadOrderItem(t);
+    }
 }

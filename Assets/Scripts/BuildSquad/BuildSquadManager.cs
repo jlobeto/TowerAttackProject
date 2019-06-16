@@ -19,7 +19,6 @@ public class BuildSquadManager : MonoBehaviour
 
     void Start()
     {
-
         _gm = FindObjectOfType<GameManager>();
         _user = _gm.User;
         _user.OnMinionBought += SetBoughtScrollButtons;
@@ -38,6 +37,8 @@ public class BuildSquadManager : MonoBehaviour
 
         FillScrollList();
         SetBoughtScrollButtons();
+
+        FillSelectedList();
     }
 
     
@@ -45,7 +46,21 @@ public class BuildSquadManager : MonoBehaviour
     {
         
     }
-    
+
+    void FillSelectedList()
+    {
+        var selectedList = _user.GetSquadMinionsOrder();
+        int index = 0;
+        foreach (var item in selectedList)
+        {
+            selectedButtons[index].SetMinion(GameUtils.ToEnum(item, MinionType.Runner));
+            index++;
+        }
+
+        ChangeSelectedItemsColorInScroller();
+    }
+
+
     void FillScrollList()
     {
         MinionInShop button;
@@ -72,7 +87,41 @@ public class BuildSquadManager : MonoBehaviour
         {
             shopPopup.DisplayPopup();
             shopPopup.SelectMinionByCode(type);
+            return;
         }
+
+        var orderList = _user.GetSquadMinionsOrder();
+
+        if (orderList.Any(i => i == type.ToString()) || orderList.Count == selectedButtons.Count)
+            return;
+
+        _user.SetSquadMinionItem(type);
+
+        var emptyItem = selectedButtons.FirstOrDefault(i => i.IsEmpty);
+        if (emptyItem != null)
+            emptyItem.SetMinion(type);
+
+        var selectedItem = _totalMinionsList.FirstOrDefault(i => i.minionType == type);
+        if (selectedItem != null)
+            selectedItem.ChangeToColor(true);
+    }
+
+    void ChangeSelectedItemsColorInScroller()
+    {
+        foreach (var item in selectedButtons)
+        {
+            if (item.IsEmpty) continue;
+
+            var selectedItem = _totalMinionsList.FirstOrDefault(i => i.minionType == item.minionType);
+            if (selectedItem != null)
+                selectedItem.ChangeToColor(true);
+        }
+        
+    }
+
+    bool IsAlreadySelected(MinionType t )
+    {
+        return selectedButtons.Any(i => i.minionType == t);
     }
 
     void SetBoughtScrollButtons()
