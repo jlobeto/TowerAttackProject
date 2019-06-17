@@ -71,6 +71,16 @@ public class Inventory
         SaveSystem.Save(_squadMinionsOrder, _pathToSquadOrder);
     }
 
+    public void DeleteSquadOrderItem(MinionType t)
+    {
+        var s = t.ToString();
+        if(_squadMinionsOrder.list.Contains(s))
+        {
+            _squadMinionsOrder.list.Remove(s);
+            SaveSystem.Save(_squadMinionsOrder, _pathToSquadOrder);
+        }
+    }
+
     GenericListJsonLoader<MinionBoughtDef> CreateNewBoughtDefData()
     {
         var list = new GenericListJsonLoader<MinionBoughtDef>();

@@ -54,10 +54,20 @@ public class BuildSquadManager : MonoBehaviour
         foreach (var item in selectedList)
         {
             selectedButtons[index].SetMinion(GameUtils.ToEnum(item, MinionType.Runner));
+            selectedButtons[index].onMinionClick += OnSelectedMinionClickCallback;
             index++;
         }
 
-        ChangeSelectedItemsColorInScroller();
+        ChangeSelectedItemsColorInScroller(true);
+    }
+
+    void UnfillSelectedList()
+    {
+        foreach (var item in selectedButtons)
+        {
+            item.onMinionClick -= OnSelectedMinionClickCallback;
+            item.ResetMinion();
+        }
     }
 
 
@@ -97,16 +107,16 @@ public class BuildSquadManager : MonoBehaviour
 
         _user.SetSquadMinionItem(type);
 
-        var emptyItem = selectedButtons.FirstOrDefault(i => i.IsEmpty);
-        if (emptyItem != null)
-            emptyItem.SetMinion(type);
+        var selectedItem = selectedButtons.FirstOrDefault(i => i.IsEmpty);
+        selectedItem.SetMinion(type);
+        selectedItem.onMinionClick += OnSelectedMinionClickCallback;
 
-        var selectedItem = _totalMinionsList.FirstOrDefault(i => i.minionType == type);
-        if (selectedItem != null)
-            selectedItem.ChangeToColor(true);
+        var selectedItemScroll = _totalMinionsList.FirstOrDefault(i => i.minionType == type);
+        if (selectedItemScroll != null)
+            selectedItemScroll.ChangeToColor(true);
     }
 
-    void ChangeSelectedItemsColorInScroller()
+    void ChangeSelectedItemsColorInScroller(bool value)
     {
         foreach (var item in selectedButtons)
         {
@@ -114,7 +124,7 @@ public class BuildSquadManager : MonoBehaviour
 
             var selectedItem = _totalMinionsList.FirstOrDefault(i => i.minionType == item.minionType);
             if (selectedItem != null)
-                selectedItem.ChangeToColor(true);
+                selectedItem.ChangeToColor(value);
         }
         
     }
@@ -125,7 +135,7 @@ public class BuildSquadManager : MonoBehaviour
     }
 
     void SetBoughtScrollButtons()
-    {
+    { 
         MinionBoughtDef bought;
         foreach (var item in _totalMinionsList)
         {
@@ -133,4 +143,20 @@ public class BuildSquadManager : MonoBehaviour
             item.IsBought = bought != null;
         }
     }
+
+    void OnSelectedMinionClickCallback(MinionType t)
+    {
+        var savedOrder = _user.GetSquadMinionsOrder();
+        var s = t.ToString();
+
+        if (savedOrder.Any( i => i == s))
+        {
+            _user.DeleteSquadMinionItem(t);
+            var selectedItem = _totalMinionsList.FirstOrDefault(i => i.minionType == t);
+            selectedItem.ChangeToColor(false);
+            UnfillSelectedList();
+            FillSelectedList();
+        }
+    }
+
 }

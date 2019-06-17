@@ -11,7 +11,7 @@ public class SquadSelectedMinion : MonoBehaviour
     public Button button;
     public Image minionPic;
     public Text text;
-    public Action<string, bool, bool, MinionType> onMinionClick = delegate { };
+    public Action<MinionType> onMinionClick = delegate { };
     public MinionType minionType = MinionType.Runner;
 
     public bool IsEmpty { get { return _isEmpty; } }
@@ -41,6 +41,19 @@ public class SquadSelectedMinion : MonoBehaviour
 
         _isEmpty = false;
         minionType = type;
+    }
+
+    public void ResetMinion()
+    {
+        minionPic.enabled = false;
+        _isEmpty = true;
+        text.text = UNSELECTED;
+        minionType = MinionType.Runner;
+    }
+
+    public void OnClickSelectedMinion()
+    {
+        onMinionClick(minionType);
     }
 
 }

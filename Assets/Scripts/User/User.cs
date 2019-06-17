@@ -78,4 +78,9 @@ public class User
     {
         _inventory.SetSquadOrderItem(t);
     }
+
+    public void DeleteSquadMinionItem(MinionType t)
+    {
+        _inventory.DeleteSquadOrderItem(t);
+    }
 }
