@@ -9,6 +9,7 @@ public class MinionInShop : MonoBehaviour
 {
 
     public Button button;
+    public Text buttonText;
     public Image minionPic;
     public Image padLock;
     public Action<string, bool, bool, MinionType> onMinionClick = delegate { };
@@ -19,7 +20,6 @@ public class MinionInShop : MonoBehaviour
 
     bool _isBought;
     bool _isBlocked;
-    Text _buttonText;
     string _description;
     ColorBlock _colorBlock;
     Color _lastColor;
@@ -42,7 +42,6 @@ public class MinionInShop : MonoBehaviour
 
     void Awake()
     {
-        _buttonText = button.GetComponentInChildren<Text>();
         button.onClick.AddListener(MinionInShopClick);
         _colorBlock = button.colors;
         var pointer = button.GetComponent<OnCustomPointerCallback>();
@@ -59,8 +58,8 @@ public class MinionInShop : MonoBehaviour
 
     public void SetButton(MinionType t, string desc)
     {
-        _buttonText.text = t.ToString();
-        minionPic.sprite = Resources.Load<Sprite>("UIMinionsPictures/" + _buttonText.text + "/" + _buttonText.text);
+        buttonText.text = t.ToString();
+        minionPic.sprite = Resources.Load<Sprite>("UIMinionsPictures/" + buttonText.text + "/" +buttonText.text);
         minionType = t;
         _description = desc;
     }
@@ -95,7 +94,7 @@ public class MinionInShop : MonoBehaviour
             _colorBlock.highlightedColor = selectedColor;
             button.colors = _colorBlock;
 
-            _buttonText.color = selectedColor;
+            buttonText.color = selectedColor;
         }
         else
         {
@@ -109,7 +108,7 @@ public class MinionInShop : MonoBehaviour
     void SetNotBoughtColors()
     {
         minionPic.color = unableToPurchaseColor;
-        _buttonText.color = unableToPurchaseColor;
+        buttonText.color = unableToPurchaseColor;
         _colorBlock.normalColor = unableToPurchaseColor;
         _colorBlock.highlightedColor = unableToPurchaseColor;
         button.colors = _colorBlock;
@@ -117,7 +116,7 @@ public class MinionInShop : MonoBehaviour
 
     void SetBoughtColors()
     {
-        _buttonText.color = minionPic.color = Color.white;
+        buttonText.color = minionPic.color = Color.white;
         _colorBlock.normalColor = Color.white;
         _colorBlock.highlightedColor = Color.white;
         button.colors = _colorBlock;
@@ -131,12 +130,12 @@ public class MinionInShop : MonoBehaviour
 
     public void OnPointerDown()
     {
-        _lastColor = _buttonText.color;
-        _buttonText.color = nameTextColor;
+        _lastColor = buttonText.color;
+        buttonText.color = nameTextColor;
     }
 
     public void OnPointerUp()
     {
-        _buttonText.color = _lastColor;
+        buttonText.color = _lastColor;
     }
 }

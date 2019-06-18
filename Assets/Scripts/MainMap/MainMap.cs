@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMap : MonoBehaviour
 {
+    public BuildSquadManager buildSquadManager;
     public GameLoadingScreen loadingJob;
 
     GameManager _gameManager;
@@ -70,6 +71,14 @@ public class MainMap : MonoBehaviour
     void OnLevelNodeClick(LevelInfo lvlInfo)
     {
 		GetGameManager().SetCurrentLevelInfo(lvlInfo);
+        buildSquadManager.DisplayPopup();
+        buildSquadManager.OnPlayPressed += OnAcceptSquad;
+    }
+
+    void OnAcceptSquad()
+    {
+        var lvlInfo = GetGameManager().CurrentLevelInfo;
+        buildSquadManager.OnPlayPressed -= OnAcceptSquad;
 
         try
         {
@@ -79,9 +88,8 @@ public class MainMap : MonoBehaviour
         }
         catch (System.Exception)
         {
-            throw new System.Exception("Error Loading LevelScene > There is not a scene called 'Level"+lvlInfo.id+"'");
+            throw new System.Exception("Error Loading LevelScene > There is not a scene called 'Level" + lvlInfo.id + "'");
         }
-        
     }
 
 	public GameManager GetGameManager()

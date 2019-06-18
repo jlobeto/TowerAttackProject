@@ -11,13 +11,14 @@ public class BuildSquadManager : MonoBehaviour
     public List<SquadSelectedMinion> selectedButtons;
     public MinionInShop unselectedPrefab;
     public GridLayoutGroup scrollContent;
+    public Action OnPlayPressed = delegate { };
     
     GameManager _gm;
     User _user;
     List<MinionInShop> _totalMinionsList = new List<MinionInShop>();
     Dictionary<MinionType, MinionStoreData> _storeInfoData;
 
-    void Start()
+    void Awake()
     {
         _gm = FindObjectOfType<GameManager>();
         _user = _gm.User;
@@ -47,6 +48,25 @@ public class BuildSquadManager : MonoBehaviour
         
     }
 
+    public void OnPlay()
+    {
+        OnPlayPressed();
+        OnExit();
+    }
+
+    public void OnExit()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void DisplayPopup()
+    {
+        gameObject.SetActive(true);
+
+        SetBoughtScrollButtons();
+        FillSelectedList();
+    }
+
     void FillSelectedList()
     {
         var selectedList = _user.GetSquadMinionsOrder();
@@ -71,6 +91,9 @@ public class BuildSquadManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// this has to be called once, at the init of the world selector scene. (first time the popup is shown, at the awake())
+    /// </summary>
     void FillScrollList()
     {
         MinionInShop button;
