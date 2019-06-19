@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class SquadSelectedMinion : MonoBehaviour
 {
-    const string UNSELECTED = "Unselected";
-
     public Button button;
     public Image minionPic;
     public Text text;
@@ -23,7 +21,7 @@ public class SquadSelectedMinion : MonoBehaviour
     void Awake()
     {
         minionPic.enabled = false;
-        text.text = UNSELECTED;
+        text.text = "";
     }
 
     
@@ -47,7 +45,7 @@ public class SquadSelectedMinion : MonoBehaviour
     {
         minionPic.enabled = false;
         _isEmpty = true;
-        text.text = UNSELECTED;
+        text.text = "";
         minionType = MinionType.Runner;
     }
 

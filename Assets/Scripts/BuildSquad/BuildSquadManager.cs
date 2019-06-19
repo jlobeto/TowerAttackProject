@@ -65,6 +65,7 @@ public class BuildSquadManager : MonoBehaviour
 
         SetBoughtScrollButtons();
         FillSelectedList();
+        UpdateScrollerPadlocks();
     }
 
     void FillSelectedList()
@@ -104,12 +105,28 @@ public class BuildSquadManager : MonoBehaviour
             t = GameUtils.ToEnum(item.Value.type, MinionType.Runner);
             button.SetButton(t, "");
             button.onMinionClick += OnScrollButtonClicked;
-
-            if (_user.LevelProgressManager.GetStarsAccumulated() < item.Value.starsNeedToUnlock)
-                button.LockButton();
+            CheckScrollItemPadlock(item.Value, button);
 
             _totalMinionsList.Add(button);
         }
+    }
+
+    void UpdateScrollerPadlocks()
+    {
+        MinionStoreData storeDataDef;
+        foreach (var item in _totalMinionsList)
+        {
+            storeDataDef = _storeInfoData[item.minionType];
+            CheckScrollItemPadlock(storeDataDef, item);
+        }
+    }
+
+    void CheckScrollItemPadlock(MinionStoreData storeDataDef, MinionInShop button)
+    {
+        if (_user.LevelProgressManager.GetStarsAccumulated() < storeDataDef.starsNeedToUnlock)
+            button.LockButton();
+        else
+            button.UnlockButton();
     }
 
     void OnScrollButtonClicked(string desc, bool isBlocked, bool isBought, MinionType type)
@@ -165,6 +182,7 @@ public class BuildSquadManager : MonoBehaviour
             bought = _user.GetMinionBought(item.minionType);
             item.IsBought = bought != null;
         }
+        ChangeSelectedItemsColorInScroller(true);
     }
 
     void OnSelectedMinionClickCallback(MinionType t)

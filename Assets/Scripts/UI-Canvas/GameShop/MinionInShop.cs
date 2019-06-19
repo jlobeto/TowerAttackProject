@@ -116,6 +116,7 @@ public class MinionInShop : MonoBehaviour
 
     void SetBoughtColors()
     {
+        if (buttonText == null) return;
         buttonText.color = minionPic.color = Color.white;
         _colorBlock.normalColor = Color.white;
         _colorBlock.highlightedColor = Color.white;
