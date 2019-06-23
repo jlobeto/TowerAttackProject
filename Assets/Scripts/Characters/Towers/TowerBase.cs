@@ -175,6 +175,7 @@ public class TowerBase : MonoBehaviour
 
 		attackRangeSprite.enabled = true;
         StartCoroutine(StopShowingAttackRangeSprite());
+        StartCoroutine(SpinAttackRange());
     }
 
     IEnumerator StopShowingAttackRangeSprite()
@@ -182,7 +183,18 @@ public class TowerBase : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
 		attackRangeSprite.enabled = false;
-        
+        StopCoroutine(StopShowingAttackRangeSprite());
+    }
+
+    IEnumerator SpinAttackRange()
+    {
+        while(attackRangeSprite.enabled)
+        {
+            attackRangeSprite.transform.Rotate(0, 0, 0.3f);
+            yield return new WaitForEndOfFrame();
+        }
+
+        StopCoroutine(SpinAttackRange());
     }
 
     protected virtual void Start()
