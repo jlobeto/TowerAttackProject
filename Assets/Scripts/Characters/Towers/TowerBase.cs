@@ -15,6 +15,7 @@ public class TowerBase : MonoBehaviour
     public Transform spawnPoint;
     public GameObject toRotate;
 	public SpriteRenderer attackRangeSprite;
+	public GameObject aimTypeSprites;
     public Transform rangeFeedbackPosition;//position where the range of the tower will spawn;
     public ParticleSystem stunEffectPS;
     public bool showGizmoRange;
@@ -164,18 +165,45 @@ public class TowerBase : MonoBehaviour
     }
     #endregion
 
+    public void DeactivateAttackRangeSprite()
+    {
+        StopCoroutine(StopShowingAttackRangeSprite());
+        StopCoroutine(SpinAttackRange());
+        StopCoroutine(StopShowingAimSprites());
+
+        if (attackRangeSprite != null)
+            attackRangeSprite.enabled = false;
+
+        if (aimTypeSprites != null)
+            aimTypeSprites.SetActive(false);
+    }
+
     public void ActivateAttackRangeSprite()
     {
-        if(attackRangeSprite == null)
+        if(attackRangeSprite != null)
         {
-            //throw new System.Exception("There isn't a attackRange particle system on this tower");
-			return;
+            if (attackRangeSprite.enabled) return;
+            attackRangeSprite.enabled = true;
+            StartCoroutine(StopShowingAttackRangeSprite());
+            StartCoroutine(SpinAttackRange());
         }
-		if (attackRangeSprite.enabled) return;
+		
+        if(aimTypeSprites != null)
+        {
+            if (aimTypeSprites.activeSelf) return;
 
-		attackRangeSprite.enabled = true;
-        StartCoroutine(StopShowingAttackRangeSprite());
-        StartCoroutine(SpinAttackRange());
+            aimTypeSprites.SetActive(true);
+            StartCoroutine(StopShowingAimSprites());
+        }
+		
+    }
+
+    IEnumerator StopShowingAimSprites()
+    {
+        yield return new WaitForSeconds(2f);
+
+        aimTypeSprites.SetActive(false);
+        StopCoroutine(StopShowingAimSprites());
     }
 
     IEnumerator StopShowingAttackRangeSprite()
@@ -229,6 +257,13 @@ public class TowerBase : MonoBehaviour
 			attackRangeSprite.size = new Vector2 (pMyStat.fireRange * 2, pMyStat.fireRange * 2);
 			attackRangeSprite.enabled = false;
 			attackRangeSprite.transform.position = rangeFeedbackPosition.position;
+        }
+
+        if(aimTypeSprites != null)
+        {
+            aimTypeSprites.transform.LookAt(Camera.main.transform);
+            aimTypeSprites.transform.Rotate(0, 0, 180);
+            aimTypeSprites.SetActive(false);
         }
     }
 

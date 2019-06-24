@@ -11,6 +11,7 @@ public class TowerManager : MonoBehaviour
     public Action<TowerType> OnClickTower = delegate { };
 
     List<TowerBase> _towers;
+    TowerBase _previousClickedTower;
 
 	void Start () 
 	{
@@ -119,6 +120,12 @@ public class TowerManager : MonoBehaviour
         if (selected == null) return;
 
         selected.ActivateAttackRangeSprite();
+
+        if (_previousClickedTower != null && _previousClickedTower.GetInstanceID() != selected.GetInstanceID())
+            _previousClickedTower.DeactivateAttackRangeSprite();
+
         OnClickTower(selected.towerType);
+
+        _previousClickedTower = selected;
     }
 }
