@@ -193,6 +193,10 @@ public class TowerBase : MonoBehaviour
             if (aimTypeSprites.activeSelf) return;
 
             aimTypeSprites.SetActive(true);
+
+            aimTypeSprites.transform.LookAt(Camera.main.transform);
+            aimTypeSprites.transform.Rotate(0, 0, 180);
+
             StartCoroutine(StopShowingAimSprites());
         }
 		
@@ -261,8 +265,6 @@ public class TowerBase : MonoBehaviour
 
         if(aimTypeSprites != null)
         {
-            aimTypeSprites.transform.LookAt(Camera.main.transform);
-            aimTypeSprites.transform.Rotate(0, 0, 180);
             aimTypeSprites.SetActive(false);
         }
     }
