@@ -10,7 +10,6 @@ public class LevelCanvasManager : MonoBehaviour
 	public int minionSlots = 5;
     [HideInInspector]
     public Level level;
-    [HideInInspector]
     public Text pointsText;
     public CanvasSkillLvlButton skillButtonPrefab;
     public Image levelPointBar;
@@ -67,7 +66,6 @@ public class LevelCanvasManager : MonoBehaviour
         //_timerBtn = GetComponentsInChildren<Button>().FirstOrDefault(i => i.tag == "BuildSquadTimer");
         //_timerText = _timerBtn.GetComponentInChildren<Text>();
         //_timerBtn.onClick.AddListener(() => OnTimerButtonClicked());
-        pointsText = levelPointBar.transform.parent.GetComponentInChildren<Text>();
         foreach (Transform child in transform)
         {
             if (child.tag == "CanvasLvlTimer")
