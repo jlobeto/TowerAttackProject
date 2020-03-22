@@ -7,6 +7,7 @@ public class CameraMovement : MonoBehaviour
 {
 	public float speed = 3;
 	public bool canMove;
+    [Range(.5f,10)]
     public float perspectiveZoomSpeed = 0.5f;// The rate of change of the field of view in perspective mode.
     public Transform constraintA;
     public Transform constraintB;
@@ -17,6 +18,7 @@ public class CameraMovement : MonoBehaviour
 	float _initTimeShowingTuto;
 	bool _startTutorialMovement;
 	float _yPos = 35f;
+    float _baseSpeed;
     Action<GameObject> _onFinishTutoMove;
     GameManager _gm;
 
@@ -26,8 +28,9 @@ public class CameraMovement : MonoBehaviour
 		if (_gm.CurrentLevelInfo.id == 0)
 			canMove = false;
 
-        
-	}
+        _baseSpeed = speed;
+
+    }
 
 	void Update ()
 	{
@@ -97,7 +100,8 @@ public class CameraMovement : MonoBehaviour
 
     void CheckFingers()
 	{
-		if (Input.touchCount == 1)
+
+        if (Input.touchCount == 1)
 		{
 			var t1 = Input.GetTouch (0);
 			//var t2 = Input.GetTouch (1);
@@ -130,11 +134,14 @@ public class CameraMovement : MonoBehaviour
             
             float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
             
-            // Otherwise change the field of view based on the change in distance between the touches.
-            Camera.main.fieldOfView += deltaMagnitudeDiff * perspectiveZoomSpeed;
-
-            // Clamp the field of view to make sure it's between 0 and 180.
+            Camera.main.fieldOfView += deltaMagnitudeDiff * (perspectiveZoomSpeed/100);
             Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, 30f, 90f);
+
+            float magicNumber = 0;
+            if (Camera.main.fieldOfView < 40)
+                magicNumber = 10;
+
+            speed = _baseSpeed * ((Camera.main.fieldOfView - magicNumber) / 100);
         }
     }
 
