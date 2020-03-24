@@ -335,7 +335,6 @@ public class LevelCanvasManager : MonoBehaviour
         float b = (float)baseValue;
         levelPointBar.fillAmount = n / b;
         pointsText.text = newValue + " / " + baseValue;
-        //Debug.Log(levelPointBar.fillAmount);
     }
 
     public void TriggerEventWarning(bool activate, float initTime , string eventType)
