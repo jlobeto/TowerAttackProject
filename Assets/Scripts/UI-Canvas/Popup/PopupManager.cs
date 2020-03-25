@@ -50,7 +50,7 @@ public class PopupManager : MonoBehaviour
         return _popupStack > 0;
     }
 
-    public void ShopPopupDisplayed()
+    public void PopupDisplayed()
     {
         _popupStack++;
     }

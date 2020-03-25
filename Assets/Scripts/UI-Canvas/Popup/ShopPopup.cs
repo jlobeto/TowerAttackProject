@@ -59,7 +59,7 @@ public class ShopPopup : BasePopup
     {
         if (isShowing) return;
 
-        _popupManager.ShopPopupDisplayed();
+        _popupManager.PopupDisplayed();
 
         _rect.position = new Vector3(_rect.parent.position.x - 12, _rect.parent.position.y);
 

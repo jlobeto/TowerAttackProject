@@ -17,10 +17,12 @@ public class BuildSquadManager : MonoBehaviour
     User _user;
     List<MinionInShop> _totalMinionsList = new List<MinionInShop>();
     Dictionary<MinionType, MinionStoreData> _storeInfoData;
+    PopupManager _popupManager;
 
     void Awake()
     {
         _gm = FindObjectOfType<GameManager>();
+        _popupManager = FindObjectOfType<PopupManager>();
         _user = _gm.User;
         _user.OnMinionBought += SetBoughtScrollButtons;
 
@@ -57,11 +59,13 @@ public class BuildSquadManager : MonoBehaviour
     public void OnExit()
     {
         gameObject.SetActive(false);
+        _popupManager.DisplayedPopupWasClosed();
     }
 
     public void DisplayPopup()
     {
         gameObject.SetActive(true);
+        _popupManager.PopupDisplayed();
 
         SetBoughtScrollButtons();
         FillSelectedList();
