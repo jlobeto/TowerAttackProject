@@ -75,14 +75,14 @@ public class TowerManager : MonoBehaviour
 		return null;
     }
 
-    public void Init(bool isTutorial)
+    public void Init()
     {
         _towers = FindObjectsOfType<TowerBase>().ToList();
 		for (int i = 0; i < _towers.Count; i++)
 		{
 			var t = _towers [i];
 			var stat = level.GameManager.TowerLoader.GetStatByLevel (t.towerType, level.levelID);
-			t.Initialize (stat, isTutorial);
+			t.Initialize (stat, false);
 		}
     }
 

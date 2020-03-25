@@ -220,7 +220,7 @@ public class Level : MonoBehaviour
         currencyWinPerObjetives = _gameManager.CurrentLevelInfo.currencyGainedByObjectives;
         levelMode = (LevelMode)Enum.Parse(typeof(LevelMode), _gameManager.CurrentLevelInfo.mode);
         levelID = _gameManager.CurrentLevelInfo.id;
-        _towerManager.Init (this is LevelCeroTutorial);
+        _towerManager.Init ();
     }
 
     void ConfigureLevelEvents()
