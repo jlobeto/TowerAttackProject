@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public PopupManager popupManager;
     [Header("Add tower prefabs so SwapSystem can work.")]
     public List<TowerBase> allTowersPrefabs;
+    public List<Minion> allMinionsPrefab;//"Add minions prefabs so can be accessed by Level.cs."
     public ParticleSystem swapParticleSystem;
 
     int _currentViewingWorld;

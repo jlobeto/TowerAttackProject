@@ -183,7 +183,9 @@ public class Level : MonoBehaviour
 
 		//_lvlSkillManager.level = this;
 		_towerManager.level = _minionManager.level = this;
-        
+
+        BuildAvailableMinions();
+
         SetGameManagerData();
 
         InitLevelCanvas();
@@ -193,7 +195,20 @@ public class Level : MonoBehaviour
         _gameManager.LevelInitFinished(this);
 		_minionSkillManager.Init (this);
 
-		ExecuteTutorialStep (null);
+    }
+
+    void BuildAvailableMinions()
+    {
+        var squadOrder = _gameManager.User.GetSquadMinionsOrder();
+        var prefabMinions = _gameManager.allMinionsPrefab;
+        foreach (var item in squadOrder)
+        {
+            foreach (var prefab in prefabMinions)
+            {
+                if (prefab.minionType.ToString() == item)
+                    availableMinions.Add(prefab);
+            }
+        }
     }
     
     protected virtual void InitLevelCanvas()

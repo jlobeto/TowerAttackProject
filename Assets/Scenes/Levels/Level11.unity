@@ -188,6 +188,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1312865066}
     m_Modifications:
+    - target: {fileID: 114792983361602340, guid: 80796dab6cb5b3e4baf08954f77bc724,
+        type: 3}
+      propertyPath: towerStats
+      value: 
+      objectReference: {fileID: 11400000, guid: bb5508f988b21ee47be2cb7a54da553a,
+        type: 2}
     - target: {fileID: 4365815457783224, guid: 80796dab6cb5b3e4baf08954f77bc724, type: 3}
       propertyPath: m_LocalPosition.x
       value: 38.04
@@ -224,12 +230,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: -90
       objectReference: {fileID: 0}
-    - target: {fileID: 114792983361602340, guid: 80796dab6cb5b3e4baf08954f77bc724,
-        type: 3}
-      propertyPath: towerStats
-      value: 
-      objectReference: {fileID: 11400000, guid: bb5508f988b21ee47be2cb7a54da553a,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80796dab6cb5b3e4baf08954f77bc724, type: 3}
 --- !u!4 &70778683 stripped
@@ -680,12 +680,7 @@ MonoBehaviour:
   levelTime: 100
   pointsPerSecond: 1
   levelSkills: 0000000001000000
-  availableMinions:
-  - {fileID: 114033774060840242, guid: e0381901c70e8f84fbb2a7b8dfdbb9a5, type: 3}
-  - {fileID: 114975196733645906, guid: 1447f125ce1a0eb4d8428f797c269efc, type: 3}
-  - {fileID: 114965857223461940, guid: eff96db714c48ca47a92bfb6c57c8bd5, type: 3}
-  - {fileID: 114489970806372932, guid: b0e29c9a437a0a141b340f6351abff51, type: 3}
-  - {fileID: 114569184015996796, guid: e5163b2161ade4540b625292a49e718a, type: 3}
+  availableMinions: []
   objetives: 
   currencyWinPerObjetives: 
   levelMode: 0
@@ -3401,6 +3396,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser Tower (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 198364264469891372, guid: 96e0e892741e51a4c87beb12af7ddd6f,
+        type: 3}
+      propertyPath: randomSeed
+      value: 205294414
+      objectReference: {fileID: 0}
+    - target: {fileID: 198273765828715794, guid: 96e0e892741e51a4c87beb12af7ddd6f,
+        type: 3}
+      propertyPath: randomSeed
+      value: -1702226651
+      objectReference: {fileID: 0}
     - target: {fileID: 4202160024168786, guid: 96e0e892741e51a4c87beb12af7ddd6f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.1
@@ -3432,16 +3437,6 @@ PrefabInstance:
     - target: {fileID: 4202160024168786, guid: 96e0e892741e51a4c87beb12af7ddd6f, type: 3}
       propertyPath: m_RootOrder
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 198364264469891372, guid: 96e0e892741e51a4c87beb12af7ddd6f,
-        type: 3}
-      propertyPath: randomSeed
-      value: 205294414
-      objectReference: {fileID: 0}
-    - target: {fileID: 198273765828715794, guid: 96e0e892741e51a4c87beb12af7ddd6f,
-        type: 3}
-      propertyPath: randomSeed
-      value: -1702226651
       objectReference: {fileID: 0}
     - target: {fileID: 114101818857371160, guid: 96e0e892741e51a4c87beb12af7ddd6f,
         type: 3}
