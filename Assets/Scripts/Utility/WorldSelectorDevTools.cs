@@ -9,6 +9,7 @@ public class WorldSelectorDevTools : MonoBehaviour
     public Button saveButton;
     public Button deleteProgressButton;
     public Button unlockLevelsButton;
+    public Button addCoins;
 
     bool _isSaving = SaveSystem.canSave;
     bool _showTools;
@@ -41,6 +42,7 @@ public class WorldSelectorDevTools : MonoBehaviour
         deleteProgressButton.gameObject.SetActive(_showTools);
         saveButton.gameObject.SetActive(_showTools);
         unlockLevelsButton.gameObject.SetActive(_showTools);
+        addCoins.gameObject.SetActive(_showTools);
 
         showToolsButton.GetComponentInChildren<Text>().text = (_showTools ? "Hide " : "Show ") + "Tools";
     }
@@ -64,5 +66,9 @@ public class WorldSelectorDevTools : MonoBehaviour
         popup.AddFunction(BasePopup.FunctionTypes.ok, () => { Application.Quit(); });
     }
 
+    public void OnAddCoins()
+    {
+        _gameManager.User.Currency += 1000;
+    }
 
 }
