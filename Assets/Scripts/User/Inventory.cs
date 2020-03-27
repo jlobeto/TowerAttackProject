@@ -85,8 +85,9 @@ public class Inventory
     {
         var list = new GenericListJsonLoader<MinionBoughtDef>();
         list.list = new List<MinionBoughtDef>();
-        var runner = CreateMinionDefInstance(MinionType.Runner);
-        list.list.Add(runner);
+        /*
+         * var runner = CreateMinionDefInstance(MinionType.Runner);
+        list.list.Add(runner);*/
         SaveSystem.Save(list, _pathToMinionsSaved);
 
         return list;

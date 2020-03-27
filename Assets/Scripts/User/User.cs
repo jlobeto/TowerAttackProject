@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using System.IO;
 
 /// <summary>
 /// This will contain all the data to be stored, or the be accessed by the entire game.
@@ -10,7 +11,7 @@ using System;
 /// </summary>
 public class User
 {
-    int _currency = 100;
+    int _currency = 30;
     Inventory _inventory;
     /// <summary>
     /// Set as the UserId at the moment...
@@ -20,7 +21,20 @@ public class User
     GameManager _gameManager;
 
 	public LevelProgressManager LevelProgressManager { get { return _levelProgressManager; } }
-    public int Currency { get { return _currency; } }
+
+    public int Currency
+    {
+        get { return _currency; }
+        set
+        {
+            var coinsSavedPath = Path.Combine(Application.persistentDataPath, SaveSystem.CURRENCY_SAVE_NAME);
+            _currency = value;
+            var coinsSaved = SaveSystem.Load<GenericListJsonLoader<int>>(coinsSavedPath);
+            coinsSaved.list[0] = _currency;
+            SaveSystem.Save(coinsSaved, coinsSavedPath);
+        }
+    }
+
     public Action OnMinionBought = delegate { };
 
     public User(GameManager gameManager)
@@ -29,6 +43,22 @@ public class User
         _gameManager = gameManager;
         _levelProgressManager = new LevelProgressManager(_gameManager);
         _inventory = new Inventory();
+
+        var coinsSavedPath = Path.Combine(Application.persistentDataPath, SaveSystem.CURRENCY_SAVE_NAME);
+        var coinsSaved = SaveSystem.Load<GenericListJsonLoader<int>>(coinsSavedPath);
+
+        if (coinsSaved == null)
+        {
+            var genList = new GenericListJsonLoader<int>
+            {
+                list = new List<int>() { _currency }
+            };
+            SaveSystem.Save(genList, coinsSavedPath);
+        }
+        else if (coinsSaved.list.Count > 0)
+            Currency = coinsSaved.list[0];
+        else
+            Currency = 1;
     }
 
     public void LevelStarted(int lvlId)
@@ -42,7 +72,7 @@ public class User
         if(stars > 0)
         {
             var info = _gameManager.LevelInfoLoader.LevelInfoList.list.First(i => i.id == lvlId);
-            _currency += info.currencyGainedByObjectives[stars - 1];
+            Currency += info.currencyGainedByObjectives[stars - 1];
         }
     }
 
@@ -53,14 +83,14 @@ public class User
 
     public void BuyMinion(MinionType t, int valueOfMinion)
     {
-        _currency -= valueOfMinion;
+        Currency -= valueOfMinion;
         _inventory.AddNewMinionToInventory(t);
         OnMinionBought();
     }
 
     public void BuyMinionStat(MinionType type, MinionBoughtDef.StatNames statName, int price)
     {
-        _currency -= price;
+        Currency -= price;
         _inventory.IncrementMinionStat(type, statName);
     }
 
