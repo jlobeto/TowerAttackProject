@@ -15,12 +15,12 @@ TutorialGroup:
 			sceneName:"sceneName"
 			popupOpened:"class name of popup"
 			coinAmount:int
-			isFirstTimeInGame:true > checkea si es la primera vez que el usuario ingreso
+			firstTimeInGame:true > checkea si es la primera vez que el usuario ingreso
 	Guardará (en tutorial manager) toda la data para que no se cargue otra vez el mismo tutorial
 
  	Se deberan poder guardar datos
 	Debera tener el indice del step actual y saber cuando se terminaron todos los steps
-	Por el momento seran scriptableobjects llamados BaseTutorialStep
+	Por el momento seran jsons llamados BaseTutorialStep
 	BaseTutorialStep:
 		contendran un regex (en este caso puede ser un array de strings) en el cual se pondran las cosas como:
 			button:true 

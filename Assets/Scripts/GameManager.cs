@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     //public CurrentScene currentScene = CurrentScene.MainMap;
     public PopupManager popupManager;
+    public TutorialManager tutorialManager;
     [Header("Add tower prefabs so SwapSystem can work.")]
     public List<TowerBase> allTowersPrefabs;
     public List<Minion> allMinionsPrefab;//"Add minions prefabs so can be accessed by Level.cs."
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
 	TowerJSONLoaderManager _towerJSONLoader;
     SwapTowerSystem _swapTowerSystem;
     LevelNodesLoader _levelInfoLoader;
+    
 
     User _user;
 
@@ -53,6 +55,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
         _swapTowerSystem = gameObject.AddComponent<SwapTowerSystem>();
         _swapTowerSystem.swapParticleSysPrefab = swapParticleSystem;
+
     }
 
     private void Start()
@@ -66,6 +69,8 @@ public class GameManager : MonoBehaviour
 		_towerJSONLoader = new TowerJSONLoaderManager ();
 
 		_user = new User (this);
+
+        tutorialManager.Init(this);
     }
 
     public void SetCurrentLevelInfo(LevelInfo lvlinfo)
