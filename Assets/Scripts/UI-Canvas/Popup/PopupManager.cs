@@ -55,7 +55,7 @@ public class PopupManager : MonoBehaviour
         _popupStack++;
     }
 
-    public void DisplayedPopupWasClosed()
+    public void DisplayedPopupWasClosed(string p ="")
     {
         _popupStack--;
 

@@ -107,7 +107,7 @@ public class Inventory
     {
         GenericListJsonLoader<string> list = new GenericListJsonLoader<string>();
         list.list = new List<string>();
-        list.list.Add(MinionType.Runner.ToString());
+        //list.list.Add(MinionType.Runner.ToString()); no se agregan mas minions al principio
 
         SaveSystem.Save(list, _pathToSquadOrder);
         return list;

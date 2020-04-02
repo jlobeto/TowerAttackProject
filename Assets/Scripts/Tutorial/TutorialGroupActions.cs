@@ -28,11 +28,10 @@ public class TutorialGroupActions : TutorialGroupUtils
         {
             ExecuteFunction(item);
         }
-
     }
 
 
-    public void DisplayPopup(string name, string title, string desc, string parent)
+    public void DisplayPopup(string name, string title, string desc, string parent, string tutorialPopupID = "")
     {
         Canvas canvas = GetCanvasWithName(parent);
 
@@ -42,6 +41,8 @@ public class TutorialGroupActions : TutorialGroupUtils
             popup.DisplayPopup();
             popup.title.text = title;
             popup.description.text = desc;
+            popup.okButton.GetComponentInChildren<Text>().text = "Yes";
+            popup.tutorialPopupID = tutorialPopupID;
         }
     }
 
@@ -50,16 +51,16 @@ public class TutorialGroupActions : TutorialGroupUtils
         Canvas canvas = GetCanvasWithName(parent);
         var go = new GameObject();
         var img = go.AddComponent<Image>();
-        img.color = new Color(0, 0, 0, 0.7f);
+        img.color = new Color(0, 0, 0, 0.8f);
 
         go.transform.SetParent(canvas.transform);
 
         img.rectTransform.anchorMin = new Vector2(0, 0);
         img.rectTransform.anchorMax = new Vector2(1, 1);
-        
-
         img.rectTransform.offsetMin = new Vector2(0, 0);
         img.rectTransform.offsetMax = new Vector2(0, 0);
+
+        go.name = TutorialManager.BLACK_OVERLAY_NAME;
     }
 
 

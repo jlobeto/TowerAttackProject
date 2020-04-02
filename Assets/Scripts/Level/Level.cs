@@ -376,7 +376,7 @@ public class Level : MonoBehaviour
     /// <summary>
     /// This will execute when the button in lose or win popups is pressed.
     /// </summary>
-    void OnFinishLevelCallback()
+    void OnFinishLevelCallback(string p)
     {
         Time.timeScale = 1;//TODO:: // SACAR ESTO A LA MIERDA
         _gameManager.SetCurrentLevelInfo(null);

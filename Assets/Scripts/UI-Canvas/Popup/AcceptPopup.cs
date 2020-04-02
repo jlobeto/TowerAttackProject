@@ -17,10 +17,6 @@ public class AcceptPopup : BasePopup
 
     protected virtual void CloseButton()
     {
-        Time.timeScale = 1;//TODO:: // SACAR ESTO A LA MIERDA
-        var lvl = FindObjectOfType<Level>();
-        lvl.LevelCanvasManager.EnableMinionButtons(true);
-        lvl.LevelCanvasManager.EnableDisableMinionSkillButtons(true);
         ExecuteFunctions(FunctionTypes.cancel);
         OnClosePopup();
     }

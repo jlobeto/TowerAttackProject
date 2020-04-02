@@ -3,7 +3,8 @@
     {
       "tutorialGroupId":"firstAppEntry",
       "triggers": "IsSceneName:IsSceneNameParams=MenuScreen",
-      "actions":"ShowBlackOverlay:ShowBlackOverlayParams=Canvas/DisplayPopup:DisplayPopupParams=AcceptPopup,,Do you want to play the tutorial?,Canvas"
-    }
+      "actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/DisplayPopup:DisplayPopupParams=AcceptPopup,,Do you want to play the tutorial?,Canvas,firstTutorialPopup",
+      "outputs": "elementType=AcceptPopup;elementId=firstTutorialPopup;listeners=type:ok{ChangeScene(World Selector Screen)}-type:cancel{ChangeScene(World Selector Screen)}"
+  	}
   ]
 }

@@ -60,10 +60,11 @@ public class WorldSelectorDevTools : MonoBehaviour
         SaveSystem.DeleteFile(SaveSystem.MINIONS_SAVE_NAME);
         SaveSystem.DeleteFile(SaveSystem.LEVEL_PROGRESS_SAVE_NAME);
         SaveSystem.DeleteFile(SaveSystem.SQUAD_ORDER_SAVE_NAME);
+        SaveSystem.DeleteFile(SaveSystem.CURRENCY_SAVE_NAME);
 
         var canvas = FindObjectOfType<MainMapCanvasManager>();
         var popup = _gameManager.popupManager.BuildPopup(canvas.transform, "QUIT GAME", "Exit game for properly deletion.", "Close", PopupsID.BasePopup);
-        popup.AddFunction(BasePopup.FunctionTypes.ok, () => { Application.Quit(); });
+        popup.AddFunction(BasePopup.FunctionTypes.ok, (string p) => { Application.Quit(); });
     }
 
     public void OnAddCoins()

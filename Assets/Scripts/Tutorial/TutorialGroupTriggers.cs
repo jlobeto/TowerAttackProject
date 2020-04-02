@@ -5,15 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class TutorialGroupTriggers : TutorialGroupUtils
 {
-    /*ORDEN DE EJECUCION: 
-     * Parseo varFuncNames para obtener todos los nombres de funciones
-     * En cada iteracion obtengo los parametros con nombreFuncion + "Params"
-     * Parseo los parametros (separados por ,)
-     * Llamo a la funcion con los parametros especificados
-     * Si alguno devuelve false, no se puede triggerear el tutorial.
-    */
-
-
     public string varFuncNames;//nombre de variables de funciones que tienen que ejecutarse
     
     #region Variables for pamams Storage
@@ -44,7 +35,6 @@ public class TutorialGroupTriggers : TutorialGroupUtils
     {
         var activeScene = SceneManager.GetActiveScene();
         var result = activeScene.name == name;
-        Debug.Log("IsScene ==  " + name + " " + result);
         return result;
     }
 

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class BasePopup : MonoBehaviour
 {
     public PopupsID popupId;
+    public string tutorialPopupID;
     public Text title;
     public Text description;
     public Button okButton;
@@ -17,7 +18,7 @@ public class BasePopup : MonoBehaviour
     /// <summary>
     /// from string (type of action like close or play press btn) to Actions.
     /// </summary>
-    Dictionary<FunctionTypes, List<Action>> _functions;
+    Dictionary<FunctionTypes, List<Tuple<Action<string>,string>>> _functions;
     
 
     public enum FunctionTypes
@@ -30,7 +31,7 @@ public class BasePopup : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _functions = new Dictionary<FunctionTypes, List<Action>>();
+        _functions = new Dictionary<FunctionTypes, List<Tuple<Action<string>, string>>>();
         okButton.onClick.AddListener(() => OkButtonPressed());
         _rect = GetComponent<RectTransform>();
     }
@@ -40,12 +41,12 @@ public class BasePopup : MonoBehaviour
 
     }
 
-    public void AddFunction(FunctionTypes type, Action func)
+    public void AddFunction(FunctionTypes type, Action<string> func, string parameters="")
     {
         if (!_functions.ContainsKey(type))
-            _functions.Add(type, new List<Action>());
+            _functions.Add(type, new List<Tuple<Action<string>, string>>());
 
-        _functions[type].Add(func);
+        _functions[type].Add(Tuple.Create(func, parameters));
     }
 
     public virtual void DisplayPopup()
@@ -70,7 +71,7 @@ public class BasePopup : MonoBehaviour
         var list = _functions[type];
         foreach (var item in list)
         {
-            item.Invoke();
+            item.Item1.Invoke(item.Item2);
         }
     }
 	

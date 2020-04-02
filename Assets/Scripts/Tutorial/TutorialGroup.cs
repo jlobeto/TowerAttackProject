@@ -11,20 +11,23 @@ public class TutorialGroup
     public string tutorialGroupId;
     public string triggers;
     public string actions;
-    public string resultingActions;
+    public string outputs;//actions that happend after the user makes an input from the actions seen.
     
     TutorialGroupActions _realActions;
     TutorialGroupTriggers _realTriggers;
+    TutorialGroupOutputs _realOutputs;
 
     
     public void SetTutorialGroup(TutorialManager t)
     {
+        _realTriggers = new TutorialGroupTriggers(t);
+        ParseFunctionInput(ref _realTriggers, triggers.Split('/'));
+
         _realActions = new TutorialGroupActions(t);
         ParseFunctionInput(ref _realActions, actions.Split('/'));
 
-        _realTriggers = new TutorialGroupTriggers(t);
-        ParseFunctionInput(ref _realTriggers, triggers.Split('/'));
-        
+        _realOutputs = new TutorialGroupOutputs(t);
+        ParseOutputs(ref _realOutputs, outputs);
     }
 
     public bool CheckForTriggers()
@@ -35,6 +38,7 @@ public class TutorialGroup
     public void ExecuteActions()
     {
         _realActions.ExecuteTutorialActions();
+        _realOutputs.InitListeners();
     }
 
 
@@ -45,6 +49,14 @@ public class TutorialGroup
     /// </summary>
     void ParseFunctionInput<T>(ref T obj, string[] input)
     {
+        /*/1- PopupOnYes:PopupOnYesParams=HideBlackOverlay,ChangeScene;World Selector Screen
+                A) PopupOnYes
+                B) PopupOnYesParams=HideBlackOverlay,ChangeScene;World Selector Screen
+                    - PopupOnYesParams
+                    - HideBlackOverlay,ChangeScene;World Selector Screen
+        
+           2- PopupOnNo:PopupOnNoParams=HideBlackOverlay
+         */
         FieldInfo prop;
 
         for (int i = 0; i < input.Length; i++)
@@ -60,41 +72,20 @@ public class TutorialGroup
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    /// <summary>
-    /// input = "varname:value"
-    /// input = "funcname:value:params/param1,param2,etc"
-    /// </summary>
-    void ParseInput<T>(ref T obj, string input)
+    void ParseOutputs<T>(ref T obj, string input)
     {
-        var splittedInput = input.Split(' ');
-        foreach (var item in splittedInput)
+        FieldInfo field;
+        var split = input.Split(';');
+        foreach (var item in split)
         {
-            var valueKeySplit = item.Split(':');
-
-            var prop = obj.GetType().GetField(valueKeySplit[0]);
-
-            if (prop == null)
-            {
-                ParseFunctionInput(ref obj, valueKeySplit);
-                continue;
-            }
-
-            if (valueKeySplit.Length == 2)
-                prop.SetValue(obj, valueKeySplit[1]);
-            else
-                prop.SetValue(obj, true);
+            var keyValue = item.Split('=');
+            field = obj.GetType().GetField(keyValue[0]);
+            field.SetValue(obj, keyValue[1]);
         }
     }
+
+
+
+
+    
 }

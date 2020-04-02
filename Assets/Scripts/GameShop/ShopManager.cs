@@ -147,7 +147,7 @@ public class ShopManager : MonoBehaviour
         return result;
     }
 
-    void OnPopupDisplayCallback()
+    void OnPopupDisplayCallback(string p = "")
     {
         UpdatePopupVisualData();
     }

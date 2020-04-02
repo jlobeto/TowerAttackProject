@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour
 {
+    public const string BLACK_OVERLAY_NAME = "tutorial_black_overlay";
+
+    public bool enableTutorial = true;
     public AcceptPopup acceptPopup;
     
     GameManager _gameManager;
@@ -14,6 +17,9 @@ public class TutorialManager : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(this);
+
+        if (!enableTutorial)
+            return;
 
         _tutorialGroups = GameUtils.LoadConfig<GenericListJsonLoader<TutorialGroup>>("TutorialsConfig.json");
         foreach (var item in _tutorialGroups.list)
