@@ -12,6 +12,7 @@ public class TutorialGroupActions : TutorialGroupUtils
     #region Variables for pamams Storage
     public string DisplayPopupParams;
     public string ShowBlackOverlayParams;
+    public string HighlightUIElementParams;
     #endregion
 
     TutorialManager _tutoManager;
@@ -63,6 +64,35 @@ public class TutorialGroupActions : TutorialGroupUtils
         go.name = TutorialManager.BLACK_OVERLAY_NAME;
     }
 
+
+    public void HighlightUIElement(string elementsTag, string parent)
+    {
+        var canvas = GetCanvasWithName(parent);
+        
+        var r = canvas.GetComponentsInChildren<RectTransform>();
+        RectTransform childTransform = null;
+        foreach (var item in r)
+        {
+            if(item.CompareTag(elementsTag))
+            {
+                childTransform = item;
+                break;
+            }
+        }
+
+        _tutoManager.SetLastParentAndSibling(childTransform.parent, childTransform.GetSiblingIndex());
+
+        if (childTransform.parent.name != parent)
+        {
+            
+            childTransform.SetParent(canvas.transform);
+        }
+        else
+        {
+            childTransform.SetSiblingIndex(canvas.transform.childCount - 1);
+        }
+
+    }
 
     Canvas GetCanvasWithName(string name)
     {

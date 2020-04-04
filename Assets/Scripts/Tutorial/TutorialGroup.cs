@@ -17,10 +17,13 @@ public class TutorialGroup
     TutorialGroupTriggers _realTriggers;
     TutorialGroupOutputs _realOutputs;
 
+    TutorialManager _tutoManager;
     
-    public void SetTutorialGroup(TutorialManager t)
+    public void SetTutorialGroup(TutorialManager t, GameManager gm)
     {
-        _realTriggers = new TutorialGroupTriggers(t);
+        _tutoManager = t;
+
+        _realTriggers = new TutorialGroupTriggers(t, gm);
         ParseFunctionInput(ref _realTriggers, triggers.Split('/'));
 
         _realActions = new TutorialGroupActions(t);
@@ -39,6 +42,7 @@ public class TutorialGroup
     {
         _realActions.ExecuteTutorialActions();
         _realOutputs.InitListeners();
+        _tutoManager.lastTutorialGroupId = tutorialGroupId;
     }
 
 
@@ -74,6 +78,8 @@ public class TutorialGroup
 
     void ParseOutputs<T>(ref T obj, string input)
     {
+        if (input.Length == 0) return;
+
         FieldInfo field;
         var split = input.Split(';');
         foreach (var item in split)

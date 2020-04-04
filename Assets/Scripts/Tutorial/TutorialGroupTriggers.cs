@@ -9,12 +9,15 @@ public class TutorialGroupTriggers : TutorialGroupUtils
     
     #region Variables for pamams Storage
     public string IsSceneNameParams;
+    public string IsPreviousSceneParams;
     #endregion
     TutorialManager _tutoManager;
+    GameManager _gm;
 
-    public TutorialGroupTriggers(TutorialManager t)
+    public TutorialGroupTriggers(TutorialManager t, GameManager gm)
     {
         _tutoManager = t;
+        _gm = gm;
     }
 
     public bool CanTrigger()
@@ -36,6 +39,11 @@ public class TutorialGroupTriggers : TutorialGroupUtils
         var activeScene = SceneManager.GetActiveScene();
         var result = activeScene.name == name;
         return result;
+    }
+
+    public bool IsPreviousScene(string name)
+    {
+        return _gm.LastLoadedScene == name;
     }
 
 }

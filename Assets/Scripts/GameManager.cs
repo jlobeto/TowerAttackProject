@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
     public ParticleSystem swapParticleSystem;
 
     int _currentViewingWorld;
+    string _lastSceneName;
 
     /// <summary>
     /// This is set when a level node is clicked, When returning from a level, this is set to null.
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour
 
     User _user;
 
+
     public LevelEventLoader LevelEventsLoader { get { return _levelEventsLoader; } }
 	public MinionsJsonLoaderManager MinionsJsonLoader { get { return _minionJSONLoader; } }
 	public TowerJSONLoaderManager TowerLoader { get { return _towerJSONLoader; } }
@@ -47,6 +50,8 @@ public class GameManager : MonoBehaviour
     public User User { get { return _user; } }
 
     public int CurrentViewingWorld { get { return _currentViewingWorld; } }
+    
+    public string LastLoadedScene { get { return _lastSceneName; } }
 
     public Action<bool> OnLevelInfoSet = delegate { };
 
@@ -71,6 +76,8 @@ public class GameManager : MonoBehaviour
 		_user = new User (this);
 
         tutorialManager.Init(this);
+
+        SceneManager.sceneUnloaded += SceneUnloaded;
     }
 
     public void SetCurrentLevelInfo(LevelInfo lvlinfo)
@@ -89,5 +96,10 @@ public class GameManager : MonoBehaviour
 
 		_user.LevelStarted (level.levelID);
         level.OnLevelFinish += _user.LevelEnded;
+    }
+
+    void SceneUnloaded(Scene scene)
+    {
+        _lastSceneName = scene.name;
     }
 }
