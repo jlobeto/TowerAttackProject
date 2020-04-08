@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TutorialGroupUtils
 {
@@ -13,4 +14,12 @@ public class TutorialGroupUtils
         var splittedParams = parameters.Split(',');
         return func.Invoke(this, splittedParams);
     }
+
+    protected GameObject GetParentByName(string name)
+    {
+        return GameObject.Find(name);
+    }
+
+    
+
 }

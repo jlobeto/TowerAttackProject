@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,13 +14,17 @@ public class TutorialGroupActions : TutorialGroupUtils
     public string DisplayPopupParams;
     public string ShowBlackOverlayParams;
     public string HighlightUIElementParams;
+    public string LockScrollRectMoveParams;
+    public string SetUIElementListsTransparencyParams;
     #endregion
 
     TutorialManager _tutoManager;
+    TutorialGroup _tutoGroup;
 
-    public TutorialGroupActions(TutorialManager t)
+    public TutorialGroupActions(TutorialManager t, TutorialGroup g)
     {
         _tutoManager = t;
+        _tutoGroup = g;
     }
 
     public void ExecuteTutorialActions()
@@ -34,7 +39,7 @@ public class TutorialGroupActions : TutorialGroupUtils
 
     public void DisplayPopup(string name, string title, string desc, string parent, string tutorialPopupID = "")
     {
-        Canvas canvas = GetCanvasWithName(parent);
+        var canvas = GetParentByName(parent);
 
         if (name == "AcceptPopup")
         {
@@ -49,7 +54,7 @@ public class TutorialGroupActions : TutorialGroupUtils
 
     public void ShowBlackOverlay(string parent)
     {
-        Canvas canvas = GetCanvasWithName(parent);
+        var canvas = GetParentByName(parent);
         var go = new GameObject();
         var img = go.AddComponent<Image>();
         img.color = new Color(0, 0, 0, 0.8f);
@@ -65,12 +70,11 @@ public class TutorialGroupActions : TutorialGroupUtils
     }
 
 
-    public void HighlightUIElement(string elementsTag, string parent)
+    public void HighlightUIElement(string elementName, string parent)
     {
-        var canvas = GetCanvasWithName(parent);
-        
-        var r = canvas.GetComponentsInChildren<RectTransform>();
-        RectTransform childTransform = null;
+        var parentGO = GetParentByName(parent);
+
+        /*var r = canvas.GetComponentsInChildren<RectTransform>();
         foreach (var item in r)
         {
             if(item.CompareTag(elementsTag))
@@ -78,30 +82,63 @@ public class TutorialGroupActions : TutorialGroupUtils
                 childTransform = item;
                 break;
             }
-        }
+        }*/
+        Transform childTransform = GameObject.Find(elementName).transform;
 
         _tutoManager.SetLastParentAndSibling(childTransform.parent, childTransform.GetSiblingIndex());
 
         if (childTransform.parent.name != parent)
         {
             
-            childTransform.SetParent(canvas.transform);
+            childTransform.SetParent(parentGO.transform);
         }
         else
         {
-            childTransform.SetSiblingIndex(canvas.transform.childCount - 1);
+            childTransform.SetSiblingIndex(parentGO.transform.childCount - 1);
         }
 
     }
-
-    Canvas GetCanvasWithName(string name)
+    
+    public void LockScrollRectMove(string elementName, string parent)
     {
-        Canvas canvas = null;
-
-        if (name == "Canvas")
-            canvas = GameObject.FindObjectOfType<Canvas>();
-
-        return canvas;
+        var canvas = GetParentByName(parent);
+        ScrollRect rect = GameObject.Find(elementName).GetComponent<ScrollRect>();
+        rect.horizontal = rect.vertical = false;
     }
 
+    public void SetUIElementListsTransparency(string elementName, string exception, string alphaPercent)
+    {
+        //hide all scroll rect elements except for 'exception'
+        GameObject groupElement = GameObject.Find(elementName);
+        foreach (Transform item in groupElement.transform)
+        {
+            if (item.name != exception)
+            {
+                var alpha = int.Parse(alphaPercent);
+                var img = item.GetComponent<Image>();
+                var txt = item.GetComponent<Text>();
+                if (img != null)
+                    img.color = new Color(img.color.r, img.color.g, img.color.b, alpha * 1.0f / 255);
+                if (txt != null)
+                    txt.color = new Color(txt.color.r, txt.color.g, txt.color.b, alpha * 1.0f / 255);
+
+                SetTransparentToChildren(item.gameObject, alpha);
+            }
+        }
+    }
+
+    private void SetTransparentToChildren(GameObject element, int alpha)
+    {
+        var childrenImg = element.GetComponentsInChildren<Image>();
+        var childrenTxt = element.GetComponentsInChildren<Text>();
+        foreach (var img in childrenImg)
+        {
+            img.color = new Color(img.color.r, img.color.g, img.color.b, alpha * 1.0f / 255);
+        }
+
+        foreach (var txt in childrenTxt)
+        {
+            txt.color = new Color(txt.color.r, txt.color.g, txt.color.b, alpha * 1.0f / 255);
+        }
+    }
 }

@@ -30,7 +30,8 @@ public class User
             var coinsSavedPath = Path.Combine(Application.persistentDataPath, SaveSystem.CURRENCY_SAVE_NAME);
             _currency = value;
             var coinsSaved = SaveSystem.Load<GenericListJsonLoader<int>>(coinsSavedPath);
-            coinsSaved.list[0] = _currency;
+            if(coinsSaved != null)
+                coinsSaved.list[0] = _currency;
             SaveSystem.Save(coinsSaved, coinsSavedPath);
         }
     }

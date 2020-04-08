@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public bool showDevTools = true;
 
     //public CurrentScene currentScene = CurrentScene.MainMap;
+    public bool enableSaveSystem;
     public PopupManager popupManager;
     public TutorialManager tutorialManager;
     [Header("Add tower prefabs so SwapSystem can work.")]
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
         _swapTowerSystem = gameObject.AddComponent<SwapTowerSystem>();
         _swapTowerSystem.swapParticleSysPrefab = swapParticleSystem;
 
+        SaveSystem.canSave = enableSaveSystem;
     }
 
     private void Start()

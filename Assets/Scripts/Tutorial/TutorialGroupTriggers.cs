@@ -10,6 +10,7 @@ public class TutorialGroupTriggers : TutorialGroupUtils
     #region Variables for pamams Storage
     public string IsSceneNameParams;
     public string IsPreviousSceneParams;
+    public string IsPreviousTutorialGroupParams;
     #endregion
     TutorialManager _tutoManager;
     GameManager _gm;
@@ -44,6 +45,11 @@ public class TutorialGroupTriggers : TutorialGroupUtils
     public bool IsPreviousScene(string name)
     {
         return _gm.LastLoadedScene == name;
+    }
+
+    public bool IsPreviousTutorialGroup(string id)
+    {
+        return _tutoManager.lastTutorialGroupId == id;
     }
 
 }

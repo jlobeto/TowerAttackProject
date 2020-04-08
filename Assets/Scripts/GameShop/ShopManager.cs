@@ -42,11 +42,13 @@ public class ShopManager : MonoBehaviour
             _storeStatsCurrencyDef.Add(minionType, item2);
         }
 
+        var i = 0;
         foreach (var item in config.list)
         {
             minionType = (MinionType)Enum.Parse(typeof(MinionType), item.type);
             _storeInfoData.Add(minionType, item);
-            _popup.AddMinionToShop(minionType, CreateDescriptionString(item));
+            _popup.AddMinionToShop(minionType, CreateDescriptionString(item), i);
+            i++;
         }
 
         OnPopupDisplayCallback();

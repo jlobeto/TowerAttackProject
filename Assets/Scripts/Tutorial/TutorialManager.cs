@@ -51,6 +51,7 @@ public class TutorialManager : MonoBehaviour
         foreach (var item in _tutorialGroups.list)
         {
             item.SetTutorialGroup(this, _gameManager);
+            item.OnTutorialFinished += CheckTriggers;
         }   
     }
 
@@ -67,12 +68,17 @@ public class TutorialManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         //fucking fix for waiting All thing to get set. (Eg: main map finish loading buttons)
-        StartCoroutine(OnCheckTriggers());
+        StartCoroutine(OnCheckTriggersCoroutine());
     }
 
-    IEnumerator OnCheckTriggers()
+    IEnumerator OnCheckTriggersCoroutine()
     {
         yield return new WaitForFixedUpdate();
+        CheckTriggers();
+    }
+
+    void CheckTriggers()
+    {
         foreach (var item in _tutorialGroups.list)
         {
             var result = item.CheckForTriggers();

@@ -26,6 +26,7 @@ public class MainMapCanvasManager : MonoBehaviour
     bool _isMovingGrid;
     bool _forceUnlockAll;
     int _lvlBtn_lastWorldId;//to know when it changes de worldId
+    int _lvlBtn_index;
     float _mouseOnPressXPos;
     float _mouseOnReleaseXPos;
     int _amountOfWorlds = 1;
@@ -125,7 +126,7 @@ public class MainMapCanvasManager : MonoBehaviour
             _currentBuildingWorld = newWorldUI;
 
             _amountOfWorlds++;
-
+            _lvlBtn_index = 0;
             CreateScreenPointUI(lvlInfo.worldId);
         }
 
@@ -133,10 +134,13 @@ public class MainMapCanvasManager : MonoBehaviour
         LevelInfo lazyLvlInfo = new LevelInfo();
         lazyLvlInfo = lvlInfo;
         btn.onClick.AddListener(() => onClick(lazyLvlInfo));
-		var node = btn.GetComponent<LevelNode> ();
+        btn.name = "levelNodeButton_" + _lvlBtn_index;
+
+        var node = btn.GetComponent<LevelNode> ();
 		node.Init (lazyLvlInfo , gm, btn);
 
         _lvlBtn_lastWorldId = lvlInfo.worldId;
+        _lvlBtn_index++;
     }
     
     public void ShowWorld(int id)

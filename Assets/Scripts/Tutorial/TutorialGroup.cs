@@ -12,12 +12,13 @@ public class TutorialGroup
     public string triggers;
     public string actions;
     public string outputs;//actions that happend after the user makes an input from the actions seen.
-    
+    public Action OnTutorialFinished = delegate { };
+
     TutorialGroupActions _realActions;
     TutorialGroupTriggers _realTriggers;
     TutorialGroupOutputs _realOutputs;
-
     TutorialManager _tutoManager;
+
     
     public void SetTutorialGroup(TutorialManager t, GameManager gm)
     {
@@ -26,10 +27,10 @@ public class TutorialGroup
         _realTriggers = new TutorialGroupTriggers(t, gm);
         ParseFunctionInput(ref _realTriggers, triggers.Split('/'));
 
-        _realActions = new TutorialGroupActions(t);
+        _realActions = new TutorialGroupActions(t, this);
         ParseFunctionInput(ref _realActions, actions.Split('/'));
 
-        _realOutputs = new TutorialGroupOutputs(t);
+        _realOutputs = new TutorialGroupOutputs(t, this);
         ParseOutputs(ref _realOutputs, outputs);
     }
 
@@ -45,6 +46,10 @@ public class TutorialGroup
         _tutoManager.lastTutorialGroupId = tutorialGroupId;
     }
 
+    public void OnOutputFinished()
+    {
+        OnTutorialFinished();
+    }
 
     /// <summary>
     /// input[0] = "Func" > no cambia

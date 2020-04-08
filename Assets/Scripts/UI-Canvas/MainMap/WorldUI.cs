@@ -22,6 +22,7 @@ public class WorldUI : MonoBehaviour
     {
         _worldId = id;
         title.text = "WORLD " + (id+1);
+        grid.name = "world_buttons_" + (id);
         padlockUI.SetLockUI(worldUnlocked, neededToUnlock);
         DeleteGridChildren();
     }

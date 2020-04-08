@@ -78,10 +78,11 @@ public class ShopPopup : BasePopup
         isShowing = false;
     }
 
-    public void AddMinionToShop(MinionType type, string description)
+    public void AddMinionToShop(MinionType type, string description, int index)
     {
         var m = Instantiate<MinionInShop>(minionInShopPrefab, _gridGroup.transform);
         m.SetButton(type, description);
+        m.name = "MinionInShop_" + index;
         m.onMinionClick += OnClickMinionButton;
         _scrollContentList.Add(m);
     }

@@ -103,15 +103,18 @@ public class BuildSquadManager : MonoBehaviour
     {
         MinionInShop button;
         MinionType t;
+        var i = 0;
         foreach (var item in _storeInfoData)
         {
             button = Instantiate(unselectedPrefab, scrollContent.transform);
             t = GameUtils.ToEnum(item.Value.type, MinionType.Runner);
             button.SetButton(t, "");
             button.onMinionClick += OnScrollButtonClicked;
+            button.name = "build_squad_unselected_" + i;
             CheckScrollItemPadlock(item.Value, button);
 
             _totalMinionsList.Add(button);
+            i++;
         }
     }
 
