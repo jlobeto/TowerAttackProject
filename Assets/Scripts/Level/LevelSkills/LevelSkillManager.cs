@@ -30,7 +30,7 @@ public class LevelSkillManager : MonoBehaviour
     void Init()
     {
         _skillStatsConfig = GameUtils.LoadConfig<SkillStatsList>("LevelSkillConfig.json");
-        _levelSkillsTypes = level.levelSkills;
+        //_levelSkillsTypes = level.levelSkills;
 
         GameObject go = new GameObject();
         go.transform.SetParent(transform);

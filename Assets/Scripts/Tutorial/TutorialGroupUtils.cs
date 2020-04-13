@@ -10,8 +10,15 @@ public class TutorialGroupUtils
         if (string.IsNullOrEmpty(funcName)) return null;
 
         var func = GetType().GetMethod(funcName);
-        var parameters = GetType().GetField(funcName + "Params").GetValue(this).ToString();
-        var splittedParams = parameters.Split(',');
+        var field = GetType().GetField(funcName + "Params");
+        var splittedParams = new string[0];
+
+        if (field != null)
+        {
+            var parameters = field.GetValue(this).ToString();
+            splittedParams = parameters.Split(',');
+        }
+        
         return func.Invoke(this, splittedParams);
     }
 

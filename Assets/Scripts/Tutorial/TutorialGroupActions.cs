@@ -48,7 +48,9 @@ public class TutorialGroupActions : TutorialGroupUtils
             popup.title.text = title;
             popup.description.text = desc;
             popup.okButton.GetComponentInChildren<Text>().text = "Yes";
+            popup.closeButton.GetComponentInChildren<Text>().text = "No";
             popup.tutorialPopupID = tutorialPopupID;
+            popup.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 

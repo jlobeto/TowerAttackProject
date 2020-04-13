@@ -150,9 +150,15 @@ public class LevelCanvasManager : MonoBehaviour
         }
     }
     
-    public void UpdateLevelTimer(float newTime, float initTime)
+    public void UpdateLevelTimer(float newTime, float initTime, bool isInfinite = false)
     {
         var text = "Time: ";
+        if(isInfinite)
+        {
+            _levelTimer.text = text + "∞";
+            return;
+        }
+
 		_levelTimer.text = (text + newTime.ToString("0.0")).ToUpper();
         _levelTimerFillBar.fillAmount = newTime / initTime;
     }

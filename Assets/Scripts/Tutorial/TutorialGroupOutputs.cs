@@ -190,6 +190,20 @@ public class TutorialGroupOutputs : TutorialGroupUtils
             _tutoGroup.OnOutputFinished();
     }
 
+
+    public void OnAgreeToDoTutorial(string p)
+    {
+        _tutoManager.UserAgreesWithDoFirstTutorial(true);
+        _tutoManager.FirstTimeAppIsOpened();
+    }
+
+    public void OnCancelToDoTutorial(string p)
+    {
+        _tutoManager.UserAgreesWithDoFirstTutorial(false);
+        _tutoManager.FirstTimeAppIsOpened();
+        _tutoGroup.OnGroupCanceled();
+    }
+
     //          type ,  list <Tuple< method,  params>
     List<Tuple<string, List<Tuple<MethodInfo, string>>>> ParseListeners()
     {

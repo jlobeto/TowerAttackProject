@@ -78,7 +78,6 @@ public class MinionInShop : MonoBehaviour
         _isBlocked = true;
         padLock.enabled = true;
         padLockOpen.enabled = false;
-        Debug.Log("___LockButton");
         SetNotBoughtColors();
     }
 
@@ -90,7 +89,6 @@ public class MinionInShop : MonoBehaviour
         padLock.enabled = false;
 
         padLockOpen.enabled = true;
-        Debug.Log("UnlockButton");
     }
 
     public void ChangeToColor(bool isSelected)
@@ -132,8 +130,6 @@ public class MinionInShop : MonoBehaviour
         _colorBlock.normalColor = Color.white;
         _colorBlock.highlightedColor = Color.white;
         button.colors = _colorBlock;
-
-        Debug.Log("SetBoughtColors()");
 
         if (_isBought)
             padLockOpen.enabled = false;

@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Show DevTools.")]
     public bool showDevTools = true;
-
+    public bool enableSwapSystem = true;
     //public CurrentScene currentScene = CurrentScene.MainMap;
     public bool enableSaveSystem;
     public PopupManager popupManager;
@@ -59,8 +59,11 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(this);
-        _swapTowerSystem = gameObject.AddComponent<SwapTowerSystem>();
-        _swapTowerSystem.swapParticleSysPrefab = swapParticleSystem;
+        if (enableSwapSystem)
+        {
+            _swapTowerSystem = gameObject.AddComponent<SwapTowerSystem>();
+            _swapTowerSystem.swapParticleSysPrefab = swapParticleSystem;
+        }
 
         SaveSystem.canSave = enableSaveSystem;
     }
@@ -94,7 +97,8 @@ public class GameManager : MonoBehaviour
 
     public void LevelInitFinished(Level level)
     {
-		_swapTowerSystem.LeveInitFinished(level.MinionManager, level.TowerManager, level.LevelCanvasManager);
+        if (enableSwapSystem)
+            _swapTowerSystem.LeveInitFinished(level.MinionManager, level.TowerManager, level.LevelCanvasManager);
 
 		_user.LevelStarted (level.levelID);
         level.OnLevelFinish += _user.LevelEnded;

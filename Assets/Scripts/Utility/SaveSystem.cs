@@ -7,13 +7,16 @@ public static class SaveSystem
     public const string LEVEL_PROGRESS_SAVE_NAME = "LevelProgressData.txt";
     public const string SQUAD_ORDER_SAVE_NAME = "squadOrderSavedData.txt";
     public const string CURRENCY_SAVE_NAME = "currencySavedData.txt";
+    public const string TUTORIAL_SAVE_NAME = "tutorialSavedData.txt";
 
 
     public static bool canSave = true;
 
-    public static void Save<T>(T data, string path)
+    public static void Save<T>(T data, string fileName)
     {
         if (!canSave) return;
+
+        var path = Path.Combine(Application.persistentDataPath, fileName);
 
         string jsonString = JsonUtility.ToJson(data);
 
@@ -23,9 +26,11 @@ public static class SaveSystem
         }
     }
 
-    public static T Load<T>(string path)
+    public static T Load<T>(string fileName)
     {
-        if(File.Exists(path))
+        var path = Path.Combine(Application.persistentDataPath, fileName);
+
+        if (File.Exists(path))
         {
             using (StreamReader streamReader = File.OpenText(path))
             {

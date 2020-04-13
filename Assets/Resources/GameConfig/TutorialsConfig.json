@@ -1,84 +1,98 @@
 {
-  "list": [
-    {
-      "tutorialGroupId":"firstAppEntry",
-      "triggers": "IsSceneName:IsSceneNameParams=MenuScreen",
-      "actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/DisplayPopup:DisplayPopupParams=AcceptPopup,,Do you want to play the tutorial?,Canvas,firstTutorialPopup",
-      "outputs": "elementType=AcceptPopup;elementId=firstTutorialPopup;listeners=type:ok{ChangeScene(World Selector Screen)}-type:cancel{ChangeScene(World Selector Screen)}"
-  	},
-  	{
-      "tutorialGroupId":"firstAppEntry_clickShop",
-      "triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousScene:IsPreviousSceneParams=MenuScreen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry",
-      "actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/HighlightUIElement:HighlightUIElementParams=Shop Btn,Canvas",
-      "outputs": "elementType=Button;elementId=Shop Btn;listeners=type:pressed{RemoveHighlightUIElement(Shop Btn)}"
-  	},
-  	{
-      "tutorialGroupId":"firstAppEntry_click_shop_select_runner",
-      "triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_clickShop",
-      "actions": "HighlightUIElement:HighlightUIElementParams=Scroll View,Canvas/LockScrollRectMove:LockScrollRectMoveParams=Scroll View,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=shop_minion_list,MinionInShop_0,80",
-      "outputs": "elementType=Button;elementId=MinionInShop_0;listeners=type:pressed{RemoveHighlightUIElement(Scroll View),UnlockScrollRectMove(Scroll View/Canvas),SetUIElementListsTransparency(shop_minion_list/none/255)}"
-  	},
-  	{
-      "tutorialGroupId":"firstAppEntry_click_shop_buy_runner",
-      "triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_shop_select_runner",
-      "actions": "HighlightUIElement:HighlightUIElementParams=Description box,Canvas",
-      "outputs": "elementType=Button;elementId=Description box;listeners=type:pressed{RemoveHighlightUIElement(Description box)}"
-  	},
-  	{
-      "tutorialGroupId":"firstAppEntry_click_shop_buy_runner_press_back",
-      "triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_shop_buy_runner",
-      "actions": "HighlightUIElement:HighlightUIElementParams=Close Button,Canvas",
-      "outputs": "elementType=Button;elementId=Close Button;listeners=type:pressed{RemoveHighlightUIElement(Close Button)}"
-  	},
-  	{
-      "tutorialGroupId":"firstAppEntry_click_level_1",
-      "triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_shop_buy_runner_press_back",
-      "actions": "HighlightUIElement:HighlightUIElementParams=world_buttons_0,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=world_buttons_0,levelNodeButton_0,80",
-      "outputs": "elementType=Button;elementId=world_buttons_0;listeners=type:pressed{RemoveHighlightUIElement(world_buttons_0),SetUIElementListsTransparency(world_buttons_0/levelNodeButton_0/255)}"
-  	},
-  	{
-      "tutorialGroupId":"firstAppEntry_click_level_1_click_runner",
-      "triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1",
-      "actions": "HighlightUIElement:HighlightUIElementParams=BuildSquadScrollView,Canvas/LockScrollRectMove:LockScrollRectMoveParams=BuildSquadScrollView,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=buildsquad_scrollview,build_squad_unselected_0,80",
-      "outputs": "elementType=Button;elementId=build_squad_unselected_0;listeners=type:pressed{RemoveHighlightUIElement(BuildSquadScrollView),UnlockScrollRectMove(BuildSquadScrollView/Canvas),SetUIElementListsTransparency(buildsquad_scrollview/none/255)}"
-  	},
-  	{
-      "tutorialGroupId":"firstAppEntry_click_level_1_click_drone",
-      "triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_runner",
-      "actions": "HighlightUIElement:HighlightUIElementParams=BuildSquadScrollView,Canvas/LockScrollRectMove:LockScrollRectMoveParams=BuildSquadScrollView,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=buildsquad_scrollview,build_squad_unselected_1,80",
-      "outputs": "elementType=Button;elementId=build_squad_unselected_1;listeners=type:pressed{RemoveHighlightUIElement(BuildSquadScrollView),UnlockScrollRectMove(BuildSquadScrollView/Canvas),SetUIElementListsTransparency(buildsquad_scrollview/none/255),HideBlackOverlay}"
-  	},
-  	{
-      "tutorialGroupId":"firstAppEntry_click_level_1_click_drone_buy",
-      "triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_drone",
-      "actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/HighlightUIElement:HighlightUIElementParams=Scroll View,Canvas/LockScrollRectMove:LockScrollRectMoveParams=Scroll View,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=shop_minion_list,MinionInShop_1,80",
-      "outputs": "elementType=Button;elementId=MinionInShop_1;listeners=type:pressed{RemoveHighlightUIElement(Scroll View),UnlockScrollRectMove(Scroll View/Canvas),SetUIElementListsTransparency(shop_minion_list/none/255)}"
-  	},
-  	{
-      "tutorialGroupId":"firstAppEntry_click_level_1_click_drone_buy_button",
-      "triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_drone_buy",
-      "actions": "HighlightUIElement:HighlightUIElementParams=Description box,Canvas",
-      "outputs": "elementType=Button;elementId=Description box;listeners=type:pressed{RemoveHighlightUIElement(Description box)}"
-  	},
-  	{
-      "tutorialGroupId":"firstAppEntry_click_shop_buy_drone_press_back",
-      "triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_drone_buy_button",
-      "actions": "HighlightUIElement:HighlightUIElementParams=Close Button,Canvas",
-      "outputs": "elementType=Button;elementId=Close Button;listeners=type:pressed{FinishTutorial}"
-  	},
-  	{
-      "tutorialGroupId":"firstAppEntry_click_level_1_click_drone_again",
-      "triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_shop_buy_drone_press_back",
-      "actions": "HighlightUIElement:HighlightUIElementParams=BuildSquadScrollView,Canvas/LockScrollRectMove:LockScrollRectMoveParams=BuildSquadScrollView,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=buildsquad_scrollview,build_squad_unselected_1,80",
-      "outputs": "elementType=Button;elementId=build_squad_unselected_1;listeners=type:pressed{RemoveHighlightUIElement(BuildSquadScrollView)}"
-  	},
-  	{
-      "tutorialGroupId":"firstAppEntry_click_level_1_press_play",
-      "triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_drone_again",
-      "actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/HighlightUIElement:HighlightUIElementParams=PlayLevelBtn,Canvas",
-      "outputs": "elementType=Button;elementId=PlayLevelBtn"
-  	}
-  ]
+	"list": [
+		{
+			"tutorialPhase": "FirstTimeOnApp",
+			"tutorialGroupId":"firstAppEntry",
+			"triggers": "IsSceneName:IsSceneNameParams=MenuScreen/HasUserNotCompletedTutorial:HasUserNotCompletedTutorialParams=FirstTimeOnApp",
+			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/DisplayPopup:DisplayPopupParams=AcceptPopup,,Do you want to play the tutorial?,Canvas,firstTutorialPopup",
+			"outputs": "elementType=AcceptPopup;elementId=firstTutorialPopup;listeners=type:ok{OnAgreeToDoTutorial,ChangeScene(World Selector Screen)}-type:cancel{OnCancelToDoTutorial,ChangeScene(World Selector Screen)}"
+		},
+		{
+			"tutorialPhase": "FirstTimeOnApp",
+			"tutorialGroupId":"firstAppEntry_clickShop",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousScene:IsPreviousSceneParams=MenuScreen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry",
+			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/HighlightUIElement:HighlightUIElementParams=Shop Btn,Canvas",
+			"outputs": "elementType=Button;elementId=Shop Btn;listeners=type:pressed{RemoveHighlightUIElement(Shop Btn)}"
+		},
+		{
+
+			"tutorialPhase": "FirstTimeOnApp",
+			"tutorialGroupId":"firstAppEntry_click_shop_select_runner",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_clickShop",
+			"actions": "HighlightUIElement:HighlightUIElementParams=Scroll View,Canvas/LockScrollRectMove:LockScrollRectMoveParams=Scroll View,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=shop_minion_list,MinionInShop_0,80",
+			"outputs": "elementType=Button;elementId=MinionInShop_0;listeners=type:pressed{RemoveHighlightUIElement(Scroll View),UnlockScrollRectMove(Scroll View/Canvas),SetUIElementListsTransparency(shop_minion_list/none/255)}"
+		},
+		{
+			"tutorialPhase": "FirstTimeOnApp",
+			"tutorialGroupId":"firstAppEntry_click_shop_buy_runner",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_shop_select_runner",
+			"actions": "HighlightUIElement:HighlightUIElementParams=Description box,Canvas",
+			"outputs": "elementType=Button;elementId=Description box;listeners=type:pressed{RemoveHighlightUIElement(Description box)}"
+		},
+		{
+			"tutorialPhase": "FirstTimeOnApp",
+			"tutorialGroupId":"firstAppEntry_click_shop_buy_runner_press_back",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_shop_buy_runner",
+			"actions": "HighlightUIElement:HighlightUIElementParams=Close Button,Canvas",
+			"outputs": "elementType=Button;elementId=Close Button;listeners=type:pressed{RemoveHighlightUIElement(Close Button)}"
+		},
+		{
+			"tutorialPhase": "FirstTimeOnApp",
+			"tutorialGroupId":"firstAppEntry_click_level_1",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_shop_buy_runner_press_back",
+			"actions": "HighlightUIElement:HighlightUIElementParams=world_buttons_0,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=world_buttons_0,levelNodeButton_0,80",
+			"outputs": "elementType=Button;elementId=world_buttons_0;listeners=type:pressed{RemoveHighlightUIElement(world_buttons_0),SetUIElementListsTransparency(world_buttons_0/levelNodeButton_0/255)}"
+		},
+		{
+			"tutorialPhase": "FirstTimeOnApp",
+			"tutorialGroupId":"firstAppEntry_click_level_1_click_runner",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1",
+			"actions": "HighlightUIElement:HighlightUIElementParams=BuildSquadScrollView,Canvas/LockScrollRectMove:LockScrollRectMoveParams=BuildSquadScrollView,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=buildsquad_scrollview,build_squad_unselected_0,80",
+			"outputs": "elementType=Button;elementId=build_squad_unselected_0;listeners=type:pressed{RemoveHighlightUIElement(BuildSquadScrollView),UnlockScrollRectMove(BuildSquadScrollView/Canvas),SetUIElementListsTransparency(buildsquad_scrollview/none/255)}"
+		},
+		{
+			"tutorialPhase": "FirstTimeOnApp",
+			"tutorialGroupId":"firstAppEntry_click_level_1_click_drone",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_runner",
+			"actions": "HighlightUIElement:HighlightUIElementParams=BuildSquadScrollView,Canvas/LockScrollRectMove:LockScrollRectMoveParams=BuildSquadScrollView,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=buildsquad_scrollview,build_squad_unselected_1,80",
+			"outputs": "elementType=Button;elementId=build_squad_unselected_1;listeners=type:pressed{RemoveHighlightUIElement(BuildSquadScrollView),UnlockScrollRectMove(BuildSquadScrollView/Canvas),SetUIElementListsTransparency(buildsquad_scrollview/none/255),HideBlackOverlay}"
+		},
+		{
+			"tutorialPhase": "FirstTimeOnApp",
+			"tutorialGroupId":"firstAppEntry_click_level_1_click_drone_buy",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_drone",
+			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/HighlightUIElement:HighlightUIElementParams=Scroll View,Canvas/LockScrollRectMove:LockScrollRectMoveParams=Scroll View,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=shop_minion_list,MinionInShop_1,80",
+			"outputs": "elementType=Button;elementId=MinionInShop_1;listeners=type:pressed{RemoveHighlightUIElement(Scroll View),UnlockScrollRectMove(Scroll View/Canvas),SetUIElementListsTransparency(shop_minion_list/none/255)}"
+		},
+		{
+			"tutorialPhase": "FirstTimeOnApp",
+			"tutorialGroupId":"firstAppEntry_click_level_1_click_drone_buy_button",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_drone_buy",
+			"actions": "HighlightUIElement:HighlightUIElementParams=Description box,Canvas",
+			"outputs": "elementType=Button;elementId=Description box;listeners=type:pressed{RemoveHighlightUIElement(Description box)}"
+		},
+		{
+			"tutorialPhase": "FirstTimeOnApp",
+			"tutorialGroupId":"firstAppEntry_click_shop_buy_drone_press_back",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_drone_buy_button",
+			"actions": "HighlightUIElement:HighlightUIElementParams=Close Button,Canvas",
+			"outputs": "elementType=Button;elementId=Close Button;listeners=type:pressed{FinishTutorial}"
+		},
+		{
+			"tutorialPhase": "FirstTimeOnApp",
+			"tutorialGroupId":"firstAppEntry_click_level_1_click_drone_again",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_shop_buy_drone_press_back",
+			"actions": "HighlightUIElement:HighlightUIElementParams=BuildSquadScrollView,Canvas/LockScrollRectMove:LockScrollRectMoveParams=BuildSquadScrollView,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=buildsquad_scrollview,build_squad_unselected_1,80",
+			"outputs": "elementType=Button;elementId=build_squad_unselected_1;listeners=type:pressed{RemoveHighlightUIElement(BuildSquadScrollView)}"
+		},
+		{
+			"tutorialPhase": "FirstTimeOnApp",
+			"tutorialGroupId":"firstAppEntry_click_level_1_press_play",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_drone_again",
+			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/HighlightUIElement:HighlightUIElementParams=PlayLevelBtn,Canvas",
+			"outputs": "elementType=Button;elementId=PlayLevelBtn"
+		}
+	]
 }
 
 

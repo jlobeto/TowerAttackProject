@@ -9,12 +9,10 @@ public class LevelProgressManager
 
     GenericListJsonLoader<LevelProgress> _lvlProgressList;
     GameManager _gameManager;
-    string _pathToSave;
     public LevelProgressManager(GameManager gameManager)
     {
-        _pathToSave = Path.Combine(Application.persistentDataPath, SaveSystem.LEVEL_PROGRESS_SAVE_NAME);
 
-        _lvlProgressList = SaveSystem.Load<GenericListJsonLoader<LevelProgress>>(_pathToSave);
+        _lvlProgressList = SaveSystem.Load<GenericListJsonLoader<LevelProgress>>(SaveSystem.LEVEL_PROGRESS_SAVE_NAME);
         if (_lvlProgressList == null || _lvlProgressList.list == null)
         {
             _lvlProgressList = new GenericListJsonLoader<LevelProgress>();
@@ -126,6 +124,6 @@ public class LevelProgressManager
 
     void Save()
     {
-        SaveSystem.Save(_lvlProgressList, _pathToSave);
+        SaveSystem.Save(_lvlProgressList, SaveSystem.LEVEL_PROGRESS_SAVE_NAME);
     }
 }

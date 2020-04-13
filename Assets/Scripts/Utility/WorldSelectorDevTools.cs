@@ -54,13 +54,16 @@ public class WorldSelectorDevTools : MonoBehaviour
         saveButton.GetComponentInChildren<Text>().text = "Save: " + _isSaving;
     }
 
-    public void DeleteSaveData()
+    public void DeleteSaveData(bool fromEditorWindow = false)
     {
         SaveSystem.canSave = true;//for deletion i need to force the save, so it saves the empty json.
         SaveSystem.DeleteFile(SaveSystem.MINIONS_SAVE_NAME);
         SaveSystem.DeleteFile(SaveSystem.LEVEL_PROGRESS_SAVE_NAME);
         SaveSystem.DeleteFile(SaveSystem.SQUAD_ORDER_SAVE_NAME);
         SaveSystem.DeleteFile(SaveSystem.CURRENCY_SAVE_NAME);
+        SaveSystem.DeleteFile(SaveSystem.TUTORIAL_SAVE_NAME);
+
+        if (fromEditorWindow) return;
 
         var canvas = FindObjectOfType<MainMapCanvasManager>();
         var popup = _gameManager.popupManager.BuildPopup(canvas.transform, "QUIT GAME", "Exit game for properly deletion.", "Close", PopupsID.BasePopup);

@@ -11,7 +11,7 @@ using UnityEngine;
 public class LevelInfo
 {
     public int id;
-    public string mode;//Normal,Hard
+    public string mode;//Normal,Hard, Tutorial
     /// <summary>
     /// 3 objetives: First is the minimun required to win the level, and the last is the maximum score to succed the level.
     /// </summary>
@@ -22,4 +22,6 @@ public class LevelInfo
     public float levelTime;
     public int initialLevelPoints;
     public int worldId;
+
+
 }

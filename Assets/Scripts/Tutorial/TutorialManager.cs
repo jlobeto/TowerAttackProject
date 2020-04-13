@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,37 +11,46 @@ public class TutorialManager : MonoBehaviour
 
     public bool enableTutorial = true;
     public AcceptPopup acceptPopup;
-    /// <summary>
-    /// This is the group tutorial that was before the current one
-    /// </summary>
-    public string lastTutorialGroupId;
-    
+
     GameManager _gameManager;
     GenericListJsonLoader<TutorialGroup> _tutorialGroups;
     Tuple<Transform, int> _lastUIParent; //the original parent of UI element that had to be moved to be highlighted.
+    /// <summary>
+    /// This is the group tutorial that was before the current one
+    /// </summary>
+    string _lastTutorialGroupId;
+    TutorialSaveDef _tutoSaveDef;
 
     public Tuple<Transform, int> LastUIParentAndSiblingIndex { get { return _lastUIParent; } }
+    public string LastTutorialGroupId {
+        get { return _lastTutorialGroupId; }
+        set { _lastTutorialGroupId = value; SaveProgress(); }
+    }
+    public bool IsUserFirstTimeOnApp { get { return !_tutoSaveDef.didShowFirstTutoPopup; } }
+    public bool UserAgreedWithMakingFirstTutorial { get { return _tutoSaveDef.didAgreeWithDoFirstTutorial; } }
 
     void Awake()
     {
         DontDestroyOnLoad(this);
 
-        if (!enableTutorial)
-            return;
-
         _tutorialGroups = GameUtils.LoadConfig<GenericListJsonLoader<TutorialGroup>>("TutorialsConfig.json");
-        
+        _tutoSaveDef = SaveSystem.Load<TutorialSaveDef>(SaveSystem.TUTORIAL_SAVE_NAME);
+        if (_tutoSaveDef == null)
+        {
+            _tutoSaveDef = new TutorialSaveDef();
+            SaveSystem.Save(_tutoSaveDef, SaveSystem.TUTORIAL_SAVE_NAME);
+        }
     }
 
     private void Start()
     {
-        if(enableTutorial)
+        if (enableTutorial)
             SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void Update()
     {
-        
+
     }
 
     public void Init(GameManager gm)
@@ -52,12 +62,35 @@ public class TutorialManager : MonoBehaviour
         {
             item.SetTutorialGroup(this, _gameManager);
             item.OnTutorialFinished += CheckTriggers;
-        }   
+        }
     }
 
     public void SetLastParentAndSibling(Transform parent, int siblingIndex)
     {
         _lastUIParent = Tuple.Create(parent, siblingIndex);
+    }
+
+    public void FirstTimeAppIsOpened()
+    {
+        _tutoSaveDef.didShowFirstTutoPopup = true;
+        SaveProgress();
+    }
+
+    public void UserAgreesWithDoFirstTutorial(bool didAgree)
+    {
+        _tutoSaveDef.didAgreeWithDoFirstTutorial = didAgree;
+        SaveProgress();
+    }
+
+    public void TutorialFinished(TutorialPhase phase)
+    {
+        _tutoSaveDef.tutorialPhasesCompleted.Add(phase.ToString());
+        SaveProgress();
+    }
+
+    public bool HasUserCompletedTutorial(string phase)
+    {
+        return _tutoSaveDef.tutorialPhasesCompleted.Any(i => i == phase);
     }
 
     void ExecuteGroupActions(TutorialGroup g)
@@ -81,6 +114,9 @@ public class TutorialManager : MonoBehaviour
     {
         foreach (var item in _tutorialGroups.list)
         {
+            var isItemCompleted = _tutoSaveDef.tutorialPhasesCompleted.Any(i => i == item.tutorialPhase);
+            if (isItemCompleted) continue;
+
             var result = item.CheckForTriggers();
             if (result)
             {
@@ -88,5 +124,10 @@ public class TutorialManager : MonoBehaviour
                 break;
             }
         }
+    }
+
+    void SaveProgress()
+    {
+        SaveSystem.Save(_tutoSaveDef, SaveSystem.TUTORIAL_SAVE_NAME);
     }
 }

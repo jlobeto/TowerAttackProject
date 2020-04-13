@@ -27,12 +27,12 @@ public class User
         get { return _currency; }
         set
         {
-            var coinsSavedPath = Path.Combine(Application.persistentDataPath, SaveSystem.CURRENCY_SAVE_NAME);
+            
             _currency = value;
-            var coinsSaved = SaveSystem.Load<GenericListJsonLoader<int>>(coinsSavedPath);
+            var coinsSaved = SaveSystem.Load<GenericListJsonLoader<int>>(SaveSystem.CURRENCY_SAVE_NAME);
             if(coinsSaved != null)
                 coinsSaved.list[0] = _currency;
-            SaveSystem.Save(coinsSaved, coinsSavedPath);
+            SaveSystem.Save(coinsSaved, SaveSystem.CURRENCY_SAVE_NAME);
         }
     }
 
@@ -45,8 +45,7 @@ public class User
         _levelProgressManager = new LevelProgressManager(_gameManager);
         _inventory = new Inventory();
 
-        var coinsSavedPath = Path.Combine(Application.persistentDataPath, SaveSystem.CURRENCY_SAVE_NAME);
-        var coinsSaved = SaveSystem.Load<GenericListJsonLoader<int>>(coinsSavedPath);
+        var coinsSaved = SaveSystem.Load<GenericListJsonLoader<int>>(SaveSystem.CURRENCY_SAVE_NAME);
 
         if (coinsSaved == null)
         {
@@ -54,7 +53,7 @@ public class User
             {
                 list = new List<int>() { _currency }
             };
-            SaveSystem.Save(genList, coinsSavedPath);
+            SaveSystem.Save(genList, SaveSystem.CURRENCY_SAVE_NAME);
         }
         else if (coinsSaved.list.Count > 0)
             Currency = coinsSaved.list[0];

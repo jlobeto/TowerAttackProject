@@ -51,7 +51,7 @@ public class LevelNode : MonoBehaviour
                 _btn.interactable = false;
                 
         }
-        else if (_lvlInfo.id != 1)
+        else if (_lvlInfo.id > 1 && _lvlInfo.mode != LevelMode.Tutorial.ToString())
             _btn.interactable = false;
 
         var currentLevelProgress = _gm.User.LevelProgressManager.GetProgress(_lvlInfo.id);

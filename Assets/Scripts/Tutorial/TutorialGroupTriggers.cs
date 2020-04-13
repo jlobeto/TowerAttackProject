@@ -11,6 +11,7 @@ public class TutorialGroupTriggers : TutorialGroupUtils
     public string IsSceneNameParams;
     public string IsPreviousSceneParams;
     public string IsPreviousTutorialGroupParams;
+    public string HasUserNotCompletedTutorialParams;
     #endregion
     TutorialManager _tutoManager;
     GameManager _gm;
@@ -49,7 +50,11 @@ public class TutorialGroupTriggers : TutorialGroupUtils
 
     public bool IsPreviousTutorialGroup(string id)
     {
-        return _tutoManager.lastTutorialGroupId == id;
+        return _tutoManager.LastTutorialGroupId == id;
     }
 
+    public bool HasUserNotCompletedTutorial(string phase)
+    {
+        return !_tutoManager.HasUserCompletedTutorial(phase);
+    }
 }

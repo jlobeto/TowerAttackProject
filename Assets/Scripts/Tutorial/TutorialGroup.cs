@@ -8,17 +8,18 @@ using System.Reflection;
 [Serializable]
 public class TutorialGroup
 {
+    public string tutorialPhase;
     public string tutorialGroupId;
     public string triggers;
     public string actions;
     public string outputs;//actions that happend after the user makes an input from the actions seen.
     public Action OnTutorialFinished = delegate { };
 
+    TutorialPhase _phase;
     TutorialGroupActions _realActions;
     TutorialGroupTriggers _realTriggers;
     TutorialGroupOutputs _realOutputs;
     TutorialManager _tutoManager;
-
     
     public void SetTutorialGroup(TutorialManager t, GameManager gm)
     {
@@ -32,6 +33,8 @@ public class TutorialGroup
 
         _realOutputs = new TutorialGroupOutputs(t, this);
         ParseOutputs(ref _realOutputs, outputs);
+
+        _phase = GameUtils.ToEnum(tutorialPhase, TutorialPhase.FirstTimeOnApp);
     }
 
     public bool CheckForTriggers()
@@ -43,12 +46,17 @@ public class TutorialGroup
     {
         _realActions.ExecuteTutorialActions();
         _realOutputs.InitListeners();
-        _tutoManager.lastTutorialGroupId = tutorialGroupId;
+        _tutoManager.LastTutorialGroupId = tutorialGroupId;
     }
 
     public void OnOutputFinished()
     {
         OnTutorialFinished();
+    }
+
+    public void OnGroupCanceled()
+    {
+        _tutoManager.TutorialFinished(_phase);
     }
 
     /// <summary>
@@ -73,6 +81,9 @@ public class TutorialGroup
             var splittedInfo = input[i].Split(':');
             prop = obj.GetType().GetField("varFuncNames");
             prop.SetValue(obj, prop.GetValue(obj) + " " + splittedInfo[0]);
+
+            if (splittedInfo.Length == 1)
+                continue;
 
             var splitParamNameFromValue = splittedInfo[1].Split('=');
             prop = obj.GetType().GetField(splitParamNameFromValue[0]);

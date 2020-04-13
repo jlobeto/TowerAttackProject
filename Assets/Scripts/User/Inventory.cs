@@ -9,16 +9,11 @@ public class Inventory
     GenericListJsonLoader<MinionBoughtDef> _minionsBoughts;
     GenericListJsonLoader<string> _squadMinionsOrder;
 
-    string _pathToMinionsSaved;
-    string _pathToSquadOrder;
-
     public Inventory()
     {
-        _pathToMinionsSaved = Path.Combine(Application.persistentDataPath, SaveSystem.MINIONS_SAVE_NAME);
-        _pathToSquadOrder = Path.Combine(Application.persistentDataPath, SaveSystem.SQUAD_ORDER_SAVE_NAME);
 
-        _minionsBoughts = SaveSystem.Load<GenericListJsonLoader<MinionBoughtDef>>(_pathToMinionsSaved);
-        _squadMinionsOrder = SaveSystem.Load<GenericListJsonLoader<string>>(_pathToSquadOrder);
+        _minionsBoughts = SaveSystem.Load<GenericListJsonLoader<MinionBoughtDef>>(SaveSystem.MINIONS_SAVE_NAME);
+        _squadMinionsOrder = SaveSystem.Load<GenericListJsonLoader<string>>(SaveSystem.SQUAD_ORDER_SAVE_NAME);
 
         if (_minionsBoughts == null)
             _minionsBoughts = CreateNewBoughtDefData();
@@ -35,7 +30,7 @@ public class Inventory
     {
         var minion = CreateMinionDefInstance(type);
         _minionsBoughts.list.Add(minion);
-        SaveSystem.Save(_minionsBoughts, _pathToMinionsSaved);
+        SaveSystem.Save(_minionsBoughts, SaveSystem.MINIONS_SAVE_NAME);
     }
 
     public void IncrementMinionStat(MinionType type, MinionBoughtDef.StatNames statName)
@@ -44,7 +39,7 @@ public class Inventory
         if(saved != null)
         {
             saved.IncrementLevelToStat(statName);
-            SaveSystem.Save(_minionsBoughts, _pathToMinionsSaved);
+            SaveSystem.Save(_minionsBoughts, SaveSystem.MINIONS_SAVE_NAME);
         }
     }
 
@@ -68,7 +63,7 @@ public class Inventory
         if (_squadMinionsOrder.list.Count >= 5) return;
 
         _squadMinionsOrder.list.Add(t.ToString());
-        SaveSystem.Save(_squadMinionsOrder, _pathToSquadOrder);
+        SaveSystem.Save(_squadMinionsOrder, SaveSystem.SQUAD_ORDER_SAVE_NAME);
     }
 
     public void DeleteSquadOrderItem(MinionType t)
@@ -77,7 +72,7 @@ public class Inventory
         if(_squadMinionsOrder.list.Contains(s))
         {
             _squadMinionsOrder.list.Remove(s);
-            SaveSystem.Save(_squadMinionsOrder, _pathToSquadOrder);
+            SaveSystem.Save(_squadMinionsOrder, SaveSystem.SQUAD_ORDER_SAVE_NAME);
         }
     }
 
@@ -88,7 +83,7 @@ public class Inventory
         /*
          * var runner = CreateMinionDefInstance(MinionType.Runner);
         list.list.Add(runner);*/
-        SaveSystem.Save(list, _pathToMinionsSaved);
+        SaveSystem.Save(list, SaveSystem.SQUAD_ORDER_SAVE_NAME);
 
         return list;
     }
@@ -109,7 +104,7 @@ public class Inventory
         list.list = new List<string>();
         //list.list.Add(MinionType.Runner.ToString()); no se agregan mas minions al principio
 
-        SaveSystem.Save(list, _pathToSquadOrder);
+        SaveSystem.Save(list, SaveSystem.SQUAD_ORDER_SAVE_NAME);
         return list;
     }
 }

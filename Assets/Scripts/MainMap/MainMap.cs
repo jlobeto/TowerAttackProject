@@ -46,6 +46,10 @@ public class MainMap : MonoBehaviour
 
         foreach (var lvlInfo in gm.LevelInfoLoader.LevelInfoList.list)
         {
+            var lvlMode = GameUtils.ToEnum(lvlInfo.mode, LevelMode.Normal);
+            if (lvlMode == LevelMode.Tutorial && !gm.tutorialManager.UserAgreedWithMakingFirstTutorial)
+                continue;//if user didnt accept doing tutorial, continue and don't show tutorial's node.
+
             bool unlocked = false;
             foreach (var worldId in worldsUnlocked)
             {

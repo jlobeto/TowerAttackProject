@@ -9,21 +9,20 @@ public class Level : MonoBehaviour
 {
     public int levelID;
     public List<WalkNode> initialWalkNodes = new List<WalkNode>();
-	public bool isTutorial;
 
     [HideInInspector] public int initialLevelPoints;
     [HideInInspector] public float levelTime = 60;
     public int pointsPerSecond = 1;
-    public List<LevelSkillManager.SkillType> levelSkills = new List<LevelSkillManager.SkillType>();
+    //public List<LevelSkillManager.SkillType> levelSkills = new List<LevelSkillManager.SkillType>();
     public List<Minion> availableMinions = new List<Minion>();
     [HideInInspector]
     public int[] objetives;//[5, 7, 10] first the minimun, last the maximun.
     [HideInInspector]
     public int[] currencyWinPerObjetives;
-    [HideInInspector]
+
     public LevelMode levelMode;
 	public Action<GameObject> ExecuteTutorialStep = delegate {};
-	public Action<int, bool, int> OnLevelFinish = delegate {}; //lvlid, win ?, stars - User.LevelEnded();
+	public Action<int, bool, int> OnLevelFinish = delegate {}; //<lvlid, win ?, stars> - User.LevelEnded();
     public LevelPortalEffect levelPortal;
 
     protected GameManager _gameManager;
@@ -102,8 +101,9 @@ public class Level : MonoBehaviour
 
     void OnRunLevelTimer()
     {
-		if (isTutorial)
-			return;
+		if (levelMode == LevelMode.Tutorial)
+            return;
+			
 		
         _levelTimeAux -= Time.deltaTime;
         _lvlCanvasManager.UpdateLevelTimer(_levelTimeAux < 0 ? 0 : _levelTimeAux, levelTime);
@@ -220,7 +220,7 @@ public class Level : MonoBehaviour
 
 		_lvlCanvasManager.BuildMinionSlots (availableMinions, levelID, _minionSkillManager);
         
-        _lvlCanvasManager.UpdateLevelTimer(levelTime, levelTime);
+        _lvlCanvasManager.UpdateLevelTimer(levelTime, levelTime, levelMode == LevelMode.Tutorial);
         _lvlCanvasManager.UpdateLevelLives(LivesRemoved, objetives[objetives.Length-1]);
         UpdatePoints(0);
     }
