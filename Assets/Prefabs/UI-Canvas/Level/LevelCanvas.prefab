@@ -145,7 +145,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -8}
+  m_AnchoredPosition: {x: 0, y: -5.6}
   m_SizeDelta: {x: 0, y: 1.9300015}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &222114003170735502
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.93793106, a: 1}
+  m_Color: {r: 0.9254902, g: 0.74445343, b: 0.3450981, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -177,19 +177,19 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: edea2665f8256b147bf5ed3f80d8af18, type: 3}
+    m_Font: {fileID: 12800000, guid: 0b8ab5e338df595418a1df23946f8a41, type: 3}
     m_FontSize: 39
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 44
+    m_MaxSize: 81
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 27.8''
+  m_Text: 'TIMER: --'
 --- !u!1 &1153319373617538
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,14 +509,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.3724635, g: 0.70830226, b: 0.8490566, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: ae11e94dbf7fc6a4a90b6e4e00158a9c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 61ab2b3357647054a856e25854217031, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1187,19 +1187,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.48871696, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.47910976, b: 1, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 6eb21023b17e4974890a84ca15f3a48c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6a291efb55349744a984ad81bf6fde94, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0.455
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -2158,11 +2158,6 @@ MonoBehaviour:
   minionSaleButtonPrefab: {fileID: 114461471381338798, guid: b41a40db8bc83b44890555751ae8c15d,
     type: 3}
   eventWarning: {fileID: 114019770550663220}
-  swapTowerTutorial: {fileID: 0}
-  tapUpImage: {fileID: 0}
-  tapDownImage: {fileID: 0}
-  holdMoveImage: {fileID: 0}
-  secondHoldMoveImage: {fileID: 0}
   minionSaleButtons: []
   liveRaySprite: {fileID: 114192155389031410}
   starOnSprite: {fileID: 21300000, guid: e00c5d3b9eedf8346bc6c0e31686ef68, type: 3}
@@ -2315,7 +2310,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0.318
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
