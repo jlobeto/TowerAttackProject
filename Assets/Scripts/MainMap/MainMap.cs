@@ -18,18 +18,20 @@ public class MainMap : MonoBehaviour
             SceneManager.LoadScene(0);
 
         loadingJob.transform.parent.gameObject.SetActive(false);
+        
+        _mainMapCanvas = FindObjectOfType<MainMapCanvasManager>();
+        _worldsManager = new WorldsManager(GetGameManager().User);
+
+        CreateLevelNodes();
+        _mainMapCanvas.ShowWorld(_gameManager.CurrentViewingWorld);
     }
 
     void Start()
     {
-        _mainMapCanvas = FindObjectOfType<MainMapCanvasManager>();
-        
-
-        _worldsManager = new WorldsManager(GetGameManager().User);
-        
-
-        CreateLevelNodes();
-        _mainMapCanvas.ShowWorld(_gameManager.CurrentViewingWorld);
+        //_mainMapCanvas = FindObjectOfType<MainMapCanvasManager>();
+        //_worldsManager = new WorldsManager(GetGameManager().User);
+        //CreateLevelNodes();
+        //_mainMapCanvas.ShowWorld(_gameManager.CurrentViewingWorld);
     }
 
     void Update ()
@@ -87,8 +89,7 @@ public class MainMap : MonoBehaviour
         try
         {
             _mainMapCanvas.gameObject.SetActive(false);
-            loadingJob.transform.parent.gameObject.SetActive(true);
-            StartCoroutine(loadingJob.Loading("Level" + lvlInfo.id));
+            loadingJob.ActivateLoadingAsyncProcess("Level" + lvlInfo.id);
         }
         catch (System.Exception)
         {

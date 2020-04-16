@@ -29,10 +29,6 @@ public class LevelNode : MonoBehaviour
 
     public void Init(LevelInfo lvlInfo, GameManager gm, Button btn)
     {
-        if (lvlInfo.id == 0)
-            foreach (var item in stars)
-                item.enabled = false;
-
 		_lvlInfo = lvlInfo;
 		_gm = gm;
         _btn = btn;
@@ -56,8 +52,13 @@ public class LevelNode : MonoBehaviour
 
         var currentLevelProgress = _gm.User.LevelProgressManager.GetProgress(_lvlInfo.id);
         if(currentLevelProgress != null)
+        {
             for (int i = 0; i < currentLevelProgress.starsWon; i++)
                 stars[i].sprite = starOnSprite;
+
+            if (_lvlInfo.mode == LevelMode.Tutorial.ToString())//if has progress, block the button so it can never be touched again
+                _btn.interactable = false;
+        }
 
         if (!_btn.interactable)//change to lock.
         {

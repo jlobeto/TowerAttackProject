@@ -10,6 +10,7 @@ public class PopupManager : MonoBehaviour
 
     int _popupStack = 0;
     bool _isPauseActivated;
+    Image _blackOverlay;
 
     void Start()
     {
@@ -30,6 +31,8 @@ public class PopupManager : MonoBehaviour
             return null;
         else if (isPause)
             _isPauseActivated = true;
+
+        CreateBlackOverlay(parent);
 
         var popup = Instantiate<BasePopup>(popupPrefabs.FirstOrDefault(i => i.popupId == popupId), parent);
         popup.title.text = title.ToUpper();
@@ -55,16 +58,33 @@ public class PopupManager : MonoBehaviour
         _popupStack++;
     }
 
-    public void DisplayedPopupWasClosed(string p ="")
+    public void DisplayedPopupWasClosed(string p = "")
     {
         _popupStack--;
 
-        if(_isPauseActivated)
+        if (_isPauseActivated)
             _isPauseActivated = false;
+
+        if (_blackOverlay != null)
+            Destroy(_blackOverlay.gameObject);
     }
 
     float GetRandomAnimation()
     {
         return Random.Range(0f, 3.9f);
+    }
+
+    void CreateBlackOverlay(Transform parent)
+    {
+        var blackOverlay = new GameObject("blackOverlay");
+        blackOverlay.transform.parent = parent;
+        _blackOverlay = blackOverlay.AddComponent<Image>();
+        _blackOverlay.color = new Color(0, 0, 0, 0.8f);
+        _blackOverlay.raycastTarget = true;
+
+        _blackOverlay.rectTransform.anchorMin = new Vector2(0, 0);
+        _blackOverlay.rectTransform.anchorMax = new Vector2(1, 1);
+        _blackOverlay.rectTransform.offsetMin = new Vector2(0, 0);
+        _blackOverlay.rectTransform.offsetMax = new Vector2(0, 0);
     }
 }

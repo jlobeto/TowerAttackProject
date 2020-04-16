@@ -5,9 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
+    public GameLoadingScreen loadingScreen;
+    public Canvas menuCanvas;
 
+    private void Awake()
+    {
+        loadingScreen.transform.parent.gameObject.SetActive(false);
+    }
 
-	void Start ()
+    void Start ()
     {
         var _gameManager = FindObjectOfType<GameManager>();
         if (_gameManager == null)
@@ -22,7 +28,8 @@ public class MainMenuManager : MonoBehaviour
 
     public void GoToMainMap()
     {
-        SceneManager.LoadScene("World Selector Screen");
+        loadingScreen.ActivateLoadingAsyncProcess("World Selector Screen");
+        menuCanvas.enabled = false;
     }
 
     public void ExitApp()

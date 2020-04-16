@@ -54,7 +54,7 @@ public class TutorialGroup
         OnTutorialFinished();
     }
 
-    public void OnGroupCanceled()
+    public void OnPhaseDoneOrCanceled()
     {
         _tutoManager.TutorialFinished(_phase);
     }

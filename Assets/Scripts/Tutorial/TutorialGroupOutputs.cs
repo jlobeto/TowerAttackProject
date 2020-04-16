@@ -102,7 +102,7 @@ public class TutorialGroupOutputs : TutorialGroupUtils
         SceneManager.LoadScene(split[0], LoadSceneMode.Single);
     }
 
-    public void FinishTutorial(string p)
+    public void ForceTutorialGroupToFinish(string p)
     {
         var split = p.Split('/');
         OnFuncFinished(split[1]);
@@ -201,7 +201,12 @@ public class TutorialGroupOutputs : TutorialGroupUtils
     {
         _tutoManager.UserAgreesWithDoFirstTutorial(false);
         _tutoManager.FirstTimeAppIsOpened();
-        _tutoGroup.OnGroupCanceled();
+        _tutoGroup.OnPhaseDoneOrCanceled();
+    }
+
+    public void OnPhaseCompleted(string p)
+    {
+        _tutoGroup.OnPhaseDoneOrCanceled();
     }
 
     //          type ,  list <Tuple< method,  params>

@@ -15,8 +15,15 @@ public class GameLoadingScreen : MonoBehaviour
             StartCoroutine(Loading());
     }
 
-    public IEnumerator Loading(string name = "MenuScreen")
+    public void ActivateLoadingAsyncProcess(string name = "MenuScreen")
     {
+        transform.parent.gameObject.SetActive(true);
+        StartCoroutine(Loading(name));
+    }
+
+    IEnumerator Loading(string name = "MenuScreen")
+    {
+        isLevelLoading = true;
         AsyncOperation op = SceneManager.LoadSceneAsync(name);
 
         while (!op.isDone)
@@ -27,5 +34,7 @@ public class GameLoadingScreen : MonoBehaviour
 
             yield return null;
         }
+
+        isLevelLoading = false;
     }
 }

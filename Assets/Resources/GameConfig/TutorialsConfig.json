@@ -76,7 +76,7 @@
 			"tutorialGroupId":"firstAppEntry_click_shop_buy_drone_press_back",
 			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_drone_buy_button",
 			"actions": "HighlightUIElement:HighlightUIElementParams=Close Button,Canvas",
-			"outputs": "elementType=Button;elementId=Close Button;listeners=type:pressed{FinishTutorial}"
+			"outputs": "elementType=Button;elementId=Close Button;listeners=type:pressed{ForceTutorialGroupToFinish}"
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp",
@@ -88,6 +88,24 @@
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_level_1_press_play",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_drone_again",
+			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/HighlightUIElement:HighlightUIElementParams=PlayLevelBtn,Canvas",
+			"outputs": "elementType=Button;elementId=PlayLevelBtn;listeners=type:pressed{OnPhaseCompleted}"
+		},
+
+
+
+
+
+
+
+
+
+
+
+		{
+			"tutorialPhase": "FirstTimeOnApp_INGAME",
+			"tutorialGroupId":"firstAppEntry_ingame_press_runner",
 			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_drone_again",
 			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/HighlightUIElement:HighlightUIElementParams=PlayLevelBtn,Canvas",
 			"outputs": "elementType=Button;elementId=PlayLevelBtn"

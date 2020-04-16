@@ -316,10 +316,10 @@ public class Level : MonoBehaviour
         GoalCompletedHandler();
     }
 
-    protected virtual void GoalCompletedHandler()
+    protected virtual void GoalCompletedHandler(bool shouldShowPopup = true)
     {
         //Debug.Log("----- Level Completed -----");
-        if(_gameManager.popupManager != null)
+        if(_gameManager.popupManager != null && shouldShowPopup)
         {
             var popup =_gameManager.popupManager.BuildPopup(_lvlCanvasManager.transform, "You won!", "Continue...", "Main Map");
             if (popup != null)
@@ -350,8 +350,6 @@ public class Level : MonoBehaviour
 
 	public int GetCurrentStarsWinning()
 	{
-        if (levelID == 0) return 0;
-
         return GameplayUtils.StarsWon(LivesRemoved, objetives);
 	}
 
@@ -376,7 +374,7 @@ public class Level : MonoBehaviour
     /// <summary>
     /// This will execute when the button in lose or win popups is pressed.
     /// </summary>
-    void OnFinishLevelCallback(string p)
+    protected void OnFinishLevelCallback(string p)
     {
         Time.timeScale = 1;//TODO:: // SACAR ESTO A LA MIERDA
         _gameManager.SetCurrentLevelInfo(null);

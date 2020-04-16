@@ -32,9 +32,15 @@ public class MinionSkillMouseDown : MonoBehaviour , IPointerDownHandler, IPointe
             img.gameObject.SetActive(false);
         else 
         {
-            img.sprite = Resources.Load<Sprite>("UIMinionsPictures/" + GameplayUtils.GetMinionTypeBySkill(_myType).ToString() + "/skill"); 
+            img.sprite = Resources.Load<Sprite>("UIMinionsPictures/" + GameplayUtils.GetMinionTypeBySkill(_myType).ToString() + "/skill");
+            img.gameObject.SetActive(true);
         }
 
+    }
+
+    public void SetDisabled()
+    {
+        img.gameObject.SetActive(false);
     }
 
     public void SetOnPointerDown(bool value)

@@ -155,7 +155,7 @@ public class LevelCanvasManager : MonoBehaviour
         var text = "Time: ";
         if(isInfinite)
         {
-            _levelTimer.text = text + "∞";
+            _levelTimer.text = text + "--";
             return;
         }
 
@@ -263,7 +263,7 @@ public class LevelCanvasManager : MonoBehaviour
 		}
         else
         {
-            skillBtn.img.gameObject.SetActive(false);
+            skillBtn.SetDisabled();
         }
 
         /*var fillImg = skillBtn.GetComponentsInChildren<Image>()[1];//Returns btn.image and its child.image(DONT KNOW WHY)
