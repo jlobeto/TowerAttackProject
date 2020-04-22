@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Reflection;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 [Serializable]
 public class TutorialGroupOutputs : TutorialGroupUtils
@@ -18,6 +19,9 @@ public class TutorialGroupOutputs : TutorialGroupUtils
     TutorialGroup _tutoGroup;
     Dictionary<string, int> _amountOfFunctionPerListener;
     Dictionary<string, int> _currentAmountOfFunctionsTriggeredPerListener;
+
+    Dictionary<string, UnityAction> _buttonListeners;
+    Button _outputButton;
 
     public TutorialGroupOutputs(TutorialManager t, TutorialGroup tutoGroup)
     {
@@ -34,6 +38,7 @@ public class TutorialGroupOutputs : TutorialGroupUtils
 
         SetListenerOfPopup();
         SetListenerOfButton();
+        SetListenerOfTimer();
     }
 
     void SetListenerOfPopup()
@@ -71,6 +76,8 @@ public class TutorialGroupOutputs : TutorialGroupUtils
         var button = button_go.GetComponent<Button>();
         if(button == null)
             button = button_go.GetComponentInChildren<Button>();
+        _outputButton = button;
+        _buttonListeners = new Dictionary<string, UnityAction>();
 
         var parsedListeners = ParseListeners();
         foreach (var listener in parsedListeners)
@@ -79,17 +86,55 @@ public class TutorialGroupOutputs : TutorialGroupUtils
             foreach (var item in listener.Item2)
             {
                 var p = item.Item2 + "/"+ listener.Item1;
+                if (item.Item1 == null)
+                    Debug.LogError("Tutorial Group ID = "+ _tutoGroup.tutorialGroupId + " may have a space in output field (maybe in a parameter?)");
+
                 Action<string> action = (Action<string>)Delegate.CreateDelegate(typeof(Action<string>), this, item.Item1);
-                button.onClick.AddListener(() => action(p));
+
+                _buttonListeners.Add(item.Item1.Name, () => action(p));
+
+                button.onClick.AddListener(_buttonListeners[item.Item1.Name]);
                 amount++;
             }
             _amountOfFunctionPerListener.Add(listener.Item1, amount);
         }
     }
 
+    void SetListenerOfTimer()
+    {
+        if (elementType != "Timer") return;
+
+        _tutoManager.OnForceExecutingOutputFinished += ExecuteOutputFunctionsOnTimerFinished;
+    }
+
+    void ExecuteOutputFunctionsOnTimerFinished()
+    {
+        _tutoManager.OnForceExecutingOutputFinished -= ExecuteOutputFunctionsOnTimerFinished;
+
+        var parsedListeners = ParseListeners();
+        var funcs = new List<Tuple<Action<string>, string>>();
+
+        foreach (var listener in parsedListeners)
+        {
+            int amount = 0;
+            foreach (var item in listener.Item2)
+            {
+                var p = item.Item2 + "/" + listener.Item1;
+                Action<string> action = (Action<string>)Delegate.CreateDelegate(typeof(Action<string>), this, item.Item1);
+                funcs.Add(Tuple.Create(action, p));
+                amount++;
+            }
+            _amountOfFunctionPerListener.Add(listener.Item1, amount);
+        }
+
+        foreach (var item in funcs)
+        {
+            item.Item1.Invoke(item.Item2);
+        }
+    }
+
     public void HideBlackOverlay(string p)
     {
-        
         var overlays = GameObject.FindObjectsOfType<Image>().Where(i => i.gameObject.name == TutorialManager.BLACK_OVERLAY_NAME);
         GameObject.Destroy(overlays.Last().gameObject);
         var split = p.Split('/');
@@ -102,6 +147,9 @@ public class TutorialGroupOutputs : TutorialGroupUtils
         SceneManager.LoadScene(split[0], LoadSceneMode.Single);
     }
 
+    /// <summary>
+    /// Used only when there no function on pressed type
+    /// </summary>
     public void ForceTutorialGroupToFinish(string p)
     {
         var split = p.Split('/');
@@ -127,9 +175,38 @@ public class TutorialGroupOutputs : TutorialGroupUtils
     {
         var split = p.Split('/');
 
-        var canvas = GetParentByName(split[1]);//Canvas
+        var canvas = GetGameObjectByName(split[1]);//Canvas
         ScrollRect rect = GameObject.Find(split[0]).GetComponent<ScrollRect>();//ScrollRect name
         rect.horizontal = true;
+
+        OnFuncFinished(split[split.Length - 1]);
+    }
+
+    public void StartNextTutorialGroupOnTimer(string p)
+    {
+        var split = p.Split('/');
+
+        var seconds = float.Parse(split[0]) / 1000; //PARAM HAS TO BE IN MILLISECONDS
+        _tutoManager.StartNextTutorialGroupOnTimer(seconds);
+
+        OnFuncFinished(split[split.Length - 1]);
+    }
+
+    public void ContinueUpdating(string p)
+    {
+        var split = p.Split('/');
+
+        Time.timeScale = 1;
+
+        OnFuncFinished(split[split.Length - 1]);
+    }
+
+    public void RemovePointFinger(string p)
+    {
+        var split = p.Split('/');
+
+        if(_tutoGroup.pointingFinger != null)
+            GameObject.Destroy(_tutoGroup.pointingFinger.gameObject);
 
         OnFuncFinished(split[split.Length - 1]);
     }
@@ -187,7 +264,18 @@ public class TutorialGroupOutputs : TutorialGroupUtils
         _currentAmountOfFunctionsTriggeredPerListener[type]++;
 
         if(_currentAmountOfFunctionsTriggeredPerListener[type] == _amountOfFunctionPerListener[type])
+        {
+            if(_outputButton != null)
+            {
+                foreach (var key in _buttonListeners.Keys)
+                {
+                    _outputButton.onClick.RemoveListener(_buttonListeners[key]);
+                }
+                _outputButton = null;
+                _buttonListeners = null;
+            }
             _tutoGroup.OnOutputFinished();
+        }
     }
 
 

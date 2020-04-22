@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Reflection;
+using UnityEngine.UI;
 
 [Serializable]
 public class TutorialGroup
@@ -14,6 +15,7 @@ public class TutorialGroup
     public string actions;
     public string outputs;//actions that happend after the user makes an input from the actions seen.
     public Action OnTutorialFinished = delegate { };
+    public Image pointingFinger;//using this to destroy it in outputs.
 
     TutorialPhase _phase;
     TutorialGroupActions _realActions;
@@ -39,6 +41,9 @@ public class TutorialGroup
 
     public bool CheckForTriggers()
     {
+        var isLastGroupThisGroup = _tutoManager.LastTutorialGroupId == tutorialGroupId;
+        if (isLastGroupThisGroup) return false;
+
         return _realTriggers.CanTrigger();
     }
 

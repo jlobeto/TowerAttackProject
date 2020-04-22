@@ -86,5 +86,13 @@ public class PopupManager : MonoBehaviour
         _blackOverlay.rectTransform.anchorMax = new Vector2(1, 1);
         _blackOverlay.rectTransform.offsetMin = new Vector2(0, 0);
         _blackOverlay.rectTransform.offsetMax = new Vector2(0, 0);
+
+        var canvas = parent.GetComponent<Canvas>();
+        if(canvas != null && canvas.renderMode == RenderMode.ScreenSpaceCamera)//in this mode the overlay looks very ugly
+        {
+            _blackOverlay.rectTransform.rotation = new Quaternion(0, 0, 0, 0);
+            _blackOverlay.rectTransform.localScale = new Vector3(1, 1, 1);
+            _blackOverlay.rectTransform.anchoredPosition3D = new Vector3(0, 0, 0);
+        }
     }
 }

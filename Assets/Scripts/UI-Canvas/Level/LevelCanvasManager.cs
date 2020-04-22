@@ -215,13 +215,14 @@ public class LevelCanvasManager : MonoBehaviour
 				Debug.LogError("minion item in AvailableMinions List is null ");
 				continue;
 			}
-			slots++;
+			
 			var minionStats = level.GameManager.MinionsJsonLoader.GetStatByLevel (m.minionType, lvlId);
 			m.pointsValue = minionStats.pointsValue;
 
 			var btn = Instantiate<Button>(minionSaleButtonPrefab, _availablesPanel.transform);
 			btn.GetComponentInChildren<Text>().text = m.pointsValue.ToString();
-			minionSaleButtons.Add (btn.GetComponent<MinionSaleButton> ());
+            btn.gameObject.name = "MinionSaleButton_" + slots; 
+            minionSaleButtons.Add (btn.GetComponent<MinionSaleButton> ());
 			minionSaleButtons[minionSaleButtons.Count-1].minionType = m.minionType;
 			minionSaleButtons[minionSaleButtons.Count-1].minionSkill = m.skillType;
 			var t = m.minionType;
@@ -231,7 +232,8 @@ public class LevelCanvasManager : MonoBehaviour
 			btn.onClick.AddListener(() => OnBuyMinion(newBtn,fillImg, t, cooldown, stayNotInteractuable));
 
 			SetMinionSkillButton (btn, m.skillType, !stayNotInteractuable, minionSkillsManager);
-		}
+            slots++;
+        }
 
 		if (slots < minionSlots) 
 		{

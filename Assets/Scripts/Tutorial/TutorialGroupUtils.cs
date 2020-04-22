@@ -22,7 +22,7 @@ public class TutorialGroupUtils
         return func.Invoke(this, splittedParams);
     }
 
-    protected GameObject GetParentByName(string name)
+    protected GameObject GetGameObjectByName(string name)
     {
         return GameObject.Find(name);
     }

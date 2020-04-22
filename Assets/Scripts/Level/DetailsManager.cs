@@ -6,12 +6,11 @@ public class DetailsManager : MonoBehaviour
 {
     public Color _baseColor;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         foreach (Transform item in transform)
         {
-            if(item.tag == "point")
+            if (item.tag == "point")
             {
                 var mat = item.GetComponent<Renderer>().material;
 
@@ -21,9 +20,15 @@ public class DetailsManager : MonoBehaviour
                 mat.SetColor("_EmissionColor", Color.black);
             }
         }
-        
+
         StartCoroutine(TurnOn());
     }
+
+    void Start()
+    {
+        
+    }
+    
 
     IEnumerator TurnOn()
     {

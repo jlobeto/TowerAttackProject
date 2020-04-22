@@ -4,13 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
     public const string BLACK_OVERLAY_NAME = "tutorial_black_overlay";
+    public const string POINTING_FINGER_NAME = "pointing_finger_image";
 
     public bool enableTutorial = true;
     public AcceptPopup acceptPopup;
+    public Image pointingFinger;
+    public Action OnForceExecutingOutputFinished = delegate { };
 
     GameManager _gameManager;
     GenericListJsonLoader<TutorialGroup> _tutorialGroups;
@@ -28,7 +32,14 @@ public class TutorialManager : MonoBehaviour
     }
     public bool IsUserFirstTimeOnApp { get { return !_tutoSaveDef.didShowFirstTutoPopup; } }
     public bool UserAgreedWithMakingFirstTutorial { get { return _tutoSaveDef.didAgreeWithDoFirstTutorial; } }
+    /// <summary>
+    /// //Is the timer of one group output(StartNextTutorialGroupOnTimer) finished so the next group tuto can be triggered? 
+    /// </summary>
+    public bool TimerForNextGroupTutorialIsFinished { get { return _timerForNextGroupTutorialIsFinished; } }
 
+    bool _timerForNextGroupTutorialIsFinished = true;
+
+    List<string> tutorialGroupsDone;
     void Awake()
     {
         DontDestroyOnLoad(this);
@@ -40,6 +51,8 @@ public class TutorialManager : MonoBehaviour
             _tutoSaveDef = new TutorialSaveDef();
             SaveSystem.Save(_tutoSaveDef, SaveSystem.TUTORIAL_SAVE_NAME);
         }
+
+        tutorialGroupsDone = new List<string>();
     }
 
     private void Start()
@@ -93,9 +106,34 @@ public class TutorialManager : MonoBehaviour
         return _tutoSaveDef.tutorialPhasesCompleted.Any(i => i == phase);
     }
 
+    public void StartNextTutorialGroupOnTimer(float seconds)
+    {
+        _timerForNextGroupTutorialIsFinished = false;
+        StartCoroutine(StartNewTutorialGroup(seconds));
+    }
+
+    IEnumerator StartNewTutorialGroup(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        _timerForNextGroupTutorialIsFinished = true;
+        CheckTriggers();
+    }
+
+    public void ForceExecutingOutputAfterSeconds(float sec)
+    {
+        StartCoroutine(StartForceExecutingOutputAfterSeconds(sec));
+    }
+    IEnumerator StartForceExecutingOutputAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        OnForceExecutingOutputFinished();
+    }
+
     void ExecuteGroupActions(TutorialGroup g)
     {
         g.ExecuteActions();
+        tutorialGroupsDone.Add(g.tutorialGroupId);
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -116,6 +154,9 @@ public class TutorialManager : MonoBehaviour
         {
             var isItemCompleted = _tutoSaveDef.tutorialPhasesCompleted.Any(i => i == item.tutorialPhase);
             if (isItemCompleted) continue;
+
+            var tutorialGroupHasBeenDone = tutorialGroupsDone.Any(i => i == item.tutorialGroupId);
+            if (tutorialGroupHasBeenDone) continue;
 
             var result = item.CheckForTriggers();
             if (result)

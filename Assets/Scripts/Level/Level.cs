@@ -21,7 +21,6 @@ public class Level : MonoBehaviour
     public int[] currencyWinPerObjetives;
 
     public LevelMode levelMode;
-	public Action<GameObject> ExecuteTutorialStep = delegate {};
 	public Action<int, bool, int> OnLevelFinish = delegate {}; //<lvlid, win ?, stars> - User.LevelEnded();
     public LevelPortalEffect levelPortal;
 

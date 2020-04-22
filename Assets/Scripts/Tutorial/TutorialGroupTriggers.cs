@@ -12,9 +12,12 @@ public class TutorialGroupTriggers : TutorialGroupUtils
     public string IsPreviousSceneParams;
     public string IsPreviousTutorialGroupParams;
     public string HasUserNotCompletedTutorialParams;
+    public string IsFirstIngameTutorialPartParams;
+    public string AmountOfMinionsReleasedParams;
     #endregion
     TutorialManager _tutoManager;
     GameManager _gm;
+    LevelTutorial _level;
 
     public TutorialGroupTriggers(TutorialManager t, GameManager gm)
     {
@@ -56,5 +59,39 @@ public class TutorialGroupTriggers : TutorialGroupUtils
     public bool HasUserNotCompletedTutorial(string phase)
     {
         return !_tutoManager.HasUserCompletedTutorial(phase);
+    }
+
+    public bool IsLastTimerFinished()
+    {
+        return _tutoManager.TimerForNextGroupTutorialIsFinished;
+    }
+
+    public bool IsFirstIngameTutorialPart(string part)
+    {
+        int num = int.Parse(part);
+
+        var lvl = GetTutorialLevelIfPossible();
+        if (lvl == null) return false;
+
+        return _level.CurrentTutorialPart + 1 == num;
+    }
+
+    public bool AmountOfMinionsReleased(string amount)
+    {
+        int num = int.Parse(amount);
+
+        var lvl = GetTutorialLevelIfPossible();
+        if (lvl == null) return false;
+
+        return false;// _level.MinionManager.DeleteAllMinionsInPath
+    }
+
+
+    LevelTutorial GetTutorialLevelIfPossible()
+    {
+        if (_level == null)
+            _level = GameObject.FindObjectOfType<LevelTutorial>();
+        
+        return _level;
     }
 }

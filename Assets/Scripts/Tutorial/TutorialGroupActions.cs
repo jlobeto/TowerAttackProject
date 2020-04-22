@@ -16,6 +16,8 @@ public class TutorialGroupActions : TutorialGroupUtils
     public string HighlightUIElementParams;
     public string LockScrollRectMoveParams;
     public string SetUIElementListsTransparencyParams;
+    public string ForceExecutingOutputAfterSecondsParams;
+    public string CreatePointFingerParams;
     #endregion
 
     TutorialManager _tutoManager;
@@ -39,7 +41,7 @@ public class TutorialGroupActions : TutorialGroupUtils
 
     public void DisplayPopup(string name, string title, string desc, string parent, string tutorialPopupID = "")
     {
-        var canvas = GetParentByName(parent);
+        var canvas = GetGameObjectByName(parent);
 
         if (name == "AcceptPopup")
         {
@@ -56,25 +58,30 @@ public class TutorialGroupActions : TutorialGroupUtils
 
     public void ShowBlackOverlay(string parent)
     {
-        var canvas = GetParentByName(parent);
-        var go = new GameObject();
+        var canvasGO = GetGameObjectByName(parent);
+        var canvas = canvasGO.GetComponent<Canvas>();
+        var go = new GameObject(TutorialManager.BLACK_OVERLAY_NAME);
         var img = go.AddComponent<Image>();
         img.color = new Color(0, 0, 0, 0.8f);
-
-        go.transform.SetParent(canvas.transform);
+        go.transform.SetParent(canvasGO.transform);
 
         img.rectTransform.anchorMin = new Vector2(0, 0);
         img.rectTransform.anchorMax = new Vector2(1, 1);
         img.rectTransform.offsetMin = new Vector2(0, 0);
         img.rectTransform.offsetMax = new Vector2(0, 0);
 
-        go.name = TutorialManager.BLACK_OVERLAY_NAME;
+        if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
+        {
+            img.rectTransform.rotation = new Quaternion(0, 0, 0, 0);
+            img.rectTransform.localScale = new Vector3(1, 1, 1);
+            img.rectTransform.anchoredPosition3D = new Vector3(0, 0, 0);
+        }
     }
 
 
     public void HighlightUIElement(string elementName, string parent)
     {
-        var parentGO = GetParentByName(parent);
+        var parentGO = GetGameObjectByName(parent);
 
         /*var r = canvas.GetComponentsInChildren<RectTransform>();
         foreach (var item in r)
@@ -100,12 +107,62 @@ public class TutorialGroupActions : TutorialGroupUtils
         }
 
     }
+
+    public void StopUpdate()
+    {
+        Time.timeScale = 0;
+    }
     
     public void LockScrollRectMove(string elementName, string parent)
     {
-        var canvas = GetParentByName(parent);
+        var canvas = GetGameObjectByName(parent);
         ScrollRect rect = GameObject.Find(elementName).GetComponent<ScrollRect>();
         rect.horizontal = rect.vertical = false;
+    }
+
+    public void ForceExecutingOutputAfterSeconds(string milliseconds)
+    {
+        var sec = float.Parse(milliseconds) / 1000;
+        _tutoManager.ForceExecutingOutputAfterSeconds(sec);
+    }
+
+    public void CreatePointFinger(string posX, string posY, string rotZ, string parent)
+    {
+        /*this will create a pointing finger.
+         - parent is the game object that the finger will be attached to
+         - the positions x and y will be added from the pivot of the parent*/
+        var parentGO = GetGameObjectByName(parent);
+
+        if (posX.Contains("parentW"))//will get the parent width and get the middle of it 
+        {
+            var parentRect = parentGO.GetComponent<RectTransform>();
+            posX = (parentRect.rect.width / 2).ToString("0.00");
+        }
+
+        var x = float.Parse(posX);
+        var y = float.Parse(posY);
+        var rotatZ = float.Parse(rotZ);
+        
+        var finger = GameObject.Instantiate<Image>(_tutoManager.pointingFinger, new Vector3(0,0,0), Quaternion.identity, parentGO.transform);
+        finger.rectTransform.position = parentGO.transform.position;
+        finger.name = TutorialManager.POINTING_FINGER_NAME;
+
+        finger.rectTransform.position += new Vector3(x, y, 0);
+        finger.rectTransform.Rotate(new Vector3(0, 0, rotatZ), Space.Self);
+
+        finger.raycastTarget = false;
+        _tutoGroup.pointingFinger = finger;
+
+        var canvas = GetGameObjectByName("LevelCanvas");
+        if(canvas != null)
+        {
+            var c = canvas.GetComponent<Canvas>();
+            if (c.renderMode != RenderMode.ScreenSpaceCamera) return;
+
+            finger.rectTransform.localPosition = new Vector3(0, 0, 0) + new Vector3(x,y,0);
+            finger.rectTransform.localRotation = new Quaternion(0, 0, 0, 0);
+            finger.rectTransform.Rotate(new Vector3(0, 0, rotatZ), Space.Self);
+        }
     }
 
     public void SetUIElementListsTransparency(string elementName, string exception, string alphaPercent)

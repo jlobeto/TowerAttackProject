@@ -145,6 +145,13 @@ public class MinionManager : MonoBehaviour
         }
     }
 
+    public void DeleteAllMinionsInPath()
+    {
+        _minions = new List<Minion>();
+        Destroy(_allMinions);
+        Init();
+    }
+
     #region Handlers
     void MinionWalkFinishedHandler(Minion m)
     {
@@ -176,6 +183,10 @@ public class MinionManager : MonoBehaviour
 
     void DestroyMinion(Minion m)
     {
+        m.OnWalkFinished -= MinionWalkFinishedHandler;
+        m.OnDeath -= MinionDeathHandler;
+        m.OnMinionSkill -= MinionSkillActivatedHandler;
+
         _minions.Remove(m);
         Destroy(m.gameObject);
     }
