@@ -34,8 +34,8 @@ public class Level : MonoBehaviour
     protected GameObjectSelector _goSelector;
     protected FloorEffect _floorEffect;
     protected int _livesRemoved;
+    protected bool _levelEnded;
 
-    bool _levelEnded;
     int _currentLevelPoints = 0;
     float _levelTimeAux;
     
@@ -64,7 +64,7 @@ public class Level : MonoBehaviour
 
     float timerAux = 1;
 
-	void Update ()
+	protected virtual void Update ()
     {
         if(_levelEnded) return;
 
@@ -110,7 +110,7 @@ public class Level : MonoBehaviour
         {
             _levelEnded = true;
             CheckLevelCompletion(true);
-            _towerManager.StopTowers();
+            _towerManager.StopOrInitTowers();
             _minionManager.StopMinions();
         }
     }
@@ -325,7 +325,7 @@ public class Level : MonoBehaviour
                 popup.AddFunction(BasePopup.FunctionTypes.ok, OnFinishLevelCallback);
         }
             
-        _towerManager.StopTowers();
+        _towerManager.StopOrInitTowers();
         _minionManager.StopMinions();
         _levelEnded = true;
         if (_lvlEventManager != null)

@@ -34,6 +34,11 @@ public class LevelPortalEffect : MonoBehaviour
             SetEmissionColor(_cubeEmisColor, cubes[1].material);*/
     }
 
+    public void SetPS(bool enable)
+    {
+        portalPS.gameObject.SetActive(enable);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Minion"))

@@ -22,11 +22,11 @@ public class TowerManager : MonoBehaviour
 		
 	}
 
-    public void StopTowers()
+    public void StopOrInitTowers(bool enabled = false)
     {
         foreach (var item in _towers)
         {
-            item.enabled = false;
+            item.enabled = enabled;
         }
     }
 
@@ -82,7 +82,7 @@ public class TowerManager : MonoBehaviour
 		{
 			var t = _towers [i];
 			var stat = level.GameManager.TowerLoader.GetStatByLevel (t.towerType, level.levelID);
-			t.Initialize (stat, false);
+			t.Initialize (stat);
 		}
     }
 

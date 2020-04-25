@@ -45,7 +45,7 @@ public class MinionsSkillManager : MonoBehaviour
 	}
 	
 
-	void FixedUpdate ()
+	void Update ()
 	{
 		if (!_pressDown)
 			return;

@@ -39,6 +39,8 @@ public class TutorialGroupOutputs : TutorialGroupUtils
         SetListenerOfPopup();
         SetListenerOfButton();
         SetListenerOfTimer();
+        SetListenerOfTouchScreen();
+        SetListenerButtonPointerDown();
     }
 
     void SetListenerOfPopup()
@@ -100,11 +102,56 @@ public class TutorialGroupOutputs : TutorialGroupUtils
         }
     }
 
+    void SetListenerButtonPointerDown()
+    {
+        if (elementType != "ButtonPointerDown") return;
+
+        var button_go = GameObject.Find(elementId);
+        var button = button_go.GetComponent<MinionSkillMouseDown>();
+
+        _outputButton = button.GetComponent<Button>();
+        button.OnSkillButtonDown += OnMinionSkillButtonDown;
+    }
+
     void SetListenerOfTimer()
     {
         if (elementType != "Timer") return;
 
         _tutoManager.OnForceExecutingOutputFinished += ExecuteOutputFunctionsOnTimerFinished;
+    }
+
+    void SetListenerOfTouchScreen()
+    {
+        if (elementType != "Touch") return;
+
+        _tutoManager.canCheckUpdateForScreeenTouch = true;
+        _tutoManager.OnScreenTouched += ExecuteWhenScreenIsTouched;
+    }
+
+    void ExecuteWhenScreenIsTouched()
+    {
+        _tutoManager.OnScreenTouched -= ExecuteWhenScreenIsTouched;
+        var parsedListeners = ParseListeners();
+        var funcs = new List<Tuple<Action<string>, string>>();
+
+        foreach (var listener in parsedListeners)
+        {
+            int amount = 0;
+            foreach (var item in listener.Item2)
+            {
+                var p = item.Item2 + "/" + listener.Item1;
+                Action<string> action = (Action<string>)Delegate.CreateDelegate(typeof(Action<string>), this, item.Item1);
+                funcs.Add(Tuple.Create(action, p));
+                amount++;
+            }
+            _amountOfFunctionPerListener.Add(listener.Item1, amount);
+        }
+
+        foreach (var item in funcs)
+        {
+            item.Item1.Invoke(item.Item2);
+        }
+        _tutoManager.canCheckUpdateForScreeenTouch = false;
     }
 
     void ExecuteOutputFunctionsOnTimerFinished()
@@ -131,6 +178,40 @@ public class TutorialGroupOutputs : TutorialGroupUtils
         {
             item.Item1.Invoke(item.Item2);
         }
+    }
+
+    void OnMinionSkillButtonDown(BaseMinionSkill.SkillType skill)
+    {
+        var button = _outputButton.GetComponent<MinionSkillMouseDown>();
+        button.OnSkillButtonDown -= OnMinionSkillButtonDown;
+        _outputButton = null;
+
+        var parsedListeners = ParseListeners();
+        var funcs = new List<Tuple<Action<string>, string>>();
+
+        foreach (var listener in parsedListeners)
+        {
+            int amount = 0;
+            foreach (var item in listener.Item2)
+            {
+                var p = item.Item2 + "/" + listener.Item1;
+                Action<string> action = (Action<string>)Delegate.CreateDelegate(typeof(Action<string>), this, item.Item1);
+                funcs.Add(Tuple.Create(action, p));
+                amount++;
+            }
+            _amountOfFunctionPerListener.Add(listener.Item1, amount);
+        }
+
+        foreach (var item in funcs)
+        {
+            item.Item1.Invoke(item.Item2);
+        }
+    }
+
+    public void StartFingerAnimation(string p)
+    {
+        var level = GameObject.FindObjectOfType<LevelTutorial>();
+        level.InitFingerAnimation();
     }
 
     public void HideBlackOverlay(string p)
@@ -204,9 +285,48 @@ public class TutorialGroupOutputs : TutorialGroupUtils
     public void RemovePointFinger(string p)
     {
         var split = p.Split('/');
+        var val = false;
+        foreach (var item in _tutoGroup.pointingFingers)
+        {
+            GameObject.Destroy(item.gameObject);
+            val = true;
+        }
 
-        if(_tutoGroup.pointingFinger != null)
-            GameObject.Destroy(_tutoGroup.pointingFinger.gameObject);
+        if(!val)
+        {
+            var fingers = GameObject.FindObjectsOfType<TutorialFingerAnimation>();
+            foreach (var f in fingers)
+            {
+                GameObject.Destroy(f.gameObject);
+            }
+        }
+        
+
+        OnFuncFinished(split[split.Length - 1]);
+    }
+
+    public void SetMinionsAndTowers(string p)
+    {
+        var split = p.Split('/');
+
+        var value = bool.Parse(split[0]);
+
+        var lvl = GameObject.FindObjectOfType<LevelTutorial>();
+        lvl.SetMinionsAndTowers(value);
+
+        OnFuncFinished(split[split.Length - 1]);
+    }
+
+    public void RemoveTuto2Fingers(string p)
+    {
+        var split = p.Split('/');
+
+        var level = GameObject.FindObjectOfType<LevelTutorial>();
+        foreach (var item in level.fingersPhase2)
+        {
+            item.gameObject.SetActive(false);
+        }
+        level.levelPortal.SetPS(true);
 
         OnFuncFinished(split[split.Length - 1]);
     }

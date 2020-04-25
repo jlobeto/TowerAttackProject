@@ -15,6 +15,9 @@ public class TutorialManager : MonoBehaviour
     public AcceptPopup acceptPopup;
     public Image pointingFinger;
     public Action OnForceExecutingOutputFinished = delegate { };
+    public Action OnScreenTouched = delegate { };
+    [HideInInspector]
+    public bool canCheckUpdateForScreeenTouch;
 
     GameManager _gameManager;
     GenericListJsonLoader<TutorialGroup> _tutorialGroups;
@@ -24,6 +27,7 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     string _lastTutorialGroupId;
     TutorialSaveDef _tutoSaveDef;
+    bool _isTutorialGroupRunning;
 
     public Tuple<Transform, int> LastUIParentAndSiblingIndex { get { return _lastUIParent; } }
     public string LastTutorialGroupId {
@@ -63,7 +67,13 @@ public class TutorialManager : MonoBehaviour
 
     void Update()
     {
-
+        if(canCheckUpdateForScreeenTouch)
+        {
+            if(Input.GetMouseButtonDown(0))
+            {
+                OnScreenTouched();
+            }
+        }
     }
 
     public void Init(GameManager gm)
@@ -97,6 +107,7 @@ public class TutorialManager : MonoBehaviour
 
     public void TutorialFinished(TutorialPhase phase)
     {
+        _isTutorialGroupRunning = false;
         _tutoSaveDef.tutorialPhasesCompleted.Add(phase.ToString());
         SaveProgress();
     }
@@ -148,10 +159,19 @@ public class TutorialManager : MonoBehaviour
         CheckTriggers();
     }
 
-    void CheckTriggers()
+    public void CheckTriggers()
     {
+        //MODIFY THIS SO IT WONT CRASH
+        //if (_isTutorialGroupRunning)
+        //{
+        //    Debug.Log("tutorial group is still running");
+        //    return;
+        //}
+
+
         foreach (var item in _tutorialGroups.list)
         {
+
             var isItemCompleted = _tutoSaveDef.tutorialPhasesCompleted.Any(i => i == item.tutorialPhase);
             if (isItemCompleted) continue;
 
@@ -161,6 +181,7 @@ public class TutorialManager : MonoBehaviour
             var result = item.CheckForTriggers();
             if (result)
             {
+                _isTutorialGroupRunning = true;
                 ExecuteGroupActions(item);
                 break;
             }

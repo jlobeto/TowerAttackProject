@@ -260,7 +260,7 @@ public class LevelCanvasManager : MonoBehaviour
 
 		if (interactable)
         {
-			skillBtn.InitButton (skill, minionSkillsManager.SkillButtonPressed);
+			skillBtn.InitButton (skill, minionSkillsManager.SkillButtonPressed, baseBtn.name);
 			//skillBtn.GetComponentInChildren<Text>().text = skill.ToString();
 		}
         else

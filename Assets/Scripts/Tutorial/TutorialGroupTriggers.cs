@@ -83,9 +83,21 @@ public class TutorialGroupTriggers : TutorialGroupUtils
         var lvl = GetTutorialLevelIfPossible();
         if (lvl == null) return false;
 
-        return false;// _level.MinionManager.DeleteAllMinionsInPath
+        return false;
     }
 
+    public bool UserUsedMinionSkill()
+    {
+        var lvl = GetTutorialLevelIfPossible();
+        if (lvl == null) return false;
+
+        var result = lvl.phase3MinionSkillSelected;
+
+        if (result)
+            lvl.phase3MinionSkillSelected = false;
+
+        return result;
+    }
 
     LevelTutorial GetTutorialLevelIfPossible()
     {

@@ -15,7 +15,7 @@ public class TutorialGroup
     public string actions;
     public string outputs;//actions that happend after the user makes an input from the actions seen.
     public Action OnTutorialFinished = delegate { };
-    public Image pointingFinger;//using this to destroy it in outputs.
+    public List<Image> pointingFingers;//using this to destroy it in outputs.
 
     TutorialPhase _phase;
     TutorialGroupActions _realActions;
@@ -25,6 +25,7 @@ public class TutorialGroup
     
     public void SetTutorialGroup(TutorialManager t, GameManager gm)
     {
+        pointingFingers = new List<Image>();
         _tutoManager = t;
 
         _realTriggers = new TutorialGroupTriggers(t, gm);

@@ -18,6 +18,8 @@ public class TutorialGroupActions : TutorialGroupUtils
     public string SetUIElementListsTransparencyParams;
     public string ForceExecutingOutputAfterSecondsParams;
     public string CreatePointFingerParams;
+    public string ShowPointFingerInSceneParams;
+    public string SetMinionsAndTowersParams;
     #endregion
 
     TutorialManager _tutoManager;
@@ -108,6 +110,17 @@ public class TutorialGroupActions : TutorialGroupUtils
 
     }
 
+    public void DisplayTuto2Fingers()
+    {
+        var level = GameObject.FindObjectOfType<LevelTutorial>();
+        foreach (var item in level.fingersPhase2)
+        {
+            item.gameObject.SetActive(true);
+            item.rectTransform.SetSiblingIndex(item.rectTransform.parent.childCount-1);
+        }
+        level.levelPortal.SetPS(false);
+    }
+    
     public void StopUpdate()
     {
         Time.timeScale = 0;
@@ -125,6 +138,7 @@ public class TutorialGroupActions : TutorialGroupUtils
         var sec = float.Parse(milliseconds) / 1000;
         _tutoManager.ForceExecutingOutputAfterSeconds(sec);
     }
+    
 
     public void CreatePointFinger(string posX, string posY, string rotZ, string parent)
     {
@@ -151,7 +165,7 @@ public class TutorialGroupActions : TutorialGroupUtils
         finger.rectTransform.Rotate(new Vector3(0, 0, rotatZ), Space.Self);
 
         finger.raycastTarget = false;
-        _tutoGroup.pointingFinger = finger;
+        _tutoGroup.pointingFingers.Add(finger);
 
         var canvas = GetGameObjectByName("LevelCanvas");
         if(canvas != null)
@@ -164,6 +178,14 @@ public class TutorialGroupActions : TutorialGroupUtils
             finger.rectTransform.Rotate(new Vector3(0, 0, rotatZ), Space.Self);
         }
     }
+
+    public void SetMinionsAndTowers(string val)
+    {
+        var value = bool.Parse(val);
+        var lvl = GameObject.FindObjectOfType<LevelTutorial>();
+        lvl.SetMinionsAndTowers(value);
+    }
+
 
     public void SetUIElementListsTransparency(string elementName, string exception, string alphaPercent)
     {
