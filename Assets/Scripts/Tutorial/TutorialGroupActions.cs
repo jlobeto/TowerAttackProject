@@ -20,6 +20,7 @@ public class TutorialGroupActions : TutorialGroupUtils
     public string CreatePointFingerParams;
     public string ShowPointFingerInSceneParams;
     public string SetMinionsAndTowersParams;
+    public string BlockOrNotSingleButtonParams;
     #endregion
 
     TutorialManager _tutoManager;
@@ -186,6 +187,23 @@ public class TutorialGroupActions : TutorialGroupUtils
         lvl.SetMinionsAndTowers(value);
     }
 
+    public void BlockOrNotSingleButton(string elementName, string value, string alpha)
+    {
+        GameObject element = GameObject.Find(elementName);
+        if (element == null)
+            Debug.LogError("TUTORIAL ACTION > " + elementName + " does not exist");
+
+        var btn = element.GetComponent<Button>();
+        var img = element.GetComponent<Image>();
+        img.color = new Color(img.color.r, img.color.g, img.color.b, int.Parse(alpha)* 1.0f / 255);
+
+        var childImg = element.GetComponentInChildren<Image>();
+        if(childImg != null)
+            childImg.color = new Color(childImg.color.r, childImg.color.g, childImg.color.b, int.Parse(alpha) * 1.0f / 255);
+
+        btn.interactable = bool.Parse(value);
+    }
+
 
     public void SetUIElementListsTransparency(string elementName, string exception, string alphaPercent)
     {
@@ -198,10 +216,14 @@ public class TutorialGroupActions : TutorialGroupUtils
                 var alpha = int.Parse(alphaPercent);
                 var img = item.GetComponent<Image>();
                 var txt = item.GetComponent<Text>();
+                var btn = item.GetComponent<Button>();
+
                 if (img != null)
                     img.color = new Color(img.color.r, img.color.g, img.color.b, alpha * 1.0f / 255);
                 if (txt != null)
                     txt.color = new Color(txt.color.r, txt.color.g, txt.color.b, alpha * 1.0f / 255);
+                if (btn != null)
+                    btn.interactable = alpha == 255;
 
                 SetTransparentToChildren(item.gameObject, alpha);
             }
@@ -212,6 +234,8 @@ public class TutorialGroupActions : TutorialGroupUtils
     {
         var childrenImg = element.GetComponentsInChildren<Image>();
         var childrenTxt = element.GetComponentsInChildren<Text>();
+        var childrenBtn = element.GetComponentsInChildren<Button>();
+
         foreach (var img in childrenImg)
         {
             img.color = new Color(img.color.r, img.color.g, img.color.b, alpha * 1.0f / 255);
@@ -220,6 +244,11 @@ public class TutorialGroupActions : TutorialGroupUtils
         foreach (var txt in childrenTxt)
         {
             txt.color = new Color(txt.color.r, txt.color.g, txt.color.b, alpha * 1.0f / 255);
+        }
+
+        foreach (var btn in childrenBtn)
+        {
+            btn.interactable = alpha == 255;
         }
     }
 }

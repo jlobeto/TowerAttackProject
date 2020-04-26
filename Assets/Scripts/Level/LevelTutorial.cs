@@ -124,18 +124,24 @@ public class LevelTutorial : Level
     }
     
 
-    public void InitFingerAnimation()
+    public void InitFingerAnimation(bool setFinger)
     {
-        var finger = FindObjectOfType<TutorialFingerAnimation>();
-        if (finger == null) return;
+        if(setFinger)
+        {
+            var finger = FindObjectOfType<TutorialFingerAnimation>();
+            if (finger == null) return;
 
-        finger.GetComponent<Image>().sprite = pressingFingerSprite;
+            finger.GetComponent<Image>().sprite = pressingFingerSprite;
 
-        finger.transform.SetParent(_lvlCanvas.transform);
-        finger.InitAnimation(finger.transform, phase3FingerAnimEndPos);
+            finger.transform.SetParent(_lvlCanvas.transform);
+            finger.InitAnimation(finger.transform, phase3FingerAnimEndPos);
+        }
 
         _minionManager.OnMinionSkillSelected += OnMinionSkillSelected;
     }
+
+
+
     public void SetMinionsAndTowers(bool enabled)
     {
         

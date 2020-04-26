@@ -92,7 +92,7 @@ public class TutorialGroupOutputs : TutorialGroupUtils
                     Debug.LogError("Tutorial Group ID = "+ _tutoGroup.tutorialGroupId + " may have a space in output field (maybe in a parameter?)");
 
                 Action<string> action = (Action<string>)Delegate.CreateDelegate(typeof(Action<string>), this, item.Item1);
-
+                
                 _buttonListeners.Add(item.Item1.Name, () => action(p));
 
                 button.onClick.AddListener(_buttonListeners[item.Item1.Name]);
@@ -210,8 +210,12 @@ public class TutorialGroupOutputs : TutorialGroupUtils
 
     public void StartFingerAnimation(string p)
     {
+        var split = p.Split('/');
+        
         var level = GameObject.FindObjectOfType<LevelTutorial>();
-        level.InitFingerAnimation();
+        level.InitFingerAnimation(bool.Parse(split[0]));
+
+        OnFuncFinished(split[split.Length - 1]);
     }
 
     public void HideBlackOverlay(string p)
@@ -331,6 +335,28 @@ public class TutorialGroupOutputs : TutorialGroupUtils
         OnFuncFinished(split[split.Length - 1]);
     }
 
+    public void BlockOrNotSingleButton(string p )
+    {
+        var split = p.Split('/');
+
+        GameObject element = GameObject.Find(split[0]);
+        if (element == null)
+            Debug.LogError("TUTORIAL OUTPUT > " + split[0] + " does not exist");
+
+        var btn = element.GetComponent<Button>();
+        var img = element.GetComponent<Image>();
+
+        img.color = new Color(img.color.r, img.color.g, img.color.b, int.Parse(split[2]) * 1.0f / 255);
+
+        var childImg = element.GetComponentInChildren<Image>();
+        if (childImg != null)
+            childImg.color = new Color(childImg.color.r, childImg.color.g, childImg.color.b, int.Parse(split[2]) * 1.0f / 255);
+
+        btn.interactable = bool.Parse(split[1]);
+
+        OnFuncFinished(split[split.Length - 1]);
+    }
+
     public void SetUIElementListsTransparency(string p)
     {
         var split = p.Split('/');
@@ -349,10 +375,14 @@ public class TutorialGroupOutputs : TutorialGroupUtils
                 var alpha = int.Parse(alphaPercent);
                 var img = item.GetComponent<Image>();
                 var txt = item.GetComponent<Text>();
+                var btn = item.GetComponent<Button>();
+
                 if (img != null)
                     img.color = new Color(img.color.r, img.color.g, img.color.b, alpha * 1.0f / 255);
                 if (txt != null)
                     txt.color = new Color(txt.color.r, txt.color.g, txt.color.b, alpha * 1.0f / 255);
+                if (btn != null)
+                    btn.interactable = alpha == 255;
 
                 SetTransparentToChildren(item.gameObject, alpha);
             }
@@ -364,6 +394,8 @@ public class TutorialGroupOutputs : TutorialGroupUtils
     {
         var childrenImg = element.GetComponentsInChildren<Image>();
         var childrenTxt = element.GetComponentsInChildren<Text>();
+        var childrenBtn = element.GetComponentsInChildren<Button>();
+
         foreach (var img in childrenImg)
         {
             img.color = new Color(img.color.r, img.color.g, img.color.b, alpha * 1.0f / 255);
@@ -372,6 +404,11 @@ public class TutorialGroupOutputs : TutorialGroupUtils
         foreach (var txt in childrenTxt)
         {
             txt.color = new Color(txt.color.r, txt.color.g, txt.color.b, alpha * 1.0f / 255);
+        }
+
+        foreach (var btn in childrenBtn)
+        {
+            btn.interactable = alpha == 255;
         }
     }
 
@@ -444,6 +481,9 @@ public class TutorialGroupOutputs : TutorialGroupUtils
                 if (indexOfParenthesis >= 0)
                 {
                     var indexOfParenthesisClosed = item.IndexOf(')');
+                    if (indexOfParenthesisClosed < 0)
+                        Debug.LogError("Parenthesis broken in output, id "+ _tutoGroup.tutorialGroupId);
+
                     funcName = funcName.Substring(0, indexOfParenthesis);
                     diff = indexOfParenthesisClosed - indexOfParenthesis;
                     p = item.Substring(indexOfParenthesis + 1, diff - 1);

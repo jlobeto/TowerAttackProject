@@ -143,12 +143,17 @@ public class MinionInShop : MonoBehaviour
 
     public void OnPointerDown()
     {
-        _lastColor = buttonText.color;
-        buttonText.color = nameTextColor;
+        if(button.IsInteractable())
+        {
+            _lastColor = buttonText.color;
+            buttonText.color = nameTextColor;
+        }
+        
     }
 
     public void OnPointerUp()
     {
-        buttonText.color = _lastColor;
+        if(button.IsInteractable())
+            buttonText.color = _lastColor;
     }
 }
