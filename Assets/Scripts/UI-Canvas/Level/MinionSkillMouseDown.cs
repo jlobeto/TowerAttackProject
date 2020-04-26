@@ -18,6 +18,12 @@ public class MinionSkillMouseDown : MonoBehaviour , IPointerDownHandler, IPointe
 	bool _init;
     Color _originalColor;
     Vector2 _originalScale;
+    Image _buttonBackground;
+
+    void Awake()
+    {
+        _buttonBackground = GetComponent<Image>();
+    }
 
 	public void InitButton(BaseMinionSkill.SkillType myType, Action<BaseMinionSkill.SkillType> callback, string parentName)
 	{
@@ -25,12 +31,18 @@ public class MinionSkillMouseDown : MonoBehaviour , IPointerDownHandler, IPointe
 		_myType = myType;
         _originalColor = img.color;
         _originalScale = img.rectTransform.sizeDelta;
+        
+        
+        _buttonBackground.enabled = true;
 
         OnSkillButtonDown += callback;
         name = "skill_button_" + parentName[parentName.Length - 1];
 
         if (myType == BaseMinionSkill.SkillType.None)
+        {
             img.gameObject.SetActive(false);
+            _buttonBackground.enabled = false;
+        }
         else 
         {
             img.sprite = Resources.Load<Sprite>("UIMinionsPictures/" + GameplayUtils.GetMinionTypeBySkill(_myType).ToString() + "/skill");
@@ -42,6 +54,7 @@ public class MinionSkillMouseDown : MonoBehaviour , IPointerDownHandler, IPointe
     public void SetDisabled()
     {
         img.gameObject.SetActive(false);
+        _buttonBackground.enabled = false;
     }
 
     public void SetOnPointerDown(bool value)
