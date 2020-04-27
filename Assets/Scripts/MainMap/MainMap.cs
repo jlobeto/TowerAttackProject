@@ -15,7 +15,11 @@ public class MainMap : MonoBehaviour
     {
         _gameManager = FindObjectOfType<GameManager>();
         if (_gameManager == null)
+        {
             SceneManager.LoadScene(0);
+            return;
+        }
+            
 
         loadingJob.transform.parent.gameObject.SetActive(false);
         
