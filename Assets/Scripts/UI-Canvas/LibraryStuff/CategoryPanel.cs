@@ -4,23 +4,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class CategoryPanel : MonoBehaviour
 {
     public Image categoriesBG;
     public Text selectCategoryText;
+    public Text selectTypeText;
+    public List<CategoryButton> _categoryBtns;
+    public Action<LibraryCategory> OnCategoryPressed = delegate { };
 
-    List<CategoryButton> _categoryBtns;
     LibraryCategory _currentSelected = LibraryCategory.None;
 
     void Start()
     {
         categoriesBG.enabled = false;
 
-        _categoryBtns = GetComponentsInChildren<CategoryButton>().ToList();
         foreach (CategoryButton item in _categoryBtns)
         {
-            item.button.onClick.AddListener(() => OnCategoryPressed(item.category));
+            item.button.onClick.AddListener(() => OnCategoryButtonPressed(item.category));
         }
 
         SceneManager.sceneUnloaded += OnSceneUnloaded;
@@ -32,15 +34,17 @@ public class CategoryPanel : MonoBehaviour
         
     }
 
-    public void OnCategoryPressed(LibraryCategory cat)
+    void OnCategoryButtonPressed(LibraryCategory cat)
     {
-        GetButtonByType(_currentSelected).Unselect();
+        if(_currentSelected != LibraryCategory.None)
+            GetButtonByType(_currentSelected).Unselect();
 
         if (_currentSelected == cat)
         {
             _currentSelected = LibraryCategory.None;
             categoriesBG.enabled = false;
             selectCategoryText.enabled = true;
+            selectTypeText.enabled = false;
         }
         else
         {
@@ -51,17 +55,25 @@ public class CategoryPanel : MonoBehaviour
             {
                 categoriesBG.enabled = true;
                 selectCategoryText.enabled = false;
+                selectTypeText.enabled = true;
             }
-                
+
             categoriesBG.color = btn.categoryColor;
         }
-            
+
+        OnCategoryPressed(_currentSelected);
     }
 
 
     CategoryButton GetButtonByType(LibraryCategory cat)
     {
-        return _categoryBtns.FirstOrDefault(i => i.category == cat);
+        foreach (var item in _categoryBtns)
+        {
+            if (item.category == cat)
+                return item;
+        }
+
+        return null;
     }
 
     void OnSceneUnloaded(Scene scene)

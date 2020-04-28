@@ -37,6 +37,12 @@ public class LibraryButton : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void HideLibrary()
+    {
+        _libraryCanvas.HideCanvas();
+        gameObject.SetActive(true);
+    }
+
     public void EnableNotification(bool enabled)
     {
         if(enabled)
