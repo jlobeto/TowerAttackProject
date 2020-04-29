@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class LibraryCanvasManager : MonoBehaviour
 {
     public LibraryCategoryCanvas[] categoryScrollerCanvases;
+    public LibraryTypeInfoMinionCanvas typeInfoMinionCanvas;
     Canvas _canvas;
     CategoryPanel _categoryPanel;
     PopupManager _popupManager;

@@ -43,7 +43,7 @@ public class LibraryCategoryCanvas : MonoBehaviour
         for (int i = 0; i < types.Count; i++)
         {
             btn = Instantiate(buttonTypePrefab, content);
-            btn.Init(resourcesPath, types[i]);
+            btn.Init(resourcesPath, types[i], category);
             _buttons[i] = btn;
         }
 
