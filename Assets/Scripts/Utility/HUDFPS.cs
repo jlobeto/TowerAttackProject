@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class HUDFPS : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class HUDFPS : MonoBehaviour
     // 5.5 frames.
 
     public float updateInterval = 0.5F;
+    public Text txt;
 
     private float accum = 0; // FPS accumulated over the interval
     private int frames = 0; // Frames drawn over the interval
@@ -24,6 +26,14 @@ public class HUDFPS : MonoBehaviour
     void Start()
     {
         timeleft = updateInterval;
+        if(!Debug.isDebugBuild)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(this);
+        }
     }
 
     void Update()
@@ -37,18 +47,17 @@ public class HUDFPS : MonoBehaviour
         {
             // display two fractional digits (f2 format)
             float fps = Mathf.RoundToInt( accum / frames);
-            string format = System.String.Format("{0:F2} FPS", fps);
-            //guiText.text = format;
 
-            /*if (fps < 30)
-                guiText.material.color = Color.yellow;
+            if (fps < 30)
+                txt.color = Color.yellow;
             else
                 if (fps < 10)
-                guiText.material.color = Color.red;
+                txt.color = Color.red;
             else
-                guiText.material.color = Color.green;*/
-            //	DebugConsole.Log(format,level);
-            Debug.Log(fps);
+                txt.color = Color.green;
+            
+            //Debug.Log(fps);
+            txt.text = "fps " + fps;
             timeleft = updateInterval;
             accum = 0.0F;
             frames = 0;

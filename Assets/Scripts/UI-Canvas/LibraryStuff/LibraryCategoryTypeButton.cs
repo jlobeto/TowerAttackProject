@@ -17,9 +17,9 @@ public class LibraryCategoryTypeButton : MonoBehaviour
     Button _btn;
 
 
-    void Start()
+    void Awake()
     {
-        _btn = GetComponentInChildren<Button>();
+        
     }
 
     
@@ -28,7 +28,7 @@ public class LibraryCategoryTypeButton : MonoBehaviour
         
     }
 
-    public void Init(string imgPath, string type, LibraryCategory cat, Action<LibraryCategory, string> OnPressedCallback = null)
+    public void Init(string imgPath, string type, LibraryCategory cat, Action<LibraryCategory, string> OnPressedCallback)
     {
         var sprite = Resources.Load<Sprite>(imgPath + "/" + type + "/" + type);
         if(sprite != null)
@@ -38,6 +38,7 @@ public class LibraryCategoryTypeButton : MonoBehaviour
         typeText.text = _type;
         _fromCategory = cat;
 
-        //_btn.onClick.AddListener(() => OnPressedCallback(_fromCategory, _type));
+        _btn = GetComponentInChildren<Button>();
+        _btn.onClick.AddListener(() => OnPressedCallback(_fromCategory, _type));
     }
 }

@@ -6,12 +6,19 @@ using UnityEngine.UI;
 
 public class LibraryCanvasManager : MonoBehaviour
 {
+    public CategoryPanel categoryPanel;
     public LibraryCategoryCanvas[] categoryScrollerCanvases;
-    public LibraryTypeInfoMinionCanvas typeInfoMinionCanvas;
+    public LibraryTypeInfoCanvas typeInfoCanvas;
+    public LibraryButton libraryButton;
+    public Text exitButtonText;
+
     Canvas _canvas;
     CategoryPanel _categoryPanel;
     PopupManager _popupManager;
+    GameManager _gameManager;
     LibraryCategory _activeCategory = LibraryCategory.None;
+    bool _isDisplayed;
+
 
     void Awake()
     {
@@ -19,7 +26,11 @@ public class LibraryCanvasManager : MonoBehaviour
         if (_popupManager == null)
             return;
 
+        _gameManager = FindObjectOfType<GameManager>();
         _categoryPanel = GetComponentInChildren<CategoryPanel>();
+
+        foreach (var item in categoryScrollerCanvases)
+            item.Init(this);
 
         _canvas = GetComponent<Canvas>();
         HideCanvas();
@@ -32,6 +43,7 @@ public class LibraryCanvasManager : MonoBehaviour
 
     public void DisplayCanvas()
     {
+        _isDisplayed = true;
         _canvas.enabled = true;
         _popupManager.PopupDisplayed();
         _categoryPanel.OnCategoryPressed += OnCategoryPressed;
@@ -39,32 +51,62 @@ public class LibraryCanvasManager : MonoBehaviour
 
     public void HideCanvas()
     {
-        _popupManager.DisplayedPopupWasClosed();
+        if(_isDisplayed)
+            _popupManager.DisplayedPopupWasClosed();
+
         _canvas.enabled = false;
         _categoryPanel.OnCategoryPressed -= OnCategoryPressed;
 
+        categoryPanel.SetDisabled();
+
         foreach (var item in categoryScrollerCanvases)
             item.SetCanvas(false);
+
+        typeInfoCanvas.SetCanvas(false);
+        _isDisplayed = false;
+    }
+
+    public void OnCategoryTypeButtonPressed(LibraryCategory categoryPressed, string typePressed)
+    {
+        var data = _gameManager.LibraryManager.GetLibraryData(categoryPressed, typePressed);
+
+        typeInfoCanvas.SetInfo(data);
+
+        exitButtonText.text = "return";
+    }
+
+    /// <summary>
+    /// It can be the exit or the return button
+    /// </summary>
+    public void OnExitButtonPressed()
+    {
+        if(typeInfoCanvas.isShowingInfo)
+        {
+            OnCategoryPressed(_activeCategory);
+        }
+        else
+        {
+            HideCanvas();
+            libraryButton.gameObject.SetActive(true);
+        }
     }
 
     void OnCategoryPressed(LibraryCategory cat)
     {
-        if(cat == LibraryCategory.None)
+        typeInfoCanvas.SetCanvas(false);
+        
+        foreach (var item in categoryScrollerCanvases)
         {
-            foreach (var item in categoryScrollerCanvases)
-                if (item.IsCanvasActive())
-                    item.SetCanvas(false);
-        }
-        else
-        {
-            foreach (var item2 in categoryScrollerCanvases)
+            if (item.category == cat && !item.IsCanvasActive())
             {
-                if(item2.category == _activeCategory)
-                    item2.SetCanvas(false);
-                else if(item2.category == cat)
-                    item2.SetCanvas(true);
+                var current = categoryScrollerCanvases.FirstOrDefault(i => i.category == _activeCategory);
+                if (current != null) current.SetCanvas(false);
+
+                item.SetCanvas(true);
             }
         }
+
+        exitButtonText.text = "exit";
 
         _activeCategory = cat;
     }

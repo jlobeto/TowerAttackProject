@@ -9,8 +9,9 @@ public class GameUtils
     public const string CONFIG_PATH = "GameConfig/";
     public const string MINION_CONFIG_PATH = "GameConfig/Minions/";
     public const string TOWER_CONFIG_PATH = "GameConfig/Towers/";
+    public const string LIBRARY_CONFIG_PATH = "GameConfig/LibraryConfig/";
 
-	enum Target{
+    enum Target{
 		resources,
 		external
 	}

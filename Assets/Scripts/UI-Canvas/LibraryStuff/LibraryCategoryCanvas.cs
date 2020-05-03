@@ -4,6 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This manage the buttons inside each category
+/// </summary>
 public class LibraryCategoryCanvas : MonoBehaviour
 {
     public LibraryCategory category;
@@ -11,6 +14,7 @@ public class LibraryCategoryCanvas : MonoBehaviour
     public RectTransform content;
 
     Canvas _canvas;
+    LibraryCanvasManager _libraryCanvasManager;
     LibraryCategoryTypeButton[] _buttons;
 
     void Start()
@@ -43,11 +47,16 @@ public class LibraryCategoryCanvas : MonoBehaviour
         for (int i = 0; i < types.Count; i++)
         {
             btn = Instantiate(buttonTypePrefab, content);
-            btn.Init(resourcesPath, types[i], category);
+            btn.Init(resourcesPath, types[i], category, OnCategoryTypeButtonPressed);
             _buttons[i] = btn;
         }
 
         btn = null;
+    }
+
+    public void Init(LibraryCanvasManager c)
+    {
+        _libraryCanvasManager = c;
     }
 
     public void SetCanvas(bool enable)
@@ -61,6 +70,13 @@ public class LibraryCategoryCanvas : MonoBehaviour
     public bool IsCanvasActive()
     {
         return _canvas.isActiveAndEnabled;
+    }
+
+
+    void OnCategoryTypeButtonPressed(LibraryCategory categoryPressed, string type)
+    {
+        SetCanvas(false);
+        _libraryCanvasManager.OnCategoryTypeButtonPressed(categoryPressed, type);
     }
     
 }

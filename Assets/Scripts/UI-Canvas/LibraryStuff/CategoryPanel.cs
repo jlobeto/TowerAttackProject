@@ -15,6 +15,7 @@ public class CategoryPanel : MonoBehaviour
     public Action<LibraryCategory> OnCategoryPressed = delegate { };
 
     LibraryCategory _currentSelected = LibraryCategory.None;
+    
 
     void Start()
     {
@@ -34,23 +35,29 @@ public class CategoryPanel : MonoBehaviour
         
     }
 
-    void OnCategoryButtonPressed(LibraryCategory cat)
+    public void SetDisabled()
     {
-        if(_currentSelected != LibraryCategory.None)
+        if (_currentSelected != LibraryCategory.None)
             GetButtonByType(_currentSelected).Unselect();
 
-        if (_currentSelected == cat)
+        _currentSelected = LibraryCategory.None;
+
+        selectCategoryText.enabled = true;
+
+        categoriesBG.enabled = false;
+        selectTypeText.enabled = false;
+    }
+    
+    void OnCategoryButtonPressed(LibraryCategory cat)
+    {
+        if(_currentSelected != cat)
         {
-            _currentSelected = LibraryCategory.None;
-            categoriesBG.enabled = false;
-            selectCategoryText.enabled = true;
-            selectTypeText.enabled = false;
-        }
-        else
-        {
+            if(_currentSelected != LibraryCategory.None)
+                GetButtonByType(_currentSelected).Unselect();
+
             var btn = GetButtonByType(cat);
             btn.Select();
-            _currentSelected = cat;
+            
             if (!categoriesBG.IsActive())//is checking go and component so idk if this can be triggered
             {
                 categoriesBG.enabled = true;
@@ -59,6 +66,7 @@ public class CategoryPanel : MonoBehaviour
             }
 
             categoriesBG.color = btn.categoryColor;
+            _currentSelected = cat;
         }
 
         OnCategoryPressed(_currentSelected);

@@ -37,7 +37,8 @@ public class GameManager : MonoBehaviour
 	TowerJSONLoaderManager _towerJSONLoader;
     SwapTowerSystem _swapTowerSystem;
     LevelNodesLoader _levelInfoLoader;
-    
+    LibraryManager _libraryManager;
+    LoadedAssets _loadedAssets;
 
     User _user;
 
@@ -48,6 +49,8 @@ public class GameManager : MonoBehaviour
     public LevelInfo CurrentLevelInfo { get { return _currentLevelInfo; } }
     public LevelNodesLoader LevelInfoLoader { get { return _levelInfoLoader; } }
     public User User { get { return _user; } }
+    public LibraryManager LibraryManager { get { return _libraryManager; } }
+    public LoadedAssets LoadedAssets { get { return _loadedAssets; } }
 
     public int CurrentViewingWorld { get { return _currentViewingWorld; } }
     
@@ -80,6 +83,9 @@ public class GameManager : MonoBehaviour
 		_user = new User (this);
 
         tutorialManager.Init(this);
+
+        _libraryManager = new LibraryManager(this);
+        _loadedAssets = FindObjectOfType<LoadedAssets>();
 
         SceneManager.sceneUnloaded += SceneUnloaded;
     }
