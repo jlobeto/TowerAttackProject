@@ -9,12 +9,13 @@ public class ShopManager : MonoBehaviour
     public const int MAX_MINION_LEVEL = 15;
     public const string SPEED_STAT_DESC = "Increment your minion's speed!";
     public const string HP_STAT_DESC = "More health means easy match!";
+    const char _descriptionBullet = '\u25A0';
 
     Dictionary<MinionType, MinionStoreData> _storeInfoData;
     Dictionary<MinionType, MinionsStatsCurrencyDef> _storeStatsCurrencyDef;
     ShopPopup _popup;
     GameManager _gm;
-    char _descriptionBullet = '\u25A0';
+    
 
     void Start()
     {

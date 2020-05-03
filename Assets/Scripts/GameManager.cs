@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        Application.targetFrameRate = 120;
+
         DontDestroyOnLoad(this);
         if (enableSwapSystem)
         {
