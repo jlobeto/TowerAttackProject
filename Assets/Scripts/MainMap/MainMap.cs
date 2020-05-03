@@ -23,19 +23,18 @@ public class MainMap : MonoBehaviour
 
         loadingJob.transform.parent.gameObject.SetActive(false);
         
-        _mainMapCanvas = FindObjectOfType<MainMapCanvasManager>();
-        _worldsManager = new WorldsManager(GetGameManager().User);
-
-        CreateLevelNodes();
-        _mainMapCanvas.ShowWorld(_gameManager.CurrentViewingWorld);
-    }
-
-    void Start()
-    {
         //_mainMapCanvas = FindObjectOfType<MainMapCanvasManager>();
         //_worldsManager = new WorldsManager(GetGameManager().User);
         //CreateLevelNodes();
         //_mainMapCanvas.ShowWorld(_gameManager.CurrentViewingWorld);
+    }
+
+    void Start()
+    {
+        _mainMapCanvas = FindObjectOfType<MainMapCanvasManager>();
+        _worldsManager = new WorldsManager(GetGameManager().User);
+        CreateLevelNodes();
+        _mainMapCanvas.ShowWorld(_gameManager.CurrentViewingWorld);
     }
 
     void Update ()
