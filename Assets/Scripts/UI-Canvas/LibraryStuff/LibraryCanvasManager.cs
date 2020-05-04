@@ -94,12 +94,15 @@ public class LibraryCanvasManager : MonoBehaviour
     void OnCategoryPressed(LibraryCategory cat)
     {
         typeInfoCanvas.SetCanvas(false);
-        
+        //Delete bottom lines when all scroller are implemented:
+        var current = categoryScrollerCanvases.FirstOrDefault(i => i.category == _activeCategory);
+        if (current != null) current.SetCanvas(false);
+
         foreach (var item in categoryScrollerCanvases)
         {
             if (item.category == cat && !item.IsCanvasActive())
             {
-                var current = categoryScrollerCanvases.FirstOrDefault(i => i.category == _activeCategory);
+                current = categoryScrollerCanvases.FirstOrDefault(i => i.category == _activeCategory);
                 if (current != null) current.SetCanvas(false);
 
                 item.SetCanvas(true);
