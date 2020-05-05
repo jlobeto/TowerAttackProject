@@ -207,8 +207,6 @@ public class TutorialGroupActions : TutorialGroupUtils
 
     public void SetUIElementListsTransparency(string elementName, string exception, string alphaPercent)
     {
-        if (_tutoGroup.tutorialGroupId == "ingame_tutorial_press_runner_unblock_buttons")
-            Debug.Log("asd");
         //hide all scroll rect elements except for 'exception'
         GameObject groupElement = GameObject.Find(elementName);
         foreach (Transform item in groupElement.transform)

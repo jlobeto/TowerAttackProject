@@ -140,8 +140,6 @@ public class LevelTutorial : Level
         _minionManager.OnMinionSkillSelected += OnMinionSkillSelected;
     }
 
-
-
     public void SetMinionsAndTowers(bool enabled)
     {
         

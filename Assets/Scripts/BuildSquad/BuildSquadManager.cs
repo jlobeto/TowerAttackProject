@@ -52,6 +52,15 @@ public class BuildSquadManager : MonoBehaviour
 
     public void OnPlay()
     {
+        if (_user.GetSquadMinionsOrder().Count == 0)
+        {
+            foreach (var item in selectedButtons)
+            {
+                item.DoRedColorAnimation();
+            }
+            return;
+        }
+
         OnPlayPressed();
         OnExit();
     }

@@ -56,8 +56,18 @@ public class LevelNode : MonoBehaviour
             for (int i = 0; i < currentLevelProgress.starsWon; i++)
                 stars[i].sprite = starOnSprite;
 
-            if (_lvlInfo.mode == LevelMode.Tutorial.ToString())//if has progress, block the button so it can never be touched again
-                _btn.interactable = false;
+            //if has progress, block the button so it can never be touched again
+            if (_lvlInfo.mode == LevelMode.Tutorial.ToString())
+            {
+                if(_lvlInfo.id == -1)//but if is level '-1', check if phase has been completed
+                {
+                    if (_gm.tutorialManager.HasUserCompletedTutorial(TutorialPhase.FirstTimeOnApp_INGAME_tuto.ToString()))
+                        _btn.interactable = false;
+                }
+                else
+                    _btn.interactable = false;
+            }
+                
         }
 
         if (!_btn.interactable)//change to lock.
