@@ -87,6 +87,8 @@ public class Level : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.Escape))
 		{
+            if (levelMode == LevelMode.Tutorial) return;
+
             var popup = GameManager.popupManager.BuildPopup(LevelCanvasManager.transform, "Pause", "Game paused", "Main Map", PopupsID.AcceptOrDecline, true);
             if (popup != null)
             {
