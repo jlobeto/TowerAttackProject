@@ -26,10 +26,8 @@ public class TowerBase : MonoBehaviour
     protected bool pImStunned;
     protected bool pSlowDebuff;
     protected GameObject pTarget;
-    protected GameObject pLastTarget;
     protected bool pIsTutoLevelCero;
 
-    bool _hasSpawnFirstBullet;
     float _fireRateAux;
     int _id;
 
@@ -46,12 +44,6 @@ public class TowerBase : MonoBehaviour
             GetTarget();
             SpawnProjectile();
         }
-
-        if(pIsTutoLevelCero && !_hasSpawnFirstBullet)
-        {
-            GetTarget();
-            //SpawnProjectile();
-        }
     }
 
     protected virtual void SpawnProjectile()
@@ -62,7 +54,6 @@ public class TowerBase : MonoBehaviour
         var p = Instantiate(random, spawnPoint.transform.position, spawnPoint.transform.rotation);
         p.Init(pTarget, pMyStat.bulletDamage, pMyStat.bulletRange, targetType);
 
-        _hasSpawnFirstBullet = true;
     }
 
     protected virtual void GetTarget()
@@ -86,23 +77,23 @@ public class TowerBase : MonoBehaviour
         }
 
         var minDist = float.MaxValue;
+        bool isAnyMinionInTarget = false;
         foreach (var item in allMinions.Select(i => i.GetComponent<Minion>()).Where(i => i.IsTargetable))
         {
             if (targetType != TargetType.Both)
                 if (item.targetType != targetType) continue;
-
+            
             var dist = Vector3.Distance(transform.position, item.transform.position);
             if (dist < minDist)
             {
                 minDist = dist;
                 pTarget = item.gameObject;
+                isAnyMinionInTarget = true;
             }
         }
 
-        if (pTarget != null && pLastTarget != null && pLastTarget != pTarget)
-            OnTargetHasChanged();
-
-        pLastTarget = pTarget;
+        if (!isAnyMinionInTarget)
+            pTarget = null;
     }
 
     protected virtual void OnTargetHasChanged()

@@ -12,8 +12,6 @@ public class LaserTower : TowerBase
     float _checkForMinionTime = 0.2f;
     float _timeShooting = 1;
     float _timeShootingAux = 1;
-    float _targetHPToGo; //this is the minion hp that is going to have after 'timeShooting' time.
-    bool _leftSpawn;
 
     protected override void Start()
     {
@@ -66,14 +64,10 @@ public class LaserTower : TowerBase
             _target = pTarget.GetComponent<Minion>();
             _lineRender.enabled = true;
             laserSpawnPS.Play();
-            //_targetHPToGo = _target.hp - pMyStat.dmgPerSecond;
             _target.GetDamage(pMyStat.dmgPerSecond);
             laserHitPS.Play();
         }
-
-        /*_target.hp = Mathf.Lerp(_target.hp, _targetHPToGo, Time.deltaTime);
-        Debug.Log(_target.hp);*/
-
+        
         _timeShooting -= Time.deltaTime;
         if (_timeShooting < 0)
         {
@@ -98,18 +92,9 @@ public class LaserTower : TowerBase
         {
             laserHitPS.transform.position = spawnPoint.transform.position;
             laserHitPS.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear);
-            _leftSpawn = !_leftSpawn;
-            pTarget = null;
         }
-            
     }
-
-    protected override void OnTargetHasChanged()
-    {
-        //Debug.Log("OnTargetHasChanged()");
-        _leftSpawn = !_leftSpawn;
-        _target = pTarget.GetComponent<Minion>();
-    }
+    
 
     /// <summary>
     /// Don't want to execute GetTarget() all frames.

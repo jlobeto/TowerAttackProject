@@ -16,7 +16,7 @@ public class EnvironBridgeEffect : MonoBehaviour
     void Start()
     {
         _paths = GetComponentsInChildren<Animator>().ToList();
-        Debug.Log(destination + " ... paths count " + _paths.Count);
+        //Debug.Log(destination + " ... paths count " + _paths.Count);
         _timerToPlayNextAux = _timerToPlayNext;
     }
     

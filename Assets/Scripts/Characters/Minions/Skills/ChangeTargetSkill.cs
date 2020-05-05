@@ -35,7 +35,6 @@ public class ChangeTargetSkill : BaseMinionSkill
   		      
 		transform.localPosition = new Vector3 (transform.localPosition.x, transform.position.y, transform.localPosition.z);
 
-
         return true;
     }
 
