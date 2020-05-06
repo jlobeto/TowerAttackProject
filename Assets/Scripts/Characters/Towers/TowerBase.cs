@@ -95,12 +95,7 @@ public class TowerBase : MonoBehaviour
         if (!isAnyMinionInTarget)
             pTarget = null;
     }
-
-    protected virtual void OnTargetHasChanged()
-    {
-
-    }
-
+    
     protected virtual void MinionAiming()
     {
         if (pTarget == null) return;
