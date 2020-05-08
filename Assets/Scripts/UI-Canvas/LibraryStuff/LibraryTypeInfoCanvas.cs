@@ -16,6 +16,8 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
     public Text partTwoText;
     public RawImage imageToRenderVideo_1;
     public RawImage imageToRenderVideo_2;
+    public Button button_ground;
+    public Button button_air;
     public bool isShowingInfo;//is showing texts, videos, etc? 
 
     Canvas _canvas;
@@ -69,55 +71,26 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
         _info = info;
         partOneText.text = "";
         partTwoText.text = "";
-        var i = 0;
 
         if (_info.partOneTexts != null)
-        {
-            foreach (var item in _info.partOneTexts)
-            {
-                if(i == _info.partOneTexts.Length-1)
-                    partOneText.text += item;
-                else
-                    partOneText.text += item + "\n";
-                i++;
-            }    
-        }
-
-        videoPlayer_1.clip = _gameManager.LoadedAssets.GetVideoByName(_info.type);
-        if (videoPlayer_1.clip != null)
-        {
-            videoPlayer_1.Play();
-            imageToRenderVideo_1.enabled = true;
-        }
-        else
-            imageToRenderVideo_1.enabled = false;
-            
+            SetText(partOneText, _info.partOneTexts);
 
         if (_info.partTwoTexts != null)
         {
-            i = 0;
-            foreach (var item in _info.partTwoTexts)
-            {
-                if (i == _info.partTwoTexts.Length - 1)
-                    partTwoText.text += item;
-                else
-                    partTwoText.text += item + "\n";
-                i++;
-            }
-
+            SetText(partTwoText, _info.partTwoTexts);
             partTwoText.enabled = true;
         }
         else
             partTwoText.enabled = false;
 
-        videoPlayer_2.clip = _gameManager.LoadedAssets.GetVideoByName(_info.type);
-        if (videoPlayer_2.clip != null)
+        if(!_info.hasTwoButtons)
         {
-            videoPlayer_2.Play();
-            imageToRenderVideo_2.enabled = true;
+            button_air.enabled = false;
+            button_ground.enabled = false;
         }
-        else
-            imageToRenderVideo_2.enabled = false;
+
+        SetVideos(imageToRenderVideo_1, videoPlayer_1, _info.type);
+        SetVideos(imageToRenderVideo_2, videoPlayer_2, _info.type);
 
         StartCoroutine(WaitToRefreshPosition());
     }
@@ -131,10 +104,49 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
         SetCanvas(true);
     }
 
+    void SetVideos(RawImage renderTarget, VideoPlayer player, string type)
+    {
+        player.clip = _gameManager.LoadedAssets.GetVideoByName(type);
+        if (player.clip != null)
+        {
+            player.Play();
+            renderTarget.enabled = true;
+        }
+        else
+            renderTarget.enabled = false;
+    }
+
+    void SetText(Text toWrite, string[] info)
+    {
+        var i = 0;
+        foreach (var item in info)
+        {
+            if (i == info.Length - 1)
+                toWrite.text += item;
+            else
+                toWrite.text += item + "\n";
+            i++;
+        }
+    }
+
     void SetElementsPositions()
     {
         float posX = 0f;
         float posY = -partOneText.rectTransform.sizeDelta.y; //get the height, negative because is going down Y axis
+
+        if (_info.hasTwoButtons)
+        {
+            posY -= ELEMENTS_DISTANCE;
+
+            var halfScreen = _canvas.pixelRect.size.x / 2;
+            var quarterScreen = halfScreen / 2;
+
+            posX = halfScreen - quarterScreen;
+            button_ground.transform.localPosition = new Vector3(posX, posY, 0);
+
+            posX = halfScreen + quarterScreen;
+            button_air.transform.localPosition = new Vector3(posX, posY, 0);
+        }
 
         if (imageToRenderVideo_1.isActiveAndEnabled)
         {
@@ -162,6 +174,8 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
 
             posY -= imageToRenderVideo_2.rectTransform.sizeDelta.y;
         }
+
+        
         
         content.sizeDelta = new Vector2(content.sizeDelta.x, -posY);
     }
