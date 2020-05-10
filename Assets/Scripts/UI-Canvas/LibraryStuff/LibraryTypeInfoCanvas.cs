@@ -23,7 +23,8 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
     Canvas _canvas;
     LibraryCategoryTypeInfoDef _info;
     GameManager _gameManager;
-    
+    RectTransform _button_ground_rect;
+    RectTransform _button_air_rect;
 
     private void Awake()
     {
@@ -31,6 +32,9 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
             _canvas = GetComponent<Canvas>();
 
         _gameManager = FindObjectOfType<GameManager>();
+
+        _button_air_rect = button_air.GetComponent<RectTransform>();
+        _button_ground_rect = button_ground.GetComponent<RectTransform>();
     }
 
     void Start()
@@ -55,16 +59,22 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
         _canvas.enabled = enable;
         if(!enable)
         {
-            if(videoPlayer_1.isPlaying)
+            if(videoPlayer_1 != null && videoPlayer_1.isPlaying)
                 videoPlayer_1.Stop();
 
-            if (videoPlayer_2.isPlaying)
+            if (videoPlayer_2 != null && videoPlayer_2.isPlaying)
                 videoPlayer_2.Stop();
 
             isShowingInfo = false;
         }
     }
-    
+
+    public void OnButtonPressed(bool isGroundButton)
+    {
+        SetVideos(imageToRenderVideo_1, videoPlayer_1, "runner");
+        StartCoroutine(WaitToRefreshPosition());
+    }
+
 
     public void SetInfo(LibraryCategoryTypeInfoDef info)
     {
@@ -85,8 +95,13 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
 
         if(!_info.hasTwoButtons)
         {
-            button_air.enabled = false;
-            button_ground.enabled = false;
+            button_air.gameObject.SetActive(false);
+            button_ground.gameObject.SetActive(false);
+        }
+        else
+        {
+            button_air.gameObject.SetActive(true);
+            button_ground.gameObject.SetActive(true);
         }
 
         SetVideos(imageToRenderVideo_1, videoPlayer_1, _info.type);
@@ -138,14 +153,16 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
         {
             posY -= ELEMENTS_DISTANCE;
 
-            var halfScreen = _canvas.pixelRect.size.x / 2;
+            var halfScreen = content.sizeDelta.x / 2;
             var quarterScreen = halfScreen / 2;
 
-            posX = halfScreen - quarterScreen;
-            button_ground.transform.localPosition = new Vector3(posX, posY, 0);
+            posX = halfScreen - halfScreen/2;
+            _button_ground_rect.localPosition = new Vector3(posX, posY, 0);
 
-            posX = halfScreen + quarterScreen;
-            button_air.transform.localPosition = new Vector3(posX, posY, 0);
+            posX = halfScreen + halfScreen/2;
+            _button_air_rect.localPosition = new Vector3(posX, posY, 0);
+
+            posY -= _button_ground_rect.sizeDelta.y;
         }
 
         if (imageToRenderVideo_1.isActiveAndEnabled)
