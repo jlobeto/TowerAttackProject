@@ -48,6 +48,19 @@ public class PopupManager : MonoBehaviour
         return popup;
     }
 
+    public BasePopup BuildPopup(Transform parent, string title, string descript, string btnText1, string btnText2, PopupsID popupId = PopupsID.BasePopup, bool isPause = false)
+    {
+        var popup = BuildPopup(parent, title, descript, btnText1, popupId, isPause);
+        if (popup == null) return null;
+
+        if (popup is AcceptPopup)
+        {
+            (popup as AcceptPopup).closeButton.GetComponentInChildren<Text>().text = btnText2;
+        }
+
+        return popup;
+    }
+
     public bool IsAnyPopupDisplayed()
     {
         return _popupStack > 0;

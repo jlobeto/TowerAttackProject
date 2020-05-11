@@ -73,6 +73,7 @@ public class LevelTutorial : Level
                     ,phaseTxt + " COMPLETED!"
                     , "Do you want to continue with the tutorial ?"
                     , "Continue"
+                    , "Exit"
                     , PopupsID.AcceptOrDecline);
 
                 popup.AddFunction(BasePopup.FunctionTypes.ok, setNextTutorialIfPossible);
@@ -120,7 +121,8 @@ public class LevelTutorial : Level
 
     void cancelTutorial(string p)//parameter does not matter
     {
-        
+        _gameManager.tutorialManager.TutorialFinished(TutorialPhase.FirstTimeOnApp_INGAME_tuto);
+        OnFinishLevelCallback("");
     }
     
 
