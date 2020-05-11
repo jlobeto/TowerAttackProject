@@ -24,10 +24,12 @@ public class MinionsSkillManager : MonoBehaviour
 	IEnumerable<Minion> _theOnes;
 	Dictionary<BaseMinionSkill.SkillType, Color> _skillToColor = new Dictionary<BaseMinionSkill.SkillType, Color>();
 	CameraMovement _cameraMovement;
+    Camera _mainCamera;
 
 	void Start () 
 	{
-		_cameraMovement = Camera.main.GetComponentInParent<CameraMovement> ();
+        _mainCamera = Camera.main;
+        _cameraMovement = _mainCamera.GetComponentInParent<CameraMovement> ();
 
 		_rangeSprite = Resources.Load("Level/MinionSkillSelector" , typeof(SpriteRenderer)) as SpriteRenderer;
 		_rangeSprite = Instantiate<SpriteRenderer> (_rangeSprite, new Vector3(1000,1000,1000), Quaternion.identity);
@@ -51,13 +53,13 @@ public class MinionsSkillManager : MonoBehaviour
 			return;
 
 		if (Input.touchCount == 0)
-			ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+			ray = _mainCamera.ScreenPointToRay (Input.mousePosition);
 		else 
-			ray = Camera.main.ScreenPointToRay (Input.GetTouch(0).position);
+			ray = _mainCamera.ScreenPointToRay (Input.GetTouch(0).position);
 
 		if (Physics.Raycast(ray, out hit, 1000, 1 << LayerMask.NameToLayer("Floor")))
 		{
-			_rangeSprite.transform.position = hit.point;
+            _rangeSprite.transform.position = hit.point + _cameraMovement.transform.forward * 5;
 		}
 
 		if(Input.GetMouseButtonUp(0))//desktop and mobile
@@ -70,8 +72,6 @@ public class MinionsSkillManager : MonoBehaviour
 			_theOnes = _selectedOnes.Where (i => i.skillType == _typeToSelect);
 
             
-            
-
             foreach (var m in _theOnes)
             {
                 //don't change the execution order of this foreach.
