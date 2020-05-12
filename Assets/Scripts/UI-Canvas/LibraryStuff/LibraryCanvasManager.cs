@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class LibraryCanvasManager : MonoBehaviour
 {
+    public const string SELECT_ONE_TYPE_TEXT = "select one type";
+
     public CategoryPanel categoryPanel;
     public LibraryCategoryCanvas[] categoryScrollerCanvases;
     public LibraryTypeInfoCanvas typeInfoCanvas;
@@ -73,6 +75,7 @@ public class LibraryCanvasManager : MonoBehaviour
         typeInfoCanvas.SetInfo(data);
 
         exitButtonText.text = "return";
+        categoryPanel.selectTypeText.text = typePressed;
     }
 
     /// <summary>
@@ -83,6 +86,7 @@ public class LibraryCanvasManager : MonoBehaviour
         if(typeInfoCanvas.isShowingInfo)
         {
             OnCategoryPressed(_activeCategory);
+            categoryPanel.selectTypeText.text = SELECT_ONE_TYPE_TEXT;
         }
         else
         {
@@ -112,5 +116,6 @@ public class LibraryCanvasManager : MonoBehaviour
         exitButtonText.text = "exit";
 
         _activeCategory = cat;
+        categoryPanel.selectTypeText.text = SELECT_ONE_TYPE_TEXT;
     }
 }
