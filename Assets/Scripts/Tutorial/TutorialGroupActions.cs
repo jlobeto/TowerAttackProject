@@ -21,6 +21,7 @@ public class TutorialGroupActions : TutorialGroupUtils
     public string ShowPointFingerInSceneParams;
     public string SetMinionsAndTowersParams;
     public string BlockOrNotSingleButtonParams;
+    public string ShowTextParams;
     #endregion
 
     TutorialManager _tutoManager;
@@ -81,20 +82,62 @@ public class TutorialGroupActions : TutorialGroupUtils
         }
     }
 
+    public void ShowText(string text, string posX, string posY, string parent)
+    {
+        /*this will create the text.
+         - parent is the game object that the finger will be attached to
+         - the positions x and y will be added from the pivot of the parent*/
+
+        var parentGO = GetGameObjectByName(parent);
+        Text txt = _tutoManager.tutorialText;
+        if (txt == null)
+        {
+            var go = new GameObject(TutorialManager.TUTORIAL_TEXT_NAME);
+            txt = go.AddComponent<Text>();
+            txt.font = _tutoManager.texts_font;
+            txt.color = Color.white;
+            _tutoManager.tutorialText = txt;
+            txt.fontSize = 35;
+            txt.alignment = TextAnchor.MiddleCenter;
+            txt.supportRichText = false;
+            txt.raycastTarget = false;
+            txt.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 330);
+            txt.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 200);
+        }
+        else if(!txt.isActiveAndEnabled)
+        {
+            txt.enabled = true;
+        }
+
+        if (txt.color.a < 1f)
+            txt.color = new Color(255, 255, 255, 255);
+
+        var x = float.Parse(posX);
+        var y = float.Parse(posY);
+
+        txt.rectTransform.SetParent(parentGO.transform);
+        txt.rectTransform.localPosition = new Vector3();
+        txt.rectTransform.localPosition += new Vector3(x, y, 0);
+
+        txt.text = text;
+
+        var canvas = GetGameObjectByName("LevelCanvas");
+        if (canvas != null)
+        {
+            var c = canvas.GetComponent<Canvas>();
+            if (c.renderMode != RenderMode.ScreenSpaceCamera) return;
+
+            txt.rectTransform.localPosition += new Vector3(x, y, 0);
+            txt.rectTransform.localRotation = new Quaternion(0, 0, 0, 0);
+            txt.rectTransform.localScale = new Vector3(1.5f, 1.5f, 1);
+        }
+    }
+
 
     public void HighlightUIElement(string elementName, string parent)
     {
         var parentGO = GetGameObjectByName(parent);
-
-        /*var r = canvas.GetComponentsInChildren<RectTransform>();
-        foreach (var item in r)
-        {
-            if(item.CompareTag(elementsTag))
-            {
-                childTransform = item;
-                break;
-            }
-        }*/
+        
         Transform childTransform = GameObject.Find(elementName).transform;
 
         _tutoManager.SetLastParentAndSibling(childTransform.parent, childTransform.GetSiblingIndex());

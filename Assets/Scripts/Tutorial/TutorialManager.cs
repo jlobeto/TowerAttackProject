@@ -10,14 +10,18 @@ public class TutorialManager : MonoBehaviour
 {
     public const string BLACK_OVERLAY_NAME = "tutorial_black_overlay";
     public const string POINTING_FINGER_NAME = "pointing_finger_image";
+    public const string TUTORIAL_TEXT_NAME = "tutorial_text";
 
     public bool enableTutorial = true;
     public AcceptPopup acceptPopup;
     public Image pointingFinger;
+    public Font texts_font;
     public Action OnForceExecutingOutputFinished = delegate { };
     public Action OnScreenTouched = delegate { };
     [HideInInspector]
     public bool canCheckUpdateForScreeenTouch;
+    [HideInInspector]
+    public Text tutorialText;//Used in tutorials. With this i can have a reference.
 
     GameManager _gameManager;
     GenericListJsonLoader<TutorialGroup> _tutorialGroups;
@@ -32,7 +36,11 @@ public class TutorialManager : MonoBehaviour
     public Tuple<Transform, int> LastUIParentAndSiblingIndex { get { return _lastUIParent; } }
     public string LastTutorialGroupId {
         get { return _lastTutorialGroupId; }
-        set { _lastTutorialGroupId = value; SaveProgress(); }
+        set {
+            _lastTutorialGroupId = value;
+            _tutoSaveDef.lastTutorialGroupId = _lastTutorialGroupId;
+            SaveProgress();
+        }
     }
     public bool IsUserFirstTimeOnApp { get { return !_tutoSaveDef.didShowFirstTutoPopup; } }
     public bool UserAgreedWithMakingFirstTutorial { get { return _tutoSaveDef.didAgreeWithDoFirstTutorial; } }
@@ -161,14 +169,6 @@ public class TutorialManager : MonoBehaviour
 
     public void CheckTriggers()
     {
-        //MODIFY THIS SO IT WONT CRASH
-        //if (_isTutorialGroupRunning)
-        //{
-        //    Debug.Log("tutorial group is still running");
-        //    return;
-        //}
-
-
         foreach (var item in _tutorialGroups.list)
         {
 

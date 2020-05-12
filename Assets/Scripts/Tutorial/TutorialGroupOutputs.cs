@@ -208,6 +208,19 @@ public class TutorialGroupOutputs : TutorialGroupUtils
         }
     }
 
+    public void HideText(string p)
+    {
+        var split = p.Split('/');
+
+        var txt = _tutoManager.tutorialText;
+        if(txt != null)
+        {
+            txt.enabled = false;
+        }
+
+        OnFuncFinished(split[split.Length - 1]);
+    }
+
     public void StartFingerAnimation(string p)
     {
         var split = p.Split('/');
