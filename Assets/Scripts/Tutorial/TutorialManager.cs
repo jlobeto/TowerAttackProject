@@ -24,7 +24,7 @@ public class TutorialManager : MonoBehaviour
     public Text tutorialText;//Used in tutorials. With this i can have a reference.
 
     GameManager _gameManager;
-    GenericListJsonLoader<TutorialGroup> _tutorialGroups;
+    GenericListJsonLoader<TutorialGroup> _tutorialGroupsConfig;
     Tuple<Transform, int> _lastUIParent; //the original parent of UI element that had to be moved to be highlighted.
     /// <summary>
     /// This is the group tutorial that was before the current one
@@ -56,7 +56,7 @@ public class TutorialManager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
 
-        _tutorialGroups = GameUtils.LoadConfig<GenericListJsonLoader<TutorialGroup>>("TutorialsConfig.json");
+        _tutorialGroupsConfig = GameUtils.LoadConfig<GenericListJsonLoader<TutorialGroup>>("TutorialsConfig.json");
         _tutoSaveDef = SaveSystem.Load<TutorialSaveDef>(SaveSystem.TUTORIAL_SAVE_NAME);
         if (_tutoSaveDef == null)
         {
@@ -89,7 +89,7 @@ public class TutorialManager : MonoBehaviour
         if (!enableTutorial) return;
 
         _gameManager = gm;
-        foreach (var item in _tutorialGroups.list)
+        foreach (var item in _tutorialGroupsConfig.list)
         {
             item.SetTutorialGroup(this, _gameManager);
             item.OnTutorialFinished += CheckTriggers;
@@ -169,7 +169,7 @@ public class TutorialManager : MonoBehaviour
 
     public void CheckTriggers()
     {
-        foreach (var item in _tutorialGroups.list)
+        foreach (var item in _tutorialGroupsConfig.list)
         {
 
             var isItemCompleted = _tutoSaveDef.tutorialPhasesCompleted.Any(i => i == item.tutorialPhase);

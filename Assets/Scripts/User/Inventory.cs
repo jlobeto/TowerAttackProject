@@ -9,8 +9,11 @@ public class Inventory
     GenericListJsonLoader<MinionBoughtDef> _minionsBoughts;
     GenericListJsonLoader<string> _squadMinionsOrder;
 
-    public Inventory()
+    GameManager _gm;
+
+    public Inventory(GameManager gm)
     {
+        _gm = gm;
 
         _minionsBoughts = SaveSystem.Load<GenericListJsonLoader<MinionBoughtDef>>(SaveSystem.MINIONS_SAVE_NAME);
         _squadMinionsOrder = SaveSystem.Load<GenericListJsonLoader<string>>(SaveSystem.SQUAD_ORDER_SAVE_NAME);
@@ -63,6 +66,10 @@ public class Inventory
         if (_squadMinionsOrder.list.Count >= 5) return;
 
         _squadMinionsOrder.list.Add(t.ToString());
+
+        if (!_gm.tutorialManager.HasUserCompletedTutorial(TutorialPhase.FirstTimeOnApp.ToString()))
+            return;
+
         SaveSystem.Save(_squadMinionsOrder, SaveSystem.SQUAD_ORDER_SAVE_NAME);
     }
 

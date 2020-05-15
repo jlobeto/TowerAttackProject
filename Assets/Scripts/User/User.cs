@@ -43,7 +43,7 @@ public class User
         _deviceId = SystemInfo.deviceUniqueIdentifier;
         _gameManager = gameManager;
         _levelProgressManager = new LevelProgressManager(_gameManager);
-        _inventory = new Inventory();
+        _inventory = new Inventory(_gameManager);
 
         var coinsSaved = SaveSystem.Load<GenericListJsonLoader<int>>(SaveSystem.CURRENCY_SAVE_NAME);
 

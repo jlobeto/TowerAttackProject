@@ -10,21 +10,21 @@
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_clickShop",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousScene:IsPreviousSceneParams=MenuScreen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousScene:IsPreviousSceneParams=MenuScreen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry/CheckBoughtMinion:CheckBoughtMinionParams=Runner,false",
 			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/HighlightUIElement:HighlightUIElementParams=Shop Btn,Canvas/CreatePointFinger:CreatePointFingerParams=0,25,180,Shop Btn/ShowText:ShowTextParams=Tap here to enter the shop,-200,350,Shop Btn",
 			"outputs": "elementType=Button;elementId=Shop Btn;listeners=type:pressed{RemoveHighlightUIElement(Shop Btn),RemovePointFinger}"
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_shop_select_runner",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_clickShop",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_clickShop/CheckBoughtMinion:CheckBoughtMinionParams=Runner,false",
 			"actions": "HighlightUIElement:HighlightUIElementParams=Scroll View,Canvas/LockScrollRectMove:LockScrollRectMoveParams=Scroll View,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=shop_minion_list,MinionInShop_0,80/CreatePointFinger:CreatePointFingerParams=20,0,90,MinionInShop_0/ShowText:ShowTextParams=Select the Runner minion,0,0,Canvas",
 			"outputs": "elementType=Button;elementId=MinionInShop_0;listeners=type:pressed{RemoveHighlightUIElement(Scroll View),UnlockScrollRectMove(Scroll View/Canvas),SetUIElementListsTransparency(shop_minion_list/none/255),RemovePointFinger}"
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_shop_buy_runner",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_shop_select_runner",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_shop_select_runner/CheckBoughtMinion:CheckBoughtMinionParams=Runner,false",
 			"actions": "HighlightUIElement:HighlightUIElementParams=Description box,Canvas/CreatePointFinger:CreatePointFingerParams=0,25,180,BuyMinionBtn/ShowText:ShowTextParams=Buy it!,0,650,Description box",
 			"outputs": "elementType=Button;elementId=Description box;listeners=type:pressed{RemovePointFinger,RemoveHighlightUIElement(Description box)}"
 		},
@@ -38,8 +38,8 @@
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_level_1",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_shop_buy_runner_press_back",
-			"actions": "HighlightUIElement:HighlightUIElementParams=world_buttons_0,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=world_buttons_0,levelNodeButton_0,80/CreatePointFinger:CreatePointFingerParams=0,30,180,levelNodeButton_0/ShowText:ShowTextParams=Tap to play the level,0,-200,levelNodeButton_0",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/CheckBoughtMinion:CheckBoughtMinionParams=Runner,true",
+			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/HighlightUIElement:HighlightUIElementParams=world_buttons_0,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=world_buttons_0,levelNodeButton_0,80/CreatePointFinger:CreatePointFingerParams=0,30,180,levelNodeButton_0/ShowText:ShowTextParams=Tap to play the level,0,-200,levelNodeButton_0",
 			"outputs": "elementType=Button;elementId=world_buttons_0;listeners=type:pressed{RemoveHighlightUIElement(world_buttons_0),SetUIElementListsTransparency(world_buttons_0/levelNodeButton_0/255),RemovePointFinger}"
 		},
 		
@@ -73,7 +73,7 @@
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_level_1_click_drone",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_runner",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/CheckBoughtMinion:CheckBoughtMinionParams=Dove,false",
 			"actions": "HighlightUIElement:HighlightUIElementParams=BuildSquadScrollView,Canvas/LockScrollRectMove:LockScrollRectMoveParams=BuildSquadScrollView,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=buildsquad_scrollview,build_squad_unselected_1,80/CreatePointFinger:CreatePointFingerParams=25,-20,45,build_squad_unselected_1/ShowText:ShowTextParams=Select unlocked minions to buy them!,0,-300,BuildSquadScrollView",
 			"outputs": "elementType=Button;elementId=build_squad_unselected_1;listeners=type:pressed{RemoveHighlightUIElement(BuildSquadScrollView),UnlockScrollRectMove(BuildSquadScrollView/Canvas),SetUIElementListsTransparency(buildsquad_scrollview/none/255),HideBlackOverlay,RemovePointFinger}"
 		},
@@ -124,7 +124,7 @@
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_level_1_click_drone_again",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_view_selected_squad_2nd_time",
+			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen//CheckBoughtMinion:CheckBoughtMinionParams=Dove,true",
 			"actions": "HighlightUIElement:HighlightUIElementParams=BuildSquadScrollView,Canvas/LockScrollRectMove:LockScrollRectMoveParams=BuildSquadScrollView,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=buildsquad_scrollview,build_squad_unselected_1,80/CreatePointFinger:CreatePointFingerParams=25,-20,45,build_squad_unselected_1/ShowText:ShowTextParams=Add the drone to the squad!,0,-300,BuildSquadScrollView",
 			"outputs": "elementType=Button;elementId=build_squad_unselected_1;listeners=type:pressed{RemovePointFinger,RemoveHighlightUIElement(BuildSquadScrollView),SetUIElementListsTransparency(buildsquad_scrollview/none/255)}"
 		},

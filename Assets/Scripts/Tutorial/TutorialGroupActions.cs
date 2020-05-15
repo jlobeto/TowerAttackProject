@@ -64,6 +64,11 @@ public class TutorialGroupActions : TutorialGroupUtils
     {
         var canvasGO = GetGameObjectByName(parent);
         var canvas = canvasGO.GetComponent<Canvas>();
+        var existingOne = GetGameObjectByName(TutorialManager.BLACK_OVERLAY_NAME);
+
+        if (existingOne != null)
+            GameObject.Destroy(existingOne);
+
         var go = new GameObject(TutorialManager.BLACK_OVERLAY_NAME);
         var img = go.AddComponent<Image>();
         img.color = new Color(0, 0, 0, 0.8f);
