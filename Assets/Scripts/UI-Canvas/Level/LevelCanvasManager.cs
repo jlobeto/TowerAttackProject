@@ -17,7 +17,7 @@ public class LevelCanvasManager : MonoBehaviour
     public Image eventWarning;
     [HideInInspector] public List<MinionSaleButton> minionSaleButtons = new List<MinionSaleButton>();
     public LiveRayEffect liveRaySprite;
-    public Sprite starOnSprite;
+    public Sprite starOn_sprite;
 
     HorizontalLayoutGroup _skillsButtonPanel;
     /// <summary>
@@ -31,8 +31,8 @@ public class LevelCanvasManager : MonoBehaviour
 
     Image _levelTimerFillBar;
     Image _levelLivesFillBar;
+    Sprite _starOff_sprite;
     Text _levelTimer;
-    //Text _levelLives;
     Text _eventWarningText;
     bool _isAnyButtonDisabled;
 	Canvas _thisCanvas;
@@ -43,6 +43,8 @@ public class LevelCanvasManager : MonoBehaviour
 
 	bool _startTutorialHoldAnimation;
     int _currentStarsOn;
+
+    Image[] _stars;
 
     void Awake()
     {
@@ -74,6 +76,7 @@ public class LevelCanvasManager : MonoBehaviour
         _eventWarningText.enabled = false;
 
 		_cameraMove = Camera.main.GetComponentInParent<CameraMovement> ();
+
     }
 
     void Update()
@@ -165,14 +168,12 @@ public class LevelCanvasManager : MonoBehaviour
 
     public void UpdateLevelLives(int newLive, int initLives)
     {
-        if (level.levelID == 0) return;
-
-        if(_levelLivesFillBar == null )
+        if (_levelLivesFillBar != null)
         {
-            SetLivesUI();
+            SendRaySpriteToLiveBar();
         }
         else
-            SendRaySpriteToLiveBar();
+            SetLivesUI();
 
         //_levelLives.text = newLive + "/" + initLives;
         float newL = (float)newLive;
@@ -189,20 +190,24 @@ public class LevelCanvasManager : MonoBehaviour
         if (_currentStarsOn == starsWon) return;
 
         _currentStarsOn = starsWon;
-        var parent = _levelLivesFillBar.rectTransform.parent.GetComponent<RectTransform>();
-        var stars = parent.GetComponentsInChildren<Image>();
-        var min = stars.FirstOrDefault(i => i.name.Contains("min"));
-        var mid = stars.FirstOrDefault(i => i.name.Contains("mid"));
-        var max = stars.FirstOrDefault(i => i.name.Contains("max"));
 
+        if(_currentStarsOn == 0)
+        {
+            foreach (var item in _stars)
+            {
+                item.sprite = _starOff_sprite;
+            }
+            return;
+        }
+        
         if (_currentStarsOn == 1)
-            min.sprite = starOnSprite;
+            _stars[0].sprite = starOn_sprite;
 
         if(_currentStarsOn == 2)
-            mid.sprite = starOnSprite;
+            _stars[1].sprite = starOn_sprite;
 
         if(_currentStarsOn == 3)
-            max.sprite = starOnSprite;
+            _stars[2].sprite = starOn_sprite;
 
     }
 
@@ -439,28 +444,31 @@ public class LevelCanvasManager : MonoBehaviour
 
         var parent = _levelLivesFillBar.rectTransform.parent.GetComponent<RectTransform>();
         var width = parent.sizeDelta.x;
-        Image min, mid, max;
-
+        
         var stars = parent.GetComponentsInChildren<Image>();
-        min = stars.FirstOrDefault(i => i.name.Contains("min"));
-        mid = stars.FirstOrDefault(i => i.name.Contains("mid"));
-        max = stars.FirstOrDefault(i => i.name.Contains("max"));
+        _stars = new Image[3];
+        _stars[0] = stars.FirstOrDefault(i => i.name.Contains("min"));
+        _stars[1] = stars.FirstOrDefault(i => i.name.Contains("mid"));
+        _stars[2] = stars.FirstOrDefault(i => i.name.Contains("max"));
+        
+
 
         float livesToWin = (float)level.objetives[2];
 
-        var yPosForAll = min.rectTransform.position.y;
+        var yPosForAll = _stars[0].rectTransform.position.y;
 
         var percent = (float)level.objetives[0] / livesToWin;
-        var posX_1 = percent * width ; 
-        
-        min.rectTransform.localPosition = new Vector3(posX_1, 0);
+        var posX_1 = percent * width ;
+
+        _stars[0].rectTransform.localPosition = new Vector3(posX_1, 0);
 
         percent = (float)level.objetives[1] / livesToWin;
         var posX_2 = percent * width ;
-        mid.rectTransform.localPosition = new Vector3(posX_2 , 0);
+        _stars[1].rectTransform.localPosition = new Vector3(posX_2 , 0);
 
-        max.rectTransform.localPosition = new Vector3(width-27, 0);
-        
+        _stars[2].rectTransform.localPosition = new Vector3(width-27, 0);
+
+        _starOff_sprite = _stars[0].sprite;
     }
 
     
