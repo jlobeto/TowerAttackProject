@@ -61,7 +61,7 @@ public class LevelNode : MonoBehaviour
             {
                 if(_lvlInfo.id == -1)//but if is level '-1', check if phase has been completed
                 {
-                    if (_gm.tutorialManager.HasUserCompletedTutorial(TutorialPhase.FirstTimeOnApp_INGAME_tuto.ToString()))
+                    if (_gm.tutorialManager.HasUserCompletedTutorial(TutorialPhase.FirstTimeOnApp_INGAME_tuto_1_phase3.ToString()))
                         _btn.interactable = false;
                 }
                 else

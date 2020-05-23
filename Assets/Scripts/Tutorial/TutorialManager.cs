@@ -116,8 +116,12 @@ public class TutorialManager : MonoBehaviour
     public void TutorialFinished(TutorialPhase phase)
     {
         _isTutorialGroupRunning = false;
-        _tutoSaveDef.tutorialPhasesCompleted.Add(phase.ToString());
-        SaveProgress();
+        var phaseS = phase.ToString();
+        if (!_tutoSaveDef.tutorialPhasesCompleted.Contains(phaseS))
+        {
+            _tutoSaveDef.tutorialPhasesCompleted.Add(phaseS);
+            SaveProgress();
+        }
     }
 
     public bool HasUserCompletedTutorial(string phase)
@@ -171,13 +175,12 @@ public class TutorialManager : MonoBehaviour
     {
         foreach (var item in _tutorialGroupsConfig.list)
         {
-
             var isItemCompleted = _tutoSaveDef.tutorialPhasesCompleted.Any(i => i == item.tutorialPhase);
             if (isItemCompleted) continue;
 
             var tutorialGroupHasBeenDone = tutorialGroupsDone.Any(i => i == item.tutorialGroupId);
             if (tutorialGroupHasBeenDone) continue;
-
+            
             var result = item.CheckForTriggers();
             if (result)
             {

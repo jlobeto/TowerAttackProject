@@ -15,6 +15,7 @@ public class TutorialGroupTriggers : TutorialGroupUtils
     public string IsFirstIngameTutorialPartParams;
     public string AmountOfMinionsReleasedParams;
     public string CheckBoughtMinionParams;
+    public string CheckLevelTutorialCompletionParams;
     #endregion
     TutorialManager _tutoManager;
     GameManager _gm;
@@ -104,6 +105,12 @@ public class TutorialGroupTriggers : TutorialGroupUtils
     {
         //check if the minion of type 'type' is bought or not, depending on the 'value'
         var result = _gm.User.MinionIsInInvetory(GameUtils.ToEnum(type, MinionType.Runner));
+        return result == bool.Parse(value);
+    }
+
+    public bool CheckLevelTutorialCompletion(string phase, string value)
+    {
+        var result = _tutoManager.HasUserCompletedTutorial(phase);
         return result == bool.Parse(value);
     }
 
