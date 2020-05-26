@@ -191,7 +191,7 @@
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase2",
 			"tutorialGroupId":"ingame_tutorial_show_towers",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsFirstIngameTutorialPart:IsFirstIngameTutorialPartParams=2/CheckLevelTutorialCompletion:CheckLevelTutorialCompletionParams=FirstTimeOnApp_INGAME_tuto_1_phase2,false",
+			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsFirstIngameTutorialPart:IsFirstIngameTutorialPartParams=2/CheckLevelTutorialCompletion:CheckLevelTutorialCompletionParams=FirstTimeOnApp_INGAME_tuto_1_phase1,true",
 			"actions": "StopUpdate/ShowBlackOverlay:ShowBlackOverlayParams=LevelCanvas/DisplayTuto2Fingers",
 			"outputs": "elementType=Touch;listeners=type:touched{HideBlackOverlay,ContinueUpdating,RemoveTuto2Fingers}"
 		},
@@ -274,7 +274,7 @@
 			"tutorialGroupId":"ingame_tutorial_tuto3_press_drone_block_everything",
 			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsFirstIngameTutorialPart:IsFirstIngameTutorialPartParams=3/IsLastTimerFinished/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=ingame_tutorial_tuto3_press_drone",
 			"actions": "SetUIElementListsTransparency:SetUIElementListsTransparencyParams=MinionsPanel,none,80/ForceExecutingOutputAfterSeconds:ForceExecutingOutputAfterSecondsParams=10",
-			"outputs": "elementType=Timer;listeners=type:time{StartNextTutorialGroupOnTimer(1500)}"
+			"outputs": "elementType=Timer;listeners=type:time{StartNextTutorialGroupOnTimer(1850)}"
 		},
 
 		{

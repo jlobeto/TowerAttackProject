@@ -205,7 +205,7 @@ public class TutorialGroupActions : TutorialGroupUtils
         var x = float.Parse(posX);
         var y = float.Parse(posY);
         var rotatZ = float.Parse(rotZ);
-        
+
         var finger = GameObject.Instantiate<Image>(_tutoManager.pointingFinger, new Vector3(0,0,0), Quaternion.identity, parentGO.transform);
         finger.rectTransform.position = parentGO.transform.position;
         finger.name = TutorialManager.POINTING_FINGER_NAME;

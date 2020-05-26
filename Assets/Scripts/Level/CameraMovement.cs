@@ -25,7 +25,7 @@ public class CameraMovement : MonoBehaviour
 	void Start () 
 	{
         _gm = FindObjectOfType<GameManager> ();
-		if (_gm.CurrentLevelInfo.id == 0)
+		if (_gm.CurrentLevelInfo.mode == LevelMode.Tutorial.ToString())
 			canMove = false;
 
         _baseSpeed = speed;
@@ -47,7 +47,7 @@ public class CameraMovement : MonoBehaviour
 
     public void SetCameraMovement(bool value)
     {
-        if(value && _gm.CurrentLevelInfo.id == 0)
+        if(value && _gm.CurrentLevelInfo.mode == LevelMode.Tutorial.ToString())
         {
             return;
         }

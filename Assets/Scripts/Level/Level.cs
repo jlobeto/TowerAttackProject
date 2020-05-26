@@ -89,16 +89,24 @@ public class Level : MonoBehaviour
 		{
             if (levelMode == LevelMode.Tutorial) return;
 
-            var popup = GameManager.popupManager.BuildPopup(LevelCanvasManager.transform, "Pause", "Game paused", "Main Map", PopupsID.AcceptOrDecline, true);
+            var popup = GameManager.popupManager.BuildPopup(LevelCanvasManager.transform, "Pause", "Game paused", "Continue", "Main Map", PopupsID.AcceptOrDecline, true);
             if (popup != null)
             {
                 Time.timeScale = 0;//TODO:: // SACAR ESTO A LA MIERDA
                 _lvlCanvasManager.EnableMinionButtons(false);
                 _lvlCanvasManager.EnableDisableMinionSkillButtons(false);
-                popup.AddFunction(BasePopup.FunctionTypes.ok, OnFinishLevelCallback);
+
+                popup.AddFunction(BasePopup.FunctionTypes.ok, OnResumePause);
+                popup.AddFunction(BasePopup.FunctionTypes.cancel, OnFinishLevelCallback);
             }
         }
 	}
+    void OnResumePause(string p)
+    {
+        Time.timeScale = 1;//TODO:: // SACAR ESTO A LA MIERDA
+        _lvlCanvasManager.EnableMinionButtons(true);
+        _lvlCanvasManager.EnableDisableMinionSkillButtons(true);
+    }
 
     void OnRunLevelTimer()
     {

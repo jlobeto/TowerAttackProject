@@ -27,7 +27,7 @@ public class LevelTutorial : Level
     int _uiCameraOldCulling;
     int _mainCameraOldCulling;
     bool _initWithFirstPhase = true;//when starting level-1 from another phase(not 1) turn this to false because Level is executed before OnCheckTriggersCoroutine;
-
+    bool _initFromPhase2 = false;
 
     protected override void Init()
     {
@@ -54,7 +54,10 @@ public class LevelTutorial : Level
             if (_gameManager.tutorialManager.HasUserCompletedTutorial(TutorialPhase.FirstTimeOnApp_INGAME_tuto_1_phase2.ToString()))
                 _currentTutorial = 2;//phase3
             else
+            {
                 _currentTutorial = 1;//phase2
+                _initFromPhase2 = true;
+            }
 
             _initWithFirstPhase = false;
             setNextTutorialIfPossible("");
@@ -93,6 +96,7 @@ public class LevelTutorial : Level
                     , "Exit"
                     , PopupsID.AcceptOrDecline);
 
+                popup.transform.localScale *= 1.5f;
                 popup.AddFunction(BasePopup.FunctionTypes.ok, setNextTutorialIfPossible);
                 popup.AddFunction(BasePopup.FunctionTypes.cancel, cancelTutorial);
 
@@ -106,17 +110,17 @@ public class LevelTutorial : Level
     void setNextTutorialIfPossible(string p)//parameter does not matter
     {
         _lvlCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+        _uiCam.cullingMask = (1 << LayerMask.NameToLayer("Tower") | 1 << LayerMask.NameToLayer("Minion"));
+        _mainCam.cullingMask = ~(1 << LayerMask.NameToLayer("Minion") | 1 << LayerMask.NameToLayer("Tower"));//render everything except for minion and tower
+
         if (_currentTutorial == 1)//phase 2
         {
             towersPhase2.SetActive(true);
-            _uiCam.cullingMask = (1 << LayerMask.NameToLayer("Tower") | 1 << LayerMask.NameToLayer("Minion"));
-            _mainCam.cullingMask = ~(1 << LayerMask.NameToLayer("Minion") | 1 << LayerMask.NameToLayer("Tower"));//render everything except for minion and tower
             _gameManager.tutorialManager.TutorialFinished(TutorialPhase.FirstTimeOnApp_INGAME_tuto_1_phase1);
         }
         else
         {
             _gameManager.tutorialManager.TutorialFinished(TutorialPhase.FirstTimeOnApp_INGAME_tuto_1_phase2);
-
             towersPhase3.SetActive(true);
             towersPhase2.SetActive(false);
             _lvlCanvasManager.EnableDisableMinionSkillButtons(true);
@@ -133,7 +137,7 @@ public class LevelTutorial : Level
         _livesRemoved = 0;
         _lvlCanvasManager.UpdateLevelLives(LivesRemoved, objetives[objetives.Length - 1]);
 
-        if(_initWithFirstPhase)
+        if(_initWithFirstPhase || _initFromPhase2)
             _gameManager.tutorialManager.CheckTriggers();
     }
 

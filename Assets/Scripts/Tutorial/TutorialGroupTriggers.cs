@@ -30,6 +30,7 @@ public class TutorialGroupTriggers : TutorialGroupUtils
     public bool CanTrigger()
     {
         var splittedFuncNames = varFuncNames.Split(' ');
+
         foreach (var item in splittedFuncNames)
         {
             var r = ExecuteFunction(item);
