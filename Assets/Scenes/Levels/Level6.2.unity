@@ -44,7 +44,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -88,7 +88,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: ea74bce64b7d28e4aa6a82d2586af3ee,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -877,6 +878,16 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 198213186957735482, guid: 96e0e892741e51a4c87beb12af7ddd6f,
+        type: 3}
+      propertyPath: randomSeed
+      value: -312149762
+      objectReference: {fileID: 0}
+    - target: {fileID: 198946240274350018, guid: 96e0e892741e51a4c87beb12af7ddd6f,
+        type: 3}
+      propertyPath: randomSeed
+      value: 973895049
+      objectReference: {fileID: 0}
     - target: {fileID: 114101818857371160, guid: 96e0e892741e51a4c87beb12af7ddd6f,
         type: 3}
       propertyPath: showGizmoRange
@@ -888,16 +899,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 410352be2440e0b4d98eda532e5df2e2,
         type: 2}
-    - target: {fileID: 198213186957735482, guid: 96e0e892741e51a4c87beb12af7ddd6f,
-        type: 3}
-      propertyPath: randomSeed
-      value: -312149762
-      objectReference: {fileID: 0}
-    - target: {fileID: 198946240274350018, guid: 96e0e892741e51a4c87beb12af7ddd6f,
-        type: 3}
-      propertyPath: randomSeed
-      value: 973895049
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96e0e892741e51a4c87beb12af7ddd6f, type: 3}
 --- !u!4 &197117347 stripped
