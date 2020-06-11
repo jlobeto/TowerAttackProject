@@ -30,8 +30,13 @@ public class LibraryCategoryTypeButton : MonoBehaviour
 
     public void Init(string imgPath, string type, LibraryCategory cat, Action<LibraryCategory, string> OnPressedCallback)
     {
-        var sprite = Resources.Load<Sprite>(imgPath + "/" + type + "/" + type);
-        if(sprite != null)
+        Sprite sprite = null;
+        if (cat != LibraryCategory.Events)
+            sprite = Resources.Load<Sprite>(imgPath + "/" + type + "/" + type);
+        else
+            sprite = Resources.Load<Sprite>(imgPath + "/" + type);
+
+        if (sprite != null)
             typeImage.sprite = sprite;
 
         _type = type;

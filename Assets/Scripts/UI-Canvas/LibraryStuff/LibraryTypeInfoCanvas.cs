@@ -18,6 +18,7 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
     public RawImage imageToRenderVideo_2;
     public Button button_ground;
     public Button button_air;
+    public Image staticImage;
     public bool isShowingInfo;//is showing texts, videos, etc? 
 
     Canvas _canvas;
@@ -71,7 +72,7 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
 
     public void OnButtonPressed(bool isGroundButton)
     {
-        SetVideos(imageToRenderVideo_1, videoPlayer_1, "runner");
+        SetVideo(imageToRenderVideo_1, videoPlayer_1, "runner");
         StartCoroutine(WaitToRefreshPosition());
     }
 
@@ -104,8 +105,17 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
             button_ground.gameObject.SetActive(true);
         }
 
-        SetVideos(imageToRenderVideo_1, videoPlayer_1, _info.type);
-        SetVideos(imageToRenderVideo_2, videoPlayer_2, _info.type);
+        if (!_info.hasStaticImage)
+            staticImage.gameObject.SetActive(false);
+        else
+            staticImage.gameObject.SetActive(true);
+
+
+
+        SetVideo(imageToRenderVideo_1, videoPlayer_1, _info.type);
+        SetVideo(imageToRenderVideo_2, videoPlayer_2, _info.type);
+
+        SetStaticImage(_info.type);
 
         StartCoroutine(WaitToRefreshPosition());
     }
@@ -119,7 +129,7 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
         SetCanvas(true);
     }
 
-    void SetVideos(RawImage renderTarget, VideoPlayer player, string type)
+    void SetVideo(RawImage renderTarget, VideoPlayer player, string type)
     {
         player.clip = _gameManager.LoadedAssets.GetVideoByName(type);
         if (player.clip != null)
@@ -142,6 +152,15 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
                 toWrite.text += item + "\n";
             i++;
         }
+    }
+
+    void SetStaticImage(string type)
+    {
+        var s = _gameManager.LoadedAssets.GetSpriteByName(type);
+        if (s != null)
+            staticImage.sprite = s;
+        else
+            staticImage.gameObject.SetActive(false);
     }
 
     void SetElementsPositions()
@@ -167,17 +186,28 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
 
         if (imageToRenderVideo_1.isActiveAndEnabled)
         {
-            posX = imageToRenderVideo_1.rectTransform.localPosition.x;
             posY -= ELEMENTS_DISTANCE;
+            posX = imageToRenderVideo_1.rectTransform.localPosition.x;
+            
             imageToRenderVideo_1.rectTransform.localPosition = new Vector3(posX, posY, 0);
             
             posY -= imageToRenderVideo_1.rectTransform.sizeDelta.y;
         }
 
+        if(_info.hasStaticImage)
+        {
+            posY -= ELEMENTS_DISTANCE;
+            posX = staticImage.rectTransform.localPosition.x;
+
+            staticImage.rectTransform.localPosition = new Vector3(posX, posY, 0);
+            posY -= staticImage.rectTransform.sizeDelta.y;
+        }
+
         if(partTwoText.isActiveAndEnabled)
         {
-            posX = partTwoText.rectTransform.localPosition.x;
             posY -= ELEMENTS_DISTANCE;
+            posX = partTwoText.rectTransform.localPosition.x;
+            
             partTwoText.rectTransform.localPosition = new Vector3(posX, posY, 0);
             
             posY -= partTwoText.rectTransform.sizeDelta.y + ELEMENTS_DISTANCE;
@@ -185,8 +215,9 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
 
         if(imageToRenderVideo_2.isActiveAndEnabled)
         {
-            posX = imageToRenderVideo_2.rectTransform.localPosition.x;
             posY -= ELEMENTS_DISTANCE;
+            posX = imageToRenderVideo_2.rectTransform.localPosition.x;
+            
             imageToRenderVideo_2.rectTransform.localPosition = new Vector3(posX, posY, 0);
 
             posY -= imageToRenderVideo_2.rectTransform.sizeDelta.y;

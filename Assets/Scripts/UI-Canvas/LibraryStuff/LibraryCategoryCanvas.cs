@@ -35,6 +35,8 @@ public class LibraryCategoryCanvas : MonoBehaviour
                 resourcesPath = "UITowersPictures";
                 break;
             case LibraryCategory.Events:
+                types = Enum.GetNames(typeof(EventTypes)).ToList();
+                resourcesPath = "UIEventsPictures";
                 break;
             case LibraryCategory.Help:
                 break;

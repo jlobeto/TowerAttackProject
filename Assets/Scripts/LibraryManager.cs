@@ -16,6 +16,9 @@ public class LibraryManager
 
         data = GameUtils.LoadConfig<GenericListJsonLoader<LibraryCategoryTypeInfoDef>>("LibraryTowersConfig.json", GameUtils.LIBRARY_CONFIG_PATH);
         _dict.Add(LibraryCategory.Towers, data);
+
+        data = GameUtils.LoadConfig<GenericListJsonLoader<LibraryCategoryTypeInfoDef>>("LibraryEventsConfig.json", GameUtils.LIBRARY_CONFIG_PATH);
+        _dict.Add(LibraryCategory.Events, data);
     }
 
 
