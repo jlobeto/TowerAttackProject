@@ -23,21 +23,33 @@ public class HUDFPS : MonoBehaviour
     private int frames = 0; // Frames drawn over the interval
     private float timeleft; // Left time for current interval
 
+    GameManager _gm;
+
     void Start()
     {
+        _gm = FindObjectOfType<GameManager>();
+        DontDestroyOnLoad(this);
+
         timeleft = updateInterval;
-        if(!Debug.isDebugBuild)
+        if(!_gm.showDevTools)
         {
-            Destroy(gameObject);
+            txt.enabled = false;
         }
-        else
-        {
-            DontDestroyOnLoad(this);
-        }
+    }
+
+    public void StopFPS()
+    {
+
     }
 
     void Update()
     {
+        if (!txt.enabled && _gm.showDevTools)
+            txt.enabled = true;
+        else if(txt.enabled && !_gm.showDevTools)
+            txt.enabled = false;
+
+
         timeleft -= Time.deltaTime;
         accum += Time.timeScale / Time.deltaTime;
         ++frames;
