@@ -41,6 +41,11 @@ public class BasePopup : MonoBehaviour
 
     }
 
+    public virtual void InitPopup(string parameters = "")
+    {
+
+    }
+
     public void AddFunction(FunctionTypes type, Action<string> func, string parameters="")
     {
         if (!_functions.ContainsKey(type))
