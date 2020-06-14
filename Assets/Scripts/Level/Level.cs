@@ -240,7 +240,7 @@ public class Level : MonoBehaviour
         initialLevelPoints = _gameManager.CurrentLevelInfo.initialLevelPoints;
         _currentLevelPoints = initialLevelPoints;
         levelTime = _gameManager.CurrentLevelInfo.levelTime;
-        _levelTimeAux = levelTime;
+        _levelTimeAux = 2;
         currencyWinPerObjetives = _gameManager.CurrentLevelInfo.currencyGainedByObjectives;
         levelMode = (LevelMode)Enum.Parse(typeof(LevelMode), _gameManager.CurrentLevelInfo.mode);
         levelID = _gameManager.CurrentLevelInfo.id;
@@ -307,11 +307,17 @@ public class Level : MonoBehaviour
 
                 if (_gameManager.popupManager != null)
                 {
-                    var popup = _gameManager.popupManager.BuildPopup(_lvlCanvasManager.transform, "Game Over !", "Try Again", "Main Map");
+                    var popup = _gameManager.popupManager.BuildPopup(_lvlCanvasManager.transform, "", "", "Retry", "Main Map", PopupsID.LevelEndPopup);
                     if (popup != null)
-                        popup.AddFunction(BasePopup.FunctionTypes.ok, OnFinishLevelCallback);
+                    {
+                        popup.AddFunction(BasePopup.FunctionTypes.close, OnFinishLevelCallback);
+                        //popup.AddFunction(BasePopup.FunctionTypes.retryLevel, OnFinishLevelCallback);
+                        popup.InitPopup("false,," + levelID + ",,");
+                    }
+                        
+
                 }
-                    
+
             }
         }
     }
@@ -329,12 +335,12 @@ public class Level : MonoBehaviour
     {
         //Debug.Log("----- Level Completed -----");
         if(_gameManager.popupManager != null && shouldShowPopup)
-        {
-            var popup =_gameManager.popupManager.BuildPopup(_lvlCanvasManager.transform, "You won!", "Continue...", "Main Map");
-            if (popup != null)
-                popup.AddFunction(BasePopup.FunctionTypes.ok, OnFinishLevelCallback);
+        {       
+            var popup = _gameManager.popupManager.BuildPopup(_lvlCanvasManager.transform,"", "", "Continue", "Main Map", "Retry", PopupsID.LevelEndPopup);
+            popup.AddFunction(BasePopup.FunctionTypes.ok, OnFinishLevelCallback);
+            popup.InitPopup("true,"+ GetCurrentStarsWinning() + "," + levelID + ","+LivesRemoved+","+ _gameManager.User.GetCoinsGained(levelID, GetCurrentStarsWinning()));
         }
-            
+
         _towerManager.StopOrInitTowers();
         _minionManager.StopMinions();
         _levelEnded = true;
@@ -387,6 +393,6 @@ public class Level : MonoBehaviour
     {
         Time.timeScale = 1;//TODO:: // SACAR ESTO A LA MIERDA
         _gameManager.SetCurrentLevelInfo(null);
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("World Selector Screen");
     }
 }
