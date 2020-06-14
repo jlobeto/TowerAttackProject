@@ -48,9 +48,9 @@ public class LevelSkillManager : MonoBehaviour
                 lvlSkill.castSkill = GetCastSkill(skillType);
                 lvlSkill.skillType = skillType;
                 lvlSkill.OnSkillExecuted += SkillExecutedHandler;
-                level.LevelCanvasManager.CreateSkillButton(lvlSkill
+                /*level.LevelCanvasManager.CreateSkillButton(lvlSkill
                     , lvlSkill.OnInitCast
-                    , lvlSkill.StopCasting);
+                    , lvlSkill.StopCasting);*/
             }
         }
     }
@@ -80,7 +80,7 @@ public class LevelSkillManager : MonoBehaviour
 
     void SkillExecutedHandler(int currUses, int initUses, SkillType type)
     {
-        level.LevelCanvasManager.SkillExecutedVisualHandler(type, initUses - currUses > 0, currUses, initUses);
+        //level.LevelCanvasManager.SkillExecutedVisualHandler(type, initUses - currUses > 0, currUses, initUses);
     }
 
 }

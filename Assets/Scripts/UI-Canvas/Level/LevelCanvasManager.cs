@@ -11,13 +11,15 @@ public class LevelCanvasManager : MonoBehaviour
     [HideInInspector]
     public Level level;
     public Text pointsText;
-    public CanvasSkillLvlButton skillButtonPrefab;
     public Image levelPointBar;
     public Button minionSaleButtonPrefab;
-    public Image eventWarning;
     [HideInInspector] public List<MinionSaleButton> minionSaleButtons = new List<MinionSaleButton>();
     public LiveRayEffect liveRaySprite;
     public Sprite starOn_sprite;
+    public Image levelTimerFillBar;
+    public Text levelTimerText;
+    public Image levelLivesFillBar;
+    public Image[] stars;
 
     HorizontalLayoutGroup _skillsButtonPanel;
     /// <summary>
@@ -28,12 +30,9 @@ public class LevelCanvasManager : MonoBehaviour
     //DragAndDropSystem _dragAndDropSystem;
     List<CanvasSkillLvlButton> _skillButtons = new List<CanvasSkillLvlButton>();
 	CameraMovement _cameraMove;
-
-    Image _levelTimerFillBar;
-    Image _levelLivesFillBar;
+    
     Sprite _starOff_sprite;
-    Text _levelTimer;
-    Text _eventWarningText;
+    
     bool _isAnyButtonDisabled;
 	Canvas _thisCanvas;
 
@@ -43,8 +42,6 @@ public class LevelCanvasManager : MonoBehaviour
 
 	bool _startTutorialHoldAnimation;
     int _currentStarsOn;
-
-    Image[] _stars;
 
     void Awake()
     {
@@ -58,25 +55,13 @@ public class LevelCanvasManager : MonoBehaviour
         //_timerBtn = GetComponentsInChildren<Button>().FirstOrDefault(i => i.tag == "BuildSquadTimer");
         //_timerText = _timerBtn.GetComponentInChildren<Text>();
         //_timerBtn.onClick.AddListener(() => OnTimerButtonClicked());
-        foreach (Transform child in transform)
-        {
-            if (child.tag == "CanvasLvlTimer")
-            {
-                _levelTimerFillBar = child.GetComponentsInChildren<Image>().FirstOrDefault(i => i.type == Image.Type.Filled);
-                _levelTimerFillBar.fillAmount = 1;
-            }
-				
-        }
-
-        _levelTimer = _levelTimerFillBar.transform.parent.GetComponentInChildren<Text>();
+        
+        levelTimerFillBar.fillAmount = 1;
         //_levelLives = _levelLivesBG.GetComponentInChildren<Text>();
-
-        _eventWarningText = eventWarning.GetComponentInChildren<Text>();
-        eventWarning.gameObject.SetActive(false);
-        _eventWarningText.enabled = false;
+        
 
 		_cameraMove = Camera.main.GetComponentInParent<CameraMovement> ();
-
+        
     }
 
     void Update()
@@ -158,27 +143,25 @@ public class LevelCanvasManager : MonoBehaviour
         var text = "Time: ";
         if(isInfinite)
         {
-            _levelTimer.text = text + "--";
+            levelTimerText.text = text + "--";
             return;
         }
 
-		_levelTimer.text = (text + newTime.ToString("0.0")).ToUpper();
-        _levelTimerFillBar.fillAmount = newTime / initTime;
+		levelTimerText.text = (text + newTime.ToString("0.0")).ToUpper();
+        levelTimerFillBar.fillAmount = newTime / initTime;
     }
 
     public void UpdateLevelLives(int newLive, int initLives)
     {
-        if (_levelLivesFillBar != null)
+        /*if (levelLivesFillBar != null)
         {
             SendRaySpriteToLiveBar();
-        }
-        else
-            SetLivesUI();
+        }*/
 
         //_levelLives.text = newLive + "/" + initLives;
         float newL = (float)newLive;
         float initL = (float)initLives;
-        _levelLivesFillBar.fillAmount = newL / initL;
+        levelLivesFillBar.fillAmount = newL / initL;
 
         UpdateStarsUI();
     }
@@ -193,7 +176,7 @@ public class LevelCanvasManager : MonoBehaviour
 
         if(_currentStarsOn == 0)
         {
-            foreach (var item in _stars)
+            foreach (var item in stars)
             {
                 item.sprite = _starOff_sprite;
             }
@@ -201,13 +184,13 @@ public class LevelCanvasManager : MonoBehaviour
         }
         
         if (_currentStarsOn == 1)
-            _stars[0].sprite = starOn_sprite;
+            stars[0].sprite = starOn_sprite;
 
         if(_currentStarsOn == 2)
-            _stars[1].sprite = starOn_sprite;
+            stars[1].sprite = starOn_sprite;
 
         if(_currentStarsOn == 3)
-            _stars[2].sprite = starOn_sprite;
+            stars[2].sprite = starOn_sprite;
 
     }
 
@@ -339,8 +322,8 @@ public class LevelCanvasManager : MonoBehaviour
     public void TriggerEventWarning(bool activate, float initTime , string eventType)
     {
         _eventWarningEnabled = activate;
-        eventWarning.gameObject.SetActive(activate);
-        _eventWarningText.enabled = activate;
+        //eventWarning.gameObject.SetActive(activate);
+        //_eventWarningText.enabled = activate;
         _eventWarningTime = initTime;
 
         if (eventType == "dust")
@@ -352,11 +335,11 @@ public class LevelCanvasManager : MonoBehaviour
         if (!_eventWarningEnabled) return;
 
         _eventWarningTime -= Time.deltaTime;
-        _eventWarningText.text = _evtType.ToUpper() + " IN: " + _eventWarningTime.ToString("0.0") + "''";
+        //_eventWarningText.text = _evtType.ToUpper() + " IN: " + _eventWarningTime.ToString("0.0") + "''";
     }
 
     #region Skills Buttons
-    public void CreateSkillButton(LevelSkill skill,Action onActivate, Action onDeactivate)
+    /*public void CreateSkillButton(LevelSkill skill,Action onActivate, Action onDeactivate)
     {
         var lvlBtn = Instantiate<CanvasSkillLvlButton>(skillButtonPrefab, transform);
         lvlBtn.type = skill.skillType;
@@ -425,50 +408,40 @@ public class LevelCanvasManager : MonoBehaviour
                 item.button.interactable = false;
             }
         }
-    }
+    }*/
     #endregion
     
-    /// <summary>
-    /// Don't touch this, is awfull but it works xD
-    /// </summary>
-    void SetLivesUI()
+
+    public void SetLivesUI()
     {
-        foreach (Transform child in transform)
-        {
-            if (child.tag != "CanvasLvlLives") continue;
+        StartCoroutine(OnEndOfFrameForLives());
+    }
 
-            var imgs = child.GetComponentsInChildren<Image>();
-            _levelLivesFillBar = imgs.FirstOrDefault(i => i.type == Image.Type.Filled);
-            break;
-        }
+    IEnumerator OnEndOfFrameForLives()
+    {
+        yield return new WaitForEndOfFrame();
 
-        var parent = _levelLivesFillBar.rectTransform.parent.GetComponent<RectTransform>();
-        var width = parent.sizeDelta.x;
-        
-        var stars = parent.GetComponentsInChildren<Image>();
-        _stars = new Image[3];
-        _stars[0] = stars.FirstOrDefault(i => i.name.Contains("min"));
-        _stars[1] = stars.FirstOrDefault(i => i.name.Contains("mid"));
-        _stars[2] = stars.FirstOrDefault(i => i.name.Contains("max"));
-        
-
+        var parent = levelLivesFillBar.rectTransform.parent.GetComponent<RectTransform>();
+        var width = parent.rect.width;
+        Debug.Log(width + " width");
 
         float livesToWin = (float)level.objetives[2];
 
-        var yPosForAll = _stars[0].rectTransform.position.y;
-
         var percent = (float)level.objetives[0] / livesToWin;
-        var posX_1 = percent * width ;
+        Debug.Log(percent + "   percetn");
+        var posX_1 = percent * width;
 
-        _stars[0].rectTransform.localPosition = new Vector3(posX_1, 0);
+        stars[0].rectTransform.localPosition = new Vector3(posX_1, 0);
+        Debug.Log(posX_1);
 
         percent = (float)level.objetives[1] / livesToWin;
-        var posX_2 = percent * width ;
-        _stars[1].rectTransform.localPosition = new Vector3(posX_2 , 0);
+        var posX_2 = percent * width;
+        stars[1].rectTransform.localPosition = new Vector3(posX_2, 0);
+        Debug.Log(posX_2);
 
-        _stars[2].rectTransform.localPosition = new Vector3(width-27, 0);
+        stars[2].rectTransform.localPosition = new Vector3(width, 0);
 
-        _starOff_sprite = _stars[0].sprite;
+        _starOff_sprite = stars[0].sprite;
     }
 
     
@@ -477,6 +450,6 @@ public class LevelCanvasManager : MonoBehaviour
         var spawnWorldPos = level.levelPortal.raySpawnPoint.position;
         var spawnScreenPos = Camera.main.WorldToScreenPoint(spawnWorldPos);
         var ray = Instantiate<LiveRayEffect>(liveRaySprite, transform);
-        ray.Init(spawnScreenPos, _levelLivesFillBar.transform.parent.position);
+        ray.Init(spawnScreenPos, levelLivesFillBar.transform.parent.position);
     }
 }

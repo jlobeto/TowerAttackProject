@@ -226,10 +226,11 @@ public class Level : MonoBehaviour
             _lvlCanvasManager = FindObjectOfType<LevelCanvasManager>();
 
 		_lvlCanvasManager.level = this;
-
-		_lvlCanvasManager.BuildMinionSlots (availableMinions, levelID, _minionSkillManager);
         
+        _lvlCanvasManager.BuildMinionSlots (availableMinions, levelID, _minionSkillManager);
         _lvlCanvasManager.UpdateLevelTimer(levelTime, levelTime, levelMode == LevelMode.Tutorial);
+
+        _lvlCanvasManager.SetLivesUI();
         _lvlCanvasManager.UpdateLevelLives(LivesRemoved, objetives[objetives.Length-1]);
         UpdatePoints(0);
     }
@@ -240,7 +241,7 @@ public class Level : MonoBehaviour
         initialLevelPoints = _gameManager.CurrentLevelInfo.initialLevelPoints;
         _currentLevelPoints = initialLevelPoints;
         levelTime = _gameManager.CurrentLevelInfo.levelTime;
-        _levelTimeAux = 2;
+        _levelTimeAux = levelTime;
         currencyWinPerObjetives = _gameManager.CurrentLevelInfo.currencyGainedByObjectives;
         levelMode = (LevelMode)Enum.Parse(typeof(LevelMode), _gameManager.CurrentLevelInfo.mode);
         levelID = _gameManager.CurrentLevelInfo.id;
@@ -311,7 +312,6 @@ public class Level : MonoBehaviour
                     if (popup != null)
                     {
                         popup.AddFunction(BasePopup.FunctionTypes.close, OnFinishLevelCallback);
-                        //popup.AddFunction(BasePopup.FunctionTypes.retryLevel, OnFinishLevelCallback);
                         popup.InitPopup("false,," + levelID + ",,");
                     }
                         
