@@ -20,6 +20,7 @@ public class LevelCanvasManager : MonoBehaviour
     public Text levelTimerText;
     public Image levelLivesFillBar;
     public Image[] stars;
+    public Color timeBarInitColor;
 
     HorizontalLayoutGroup _skillsButtonPanel;
     /// <summary>
@@ -34,6 +35,7 @@ public class LevelCanvasManager : MonoBehaviour
     Sprite _starOff_sprite;
     
     bool _isAnyButtonDisabled;
+    bool _startTimerTextColorAnim;
 	Canvas _thisCanvas;
 
     string _evtType;
@@ -61,12 +63,14 @@ public class LevelCanvasManager : MonoBehaviour
         
 
 		_cameraMove = Camera.main.GetComponentInParent<CameraMovement> ();
-        
     }
 
     void Update()
     {
-        UpdateEventWarning();
+        if(levelTimerFillBar.fillAmount < .1f)
+        {
+
+        }
     }
 
 	public void EnableSwapTowerTutorial(Vector3 towerPos)
@@ -149,6 +153,8 @@ public class LevelCanvasManager : MonoBehaviour
 
 		levelTimerText.text = (text + newTime.ToString("0.0")).ToUpper();
         levelTimerFillBar.fillAmount = newTime / initTime;
+        levelTimerFillBar.color = Color.Lerp(timeBarInitColor, Color.red, 1 - levelTimerFillBar.fillAmount);
+        
     }
 
     public void UpdateLevelLives(int newLive, int initLives)
@@ -423,23 +429,24 @@ public class LevelCanvasManager : MonoBehaviour
 
         var parent = levelLivesFillBar.rectTransform.parent.GetComponent<RectTransform>();
         var width = parent.rect.width;
-        Debug.Log(width + " width");
+
 
         float livesToWin = (float)level.objetives[2];
 
         var percent = (float)level.objetives[0] / livesToWin;
-        Debug.Log(percent + "   percetn");
+        //Debug.Log(percent + "   percetn");
         var posX_1 = percent * width;
+        var yPos = stars[0].rectTransform.localPosition.y;
 
-        stars[0].rectTransform.localPosition = new Vector3(posX_1, 0);
-        Debug.Log(posX_1);
+        stars[0].rectTransform.localPosition = new Vector3(posX_1, yPos);
+        //Debug.Log(posX_1);
 
         percent = (float)level.objetives[1] / livesToWin;
         var posX_2 = percent * width;
-        stars[1].rectTransform.localPosition = new Vector3(posX_2, 0);
-        Debug.Log(posX_2);
+        stars[1].rectTransform.localPosition = new Vector3(posX_2, yPos);
+        //Debug.Log(posX_2);
 
-        stars[2].rectTransform.localPosition = new Vector3(width, 0);
+        stars[2].rectTransform.localPosition = new Vector3(width - 5, yPos);
 
         _starOff_sprite = stars[0].sprite;
     }
