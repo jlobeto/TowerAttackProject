@@ -7,5 +7,6 @@ public enum PopupsID
     AcceptOrDecline,
     BasePopup,
     Shop,
-    StatUpgradeShop
+    StatUpgradeShop,
+    LevelEndPopup
 }

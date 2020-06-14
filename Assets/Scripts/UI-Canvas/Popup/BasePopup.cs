@@ -26,7 +26,8 @@ public class BasePopup : MonoBehaviour
         ok,
         displayCallback,
         cancel,
-        close
+        close,
+        retryLevel
     }
 
     protected virtual void Awake()

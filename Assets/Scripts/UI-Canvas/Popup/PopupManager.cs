@@ -61,6 +61,19 @@ public class PopupManager : MonoBehaviour
         return popup;
     }
 
+    public BasePopup BuildPopup(Transform parent, string title, string descript, string btnText1, string btnText2, string btnText3, PopupsID popupId = PopupsID.BasePopup, bool isPause = false)
+    {
+        var popup = BuildPopup(parent, title, descript, btnText1, btnText2, popupId, isPause);
+        if (popup == null) return null;
+
+        if (popup is EndLevelPopup)
+        {
+            (popup as EndLevelPopup).retryButton.GetComponentInChildren<Text>().text = btnText3;
+        }
+
+        return popup;
+    }
+
     public bool IsAnyPopupDisplayed()
     {
         return _popupStack > 0;

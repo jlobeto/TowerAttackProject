@@ -76,6 +76,12 @@ public class User
         }
     }
 
+    public int GetCoinsGained(int levelID, int stars)
+    {
+        var info = _gameManager.LevelInfoLoader.LevelInfoList.list.First(i => i.id == levelID);
+        return info.currencyGainedByObjectives[stars - 1];
+    }
+
     public bool MinionIsInInvetory(MinionType t)
     {
         return _inventory.IsBought(t);
