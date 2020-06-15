@@ -61,7 +61,7 @@ public class ShopPopup : BasePopup
 
         _popupManager.PopupDisplayed();
 
-        _rect.position = new Vector3(_rect.parent.position.x - 12, _rect.parent.position.y);
+        _rect.position = new Vector3(_rect.parent.position.x-3, _rect.parent.position.y);
 
         gameObject.SetActive(true);
 
