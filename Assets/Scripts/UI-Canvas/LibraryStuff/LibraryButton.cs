@@ -11,15 +11,10 @@ public class LibraryButton : MonoBehaviour
     LibraryCanvasManager _libraryCanvas;
     Sprite _normalSprite;
     Image _btnImg;
-    Text _txt;
 
     void Start()
     {
         _libraryCanvas = FindObjectOfType<LibraryCanvasManager>();
-
-        _txt = GetComponentInChildren<Text>();
-        _txt.text = "!";
-        _txt.enabled = false;
 
         _btnImg = GetComponent<Image>();
         _normalSprite = _btnImg.sprite;
@@ -40,12 +35,6 @@ public class LibraryButton : MonoBehaviour
 
     public void EnableNotification(bool enabled)
     {
-        if(enabled)
-        {
-            _btnImg.sprite = notificationSprite;
-            _txt.enabled = true;
-        }
-        else
-            _btnImg.sprite = _normalSprite;
+
     }
 }

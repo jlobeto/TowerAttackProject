@@ -11,7 +11,7 @@
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_clickShop",
 			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousScene:IsPreviousSceneParams=MenuScreen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry/CheckBoughtMinion:CheckBoughtMinionParams=Runner,false",
-			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/HighlightUIElement:HighlightUIElementParams=Shop Btn,Canvas/CreatePointFinger:CreatePointFingerParams=0,25,180,Shop Btn/ShowText:ShowTextParams=Tap here to enter the shop,-200,350,Shop Btn",
+			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/HighlightUIElement:HighlightUIElementParams=Shop Btn,Canvas/CreatePointFinger:CreatePointFingerParams=5,-20,0,Shop Btn/ShowText:ShowTextParams=Tap here to enter the shop,500,-400,Shop Btn",
 			"outputs": "elementType=Button;elementId=Shop Btn;listeners=type:pressed{RemoveHighlightUIElement(Shop Btn),RemovePointFinger}"
 		},
 		{
