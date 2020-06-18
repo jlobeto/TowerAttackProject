@@ -8,7 +8,6 @@ using System;
 
 public class CategoryPanel : MonoBehaviour
 {
-    public Image categoriesBG;
     public Text selectCategoryText;
     public Text selectTypeText;
     public List<CategoryButton> _categoryBtns;
@@ -19,8 +18,6 @@ public class CategoryPanel : MonoBehaviour
 
     void Start()
     {
-        categoriesBG.enabled = false;
-
         foreach (CategoryButton item in _categoryBtns)
         {
             item.button.onClick.AddListener(() => OnCategoryButtonPressed(item.category));
@@ -43,8 +40,7 @@ public class CategoryPanel : MonoBehaviour
         _currentSelected = LibraryCategory.None;
 
         selectCategoryText.enabled = true;
-
-        categoriesBG.enabled = false;
+        
         selectTypeText.enabled = false;
     }
     
@@ -58,14 +54,12 @@ public class CategoryPanel : MonoBehaviour
             var btn = GetButtonByType(cat);
             btn.Select();
             
-            if (!categoriesBG.IsActive())//is checking go and component so idk if this can be triggered
+            if (!selectTypeText.IsActive())//is checking go and component so idk if this can be triggered
             {
-                categoriesBG.enabled = true;
                 selectCategoryText.enabled = false;
                 selectTypeText.enabled = true;
             }
 
-            categoriesBG.color = btn.categoryColor;
             _currentSelected = cat;
         }
 

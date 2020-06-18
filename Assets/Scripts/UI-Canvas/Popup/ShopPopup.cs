@@ -20,6 +20,7 @@ public class ShopPopup : BasePopup
     ShopManager _shopManager;
     Text _buyButtonText;
     ScrollRect _scrollRect;
+    Canvas _thisCanvas;
     bool _goingToItemInScroller;
     float _showItemInScrollerResult;
 
@@ -35,12 +36,10 @@ public class ShopPopup : BasePopup
         _buyButtonText = buyButton.GetComponentInChildren<Text>();
 
         _scrollContentList = new List<MinionInShop>();
+        _thisCanvas = GetComponent<Canvas>();
+        _thisCanvas.enabled = false;
     }
-
-    protected override void Start()
-    {
-        gameObject.SetActive(false);
-    }
+    
 
     private void Update()
     {
@@ -63,7 +62,7 @@ public class ShopPopup : BasePopup
 
         _rect.position = new Vector3(_rect.parent.position.x-3, _rect.parent.position.y);
 
-        gameObject.SetActive(true);
+        _thisCanvas.enabled = true;
 
         base.DisplayPopup();
     }
@@ -74,7 +73,7 @@ public class ShopPopup : BasePopup
 
         ExecuteFunctions(FunctionTypes.ok);
         _popupManager.DisplayedPopupWasClosed();
-        gameObject.SetActive(false);
+        _thisCanvas.enabled = false;
         isShowing = false;
     }
 

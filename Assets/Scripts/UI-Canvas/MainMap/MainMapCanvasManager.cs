@@ -13,6 +13,7 @@ public class MainMapCanvasManager : MonoBehaviour
     public Image selectedScreenUI;
     public Sprite unselectedScreenUISprite;
     public Sprite selectedScreenUISprite;
+    public Text coinsText, starsText;
 
     Canvas _canvas;
     WorldUI _currentBuildingWorld;

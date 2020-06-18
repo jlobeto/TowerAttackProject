@@ -7,7 +7,6 @@ public class CategoryButton : MonoBehaviour
 {
     public LibraryCategory category;
     public Color categoryColor;
-    public Image btnBG;
 
     public Button button { get { return _btn; } }
 
@@ -21,8 +20,6 @@ public class CategoryButton : MonoBehaviour
 
     void Start()
     {
-        btnBG.color = categoryColor;
-        btnBG.enabled = false;
     }
 
     
@@ -34,14 +31,12 @@ public class CategoryButton : MonoBehaviour
     public void Select()
     {
         _isSelected = true;
-        btnBG.enabled = true;
         
     }
 
     public void Unselect()
     {
         _isSelected = false;
-        btnBG.enabled = false;
     }
 
 }
