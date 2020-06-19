@@ -36,7 +36,8 @@ public class ShopPopup : BasePopup
         _buyButtonText = buyButton.GetComponentInChildren<Text>();
 
         _scrollContentList = new List<MinionInShop>();
-        _thisCanvas = GetComponent<Canvas>();
+        _thisCanvas = GetComponentInParent<Canvas>();
+
         _thisCanvas.enabled = false;
     }
     
