@@ -29,7 +29,6 @@ public class LibraryButton : MonoBehaviour
     public void DisplayLibrary()
     {
         _libraryCanvas.DisplayCanvas();
-        gameObject.SetActive(false);
     }
 
 

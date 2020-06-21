@@ -11,7 +11,6 @@ public class LibraryCanvasManager : MonoBehaviour
     public CategoryPanel categoryPanel;
     public LibraryCategoryCanvas[] categoryScrollerCanvases;
     public LibraryTypeInfoCanvas typeInfoCanvas;
-    public LibraryButton libraryButton;
     public Text exitButtonText;
 
     Canvas _canvas;
@@ -49,6 +48,8 @@ public class LibraryCanvasManager : MonoBehaviour
         _canvas.enabled = true;
         _popupManager.PopupDisplayed();
         _categoryPanel.OnCategoryPressed += OnCategoryPressed;
+
+        Time.timeScale = 0;
     }
 
     public void HideCanvas()
@@ -66,6 +67,7 @@ public class LibraryCanvasManager : MonoBehaviour
 
         typeInfoCanvas.SetCanvas(false);
         _isDisplayed = false;
+        Time.timeScale = 1;
     }
 
     public void OnCategoryTypeButtonPressed(LibraryCategory categoryPressed, string typePressed)
@@ -91,7 +93,6 @@ public class LibraryCanvasManager : MonoBehaviour
         else
         {
             HideCanvas();
-            libraryButton.gameObject.SetActive(true);
         }
     }
 
