@@ -21,6 +21,7 @@ public class User
     GameManager _gameManager;
 
 	public LevelProgressManager LevelProgressManager { get { return _levelProgressManager; } }
+    public Action<int> OnCurrencyChanged = delegate { };
 
     public int Currency
     {
@@ -33,6 +34,7 @@ public class User
             if(coinsSaved != null)
                 coinsSaved.list[0] = _currency;
             SaveSystem.Save(coinsSaved, SaveSystem.CURRENCY_SAVE_NAME);
+            OnCurrencyChanged(_currency);
         }
     }
 
@@ -54,6 +56,7 @@ public class User
                 list = new List<int>() { _currency }
             };
             SaveSystem.Save(genList, SaveSystem.CURRENCY_SAVE_NAME);
+            OnCurrencyChanged(_currency);
         }
         else if (coinsSaved.list.Count > 0)
             Currency = coinsSaved.list[0];

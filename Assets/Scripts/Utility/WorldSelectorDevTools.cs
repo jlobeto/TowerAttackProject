@@ -72,7 +72,7 @@ public class WorldSelectorDevTools : MonoBehaviour
 
     public void OnAddCoins()
     {
-        _gameManager.User.Currency += 1000;
+        _gameManager.User.Currency += 200;
     }
 
 }

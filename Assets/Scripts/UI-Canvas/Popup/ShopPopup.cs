@@ -7,6 +7,9 @@ using System;
 
 public class ShopPopup : BasePopup
 {
+    private const string STARS_TEXT = "<color=cyan>STARS:</color>";
+    private const string COINS_TEXT = "<color=yellow>CHIPS:</color>";
+
     public MinionInShop minionInShopPrefab;
     public Text currency;
     public Text starsText;
@@ -103,12 +106,12 @@ public class ShopPopup : BasePopup
 
     public void SetCurrency(int c)
     {
-        currency.text = "CHIPS: " + c;
+        currency.text = COINS_TEXT + c;
     }
 
     public void SetStars(int s)
     {
-        starsText.text = "STARS: " + s;
+        starsText.text = STARS_TEXT + s;
     }
 
     public void CheckBuyButton(bool isBlocked, bool isBought, int starsToUnlock = 0, int price = 0)

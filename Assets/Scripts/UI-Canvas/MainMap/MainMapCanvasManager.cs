@@ -2,10 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMapCanvasManager : MonoBehaviour
 {
+    private const string STARS_TEXT = "<color=cyan>STARS:</color>";
+    private const string COINS_TEXT = "<color=yellow>CHIPS:</color>";
+
     public Button levelNodeButton;
     public MainMap mainMap;
     public RectTransform worldsTransform;
@@ -34,6 +38,7 @@ public class MainMapCanvasManager : MonoBehaviour
     int _currentWorldOnScreen;
 
 
+
     void Awake ()
     {
         _canvas = GetComponent<Canvas>();
@@ -41,6 +46,17 @@ public class MainMapCanvasManager : MonoBehaviour
 
         _screenSelectorsUI.Add(selectedScreenUI);
         _worldsCreated.Add(world_0_container);
+
+        
+    }
+
+    private void Start()
+    {
+        SceneManager.sceneUnloaded += SceneUnloaded;
+
+        starsText.text =  STARS_TEXT + mainMap.GetGameManager().User.LevelProgressManager.GetStarsAccumulated();
+        coinsText.text = COINS_TEXT + mainMap.GetGameManager().User.Currency;
+        mainMap.GetGameManager().User.OnCurrencyChanged += CurrencyChangedHandler;
     }
 
     void Update ()
@@ -188,6 +204,24 @@ public class MainMapCanvasManager : MonoBehaviour
     {
         return _canvas.pixelRect.width;
     }
+    void CurrencyChangedHandler(int currency)
+    {
+        coinsText.text = COINS_TEXT + currency;
+    }
+
+    void SceneUnloaded(Scene scene)
+    {
+        mainMap.GetGameManager().User.OnCurrencyChanged -= CurrencyChangedHandler;
+        Debug.Log("scene unloaded " + scene.name);
+    }
+
+
+
+
+
+
+
+
 
     /// <summary>
     /// USed by the dev button at the upper left corner.
