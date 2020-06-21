@@ -547,10 +547,10 @@ RectTransform:
   m_Father: {fileID: 3648727912695054176}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.6049957, y: -0.9499893}
-  m_SizeDelta: {x: -54.010002, y: -90.69998}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 250.2, y: 52.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3648727912772014231
 CanvasRenderer:
@@ -582,18 +582,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: bb35583430ff2c24eb70f2ac769530e3, type: 3}
-    m_FontSize: 59
+    m_FontSize: 23
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 13
-    m_MaxSize: 80
+    m_MinSize: 18
+    m_MaxSize: 49
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 15000 chips
+  m_Text: 0 chips
 --- !u!1 &6421284012420109545
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,6 +653,7 @@ MonoBehaviour:
   currValue: {fileID: 161848517729758432}
   nextValue: {fileID: 7228131954561182745}
   levelBar: {fileID: 7149545700331886304}
+  nextLevelBar: {fileID: 0}
   id: 0
 --- !u!1 &6559538619145540689
 GameObject:

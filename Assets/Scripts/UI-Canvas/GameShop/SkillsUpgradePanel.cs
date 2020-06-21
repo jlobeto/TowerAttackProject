@@ -54,23 +54,13 @@ public class SkillsUpgradePanel : MonoBehaviour
             ReloadItems();
     }
 
-    void StatBuyPressed(MinionBoughtDef.StatNames  id)
+    void StatBuyPressed(MinionBoughtDef.StatNames  id, StatUpgradeItem item)
     {
-        var statLvl = _boughtInfo.GetStatLevel(id);
-        var desc = _shopManager.GetMinionUpgradeDescription(_boughtInfo.type, id);
-        var btnText = _statsCurrency.GetPrice(id, statLvl+1) + " CHIPS";
-        var values = GetCurrentAndNextStat(statLvl);
-        var popup = _popManager.BuildPopup(transform.parent, _boughtInfo.type , desc, btnText, PopupsID.StatUpgradeShop) as StatUpgradePopup;
-        var minionType = GameUtils.ToEnum(_boughtInfo.type, MinionType.Runner);
-        popup.SetPopup(id, values.Item1.GetStatByStatId(id, minionType).ToString(), values.Item2.GetStatByStatId(id, minionType).ToString(), statLvl);
-        popup.OnUpgradeClick += RequestStatUpgrade;
+        var couldBuy = _shopManager.BuyStat(id);
+        if (!couldBuy)
+            item.NoCoinsAnimation();
     }
-
-    bool RequestStatUpgrade(MinionBoughtDef.StatNames  id)
-    {
-        return _shopManager.BuyStat(id);
-
-    }
+    
 
     void GenerateItemsFromScratch()
     {
@@ -81,7 +71,7 @@ public class SkillsUpgradePanel : MonoBehaviour
         item.OnBuyClick += StatBuyPressed;
 
         float curr = currAndNext.Item1.hp;
-        float next = currAndNext.Item2.hp;        
+        float next = currAndNext.Item2.hp;
 
         if (_boughtInfo.type == MinionType.Healer.ToString() || _boughtInfo.type == MinionType.WarScreamer.ToString())
         {
@@ -90,10 +80,10 @@ public class SkillsUpgradePanel : MonoBehaviour
             curr = currAndNext.Item1.GetStatByStatId(MinionBoughtDef.StatNames.PASSIVE, GameUtils.ToEnum(_boughtInfo.type, MinionType.Runner));
             next = currAndNext.Item2.GetStatByStatId(MinionBoughtDef.StatNames.PASSIVE, GameUtils.ToEnum(_boughtInfo.type, MinionType.Runner));
 
-            item.SetItem(_boughtInfo.passiveSkill, curr, next, name);
+            item.SetItem(_boughtInfo.passiveSkill, curr, next, name, _statsCurrency.GetPrice(name, _boughtInfo.GetStatLevel(name) + 1));
         }
         else
-            item.SetItem(_boughtInfo.hp, curr, next, name);
+            item.SetItem(_boughtInfo.hp, curr, next, name, _statsCurrency.GetPrice(name, _boughtInfo.GetStatLevel(name) + 1));
 
         _list = new List<StatUpgradeItem>();
         _list.Add(item);
@@ -105,7 +95,7 @@ public class SkillsUpgradePanel : MonoBehaviour
 
         curr = currAndNext.Item1.speed;
         next = currAndNext.Item2.speed;
-        item.SetItem(_boughtInfo.speed, curr, next, name);
+        item.SetItem(_boughtInfo.speed, curr, next, name, _statsCurrency.GetPrice(name, _boughtInfo.GetStatLevel(name) + 1));
         _list.Add(item);
 
         if (_boughtInfo.type == MinionType.Dove.ToString())
@@ -120,7 +110,7 @@ public class SkillsUpgradePanel : MonoBehaviour
         curr = currAndNext.Item1.GetStatByStatId(MinionBoughtDef.StatNames.SKILL, GameUtils.ToEnum(_boughtInfo.type, MinionType.Runner));
         next = currAndNext.Item2.GetStatByStatId(MinionBoughtDef.StatNames.SKILL, GameUtils.ToEnum(_boughtInfo.type, MinionType.Runner));
 
-        item.SetItem(_boughtInfo.skill, curr, next, name);
+        item.SetItem(_boughtInfo.skill, curr, next, name, _statsCurrency.GetPrice(name, _boughtInfo.GetStatLevel(name) + 1));
         _list.Add(item);
     }
 
@@ -133,13 +123,13 @@ public class SkillsUpgradePanel : MonoBehaviour
         }
 
         ///THIS MUST CHANGE SO IT DOES NOT CREATE AN INSTANCE EACH TIME
-        GenerateItemsFromScratch();       
+        GenerateItemsFromScratch();
     }
 
 
     MinionBoughtDef.StatNames GetFirstStatName()
     {
-        return _statsCurrency.baseHPCurrencyValue > 0 ? MinionBoughtDef.StatNames.HP : MinionBoughtDef.StatNames.PASSIVE;
+        return _statsCurrency.hpPerLevel != null ? MinionBoughtDef.StatNames.HP : MinionBoughtDef.StatNames.PASSIVE;
     }
 
     Tuple<BaseMinionStat, BaseMinionStat> GetCurrentAndNextStat(int lvl)

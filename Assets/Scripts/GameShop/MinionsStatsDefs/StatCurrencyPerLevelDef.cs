@@ -7,6 +7,6 @@ using UnityEngine;
 [Serializable]
 public class StatCurrencyPerLevelDef 
 {
-    public int[] levels;
-    public float toAdd;
+    public int level;
+    public int newPrice;
 }
