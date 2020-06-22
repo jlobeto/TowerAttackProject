@@ -6,8 +6,14 @@
       "partOneTexts": 
       [
         "General:",
-        "-Fast unit",
-        "-Low health"
+		"- Attacks only Ground units"
+        "- Low attack speed",
+        "- High Damage"
+		"- AoE Splash Damage"
+      ],
+	  "partTwoTexts": 
+      [
+        "This tower is very powerfull against large groups of Ground minions",        
       ]
     },
     {
@@ -15,18 +21,61 @@
       "partOneTexts": 
       [
         "General:",
-        "-Laser units",
-        "-Damage per second",
-        "-Two target types: Air and Ground"
+        "- Attack a Single unit",
+        "- Damage per second",
+        "- Two target types: Air and Ground"
       ],
       "hasTwoButtons": true,
       "partTwoTexts": 
       [
-        "General:.......",
-        "-Laser units............",
-        "-Damage per second.............",
-        "-Two target types: Air and Ground......"
+        "This tower can be anonnying if its ignored, the more time hitting the same target the more damage it will dealt.",        
       ]
-    }
+    },
+	{
+      "type": "Freeze",
+      "partOneTexts": 
+      [
+        "General:",		
+        "- Low attack speed",
+        "- Low Damage"
+		"- Every attack freezes / stuns, the unit hitted."
+		"- Two target types: Air and Ground"
+      ],
+	  "hasTwoButtons": true,
+	  "partTwoTexts": 
+      [
+        "Be carefull this tower can destroy your strategy leaving behind frontline units.",        
+      ]
+    },
+	{
+      "type": "Anti Air",
+      "partOneTexts": 
+      [
+        "General:",		
+        "- Attacks only Air units"
+        "- Low attack speed",
+        "- High Damage"
+		"- AoE Splash Damage"
+      ],
+	  "hasTwoButtons": true,
+	  "partTwoTexts": 
+      [
+        "This tower is very powerfull against large groups of Air minions",       
+      ]
+    },
+	{
+      "type": "Ice",
+      "partOneTexts": 
+      [
+        "General:",		
+        "- Dont do damage"
+        "- AoE Slow to ground units",
+        "- Always active"		
+      ],	 
+	  "partTwoTexts": 
+      [
+        "This tower will slow your minions before high damaging towers, be carefull and time well your skills in order to survive",       
+      ]
+    },
 	]
 }
