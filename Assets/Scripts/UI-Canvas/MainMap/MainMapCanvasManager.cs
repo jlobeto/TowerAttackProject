@@ -212,7 +212,6 @@ public class MainMapCanvasManager : MonoBehaviour
     void SceneUnloaded(Scene scene)
     {
         mainMap.GetGameManager().User.OnCurrencyChanged -= CurrencyChangedHandler;
-        Debug.Log("scene unloaded " + scene.name);
     }
 
 

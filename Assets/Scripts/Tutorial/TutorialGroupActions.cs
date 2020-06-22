@@ -87,7 +87,7 @@ public class TutorialGroupActions : TutorialGroupUtils
         }
     }
 
-    public void ShowText(string text, string posX, string posY, string parent)
+    public void ShowText(string text, string posX, string posY, string parent, string size)
     {
         /*this will create the text.
          - parent is the game object that the finger will be attached to
@@ -102,12 +102,11 @@ public class TutorialGroupActions : TutorialGroupUtils
             txt.font = _tutoManager.texts_font;
             txt.color = Color.white;
             _tutoManager.tutorialText = txt;
-            txt.fontSize = 35;
             txt.alignment = TextAnchor.MiddleCenter;
             txt.supportRichText = false;
             txt.raycastTarget = false;
-            txt.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 330);
-            txt.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 200);
+            txt.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 500);
+            txt.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 400);
         }
         else if(!txt.isActiveAndEnabled)
         {
@@ -123,7 +122,9 @@ public class TutorialGroupActions : TutorialGroupUtils
         txt.rectTransform.SetParent(parentGO.transform);
         txt.rectTransform.localPosition = new Vector3();
         txt.rectTransform.localPosition += new Vector3(x, y, 0);
+        txt.rectTransform.localScale = new Vector3(1, 1, 1);
 
+        txt.fontSize = int.Parse(size);
         txt.text = text;
 
         var canvas = GetGameObjectByName("LevelCanvas");

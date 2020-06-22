@@ -3,52 +3,140 @@
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry",
-			"triggers": "IsSceneName:IsSceneNameParams=MenuScreen/HasUserNotCompletedTutorial:HasUserNotCompletedTutorialParams=FirstTimeOnApp",
-			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/DisplayPopup:DisplayPopupParams=AcceptPopup,,Do you want to play the tutorial?,Canvas,firstTutorialPopup",
-			"outputs": "elementType=AcceptPopup;elementId=firstTutorialPopup;listeners=type:ok{OnAgreeToDoTutorial,ChangeScene(World Selector Screen)}-type:cancel{OnCancelToDoTutorial,ChangeScene(World Selector Screen)}"
+			"triggers": [
+				"IsSceneName(MenuScreen)",
+				"HasUserNotCompletedTutorial(FirstTimeOnApp)"
+			],
+			"actions": [
+				"ShowBlackOverlay(Canvas)",
+				"DisplayPopup(AcceptPopup,,Do you want to play the tutorial?,Canvas,firstTutorialPopup)"
+			],
+			"outputs": [
+				"elementType=AcceptPopup",
+				"elementId=firstTutorialPopup",
+				"listeners=type:ok{OnAgreeToDoTutorial,ChangeScene(World Selector Screen)}-type:cancel{OnCancelToDoTutorial,ChangeScene(World Selector Screen)}"
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_clickShop",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousScene:IsPreviousSceneParams=MenuScreen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry/CheckBoughtMinion:CheckBoughtMinionParams=Runner,false",
-			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/HighlightUIElement:HighlightUIElementParams=Shop Btn,Canvas/CreatePointFinger:CreatePointFingerParams=5,-20,0,Shop Btn/ShowText:ShowTextParams=Tap here to enter the shop,500,-400,Shop Btn",
-			"outputs": "elementType=Button;elementId=Shop Btn;listeners=type:pressed{RemoveHighlightUIElement(Shop Btn),RemovePointFinger}"
+			"triggers": [
+				"IsSceneName(World Selector Screen)",
+				"IsPreviousScene(MenuScreen)",
+				"IsPreviousTutorialGroup(firstAppEntry)",
+				"CheckBoughtMinion(Runner,false)"			
+			],
+			
+			"actions": [
+				"ShowBlackOverlay(Canvas)",
+				"HighlightUIElement(Shop Btn,Canvas)",
+				"CreatePointFinger(30,-40,0,Shop Btn)",
+				"ShowText(Tap here to enter the shop,0,600,Canvas,80)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=Shop Btn",
+				"listeners=type:pressed{RemoveHighlightUIElement(Shop Btn),RemovePointFinger,HideBlackOverlay}"
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_shop_select_runner",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_clickShop/CheckBoughtMinion:CheckBoughtMinionParams=Runner,false",
-			"actions": "HighlightUIElement:HighlightUIElementParams=Scroll View,Canvas/LockScrollRectMove:LockScrollRectMoveParams=Scroll View,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=shop_minion_list,MinionInShop_0,80/CreatePointFinger:CreatePointFingerParams=20,0,90,MinionInShop_0/ShowText:ShowTextParams=Select the Runner minion,0,0,Canvas",
-			"outputs": "elementType=Button;elementId=MinionInShop_0;listeners=type:pressed{RemoveHighlightUIElement(Scroll View),UnlockScrollRectMove(Scroll View/Canvas),SetUIElementListsTransparency(shop_minion_list/none/255),RemovePointFinger}"
+			"triggers": [
+				"IsSceneName(World Selector Screen)",
+				"IsPreviousTutorialGroup(firstAppEntry_clickShop)",
+				"CheckBoughtMinion(Runner,false)"
+			],
+			"actions": [
+				"ShowBlackOverlay(ShopCanvas)",
+				"HighlightUIElement(Scroll View,ShopCanvas)",
+				"LockScrollRectMove(Scroll View,ShopCanvas)",
+				"SetUIElementListsTransparency(shop_minion_list,MinionInShop_0,80)",
+				"CreatePointFinger(20,0,90,MinionInShop_0)",
+				"ShowText(Select the Runner minion,0,0,Canvas,80)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=MinionInShop_0",
+				"listeners=type:pressed{RemoveHighlightUIElement(Scroll View),UnlockScrollRectMove(Scroll View/ShopCanvas),SetUIElementListsTransparency(shop_minion_list/none/255),RemovePointFinger}"	
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_shop_buy_runner",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_shop_select_runner/CheckBoughtMinion:CheckBoughtMinionParams=Runner,false",
-			"actions": "HighlightUIElement:HighlightUIElementParams=Description box,Canvas/CreatePointFinger:CreatePointFingerParams=0,25,180,BuyMinionBtn/ShowText:ShowTextParams=Buy it!,0,650,Description box",
-			"outputs": "elementType=Button;elementId=Description box;listeners=type:pressed{RemovePointFinger,RemoveHighlightUIElement(Description box)}"
+			"triggers": [
+				"IsSceneName(World Selector Screen)",
+				"IsPreviousTutorialGroup(firstAppEntry_click_shop_select_runner)",
+				"CheckBoughtMinion(Runner,false)"
+			],
+			"actions": [
+				"HighlightUIElement(Description box,ShopCanvas)",
+				"CreatePointFinger(0,25,180,BuyMinionBtn)",
+				"ShowText(Buy it!,0,0,ShopCanvas,80)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=Description box"	,
+				"listeners=type:pressed{RemovePointFinger,RemoveHighlightUIElement(Description box)}"
+			]
+			
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_shop_buy_runner_press_back",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_shop_buy_runner",
-			"actions": "HighlightUIElement:HighlightUIElementParams=Close Button,Canvas/CreatePointFinger:CreatePointFingerParams=-10,25,180,Close Button/ShowText:ShowTextParams=Go back to world selector,-200,350,Close Button",
-			"outputs": "elementType=Button;elementId=Close Button;listeners=type:pressed{RemovePointFinger,RemoveHighlightUIElement(Close Button)}"
+			"triggers": [
+				"IsSceneName(World Selector Screen)",
+				"IsPreviousTutorialGroup(firstAppEntry_click_shop_buy_runner)"
+
+			],
+			"actions": [
+				"HighlightUIElement(Close Button,ShopCanvas)",
+				"CreatePointFinger(-10,25,180,Close Button)",
+				"ShowText(Go back to world selector,0,0,ShopCanvas,80)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=Close Button",
+				"listeners=type:pressed{RemovePointFinger,RemoveHighlightUIElement(Close Button)}"		
+			]
+			
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_level_1",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/CheckBoughtMinion:CheckBoughtMinionParams=Runner,true",
-			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/HighlightUIElement:HighlightUIElementParams=world_buttons_0,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=world_buttons_0,levelNodeButton_0,80/CreatePointFinger:CreatePointFingerParams=0,30,180,levelNodeButton_0/ShowText:ShowTextParams=Tap to play the level,0,-200,levelNodeButton_0",
-			"outputs": "elementType=Button;elementId=world_buttons_0;listeners=type:pressed{RemoveHighlightUIElement(world_buttons_0),SetUIElementListsTransparency(world_buttons_0/levelNodeButton_0/255),RemovePointFinger}"
+			"triggers": [
+				"IsSceneName(World Selector Screen)",
+				"CheckBoughtMinion(Runner,true)"
+			],
+			"actions": [
+				"ShowBlackOverlay(Canvas)",
+				"HighlightUIElement(world_buttons_0,Canvas)",
+				"SetUIElementListsTransparency(world_buttons_0,levelNodeButton_0,80)",
+				"CreatePointFinger(0,30,180,levelNodeButton_0)",
+				"ShowText(Tap to play the level,0,0,Canvas,80)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=world_buttons_0",
+				"listeners=type:pressed{RemoveHighlightUIElement(world_buttons_0),SetUIElementListsTransparency(world_buttons_0/levelNodeButton_0/255),RemovePointFinger}"
+			]
 		},
 		
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_level_1_view_selected_squad",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1",
-			"actions": "HighlightUIElement:HighlightUIElementParams=SelectedSquad,Canvas/ForceExecutingOutputAfterSeconds:ForceExecutingOutputAfterSecondsParams=10",
-			"outputs": "elementType=Timer;listeners=type:time{ForceTutorialGroupToFinish}"
+			"triggers": [
+				"IsSceneName(World Selector Screen)",
+				"IsPreviousTutorialGroup(firstAppEntry_click_level_1)"
+			],
+			"actions": [
+				"HighlightUIElement(SelectedSquad,Canvas)",
+				"ForceExecutingOutputAfterSeconds(10)"
+			],
+			"outputs": [
+				"elementType=Timer",
+				"listeners=type:time{ForceTutorialGroupToFinish}"	
+			]
 		},
 
 
@@ -64,18 +152,43 @@
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_level_1_click_runner",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_view_selected_squad",
-			"actions": "HighlightUIElement:HighlightUIElementParams=BuildSquadScrollView,Canvas/LockScrollRectMove:LockScrollRectMoveParams=BuildSquadScrollView,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=buildsquad_scrollview,build_squad_unselected_0,80/CreatePointFinger:CreatePointFingerParams=25,-20,45,build_squad_unselected_0/ShowText:ShowTextParams=Tap the Runner to include it in your squad!,250,-600,build_squad_unselected_0",
-			"outputs": "elementType=Button;elementId=build_squad_unselected_0;listeners=type:pressed{RemoveHighlightUIElement(BuildSquadScrollView),UnlockScrollRectMove(BuildSquadScrollView/Canvas),SetUIElementListsTransparency(buildsquad_scrollview/none/255),RemovePointFinger}"
+			"triggers": [
+				"IsSceneName(World Selector Screen)",
+				"IsPreviousTutorialGroup(firstAppEntry_click_level_1_view_selected_squad)"
+			],
+			"actions": [
+				"HighlightUIElement(BuildSquadScrollView,Canvas)",
+				"LockScrollRectMove(BuildSquadScrollView,Canvas)",
+				"SetUIElementListsTransparency(buildsquad_scrollview,build_squad_unselected_0,80)",
+				"CreatePointFinger(25,-20,45,build_squad_unselected_0)",
+				"ShowText(Tap the Runner to include it in your squad!,250,-600,Canvas,80)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=build_squad_unselected_0",
+				"listeners=type:pressed{RemoveHighlightUIElement(BuildSquadScrollView),UnlockScrollRectMove(BuildSquadScrollView/Canvas),SetUIElementListsTransparency(buildsquad_scrollview/none/255),RemovePointFinger}"
+			]
 		},
-
-
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_level_1_click_drone",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/CheckBoughtMinion:CheckBoughtMinionParams=Dove,false",
-			"actions": "HighlightUIElement:HighlightUIElementParams=BuildSquadScrollView,Canvas/LockScrollRectMove:LockScrollRectMoveParams=BuildSquadScrollView,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=buildsquad_scrollview,build_squad_unselected_1,80/CreatePointFinger:CreatePointFingerParams=25,-20,45,build_squad_unselected_1/ShowText:ShowTextParams=Select unlocked minions to buy them!,0,-300,BuildSquadScrollView",
-			"outputs": "elementType=Button;elementId=build_squad_unselected_1;listeners=type:pressed{RemoveHighlightUIElement(BuildSquadScrollView),UnlockScrollRectMove(BuildSquadScrollView/Canvas),SetUIElementListsTransparency(buildsquad_scrollview/none/255),HideBlackOverlay,RemovePointFinger}"
+			"triggers": [
+				"IsSceneName(World Selector Screen)",
+				"CheckBoughtMinion(Dove,false)"
+			],
+			"actions": [
+				"HighlightUIElement(BuildSquadScrollView,Canvas)",
+				"LockScrollRectMove(BuildSquadScrollView,Canvas)",
+				"SetUIElementListsTransparency(buildsquad_scrollview,build_squad_unselected_1,80)",
+				"CreatePointFinger(25,-20,45,build_squad_unselected_1)",
+				"ShowText(Select unlocked minions to buy them!,0,-300,Canvas,80)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=build_squad_unselected_1",
+				"listeners=type:pressed{RemoveHighlightUIElement(BuildSquadScrollView),UnlockScrollRectMove(BuildSquadScrollView/Canvas),SetUIElementListsTransparency(buildsquad_scrollview/none/255),HideBlackOverlay,RemovePointFinger}"
+
+			]
 		},
 
 
@@ -83,30 +196,74 @@
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_level_1_click_drone_hide_selectedSquad",
-			"triggers": "IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_drone/IsSceneName:IsSceneNameParams=World Selector Screen",
-			"actions": "ForceExecutingOutputAfterSeconds:ForceExecutingOutputAfterSecondsParams=10",
-			"outputs": "elementType=Timer;listeners=type:time{RemoveHighlightUIElement(SelectedSquad)}"
+			"triggers": [
+				"IsPreviousTutorialGroup(firstAppEntry_click_level_1_click_drone)",
+				"IsSceneName(World Selector Screen)"
+			],
+			"actions": [
+				"ForceExecutingOutputAfterSeconds(10)"
+			],
+			"outputs": [
+				"elementType=Timer",
+				"listeners=type:time{RemoveHighlightUIElement(SelectedSquad)}"
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_level_1_click_drone_buy",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_drone_hide_selectedSquad",
-			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=Canvas/HighlightUIElement:HighlightUIElementParams=Scroll View,Canvas/LockScrollRectMove:LockScrollRectMoveParams=Scroll View,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=shop_minion_list,MinionInShop_1,80/CreatePointFinger:CreatePointFingerParams=20,0,90,MinionInShop_1/ShowText:ShowTextParams=Select the Drone minion!,0,0,Canvas",
-			"outputs": "elementType=Button;elementId=MinionInShop_1;listeners=type:pressed{RemoveHighlightUIElement(Scroll View),UnlockScrollRectMove(Scroll View/Canvas),SetUIElementListsTransparency(shop_minion_list/none/255),RemovePointFinger}"
+			"triggers": [
+				"IsSceneName(World Selector Screen)",
+				"IsPreviousTutorialGroup(firstAppEntry_click_level_1_click_drone_hide_selectedSquad)"	
+			],
+			"actions": [
+				"ShowBlackOverlay(ShopCanvas)",
+				"HighlightUIElement(Scroll View,ShopCanvas)",
+				"LockScrollRectMove(Scroll View,ShopCanvas)",
+				"SetUIElementListsTransparency(shop_minion_list,MinionInShop_1,80)",
+				"CreatePointFinger(20,0,90,MinionInShop_1)",
+				"ShowText(Select the Drone minion!,0,0,ShopCanvas,80)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=MinionInShop_1",
+				"listeners=type:pressed{RemoveHighlightUIElement(Scroll View),UnlockScrollRectMove(Scroll View/ShopCanvas),SetUIElementListsTransparency(shop_minion_list/none/255),RemovePointFinger}"
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_level_1_click_drone_buy_button",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_drone_buy",
-			"actions": "HighlightUIElement:HighlightUIElementParams=Description box,Canvas/CreatePointFinger:CreatePointFingerParams=0,25,180,BuyMinionBtn/ShowText:ShowTextParams=Buy it! \nAlways check how many chips you have,0,750,Description box",
-			"outputs": "elementType=Button;elementId=Description box;listeners=type:pressed{RemovePointFinger,RemoveHighlightUIElement(Description box)}"
+			"triggers": [
+				"IsSceneName(World Selector Screen)",
+				"IsPreviousTutorialGroup(firstAppEntry_click_level_1_click_drone_buy)"
+			],
+			"actions": [
+				"HighlightUIElement(Description box,ShopCanvas)",
+				"CreatePointFinger(0,25,180,BuyMinionBtn)",
+				"ShowText(Buy it! \nAlways check how many chips you have,0,750,ShopCanvas,80)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=Description box",
+				"listeners=type:pressed{RemovePointFinger,RemoveHighlightUIElement(Description box)}"
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_shop_buy_drone_press_back",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_drone_buy_button",
-			"actions": "HighlightUIElement:HighlightUIElementParams=Close Button,Canvas/CreatePointFinger:CreatePointFingerParams=-10,25,180,Close Button/ShowText:ShowTextParams=Go back to the build squad system!,-200,400,Close Button",
-			"outputs": "elementType=Button;elementId=Close Button;listeners=type:pressed{RemovePointFinger,RemoveHighlightUIElement(Close Button)}"
+			"triggers": [
+				"IsSceneName(World Selector Screen)",
+				"IsPreviousTutorialGroup(firstAppEntry_click_level_1_click_drone_buy_button)"
+			],
+			"actions": [
+				"HighlightUIElement(Close Button,ShopCanvas)",
+				"CreatePointFinger(-10,25,180,Close Button)",
+				"ShowText(Go back to the build squad system!,-200,400,ShopCanvas,80)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=Close Button",
+				"listeners=type:pressed{RemovePointFinger,RemoveHighlightUIElement(Close Button)}"
+			]
 		},
 
 
@@ -114,9 +271,18 @@
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_level_1_view_selected_squad_2nd_time",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_shop_buy_drone_press_back",
-			"actions": "HighlightUIElement:HighlightUIElementParams=SelectedSquad,Canvas/ForceExecutingOutputAfterSeconds:ForceExecutingOutputAfterSecondsParams=10",
-			"outputs": "elementType=Timer;listeners=type:time{ForceTutorialGroupToFinish}"
+			"triggers": [
+				"IsSceneName(World Selector Screen)",
+				"IsPreviousTutorialGroup(firstAppEntry_click_shop_buy_drone_press_back)"
+			],
+			"actions": [
+				"HighlightUIElement(SelectedSquad,Canvas)",
+				"ForceExecutingOutputAfterSeconds(10)"
+			],
+			"outputs": [
+				"elementType=Timer",
+				"listeners=type:time{ForceTutorialGroupToFinish}"
+			]
 		},
 
 
@@ -124,16 +290,41 @@
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_level_1_click_drone_again",
-			"triggers": "IsSceneName:IsSceneNameParams=World Selector Screen/CheckBoughtMinion:CheckBoughtMinionParams=Dove,true",
-			"actions": "HighlightUIElement:HighlightUIElementParams=BuildSquadScrollView,Canvas/LockScrollRectMove:LockScrollRectMoveParams=BuildSquadScrollView,Canvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=buildsquad_scrollview,build_squad_unselected_1,80/CreatePointFinger:CreatePointFingerParams=25,-20,45,build_squad_unselected_1/ShowText:ShowTextParams=Add the drone to the squad!,0,-300,BuildSquadScrollView",
-			"outputs": "elementType=Button;elementId=build_squad_unselected_1;listeners=type:pressed{RemovePointFinger,RemoveHighlightUIElement(BuildSquadScrollView),SetUIElementListsTransparency(buildsquad_scrollview/none/255)}"
+			"triggers": [
+				"IsSceneName(World Selector Screen)",
+				"CheckBoughtMinion(Dove,true)"
+			],
+			"actions": [
+				"ShowBlackOverlay(Canvas)",
+				"HighlightUIElement(BuildSquadScrollView,Canvas)",
+				"LockScrollRectMove(BuildSquadScrollView,Canvas)",
+				"SetUIElementListsTransparency(buildsquad_scrollview,build_squad_unselected_1,80)",
+				"CreatePointFinger(25,-20,45,build_squad_unselected_1)",
+				"ShowText(Add the drone to the squad!,0,-300,Canvas,80)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=build_squad_unselected_1",
+				"listeners=type:pressed{RemovePointFinger,RemoveHighlightUIElement(BuildSquadScrollView),SetUIElementListsTransparency(buildsquad_scrollview/none/255)}"
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp",
 			"tutorialGroupId":"firstAppEntry_click_level_1_press_play",
-			"triggers": "IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=firstAppEntry_click_level_1_click_drone_again/IsSceneName:IsSceneNameParams=World Selector Screen",
-			"actions": "HighlightUIElement:HighlightUIElementParams=PlayLevelBtn,Canvas/CreatePointFinger:CreatePointFingerParams=0,15,180,PlayLevelBtn/ShowText:ShowTextParams=Play the level with your selected squad!,0,300,PlayLevelBtn",
-			"outputs": "elementType=Button;elementId=PlayLevelBtn;listeners=type:pressed{RemovePointFinger,OnPhaseCompleted}"
+			"triggers": [
+				"IsPreviousTutorialGroup(firstAppEntry_click_level_1_click_drone_again)",
+				"IsSceneName(World Selector Screen)"
+			],
+			"actions": [
+				"HighlightUIElement(PlayLevelBtn,Canvas)",
+				"CreatePointFinger(0,15,180,PlayLevelBtn)",
+				"ShowText(Play the level with your selected squad!,0,300,Canvas,80)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=PlayLevelBtn",
+				"listeners=type:pressed{RemovePointFinger,OnPhaseCompleted}"
+			]
 		},
 
 
@@ -148,37 +339,93 @@
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase1",
 			"tutorialGroupId":"ingame_tutorial_press_runner",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/CheckLevelTutorialCompletion:CheckLevelTutorialCompletionParams=FirstTimeOnApp_INGAME_tuto_1_phase1,false",
-			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=LevelCanvas/HighlightUIElement:HighlightUIElementParams=MinionsPanel,LevelCanvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=MinionsPanel,MinionSaleButton_0,80/CreatePointFinger:CreatePointFingerParams=85,130,180,MinionSaleButton_0/ShowText:ShowTextParams=Tap on the Runner to summon it!,150,200,MinionSaleButton_0",
-			"outputs": "elementType=Button;elementId=MinionSaleButton_0;listeners=type:pressed{HideBlackOverlay,SetUIElementListsTransparency(MinionsPanel/none/80),RemoveHighlightUIElement(MinionsPanel),StartNextTutorialGroupOnTimer(720),RemovePointFinger,HideText}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"CheckLevelTutorialCompletion(FirstTimeOnApp_INGAME_tuto_1_phase1,false)"
+		],
+			"actions": [
+				"ShowBlackOverlay(LevelCanvas)",
+				"HighlightUIElement(MinionsPanel,LevelCanvas)",
+				"SetUIElementListsTransparency(MinionsPanel,MinionSaleButton_0,80)",
+				"CreatePointFinger(85,130,180,MinionSaleButton_0)",
+				"ShowText(Tap on the Runner to summon it!,150,200,LevelCanvas,80)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=MinionSaleButton_0",
+				"listeners=type:pressed{HideBlackOverlay,SetUIElementListsTransparency(MinionsPanel/none/80),RemoveHighlightUIElement(MinionsPanel),StartNextTutorialGroupOnTimer(720),RemovePointFinger,HideText}"
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase1",
 			"tutorialGroupId":"ingame_tutorial_press_runner_block_buttons",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsLastTimerFinished",
-			"actions": "SetUIElementListsTransparency:SetUIElementListsTransparencyParams=MinionsPanel,none,80/ForceExecutingOutputAfterSeconds:ForceExecutingOutputAfterSecondsParams=10",
-			"outputs": "elementType=Timer;listeners=type:time{StartNextTutorialGroupOnTimer(1300)}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"IsLastTimerFinished()"
+			],
+			"actions": [
+				"SetUIElementListsTransparency(MinionsPanel,none,80)",
+				"ForceExecutingOutputAfterSeconds(10)"
+			],
+			"outputs": [
+				"elementType=Timer",
+				"listeners=type:time{StartNextTutorialGroupOnTimer(1300)}"
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase1",
 			"tutorialGroupId":"ingame_tutorial_press_runner_unblock_buttons",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsLastTimerFinished",
-			"actions": "SetUIElementListsTransparency:SetUIElementListsTransparencyParams=MinionsPanel,none,255/ForceExecutingOutputAfterSeconds:ForceExecutingOutputAfterSecondsParams=10",
-			"outputs": "elementType=Timer;listeners=type:time{StartNextTutorialGroupOnTimer(10)}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"IsLastTimerFinished()"
+			],
+			"actions": [
+				"SetUIElementListsTransparency(MinionsPanel,none,255)",
+				"ForceExecutingOutputAfterSeconds(10)"
+			],
+			"outputs":[
+				"elementType=Timer",
+				"listeners=type:time{StartNextTutorialGroupOnTimer(10)}"
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase1",
 			"tutorialGroupId":"ingame_tutorial_press_drone",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsLastTimerFinished",
-			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=LevelCanvas/HighlightUIElement:HighlightUIElementParams=MinionsPanel,LevelCanvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=MinionsPanel,MinionSaleButton_1,80/CreatePointFinger:CreatePointFingerParams=85,130,180,MinionSaleButton_1/ShowText:ShowTextParams=Tap on the Drone to summon it!,150,200,MinionSaleButton_1",
-			"outputs": "elementType=Button;elementId=MinionSaleButton_1;listeners=type:pressed{HideBlackOverlay,RemoveHighlightUIElement(MinionsPanel),SetUIElementListsTransparency(MinionsPanel/none/255),StartNextTutorialGroupOnTimer(6000),RemovePointFinger,HideText}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"IsLastTimerFinished()"	
+			],
+			"actions": [
+				"ShowBlackOverlay(LevelCanvas)",
+				"HighlightUIElement(MinionsPanel,LevelCanvas)",
+				"SetUIElementListsTransparency(MinionsPanel,MinionSaleButton_1,80)",
+				"CreatePointFinger(85,130,180,MinionSaleButton_1)",
+				"ShowText(Tap on the Drone to summon it!,150,200,LevelCanvas,80)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=MinionSaleButton_1",
+				"listeners=type:pressed{HideBlackOverlay,RemoveHighlightUIElement(MinionsPanel),SetUIElementListsTransparency(MinionsPanel/none/255),StartNextTutorialGroupOnTimer(6000),RemovePointFinger,HideText}"
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase1",
 			"tutorialGroupId":"ingame_tutorial_show_lives",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsLastTimerFinished",
-			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=LevelCanvas/HighlightUIElement:HighlightUIElementParams=new Lives,LevelCanvas/ForceExecutingOutputAfterSeconds:ForceExecutingOutputAfterSecondsParams=4000/ShowText:ShowTextParams=keep sending minions until the stars' bar is full!,0,-150,new Lives",
-			"outputs": "elementType=Timer;listeners=type:time{HideBlackOverlay,RemoveHighlightUIElement(new Lives),HideText}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"IsLastTimerFinished()"
+			],
+			"actions": [
+				
+				"HighlightUIElement(new Lives,LevelCanvas)",
+				"ForceExecutingOutputAfterSeconds(4000)",
+				"ShowText(keep sending minions until the stars' bar is full!,0,-150,LevelCanvas,80)",
+				"ShowBlackOverlay(LevelCanvas)"
+			],
+			"outputs": [
+				"elementType=Timer",
+				"listeners=type:time{HideBlackOverlay,RemoveHighlightUIElement(new Lives),HideText}"
+			]
 		},
 
 
@@ -191,9 +438,20 @@
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase2",
 			"tutorialGroupId":"ingame_tutorial_show_towers",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsFirstIngameTutorialPart:IsFirstIngameTutorialPartParams=2/CheckLevelTutorialCompletion:CheckLevelTutorialCompletionParams=FirstTimeOnApp_INGAME_tuto_1_phase1,true",
-			"actions": "StopUpdate/ShowBlackOverlay:ShowBlackOverlayParams=LevelCanvas/DisplayTuto2Fingers",
-			"outputs": "elementType=Touch;listeners=type:touched{HideBlackOverlay,ContinueUpdating,RemoveTuto2Fingers}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"IsFirstIngameTutorialPart(2)",
+				"CheckLevelTutorialCompletion(FirstTimeOnApp_INGAME_tuto_1_phase1,true)"
+			],
+			"actions": [
+				"StopUpdate()",
+				"ShowBlackOverlay(LevelCanvas)",
+				"DisplayTuto2Fingers()"
+			],
+			"outputs": [
+				"elementType=Touch",
+				"listeners=type:touched{HideBlackOverlay,ContinueUpdating,RemoveTuto2Fingers}"
+			]
 		},
 
 
@@ -208,45 +466,116 @@
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase3",
 			"tutorialGroupId":"ingame_tutorial_tuto3_press_runner",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsFirstIngameTutorialPart:IsFirstIngameTutorialPartParams=3/CheckLevelTutorialCompletion:CheckLevelTutorialCompletionParams=FirstTimeOnApp_INGAME_tuto_1_phase2,true",
-			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=LevelCanvas/HighlightUIElement:HighlightUIElementParams=MinionsPanel,LevelCanvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=MinionsPanel,MinionSaleButton_0,80/CreatePointFinger:CreatePointFingerParams=85,130,180,MinionSaleButton_0",
-			"outputs": "elementType=Button;elementId=MinionSaleButton_0;listeners=type:pressed{StartNextTutorialGroupOnTimer(710),HideBlackOverlay,RemoveHighlightUIElement(MinionsPanel),RemovePointFinger,SetUIElementListsTransparency(MinionsPanel/none/80)}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"IsFirstIngameTutorialPart(3)",
+				"CheckLevelTutorialCompletion(FirstTimeOnApp_INGAME_tuto_1_phase2,true)"
+			],
+			"actions": [
+				"ShowBlackOverlay(LevelCanvas)",
+				"HighlightUIElement(MinionsPanel,LevelCanvas)",
+				"SetUIElementListsTransparency(MinionsPanel,MinionSaleButton_0,80)",
+				"CreatePointFinger(85,130,180,MinionSaleButton_0)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=MinionSaleButton_0",
+				"listeners=type:pressed{StartNextTutorialGroupOnTimer(710),HideBlackOverlay,RemoveHighlightUIElement(MinionsPanel),RemovePointFinger,SetUIElementListsTransparency(MinionsPanel/none/80)}"
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase3",
 			"tutorialGroupId":"ingame_tutorial_tuto3_press_runner_block_everything",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsFirstIngameTutorialPart:IsFirstIngameTutorialPartParams=3/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=ingame_tutorial_tuto3_press_runner/IsLastTimerFinished",
-			"actions": "SetUIElementListsTransparency:SetUIElementListsTransparencyParams=MinionsPanel,none,80/ForceExecutingOutputAfterSeconds:ForceExecutingOutputAfterSecondsParams=10",
-			"outputs": "elementType=Timer;listeners=type:time{StartNextTutorialGroupOnTimer(1300)}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"IsFirstIngameTutorialPart(3)",
+				"IsPreviousTutorialGroup(ingame_tutorial_tuto3_press_runner)",
+				"IsLastTimerFinished()"
+			],
+			"actions": [
+				"SetUIElementListsTransparency(MinionsPanel,none,80)",
+				"ForceExecutingOutputAfterSeconds(10)"
+			],
+			"outputs": [
+				"elementType=Timer",
+				"listeners=type:time{StartNextTutorialGroupOnTimer(1300)}"
+			]
 		},
 
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase3",
 			"tutorialGroupId":"ingame_tutorial_press_runner_unblock_everything",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=ingame_tutorial_tuto3_press_runner_block_everything/IsLastTimerFinished",
-			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=LevelCanvas/ForceExecutingOutputAfterSeconds:ForceExecutingOutputAfterSecondsParams=10/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=MinionsPanel,none,255",
-			"outputs": "elementType=Timer;listeners=type:time{StartNextTutorialGroupOnTimer(10)}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"IsPreviousTutorialGroup(ingame_tutorial_tuto3_press_runner_block_everything)",
+				"IsLastTimerFinished()"
+			],
+			"actions": [
+				"ShowBlackOverlay(LevelCanvas)",
+				"ForceExecutingOutputAfterSeconds(10)",
+				"SetUIElementListsTransparency(MinionsPanel,none,255)"
+			],
+			"outputs": [
+				"elementType=Timer",
+				"listeners=type:time{StartNextTutorialGroupOnTimer(10)}"
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase3",
 			"tutorialGroupId":"ingame_tutorial_tuto3_watch_out_towers_runner",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsFirstIngameTutorialPart:IsFirstIngameTutorialPartParams=3/IsLastTimerFinished",
-			"actions": "SetUIElementListsTransparency:SetUIElementListsTransparencyParams=MinionsPanel,MinionSaleButton_0,80/SetMinionsAndTowers:SetMinionsAndTowersParams=false/HighlightUIElement:HighlightUIElementParams=skill_button_0,LevelCanvas/CreatePointFinger:CreatePointFingerParams=0,30,180,skill_button_0/BlockOrNotSingleButton:BlockOrNotSingleButtonParams=MinionSaleButton_0,false,80",
-			"outputs": "elementType=ButtonPointerDown;elementId=skill_button_0;listeners=type:pressed{HideBlackOverlay,StartFingerAnimation(true)}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"IsFirstIngameTutorialPart(3)",
+				"IsLastTimerFinished()"
+			],
+			"actions": [
+				"SetUIElementListsTransparency(MinionsPanel,MinionSaleButton_0,80)",
+				"SetMinionsAndTowers(false)",
+				"HighlightUIElement(skill_button_0,LevelCanvas)",
+				"CreatePointFinger(0,30,180,skill_button_0)",
+				"BlockOrNotSingleButton(MinionSaleButton_0,false,80)"
+			],
+			"outputs": [
+				"elementType=ButtonPointerDown",
+				"elementId=skill_button_0",
+				"listeners=type:pressed{HideBlackOverlay,StartFingerAnimation(true)}"
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase3",
 			"tutorialGroupId":"ingame_tutorial_tuto3_watch_out_towers_runner_skill_done",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsFirstIngameTutorialPart:IsFirstIngameTutorialPartParams=3/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=ingame_tutorial_tuto3_watch_out_towers_runner/UserUsedMinionSkill",
-			"actions": "SetMinionsAndTowers:SetMinionsAndTowersParams=true/ForceExecutingOutputAfterSeconds:ForceExecutingOutputAfterSecondsParams=10",
-			"outputs": "elementType=Timer;listeners=type:time{SetUIElementListsTransparency(MinionsPanel/none/80),RemovePointFinger,RemoveHighlightUIElement(skill_button_0),StartNextTutorialGroupOnTimer(1500)}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"IsFirstIngameTutorialPart(3)",
+				"IsPreviousTutorialGroup(ingame_tutorial_tuto3_watch_out_towers_runner)",
+				"UserUsedMinionSkill()"	
+			],
+			"actions": [
+				"SetMinionsAndTowers(true)",
+				"ForceExecutingOutputAfterSeconds(10)"
+			],
+			"outputs": [
+				"elementType=Timer",
+				"listeners=type:time{SetUIElementListsTransparency(MinionsPanel/none/80),RemovePointFinger,RemoveHighlightUIElement(skill_button_0),StartNextTutorialGroupOnTimer(1500)}"
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase3",
 			"tutorialGroupId":"ingame_tutorial_tuto3_watch_out_towers_runner_skill_done_blockallbuttons",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsFirstIngameTutorialPart:IsFirstIngameTutorialPartParams=3/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=ingame_tutorial_tuto3_watch_out_towers_runner_skill_done/IsLastTimerFinished",
-			"actions": "SetMinionsAndTowers:SetMinionsAndTowersParams=true/ForceExecutingOutputAfterSeconds:ForceExecutingOutputAfterSecondsParams=10",
-			"outputs": "elementType=Timer;listeners=type:time{SetUIElementListsTransparency(MinionsPanel/none/255),RemovePointFinger,RemoveHighlightUIElement(skill_button_0),StartNextTutorialGroupOnTimer(10)}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"IsFirstIngameTutorialPart(3)",
+				"IsPreviousTutorialGroup(ingame_tutorial_tuto3_watch_out_towers_runner_skill_done)",
+				"IsLastTimerFinished()"
+			],
+			"actions": [
+				"SetMinionsAndTowers(true)",
+				"ForceExecutingOutputAfterSeconds(10)"
+			],
+			"outputs": [
+				"elementType=Timer",
+				"listeners=type:time{SetUIElementListsTransparency(MinionsPanel/none/255),RemovePointFinger,RemoveHighlightUIElement(skill_button_0),StartNextTutorialGroupOnTimer(10)}"
+			]
 		},
 
 
@@ -265,24 +594,60 @@
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase3",
 			"tutorialGroupId":"ingame_tutorial_tuto3_press_drone",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsFirstIngameTutorialPart:IsFirstIngameTutorialPartParams=3/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=ingame_tutorial_tuto3_watch_out_towers_runner_skill_done_blockallbuttons/IsLastTimerFinished",
-			"actions": "ShowBlackOverlay:ShowBlackOverlayParams=LevelCanvas/HighlightUIElement:HighlightUIElementParams=MinionsPanel,LevelCanvas/SetUIElementListsTransparency:SetUIElementListsTransparencyParams=MinionsPanel,MinionSaleButton_1,80/CreatePointFinger:CreatePointFingerParams=85,130,180,MinionSaleButton_1",
-			"outputs": "elementType=Button;elementId=MinionSaleButton_1;listeners=type:pressed{StartNextTutorialGroupOnTimer(510),HideBlackOverlay,RemoveHighlightUIElement(MinionsPanel),RemovePointFinger}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"IsFirstIngameTutorialPart(3)",
+				"IsPreviousTutorialGroup(ingame_tutorial_tuto3_watch_out_towers_runner_skill_done_blockallbuttons)",
+				"IsLastTimerFinished()"
+			],
+			"actions": [
+				"ShowBlackOverlay(LevelCanvas)",
+				"HighlightUIElement(MinionsPanel,LevelCanvas)",
+				"SetUIElementListsTransparency(MinionsPanel,MinionSaleButton_1,80)",
+				"CreatePointFinger(85,130,180,MinionSaleButton_1)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=MinionSaleButton_1",
+				"listeners=type:pressed{StartNextTutorialGroupOnTimer(510),HideBlackOverlay,RemoveHighlightUIElement(MinionsPanel),RemovePointFinger}"
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase3",
 			"tutorialGroupId":"ingame_tutorial_tuto3_press_drone_block_everything",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsFirstIngameTutorialPart:IsFirstIngameTutorialPartParams=3/IsLastTimerFinished/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=ingame_tutorial_tuto3_press_drone",
-			"actions": "SetUIElementListsTransparency:SetUIElementListsTransparencyParams=MinionsPanel,none,80/ForceExecutingOutputAfterSeconds:ForceExecutingOutputAfterSecondsParams=10",
-			"outputs": "elementType=Timer;listeners=type:time{StartNextTutorialGroupOnTimer(1850)}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"IsFirstIngameTutorialPart(3)",
+				"IsLastTimerFinished()",
+				"IsPreviousTutorialGroup(ingame_tutorial_tuto3_press_drone)"
+			],
+			"actions": [
+				"SetUIElementListsTransparency(MinionsPanel,none,80)",
+				"ForceExecutingOutputAfterSeconds(10)"	
+			],
+			"outputs": [
+				"elementType=Timer",
+				"listeners=type:time{StartNextTutorialGroupOnTimer(1850)}"
+			]
 		},
 
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase3",
 			"tutorialGroupId":"ingame_tutorial_tuto3_press_drone_unblock_everything",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsFirstIngameTutorialPart:IsFirstIngameTutorialPartParams=3/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=ingame_tutorial_tuto3_press_drone_block_everything/IsLastTimerFinished",
-			"actions": "SetUIElementListsTransparency:SetUIElementListsTransparencyParams=MinionsPanel,none,255/ForceExecutingOutputAfterSeconds:ForceExecutingOutputAfterSecondsParams=10",
-			"outputs": "elementType=Timer;listeners=type:time{StartNextTutorialGroupOnTimer(10)}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"IsFirstIngameTutorialPart(3)",
+				"IsPreviousTutorialGroup(ingame_tutorial_tuto3_press_drone_block_everything)",
+				"IsLastTimerFinished()"
+			],
+			"actions": [
+				"SetUIElementListsTransparency(MinionsPanel,none,255)",
+				"ForceExecutingOutputAfterSeconds(10)"
+			],
+			"outputs": [
+				"elementType=Timer",
+				"listeners=type:time{StartNextTutorialGroupOnTimer(10)}"
+			]
 		},
 
 
@@ -295,16 +660,41 @@
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase3",
 			"tutorialGroupId":"ingame_tutorial_tuto3_watch_out_towers_drone",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsFirstIngameTutorialPart:IsFirstIngameTutorialPartParams=3/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=ingame_tutorial_tuto3_press_drone_unblock_everything/IsLastTimerFinished",
-			"actions": "SetMinionsAndTowers:SetMinionsAndTowersParams=false/ShowBlackOverlay:ShowBlackOverlayParams=LevelCanvas/HighlightUIElement:HighlightUIElementParams=skill_button_1,LevelCanvas/CreatePointFinger:CreatePointFingerParams=0,30,180,skill_button_1",
-			"outputs": "elementType=ButtonPointerDown;elementId=skill_button_1;listeners=type:pressed{HideBlackOverlay,StartFingerAnimation(false),RemovePointFinger}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"IsFirstIngameTutorialPart(3)",
+				"IsPreviousTutorialGroup(ingame_tutorial_tuto3_press_drone_unblock_everything)",
+				"IsLastTimerFinished()"
+			],
+			"actions": [
+				"SetMinionsAndTowers(false)",
+				"ShowBlackOverlay(LevelCanvas)",
+				"HighlightUIElement(skill_button_1,LevelCanvas)",
+				"CreatePointFinger(0,30,180,skill_button_1)"
+			],
+			"outputs": [
+				"elementType=ButtonPointerDown",
+				"elementId=skill_button_1",
+				"listeners=type:pressed{HideBlackOverlay,StartFingerAnimation(false),RemovePointFinger}"
+			]
 		},
 		{
 			"tutorialPhase": "FirstTimeOnApp_INGAME_tuto_1_phase3",
 			"tutorialGroupId":"ingame_tutorial_tuto3_watch_out_towers_drone_skill_done",
-			"triggers": "IsSceneName:IsSceneNameParams=Level-1/IsFirstIngameTutorialPart:IsFirstIngameTutorialPartParams=3/UserUsedMinionSkill/IsPreviousTutorialGroup:IsPreviousTutorialGroupParams=ingame_tutorial_tuto3_watch_out_towers_drone",
-			"actions": "SetMinionsAndTowers:SetMinionsAndTowersParams=true/ForceExecutingOutputAfterSeconds:ForceExecutingOutputAfterSecondsParams=10",
-			"outputs": "elementType=Timer;listeners=type:time{SetMinionsAndTowers(true),RemoveHighlightUIElement(skill_button_1),SetUIElementListsTransparency(MinionsPanel/none/255)}"
+			"triggers": [
+				"IsSceneName(Level-1)",
+				"IsFirstIngameTutorialPart(3)",
+				"UserUsedMinionSkill()",
+				"IsPreviousTutorialGroup(ingame_tutorial_tuto3_watch_out_towers_drone)"
+			],
+			"actions": [
+				"SetMinionsAndTowers(true)",
+				"ForceExecutingOutputAfterSeconds(10)"
+			],
+			"outputs": [
+				"elementType=Timer",
+				"listeners=type:time{SetMinionsAndTowers(true),RemoveHighlightUIElement(skill_button_1),SetUIElementListsTransparency(MinionsPanel/none/255)}"
+			]
 		}
 	]
 }
