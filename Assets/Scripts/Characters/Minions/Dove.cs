@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dove : Minion
+public class Dove : AirMinion
 {
-    public float airYpos = 7;
     public float groundYpos = 1;
 	public float shadowGroundPos = -0.32f;
 	public float shadowAirPos = -2.11f;

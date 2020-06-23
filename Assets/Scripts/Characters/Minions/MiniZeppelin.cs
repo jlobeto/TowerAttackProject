@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiniZeppelin : Minion
+public class MiniZeppelin : AirMinion
 {
-    public float airYpos = 7;
     public override void InitMinion(WalkNode n, Vector3 pos = default(Vector3))
     {
         hasBeenFreed = true;

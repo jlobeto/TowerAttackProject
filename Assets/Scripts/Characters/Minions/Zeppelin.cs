@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Zeppelin : Minion
+public class Zeppelin : AirMinion
 {
     public MiniZeppelin miniZeppelin;
-
-    public float airYpos = 7;
 
     [HideInInspector]
     public MinionManager manager;

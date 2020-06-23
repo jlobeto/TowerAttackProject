@@ -34,9 +34,6 @@ public class Minion : MonoBehaviour
     //public ParticleSystem explotion;
     public GameObject skillZoneEffect;
 
-    
-
-
     protected bool pDamageDebuff;
     protected float pDamageDebuffValue;
     protected WalkNode pNextNode;

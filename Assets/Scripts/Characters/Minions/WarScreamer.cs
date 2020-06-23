@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WarScreamer : Minion 
+public class WarScreamer : AirMinion
 {
     [HideInInspector] public float areaOfEffect = 5;
     [HideInInspector] public float lifePercentThresholdToActivatePassive = 25;//will activate the passive skill on the minion when that minin has lower percent of life than this threshold
@@ -22,6 +22,8 @@ public class WarScreamer : Minion
     protected override void Start()
 	{
 		base.Start();
+
+        transform.position = new Vector3(transform.position.x, airYpos, transform.position.z);
         _timerAux = timeToPassive;
         _mySkill = gameObject.AddComponent<WarScreamSkill>();        
 		skills.Add(_mySkill);
