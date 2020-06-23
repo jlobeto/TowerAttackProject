@@ -315,6 +315,7 @@ public class Minion : MonoBehaviour
                 explotion.GetComponentInChildren<Animation>().Play("test");
                 StartCoroutine(ExplotionStopped(explotion.main.duration));
             }*/
+            OnDeath(this);
         }
     }
 
