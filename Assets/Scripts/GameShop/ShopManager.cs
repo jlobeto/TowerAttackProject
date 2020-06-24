@@ -73,7 +73,7 @@ public class ShopManager : MonoBehaviour
 
         if (dif < 0)
         {
-            Debug.Log("You don't have currency for this buy.");
+            //Debug.Log("You don't have currency for this buy.");
             return;
         }
 

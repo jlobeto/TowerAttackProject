@@ -54,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 10
+    serializedVersion: 12
     m_Resolution: 2
     m_BakeResolution: 40
     m_AtlasSize: 1024
@@ -62,6 +62,7 @@ LightmapSettings:
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
     m_CompAOExponentDirect: 0
+    m_ExtractAmbientOcclusion: 0
     m_Padding: 2
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
@@ -76,10 +77,16 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
+    m_PVREnvironmentSampleCount: 500
+    m_PVREnvironmentReferencePointCount: 2048
+    m_PVRFilteringMode: 2
+    m_PVRDenoiserTypeDirect: 0
+    m_PVRDenoiserTypeIndirect: 0
+    m_PVRDenoiserTypeAO: 0
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
     m_PVRFilterTypeAO: 0
-    m_PVRFilteringMode: 1
+    m_PVREnvironmentMIS: 0
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
@@ -87,7 +94,9 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaDirect: 0.5
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
-    m_ShowResolutionOverlay: 1
+    m_ExportTrainingData: 0
+    m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 2ae030b71c4c8184fb4eba2c4bc14ccc,
     type: 2}
   m_UseShadowmask: 1
@@ -1334,7 +1343,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 201801013}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -1351,7 +1360,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 201801013}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
@@ -1484,6 +1493,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1495,6 +1505,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3090,17 +3101,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 583627706}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: a5313877f50dcbd4a9e4aa91ac8cfe2c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -3110,6 +3120,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &583627710
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3201,17 +3212,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 611260906}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -5282,17 +5292,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1011702724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -5439,16 +5448,6 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 114016264212575564, guid: 10f92c54e0525da4ba3084ec0437064d,
-        type: 3}
-      propertyPath: constraintA
-      value: 
-      objectReference: {fileID: 1873720363}
-    - target: {fileID: 114016264212575564, guid: 10f92c54e0525da4ba3084ec0437064d,
-        type: 3}
-      propertyPath: constraintB
-      value: 
-      objectReference: {fileID: 918288010}
     - target: {fileID: 4962584555601104, guid: 10f92c54e0525da4ba3084ec0437064d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5482,6 +5481,16 @@ PrefabInstance:
       propertyPath: m_BackGroundColor.b
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114016264212575564, guid: 10f92c54e0525da4ba3084ec0437064d,
+        type: 3}
+      propertyPath: constraintA
+      value: 
+      objectReference: {fileID: 1873720363}
+    - target: {fileID: 114016264212575564, guid: 10f92c54e0525da4ba3084ec0437064d,
+        type: 3}
+      propertyPath: constraintB
+      value: 
+      objectReference: {fileID: 918288010}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10f92c54e0525da4ba3084ec0437064d, type: 3}
 --- !u!1001 &1070910037
@@ -5842,17 +5851,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1147911199}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -6103,16 +6111,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1963278527}
     m_Modifications:
-    - target: {fileID: 5281521292216108371, guid: aa298c9cd2eceed41938af2969e4924f,
-        type: 3}
-      propertyPath: m_Name
-      value: Frosted Glass
-      objectReference: {fileID: 0}
-    - target: {fileID: 5281521292216108371, guid: aa298c9cd2eceed41938af2969e4924f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 761143092682266482, guid: aa298c9cd2eceed41938af2969e4924f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6166,6 +6164,16 @@ PrefabInstance:
     - target: {fileID: 761143092682266482, guid: aa298c9cd2eceed41938af2969e4924f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5281521292216108371, guid: aa298c9cd2eceed41938af2969e4924f,
+        type: 3}
+      propertyPath: m_Name
+      value: Frosted Glass
+      objectReference: {fileID: 0}
+    - target: {fileID: 5281521292216108371, guid: aa298c9cd2eceed41938af2969e4924f,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -6319,16 +6327,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1963278527}
     m_Modifications:
-    - target: {fileID: 5281521292216108371, guid: aa298c9cd2eceed41938af2969e4924f,
-        type: 3}
-      propertyPath: m_Name
-      value: Frosted Glass (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5281521292216108371, guid: aa298c9cd2eceed41938af2969e4924f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 761143092682266482, guid: aa298c9cd2eceed41938af2969e4924f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6382,6 +6380,16 @@ PrefabInstance:
     - target: {fileID: 761143092682266482, guid: aa298c9cd2eceed41938af2969e4924f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5281521292216108371, guid: aa298c9cd2eceed41938af2969e4924f,
+        type: 3}
+      propertyPath: m_Name
+      value: Frosted Glass (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5281521292216108371, guid: aa298c9cd2eceed41938af2969e4924f,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -6816,7 +6824,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1307756950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalAxis: Horizontal
@@ -6835,7 +6843,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1307756950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_FirstSelected: {fileID: 0}
@@ -10944,16 +10952,16 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 199930902165528922, guid: 96e0e892741e51a4c87beb12af7ddd6f,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: b4653465c69a1a9408bdaab687a8bfe9, type: 2}
     - target: {fileID: 120102923710143852, guid: 96e0e892741e51a4c87beb12af7ddd6f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 4aab54f2eeb060d41b54279a893a22a0, type: 2}
+    - target: {fileID: 199930902165528922, guid: 96e0e892741e51a4c87beb12af7ddd6f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b4653465c69a1a9408bdaab687a8bfe9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96e0e892741e51a4c87beb12af7ddd6f, type: 3}
 --- !u!1001 &2132043829
