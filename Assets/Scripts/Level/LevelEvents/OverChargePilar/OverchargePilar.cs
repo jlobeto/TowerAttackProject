@@ -35,8 +35,8 @@ public class OverchargePilar : MonoBehaviour
             _linesToTower.Add(l);
         }
 
-        ballRenderer.material.SetColor("_EmissionColor", Color.black);
-        ballRenderer.material.SetFloat("EmissionQty", 0f);
+        ballRenderer.sharedMaterial.SetColor("_EmissionColor", Color.black);
+        ballRenderer.sharedMaterial.SetFloat("EmissionQty", 0f);
     }
 
 
@@ -52,16 +52,16 @@ public class OverchargePilar : MonoBehaviour
     {
         _effectTimeAux = effectTime;
         _isActive = true;
-        ballRenderer.material.SetColor("_EmissionColor", Color.green);
-        ballRenderer.material.SetFloat("EmissionQty", 1f);
+        ballRenderer.sharedMaterial.SetColor("_EmissionColor", Color.green);
+        ballRenderer.sharedMaterial.SetFloat("EmissionQty", 1f);
 
         activatePS.Play(true);
     }
 
     public void DeactivatePilar()
     {
-        ballRenderer.material.SetColor("_EmissionColor", Color.black);
-        ballRenderer.material.SetFloat("EmissionQty", 0f);
+        ballRenderer.sharedMaterial.SetColor("_EmissionColor", Color.black);
+        ballRenderer.sharedMaterial.SetFloat("EmissionQty", 0f);
         activatePS.Stop(true, ParticleSystemStopBehavior.StopEmitting);
 
         _isActive = false;

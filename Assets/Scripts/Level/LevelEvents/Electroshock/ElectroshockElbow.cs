@@ -23,7 +23,7 @@ public class ElectroshockElbow : MonoBehaviour
 
 	void Start ()
     {
-        _material = GetComponentInChildren<MeshRenderer>().material;
+        _material = GetComponentInChildren<MeshRenderer>().sharedMaterial;
         _material.EnableKeyword("_EMISSION");
         _material.SetFloat("EmissionQty", 0f);
         _myCollider = GetComponent<Collider>();

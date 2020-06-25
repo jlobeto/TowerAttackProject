@@ -17,7 +17,7 @@ public class BridgeClock : MonoBehaviour
     float _lerpCurrentTime;
 
     void Start () {
-        _emissionQtyStart = _emissionQty = clockRenderer.material.GetFloat("_EmissionQty");
+        _emissionQtyStart = _emissionQty = clockRenderer.sharedMaterial.GetFloat("_EmissionQty");
     }
 
     public void StartCountdown(float time)
@@ -53,7 +53,7 @@ public class BridgeClock : MonoBehaviour
             {
                 
                 _emissionQty = Mathf.Lerp(_emissionQtyStart, 20, _lerpCurrentTime );//puse -18 xq a partir de ahi ya se empieza a ver muy brillante
-                clockRenderer.material.SetFloat("_EmissionQty",_emissionQty);
+                clockRenderer.sharedMaterial.SetFloat("_EmissionQty",_emissionQty);
                 _lerpCurrentTime += Time.deltaTime / _initTime;
                 //Debug.Log(_emissionQty);
             }

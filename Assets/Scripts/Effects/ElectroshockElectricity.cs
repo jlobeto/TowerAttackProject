@@ -68,8 +68,8 @@ public class ElectroshockElectricity : MonoBehaviour
             float distance = Vector3.Distance(transformPointA.position, transformPointB.position) / points.Length;
             mainTextureScale.x = distance;
             mainTextureOffset.x = Random.Range(-randomness, randomness);
-            lRend.material.SetTextureScale(mainTexture, mainTextureScale);
-            lRend.material.SetTextureOffset(mainTexture, mainTextureOffset);
+            lRend.sharedMaterial.SetTextureScale(mainTexture, mainTextureScale);
+            lRend.sharedMaterial.SetTextureOffset(mainTexture, mainTextureOffset);
 
             randomness = distance / (pointsCount * half);
 
