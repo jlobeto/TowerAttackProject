@@ -87,7 +87,7 @@ public class BuildSquadManager : MonoBehaviour
         int index = 0;
         foreach (var item in selectedList)
         {
-            selectedButtons[index].SetMinion(GameUtils.ToEnum(item, MinionType.Runner));
+            selectedButtons[index].SetMinion(GameUtils.ToEnum(item, MinionType.Runner), _gm);
             selectedButtons[index].onMinionClick += OnSelectedMinionClickCallback;
             index++;
         }
@@ -117,7 +117,7 @@ public class BuildSquadManager : MonoBehaviour
         {
             button = Instantiate(unselectedPrefab, scrollContent.transform);
             t = GameUtils.ToEnum(item.Value.type, MinionType.Runner);
-            button.SetButton(t, "");
+            button.SetButton(t, "", _gm);
             button.onMinionClick += OnScrollButtonClicked;
             button.name = "build_squad_unselected_" + i;
             CheckScrollItemPadlock(item.Value, button);
@@ -164,7 +164,7 @@ public class BuildSquadManager : MonoBehaviour
         _user.SetSquadMinionItem(type);
 
         var selectedItem = selectedButtons.FirstOrDefault(i => i.IsEmpty);
-        selectedItem.SetMinion(type);
+        selectedItem.SetMinion(type, _gm);
         selectedItem.onMinionClick += OnSelectedMinionClickCallback;
 
         var selectedItemScroll = _totalMinionsList.FirstOrDefault(i => i.minionType == type);

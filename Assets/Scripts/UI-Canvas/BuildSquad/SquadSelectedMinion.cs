@@ -53,12 +53,12 @@ public class SquadSelectedMinion : MonoBehaviour
         }
     }
 
-    public void SetMinion(MinionType type)
+    public void SetMinion(MinionType type, GameManager gm)
     {
         text.text = type.ToString();
 
         minionPic.enabled = true;
-        minionPic.sprite = Resources.Load<Sprite>("UIMinionsPictures/" + text.text + "/" + text.text);
+        minionPic.sprite = gm.LoadedAssets.GetSpriteByName(text.text);
 
         _isEmpty = false;
         minionType = type;

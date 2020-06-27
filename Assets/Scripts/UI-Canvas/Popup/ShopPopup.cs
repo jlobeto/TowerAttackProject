@@ -21,6 +21,7 @@ public class ShopPopup : BasePopup
     GridLayoutGroup _gridGroup;
     List<MinionInShop> _scrollContentList;
     ShopManager _shopManager;
+    GameManager _gameManager;
     Text _buyButtonText;
     ScrollRect _scrollRect;
     Canvas _thisCanvas;
@@ -31,6 +32,7 @@ public class ShopPopup : BasePopup
     {
         base.Awake();
         _popupManager = FindObjectOfType<PopupManager>();
+        _gameManager = FindObjectOfType<GameManager>();
         _gridGroup = GetComponentInChildren<GridLayoutGroup>();
         _scrollRect = GetComponentInChildren<ScrollRect>();
         _shopManager = GetComponent<ShopManager>();
@@ -84,7 +86,7 @@ public class ShopPopup : BasePopup
     public void AddMinionToShop(MinionType type, string description, int index)
     {
         var m = Instantiate<MinionInShop>(minionInShopPrefab, _gridGroup.transform);
-        m.SetButton(type, description);
+        m.SetButton(type, description, _gameManager);
         m.name = "MinionInShop_" + index;
         m.onMinionClick += OnClickMinionButton;
         _scrollContentList.Add(m);

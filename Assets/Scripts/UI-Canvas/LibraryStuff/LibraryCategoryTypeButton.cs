@@ -28,13 +28,9 @@ public class LibraryCategoryTypeButton : MonoBehaviour
         
     }
 
-    public void Init(string imgPath, string type, LibraryCategory cat, Action<LibraryCategory, string> OnPressedCallback)
+    public void Init(string type, LibraryCategory cat, Action<LibraryCategory, string> OnPressedCallback, GameManager gm)
     {
-        Sprite sprite = null;
-        if (cat != LibraryCategory.Events)
-            sprite = Resources.Load<Sprite>(imgPath + "/" + type + "/" + type);
-        else
-            sprite = Resources.Load<Sprite>(imgPath + "/" + type);
+        Sprite sprite = gm.LoadedAssets.GetSpriteByName(type);
 
         if (sprite != null)
             typeImage.sprite = sprite;

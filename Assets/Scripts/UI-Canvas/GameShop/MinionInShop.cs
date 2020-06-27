@@ -58,10 +58,10 @@ public class MinionInShop : MonoBehaviour
     {
     }
 
-    public void SetButton(MinionType t, string desc)
+    public void SetButton(MinionType t, string desc, GameManager gm)
     {
         buttonText.text = t.ToString();
-        minionPic.sprite = Resources.Load<Sprite>("UIMinionsPictures/" + buttonText.text + "/" +buttonText.text);
+        minionPic.sprite =  gm.LoadedAssets.GetSpriteByName(buttonText.text);
         minionType = t;
         _description = desc;
     }

@@ -16,27 +16,26 @@ public class LibraryCategoryCanvas : MonoBehaviour
     Canvas _canvas;
     LibraryCanvasManager _libraryCanvasManager;
     LibraryCategoryTypeButton[] _buttons;
+    GameManager _gm;
 
     void Start()
     {
         if (_canvas == null)//maybe setCanvas() has been already called
             _canvas = GetComponent<Canvas>();
 
+        _gm = FindObjectOfType<GameManager>();
+
         List<string> types = new List<string>();
-        string resourcesPath = "";
         switch (category)
         {
             case LibraryCategory.Minions:
                 types = Enum.GetNames(typeof(MinionType)).Where(i => i != MinionType.MiniZeppelin.ToString()).ToList();
-                resourcesPath = "UIMinionsPictures";
                 break;
             case LibraryCategory.Towers:
                 types = Enum.GetNames(typeof(TowerType)).ToList();
-                resourcesPath = "UITowersPictures";
                 break;
             case LibraryCategory.Events:
                 types = Enum.GetNames(typeof(EventTypes)).ToList();
-                resourcesPath = "UIEventsPictures";
                 break;
             case LibraryCategory.Help:
                 break;
@@ -49,7 +48,7 @@ public class LibraryCategoryCanvas : MonoBehaviour
         for (int i = 0; i < types.Count; i++)
         {
             btn = Instantiate(buttonTypePrefab, content);
-            btn.Init(resourcesPath, types[i], category, OnCategoryTypeButtonPressed);
+            btn.Init(types[i], category, OnCategoryTypeButtonPressed, _gm);
             _buttons[i] = btn;
         }
 
