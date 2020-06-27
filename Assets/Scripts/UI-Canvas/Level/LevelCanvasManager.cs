@@ -215,11 +215,14 @@ public class LevelCanvasManager : MonoBehaviour
 
 			var btn = Instantiate<Button>(minionSaleButtonPrefab, _availablesPanel.transform);
 			btn.GetComponentInChildren<Text>().text = m.pointsValue.ToString();
-            btn.gameObject.name = "MinionSaleButton_" + slots; 
-            minionSaleButtons.Add (btn.GetComponent<MinionSaleButton> ());
-			minionSaleButtons[minionSaleButtons.Count-1].minionType = m.minionType;
-			minionSaleButtons[minionSaleButtons.Count-1].minionSkill = m.skillType;
-			var t = m.minionType;
+            btn.gameObject.name = "MinionSaleButton_" + slots;
+            var minionSaleBtn = btn.GetComponent<MinionSaleButton>();
+            minionSaleButtons.Add (minionSaleBtn);
+            minionSaleBtn.minionType = m.minionType;
+            minionSaleBtn.minionSkill = m.skillType;
+            minionSaleBtn.Init(level.GameManager);
+
+            var t = m.minionType;
 			var newBtn = btn;
 			var cooldown = m.spawnCooldown;
 			var fillImg = minionSaleButtons[minionSaleButtons.Count - 1].offButtonImg;
@@ -254,7 +257,7 @@ public class LevelCanvasManager : MonoBehaviour
 
 		if (interactable)
         {
-			skillBtn.InitButton (skill, minionSkillsManager.SkillButtonPressed, baseBtn.name);
+			skillBtn.InitButton (skill, minionSkillsManager.SkillButtonPressed, baseBtn.name, level.GameManager);
 			//skillBtn.GetComponentInChildren<Text>().text = skill.ToString();
 		}
         else

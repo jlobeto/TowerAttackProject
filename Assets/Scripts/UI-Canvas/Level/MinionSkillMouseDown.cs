@@ -25,7 +25,7 @@ public class MinionSkillMouseDown : MonoBehaviour , IPointerDownHandler, IPointe
         _buttonBackground = GetComponent<Image>();
     }
 
-	public void InitButton(BaseMinionSkill.SkillType myType, Action<BaseMinionSkill.SkillType> callback, string parentName)
+	public void InitButton(BaseMinionSkill.SkillType myType, Action<BaseMinionSkill.SkillType> callback, string parentName, GameManager gm)
 	{
 		_init = true;
 		_myType = myType;
@@ -45,7 +45,7 @@ public class MinionSkillMouseDown : MonoBehaviour , IPointerDownHandler, IPointe
         }
         else 
         {
-            img.sprite = Resources.Load<Sprite>("UIMinionsPictures/" + GameplayUtils.GetMinionTypeBySkill(_myType).ToString() + "/skill");
+            img.sprite = gm.LoadedAssets.GetSpriteByName(GameplayUtils.GetMinionTypeBySkill(_myType).ToString() + "_skill");
             img.gameObject.SetActive(true);
         }
 

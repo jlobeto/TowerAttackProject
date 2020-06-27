@@ -22,9 +22,14 @@ public class MinionSaleButton : MonoBehaviour
 
     private void Start()
     {
+        
+    }
+
+    public void Init(GameManager gm)
+    {
         if (minionSkill != BaseMinionSkill.SkillType.None)
         {
-            var s = Resources.Load<Sprite>("UIMinionsPictures/" + minionType.ToString() + "/" + minionType.ToString());
+            var s = gm.LoadedAssets.GetSpriteByName(minionType.ToString());
             charImg.sprite = s;
             _interactuable = true;
         }
