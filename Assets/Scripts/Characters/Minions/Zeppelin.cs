@@ -10,6 +10,9 @@ public class Zeppelin : AirMinion
 
     [HideInInspector]
     public MinionManager manager;
+    /// <summary>
+    /// When zep is dead, it will spawn this quantity of minizeps
+    /// </summary>
     [HideInInspector]
     public int miniZeppelinCount;
     [HideInInspector]

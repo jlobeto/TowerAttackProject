@@ -80,9 +80,10 @@ public class MinionsSkillManager : MonoBehaviour
 
                 m.ActivateSelfSkill();
             }
-				
 
-			_rangeSprite.transform.position = new Vector3 (1000, 1000, 1000);
+            Time.timeScale = 1f;
+
+            _rangeSprite.transform.position = new Vector3 (1000, 1000, 1000);
 		}
 
 	}
@@ -100,7 +101,9 @@ public class MinionsSkillManager : MonoBehaviour
 		var m = _lvl.availableMinions.First (i => i.skillType == skill);
 		if (m == null)
 			return;
-		
+
+        Time.timeScale = .35f;
+
 		_typeToSelect = skill;
 		_pressDown = true;
 

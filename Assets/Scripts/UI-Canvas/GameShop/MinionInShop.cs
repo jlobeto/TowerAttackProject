@@ -22,7 +22,7 @@ public class MinionInShop : MonoBehaviour
     bool _isBought;
     bool _isBlocked;
     string _description;
-    ColorBlock _colorBlock;
+    Image _buttonImg;
     Color _lastColor;
 
 
@@ -44,7 +44,7 @@ public class MinionInShop : MonoBehaviour
     void Awake()
     {
         button.onClick.AddListener(MinionInShopClick);
-        _colorBlock = button.colors;
+        _buttonImg = button.GetComponent<Image>();
         var pointer = button.GetComponent<OnCustomPointerCallback>();
         pointer.AddListener(OnCustomPointerCallback.Listener.pointerDown, OnPointerDown);
         pointer.AddListener(OnCustomPointerCallback.Listener.pointerUp, OnPointerUp);
@@ -95,10 +95,7 @@ public class MinionInShop : MonoBehaviour
     {
         if (isSelected)
         {
-            _colorBlock.normalColor = selectedColor;
-            _colorBlock.highlightedColor = selectedColor;
-            button.colors = _colorBlock;
-
+            _buttonImg.color = selectedColor;
             buttonText.color = selectedColor;
         }
         else
@@ -114,10 +111,7 @@ public class MinionInShop : MonoBehaviour
     {
         minionPic.color = unableToPurchaseColor;
         buttonText.color = unableToPurchaseColor;
-        _colorBlock.normalColor = unableToPurchaseColor;
-        _colorBlock.highlightedColor = unableToPurchaseColor;
-        button.colors = _colorBlock;
-
+        _buttonImg.color = unableToPurchaseColor;
 
         if (!_isBought && !_isBlocked)
             padLockOpen.enabled = true;
@@ -126,10 +120,7 @@ public class MinionInShop : MonoBehaviour
     void SetBoughtColors()
     {
         if (buttonText == null) return;
-        buttonText.color = minionPic.color = Color.white;
-        _colorBlock.normalColor = Color.white;
-        _colorBlock.highlightedColor = Color.white;
-        button.colors = _colorBlock;
+        _buttonImg.color = buttonText.color = minionPic.color = Color.white;
 
         if (_isBought)
             padLockOpen.enabled = false;

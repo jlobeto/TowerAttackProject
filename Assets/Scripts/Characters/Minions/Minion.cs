@@ -27,8 +27,8 @@ public class Minion : MonoBehaviour
     public SimpleParticleSystem sparkParticleSys;
     [HideInInspector]
     public List<BaseMinionSkill> skills = new List<BaseMinionSkill>();
-    [HideInInspector] public float skillTime = 2;
-    [HideInInspector] public float skillCooldown = 5;
+    public float skillTime = 2;
+    public float skillCooldown = 5;
     public bool hasBeenFreed;
     //public ParticleSystem explotion;
     public GameObject skillZoneEffect;

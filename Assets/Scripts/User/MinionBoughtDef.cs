@@ -11,7 +11,7 @@ using UnityEngine;
 public class MinionBoughtDef
 {
     public string type;
-    public int hp;
+    public int hp = 1;
     public int speed;
     public int skill;
     public int passiveSkill;

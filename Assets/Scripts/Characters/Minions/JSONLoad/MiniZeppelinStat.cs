@@ -8,6 +8,4 @@ public class MiniZeppelinStat
 {
     public int hitsToDie;
     public float speed;
-    public float levelPointsToRecover = 0;
-    public int pointsValue = 0;
 }

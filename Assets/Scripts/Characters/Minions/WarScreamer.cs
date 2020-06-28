@@ -5,17 +5,12 @@ using UnityEngine;
 public class WarScreamer : AirMinion
 {
     [HideInInspector] public float areaOfEffect = 5;
-    [HideInInspector] public float lifePercentThresholdToActivatePassive = 25;//will activate the passive skill on the minion when that minin has lower percent of life than this threshold
-    [HideInInspector] public float passiveSpeedDelta = 1.5f;
-
     [HideInInspector] public float activeSpeedDelta = 2f;
-    [HideInInspector] public float passiveSkillDurationOnAffectedMinion = 1.5f;
-    [HideInInspector] public float timeToPassive = 2f;
 
 	[HideInInspector]
 	public MinionManager manager;
 
-	float _timerAux = 1;
+	//float _timerAux = 1;
 	WarScreamSkill _mySkill;
     bool skillPhase;//phaseOne = user has clicked to know the skill range
 
@@ -24,7 +19,7 @@ public class WarScreamer : AirMinion
 		base.Start();
 
         transform.position = new Vector3(transform.position.x, airYpos, transform.position.z);
-        _timerAux = timeToPassive;
+        //_timerAux = timeToPassive;
         _mySkill = gameObject.AddComponent<WarScreamSkill>();        
 		skills.Add(_mySkill);
 		_mySkill.infoCanvas = infoCanvas;
@@ -63,10 +58,11 @@ public class WarScreamer : AirMinion
 	{
 		base.PerformAction();
 
-		PassiveSkill ();
+		//PassiveSkill ();
 	}
 
-	void PassiveSkill()
+	/*Sacamo la passiva a la mierda
+     * void PassiveSkill()
 	{
 		if (manager == null) return;
 
@@ -76,7 +72,7 @@ public class WarScreamer : AirMinion
 			_timerAux = timeToPassive;
             OnSkill();	
 		}
-	}
+	}*/
 
     void OnSkill(bool activeSkill = false)
     {
@@ -99,9 +95,9 @@ public class WarScreamer : AirMinion
 			warscreamSkill.useCanvas = false;
 		}
 
-        if(!activeSkill)
+        /*if(!activeSkill)
 		    warscreamSkill.Initialize(passiveSkillDurationOnAffectedMinion,0 ,passiveSpeedDelta, m.speed);
-        else
+        else*/
             warscreamSkill.Initialize(skillTime, 0, activeSpeedDelta, m.speed);
     }
 
@@ -116,6 +112,6 @@ public class WarScreamer : AirMinion
 
 		var result =  Mathf.Abs(Vector3.Distance(m.transform.position, transform.position)) <= areaOfEffect;
 		var currentPercent = m.hp / m.InitialHP;
-		return result && currentPercent <= lifePercentThresholdToActivatePassive;
+        return result;// && currentPercent <= lifePercentThresholdToActivatePassive;
 	}
 }

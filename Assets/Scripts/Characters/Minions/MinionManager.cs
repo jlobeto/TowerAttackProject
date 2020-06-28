@@ -194,23 +194,27 @@ public class MinionManager : MonoBehaviour
     void SetMinionStats(ref Minion minion)
     {
         BaseMinionStat stats;
-        var bought = level.GameManager.User.GetMinionBought(minion.minionType);
+        var type = minion.minionType == MinionType.MiniZeppelin ? MinionType.Zeppelin : minion.minionType;//only yo get stats of zepp because minizep stats are inside zep
+        var bought = level.GameManager.User.GetMinionBought(type);
 
-
-        if(minion.minionType != MinionType.MiniZeppelin)
-            stats = level.GameManager.MinionsJsonLoader.GetStatByLevel(minion.minionType, 1);
-        else
-            stats = level.GameManager.MinionsJsonLoader.GetStatByLevel(MinionType.Zeppelin, 1);
-        
+        //HP STATS
+        stats = level.GameManager.MinionsJsonLoader.GetStatByLevel(type, bought.hp);
         minion.hp = stats.hp;
+
+        //These 5 are always the same
         minion.pointsValue = stats.pointsValue;
         minion.levelPointsToRecover = stats.levelPointsToRecover;
-        minion.speed = stats.speed;
         minion.spawnCooldown = stats.spawnCooldown;
         minion.skillTime = stats.skillTime;
         minion.skillCooldown = stats.skillCooldown;
 
-        //TODO::// CHANGE THIS SWITCH
+        //SPEED STATS
+        stats = level.GameManager.MinionsJsonLoader.GetStatByLevel(type, bought.speed);
+        minion.speed = stats.speed;
+
+        //SKILL STATS
+        stats = level.GameManager.MinionsJsonLoader.GetStatByLevel(type, bought.skill);
+
         switch (minion.minionType)
         {
             case MinionType.Runner:
@@ -220,7 +224,8 @@ public class MinionManager : MonoBehaviour
                 (minion as Tank).shieldHits = stats.shieldHits;
                 (minion as Tank).skillArea = stats.skillArea;
                 break;
-            case MinionType.Dove://does not have any special stats
+            case MinionType.Dove:
+                minion.skillCooldown = stats.skillCooldown;
                 break;
             case MinionType.Healer:
                 (minion as Healer).areaOfEffect = stats.areaOfEffect;
@@ -229,8 +234,6 @@ public class MinionManager : MonoBehaviour
                 break;
             case MinionType.MiniZeppelin:
                 minion.hp = stats.miniZeppelinStat.hitsToDie;
-                minion.pointsValue = stats.miniZeppelinStat.pointsValue;
-                minion.levelPointsToRecover = stats.miniZeppelinStat.levelPointsToRecover;
                 minion.speed = stats.miniZeppelinStat.speed;
                 break;
             case MinionType.Zeppelin:
@@ -240,10 +243,6 @@ public class MinionManager : MonoBehaviour
 			case MinionType.WarScreamer:
 				(minion as WarScreamer).areaOfEffect = stats.areaOfEffect;
 				(minion as WarScreamer).activeSpeedDelta = stats.activeSpeedDelta;
-				(minion as WarScreamer).passiveSpeedDelta = stats.passiveSpeedDelta;
-				(minion as WarScreamer).lifePercentThresholdToActivatePassive = stats.lifePercentThresholdToActivatePassive;
-				(minion as WarScreamer).passiveSkillDurationOnAffectedMinion = stats.passiveSkillDurationOnAffectedMinion;
-				(minion as WarScreamer).timeToPassive = stats.timeToPassive;
                 break;
             default:
                 break;

@@ -73,7 +73,7 @@ public class SkillsUpgradePanel : MonoBehaviour
         float curr = currAndNext.Item1.hp;
         float next = currAndNext.Item2.hp;
 
-        if (_boughtInfo.type == MinionType.Healer.ToString() || _boughtInfo.type == MinionType.WarScreamer.ToString())
+        if (_boughtInfo.type == MinionType.Healer.ToString() /*|| _boughtInfo.type == MinionType.WarScreamer.ToString() WARSCREAMER DOES NOT HAVE PASSIVE ANYMORE */)
         {
             currAndNext = GetCurrentAndNextStat(_boughtInfo.passiveSkill);
 
@@ -97,10 +97,7 @@ public class SkillsUpgradePanel : MonoBehaviour
         next = currAndNext.Item2.speed;
         item.SetItem(_boughtInfo.speed, curr, next, name, _statsCurrency.GetPrice(name, _boughtInfo.GetStatLevel(name) + 1));
         _list.Add(item);
-
-        if (_boughtInfo.type == MinionType.Dove.ToString())
-            return;
-
+        
         item = Instantiate<StatUpgradeItem>(itemGO, transform);
         item.OnBuyClick += StatBuyPressed;
         name = MinionBoughtDef.StatNames.SKILL;

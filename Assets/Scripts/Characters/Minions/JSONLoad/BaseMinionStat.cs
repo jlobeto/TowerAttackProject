@@ -38,10 +38,6 @@ public class BaseMinionStat
 
     //warscreamer
     public float activeSpeedDelta;
-    public float passiveSpeedDelta;
-    public float lifePercentThresholdToActivatePassive;
-    public float passiveSkillDurationOnAffectedMinion;
-    public float timeToPassive;
 
     public float GetStatByStatId(MinionBoughtDef.StatNames id, MinionType minionType)
     {
@@ -57,8 +53,8 @@ public class BaseMinionStat
             case MinionBoughtDef.StatNames.PASSIVE:
                 if (minionType == MinionType.Healer)
                     result = healPerSecond;
-                else if (minionType == MinionType.WarScreamer)
-                    result = passiveSpeedDelta;
+                /*else if (minionType == MinionType.WarScreamer)
+                    result = passiveSpeedDelta;*/
 
                 break;
             case MinionBoughtDef.StatNames.SKILL:
@@ -69,7 +65,7 @@ public class BaseMinionStat
                         result = skillDeltaSpeed;
                         break;
                     case MinionType.Tank:
-                        result = skillArea;
+                        result = shieldHits;
                         break;
                     case MinionType.Healer:
                         result = skillHealAmount;
@@ -80,6 +76,10 @@ public class BaseMinionStat
                     case MinionType.WarScreamer:
                         result = activeSpeedDelta;
                         break;
+                    case MinionType.Dove:
+                        result = skillCooldown;
+                        break;
+
                 }
                 break;
         }
