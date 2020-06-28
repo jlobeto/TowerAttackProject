@@ -14,7 +14,6 @@ public class Minion : MonoBehaviour
 	public SpriteRenderer skillSelectorSprite;
     [HideInInspector] public float speed = 4;
     [HideInInspector] public int pointsValue = 15;
-    [HideInInspector] public float strength = 0;
     [HideInInspector] public float spawnCooldown = 0.5f;
     //public IMinionSkill skill;
     [HideInInspector] public int coinValue = 0;

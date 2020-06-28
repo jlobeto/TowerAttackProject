@@ -11,7 +11,6 @@ public class BaseMinionStat
     //Base Minion
     public int hp;
     public float speed;
-    public float strength;
     public int pointsValue;
     public float spawnCooldown;
     public float levelPointsToRecover;

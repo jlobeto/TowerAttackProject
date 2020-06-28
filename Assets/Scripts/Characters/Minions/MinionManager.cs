@@ -39,7 +39,7 @@ public class MinionManager : MonoBehaviour
             return;
         }
 
-        ModifyMinionStatByLevelID(ref minion, level.levelID);
+        SetMinionStats(ref minion);
         minion.transform.SetParent(_allMinions.transform);
         minion.OnWalkFinished += MinionWalkFinishedHandler;
         minion.OnDeath += MinionDeathHandler;
@@ -191,19 +191,21 @@ public class MinionManager : MonoBehaviour
         Destroy(m.gameObject);
     }
 
-    void ModifyMinionStatByLevelID(ref Minion minion, int levelId)
+    void SetMinionStats(ref Minion minion)
     {
         BaseMinionStat stats;
+        var bought = level.GameManager.User.GetMinionBought(minion.minionType);
+
+
         if(minion.minionType != MinionType.MiniZeppelin)
-            stats = level.GameManager.MinionsJsonLoader.GetStatByLevel(minion.minionType, levelId);
+            stats = level.GameManager.MinionsJsonLoader.GetStatByLevel(minion.minionType, 1);
         else
-            stats = level.GameManager.MinionsJsonLoader.GetStatByLevel(MinionType.Zeppelin, levelId);
+            stats = level.GameManager.MinionsJsonLoader.GetStatByLevel(MinionType.Zeppelin, 1);
         
         minion.hp = stats.hp;
         minion.pointsValue = stats.pointsValue;
         minion.levelPointsToRecover = stats.levelPointsToRecover;
         minion.speed = stats.speed;
-        minion.strength = stats.strength;
         minion.spawnCooldown = stats.spawnCooldown;
         minion.skillTime = stats.skillTime;
         minion.skillCooldown = stats.skillCooldown;
