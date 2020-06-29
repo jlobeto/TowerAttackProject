@@ -22,6 +22,7 @@ public class TutorialGroupOutputs : TutorialGroupUtils
 
     Dictionary<string, UnityAction> _buttonListeners;
     Button _outputButton;
+    DocUICanvas _docUICanvas;
 
     public TutorialGroupOutputs(TutorialManager t, TutorialGroup tutoGroup)
     {
@@ -30,6 +31,7 @@ public class TutorialGroupOutputs : TutorialGroupUtils
 
         _amountOfFunctionPerListener = new Dictionary<string, int>();
         _currentAmountOfFunctionsTriggeredPerListener = new Dictionary<string, int>();
+        _docUICanvas = GameObject.FindObjectOfType<DocUICanvas>();
     }
 
     public void InitListeners()
@@ -344,6 +346,15 @@ public class TutorialGroupOutputs : TutorialGroupUtils
             item.gameObject.SetActive(false);
         }
         level.levelPortal.SetPS(true);
+
+        OnFuncFinished(split[split.Length - 1]);
+    }
+
+    public void HideDocUI(string p)
+    {
+        var split = p.Split('/');
+
+        _docUICanvas.HideDocUI();
 
         OnFuncFinished(split[split.Length - 1]);
     }

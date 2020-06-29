@@ -72,7 +72,8 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
 
     public void OnButtonPressed(bool isGroundButton)
     {
-        SetVideo(imageToRenderVideo_1, videoPlayer_1, "runner");
+        var s = isGroundButton ? "ground" : "air";
+        SetVideo(imageToRenderVideo_1, videoPlayer_1, _info.type + "_" +s);
         StartCoroutine(WaitToRefreshPosition());
     }
 

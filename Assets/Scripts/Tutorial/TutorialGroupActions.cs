@@ -22,15 +22,18 @@ public class TutorialGroupActions : TutorialGroupUtils
     public string SetMinionsAndTowersParams;
     public string BlockOrNotSingleButtonParams;
     public string ShowTextParams;
+    public string ShopDocUIParams;
     #endregion
 
     TutorialManager _tutoManager;
     TutorialGroup _tutoGroup;
+    DocUICanvas _docUICanvas;
 
     public TutorialGroupActions(TutorialManager t, TutorialGroup g)
     {
         _tutoManager = t;
         _tutoGroup = g;
+        _docUICanvas = GameObject.FindObjectOfType<DocUICanvas>();
     }
 
     public void ExecuteTutorialActions()
@@ -40,6 +43,15 @@ public class TutorialGroupActions : TutorialGroupUtils
         {
             ExecuteFunction(item);
         }
+    }
+
+    public void ShopDocUI(string position, string text, string mood, string scale)
+    {
+        var m = GameUtils.ToEnum(mood, DocUICanvas.DocUIMood.normal);
+        var pos = GameUtils.ToEnum(position, DocUICanvas.DocUIPosition.bottomLeft);
+        var realS = float.Parse(scale);
+
+        _docUICanvas.ShowDocUI(m, text, pos, realS);
     }
 
 
