@@ -155,6 +155,7 @@ public class TutorialManager : MonoBehaviour
 
     void ExecuteGroupActions(TutorialGroup g)
     {
+
         g.ExecuteActions();
         tutorialGroupsDone.Add(g.tutorialGroupId);
     }
@@ -181,6 +182,7 @@ public class TutorialManager : MonoBehaviour
             var tutorialGroupHasBeenDone = tutorialGroupsDone.Any(i => i == item.tutorialGroupId);
             if (tutorialGroupHasBeenDone) continue;
             
+
             var result = item.CheckForTriggers();
             if (result)
             {

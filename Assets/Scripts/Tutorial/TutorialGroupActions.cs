@@ -22,7 +22,7 @@ public class TutorialGroupActions : TutorialGroupUtils
     public string SetMinionsAndTowersParams;
     public string BlockOrNotSingleButtonParams;
     public string ShowTextParams;
-    public string ShopDocUIParams;
+    public string ShowDocUIParams;
     #endregion
 
     TutorialManager _tutoManager;
@@ -38,6 +38,9 @@ public class TutorialGroupActions : TutorialGroupUtils
 
     public void ExecuteTutorialActions()
     {
+        if (_tutoGroup.tutorialGroupId == "ingame_tutorial_show_points_bar")
+            Debug.Log("");
+
         var splittedFuncNames = varFuncNames.Split(' ');
         foreach (var item in splittedFuncNames)
         {
@@ -45,11 +48,11 @@ public class TutorialGroupActions : TutorialGroupUtils
         }
     }
 
-    public void ShopDocUI(string position, string text, string mood, string scale)
+    public void ShowDocUI(string position, string text, string mood, string scale)
     {
         var m = GameUtils.ToEnum(mood, DocUICanvas.DocUIMood.normal);
         var pos = GameUtils.ToEnum(position, DocUICanvas.DocUIPosition.bottomLeft);
-        var realS = float.Parse(scale);
+        var realS = float.Parse(scale, System.Globalization.NumberStyles.AllowDecimalPoint);
 
         _docUICanvas.ShowDocUI(m, text, pos, realS);
     }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -61,6 +63,8 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Application.targetFrameRate = 500;
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("en-us");
+
 
         DontDestroyOnLoad(this);
         if (enableSwapSystem)

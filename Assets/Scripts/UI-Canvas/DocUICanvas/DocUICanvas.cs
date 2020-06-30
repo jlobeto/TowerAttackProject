@@ -17,6 +17,12 @@ public class DocUICanvas : MonoBehaviour
     DocImageText _selected;
     Canvas _canvas;
     string _textToShow;
+    string _currentShowinText;
+    int _charIndex;
+    float _txtTime = .05f;
+    float _txtTimeAux;
+    bool _showTextAnimation;
+    
 
     void Start()
     {
@@ -24,18 +30,34 @@ public class DocUICanvas : MonoBehaviour
         _canvas = GetComponent<Canvas>();
         foreach (var item in docImagesByPosition)
             item.gameObject.SetActive(false);
+
+        _txtTimeAux = _txtTime;
     }
 
     void Update()
     {
-        
+        if(_selected != null && _showTextAnimation)
+        {
+            _txtTimeAux -= Time.deltaTime;
+            if(_txtTimeAux < 0)
+            {
+                _txtTimeAux = _txtTime;
+
+                _charIndex++;
+                _currentShowinText = _textToShow.Substring(0, _charIndex);
+                _selected.text.text = _currentShowinText;
+                if (_charIndex == _textToShow.Length)
+                    _showTextAnimation = false;
+            }
+        }
     }
 
     public void HideDocUI()
     {
         _canvas.enabled = false;
-        //volver al tamaño original
-
+        _selected.transform.localScale = new Vector3(1,1,1);
+        _selected = null;
+        _showTextAnimation = false;
     }
 
     public void ShowDocUI(DocUIMood mood, string txt, DocUIPosition docPosition, float docScale)
@@ -43,17 +65,23 @@ public class DocUICanvas : MonoBehaviour
         foreach (var item in docImagesByPosition)
             item.gameObject.SetActive(false);
 
+        _charIndex = 1;
+        //_currentShowinText = txt.Substring(0, _charIndex);
+        //_showTextAnimation = true;
         _textToShow = txt;
-        SetDoc(docPosition, txt, mood);
+        SetDoc(docPosition, txt, mood, docScale);
+        
         _canvas.enabled = true;
     }
 
-    void SetDoc(DocUIPosition pos, string txt, DocUIMood mood)
+    void SetDoc(DocUIPosition pos, string txt, DocUIMood mood, float scale)
     {
         _selected = docImagesByPosition.FirstOrDefault(i => i.docPosition == pos);
 
         _selected.gameObject.SetActive(true);
+        //_selected.text.text = _currentShowinText;
         _selected.text.text = txt;
+        _selected.transform.localScale *= scale;
         SetMoodSprite(_selected.image, mood);
     }
 

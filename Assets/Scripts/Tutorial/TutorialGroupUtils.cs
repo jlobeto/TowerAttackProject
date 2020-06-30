@@ -18,7 +18,17 @@ public class TutorialGroupUtils
             var parameters = field.GetValue(this).ToString();
             splittedParams = parameters.Split(',');
         }
+
+        Debug.Log(funcName + " " + splittedParams.Length);
+        if (funcName == "ShowDocUI")
+        {
+            foreach (var item in splittedParams)
+            {
+                Debug.Log(item);
+            }
+        }
         
+
         return func.Invoke(this, splittedParams);
     }
 
