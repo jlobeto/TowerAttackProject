@@ -52,7 +52,7 @@ public class BakeLightsWindow : EditorWindow
 
         _pathToScenes = EditorGUILayout.TextField("Path To Scenes", _pathToScenes);
         GUILayout.Space(1);
-        _lightMapResIndex = EditorGUILayout.Popup(_lightMapResIndex, _lightmapResolution);
+        _lightMapResIndex = EditorGUILayout.Popup("Lightmap resolution", _lightMapResIndex, _lightmapResolution);
 
         GUILayout.Space(1);
 
