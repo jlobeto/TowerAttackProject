@@ -93,6 +93,20 @@ public class LevelProgressManager
     }
 
 
+    /// <summary>
+    /// Get Current Level.
+    /// </summary>
+    public int GetCurrentUserLevel()
+    {
+        var lastestSaved = _lvlProgressList.list.Last();
+
+        if (!lastestSaved.won)
+            return lastestSaved.levelId;
+        else
+            return lastestSaved.levelId + 1;
+    }
+
+
 
     /*
      * ////////////////////////////////////////////////

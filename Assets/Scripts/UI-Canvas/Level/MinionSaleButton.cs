@@ -25,7 +25,7 @@ public class MinionSaleButton : MonoBehaviour
         
     }
 
-    public void Init(GameManager gm)
+    public void Init(GameManager gm) 
     {
         if (minionSkill != BaseMinionSkill.SkillType.None)
         {

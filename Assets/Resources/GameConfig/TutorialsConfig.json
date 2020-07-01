@@ -700,6 +700,33 @@
 				"elementType=Timer",
 				"listeners=type:time{SetMinionsAndTowers(true),RemoveHighlightUIElement(skill_button_1),SetUIElementListsTransparency(MinionsPanel/none/255)}"
 			]
+		},
+
+
+
+
+
+
+
+
+		{
+			"tutorialPhase": "LibraryTutorial",
+			"tutorialGroupId":"world_selector_explain_library_button",
+			"triggers": [
+				"IsSceneName(World Selector Screen)",
+				"IsInLevel(2)"
+			],
+			"actions": [
+				"ShowBlackOverlay(Canvas)",
+				"HighlightUIElement(LibraryButton,Canvas)",
+				"CreatePointFinger(30,-40,0,LibraryButton)",
+				"ShowDocUI(middleLeft,You can access the library from here. You can see all information related to Minions and enemies as well as basic info!,normal,0.9)"
+			],
+			"outputs": [
+				"elementType=Button",
+				"elementId=LibraryButton",
+				"listeners=type:pressed{RemovePointFinger,RemoveHighlightUIElement(LibraryButton),HideDocUI,OnPhaseCompleted,HideBlackOverlay}"
+			]
 		}
 	]
 }

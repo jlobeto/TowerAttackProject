@@ -44,11 +44,17 @@ public class LevelNode : MonoBehaviour
         if(lastLevelProgress != null)
         {
             if (!lastLevelProgress.won)
+            {
                 _btn.interactable = false;
-                
+                SetStars(false);
+            }
         }
         else if (_lvlInfo.id > 1 && _lvlInfo.mode != LevelMode.Tutorial.ToString())
+        {
             _btn.interactable = false;
+            SetStars(false);
+        }
+            
 
         var currentLevelProgress = _gm.User.LevelProgressManager.GetProgress(_lvlInfo.id);
         if(currentLevelProgress != null)
@@ -56,8 +62,9 @@ public class LevelNode : MonoBehaviour
             for (int i = 0; i < currentLevelProgress.starsWon; i++)
                 stars[i].sprite = starOnSprite;
 
+            SetStars(true);
             //if has progress, block the button so it can never be touched again
-            if (_lvlInfo.mode == LevelMode.Tutorial.ToString())
+            /*if (_lvlInfo.mode == LevelMode.Tutorial.ToString())
             {
                 if(_lvlInfo.id == -1)//but if is level '-1', check if phase has been completed
                 {
@@ -66,8 +73,8 @@ public class LevelNode : MonoBehaviour
                 }
                 else
                     _btn.interactable = false;
-            }
-                
+            }*/
+
         }
 
         if (!_btn.interactable)//change to lock.
@@ -76,5 +83,15 @@ public class LevelNode : MonoBehaviour
         }
 
         txt.text = _btn.interactable ? "" + _lvlInfo.id : "";
+    }
+
+    void SetStars(bool interactiveNode)
+    {
+        foreach (var item in stars)
+        {
+            var c = item.color;
+            c.a = interactiveNode ? 1 : 0.2f;
+            item.color = c;
+        }
     }
 }

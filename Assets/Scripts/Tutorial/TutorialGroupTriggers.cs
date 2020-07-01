@@ -16,6 +16,7 @@ public class TutorialGroupTriggers : TutorialGroupUtils
     public string AmountOfMinionsReleasedParams;
     public string CheckBoughtMinionParams;
     public string CheckLevelTutorialCompletionParams;
+    public string IsInLevelParams;
     #endregion
     TutorialManager _tutoManager;
     GameManager _gm;
@@ -114,6 +115,15 @@ public class TutorialGroupTriggers : TutorialGroupUtils
         var result = _tutoManager.HasUserCompletedTutorial(phase);
         return result == bool.Parse(value);
     }
+
+    public bool IsInLevel(string lvl)
+    {
+        var userlvl = _gm.User.LevelProgressManager.GetCurrentUserLevel();
+        var paramLevel = int.Parse(lvl);
+
+        return userlvl == paramLevel;
+    }
+
 
     LevelTutorial GetTutorialLevelIfPossible()
     {
