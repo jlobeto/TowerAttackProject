@@ -14,6 +14,8 @@ public class BakeLightsWindow : EditorWindow
     string[] _realPaths;
     int _currentSceneBuildingIndex = 0;
     List<string> _scenesBuilt = new List<string>();
+    Dictionary<string, bool> _sceneToggle = new Dictionary<string, bool>();
+    Vector2 _scrollPosition;
 
     [MenuItem("UTILITIES/Bake Scenes Lights")]
     static void Init()
@@ -56,11 +58,31 @@ public class BakeLightsWindow : EditorWindow
 
         GUILayout.Space(1);
 
+        var paths = new string[] { _pathToScenes };
+
+        var p = AssetDatabase.FindAssets("t:scene", paths);
+        var list = new List<string>();
+
+        _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
+        foreach (var item in p)
+        {
+            var i = AssetDatabase.GUIDToAssetPath(item);
+            list.Add(i);
+            if (!_sceneToggle.ContainsKey(i))
+                _sceneToggle.Add(i, false);
+            
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.Toggle(_sceneToggle[i]);
+            EditorGUILayout.LabelField(i);
+            EditorGUILayout.EndHorizontal();
+            
+        }
+        EditorGUILayout.EndScrollView();
 
         if (GUILayout.Button("BAKE LIGHTS !") && !_baking)
         {
             _baking = true;
-            BakeLights();
+            BakeLights(list);
         }
 
         if(_baking)
@@ -71,27 +93,17 @@ public class BakeLightsWindow : EditorWindow
                 var splitted = item.Split('/');
                 EditorGUILayout.LabelField(splitted[splitted.Length - 1]);
             }
-            if (GUILayout.Button("STOP BAKING !"))
+            if (GUILayout.Button("FORCE STOP BAKING !"))
             {
                 Lightmapping.ForceStop();
                 _baking = false;
+                _sceneToggle = new Dictionary<string, bool>();
             }
         }
     }
 
-    void BakeLights()
+    void BakeLights(List<string> list)
     {
-        var paths = new string[] { _pathToScenes };
-
-        var p = AssetDatabase.FindAssets("t:scene", paths);
-        var list = new List<string>();
-        
-        foreach (var item in p)
-        {
-            var i = AssetDatabase.GUIDToAssetPath(item);
-            list.Add(i);
-        }
-
         _realPaths = list.ToArray();
         _currentSceneBuildingIndex = 0;
         _scenesBuilt = new List<string>();
