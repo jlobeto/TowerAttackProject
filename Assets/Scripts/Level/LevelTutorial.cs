@@ -84,6 +84,7 @@ public class LevelTutorial : Level
                 _gameManager.tutorialManager.TutorialFinished(TutorialPhase.FirstTimeOnApp_INGAME_tuto_1_phase3);
                 popup = _gameManager.popupManager.BuildPopup(_lvlCanvasManager.transform, "TUTORIAL COMPLETED!", "Continue tu main map", "Continue");
                 popup.AddFunction(BasePopup.FunctionTypes.ok, OnFinishLevelCallback);
+                popup.transform.localScale *= 2;
                 base.GoalCompletedHandler(false);
             }
             else

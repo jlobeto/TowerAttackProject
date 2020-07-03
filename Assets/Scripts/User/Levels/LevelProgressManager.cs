@@ -98,7 +98,9 @@ public class LevelProgressManager
     /// </summary>
     public int GetCurrentUserLevel()
     {
-        var lastestSaved = _lvlProgressList.list.Last();
+        var lastestSaved = _lvlProgressList.list.Count > 0 ? _lvlProgressList.list.Last() : null;
+        if (lastestSaved == null)
+            return 1;
 
         if (!lastestSaved.won)
             return lastestSaved.levelId;
