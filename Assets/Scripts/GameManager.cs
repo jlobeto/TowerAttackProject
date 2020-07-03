@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public bool enableSaveSystem;
     public PopupManager popupManager;
     public TutorialManager tutorialManager;
+    public SoundManager soundManager;
     [Header("Add tower prefabs so SwapSystem can work.")]
     public List<TowerBase> allTowersPrefabs;
     public List<Minion> allMinionsPrefab;//"Add minions prefabs so can be accessed by Level.cs."
@@ -102,6 +103,8 @@ public class GameManager : MonoBehaviour
 
         if (lvlinfo != null)
             _currentViewingWorld = lvlinfo.worldId;
+        else
+            soundManager.PlayMenuMusic();//when comming from a level to the world selector
 
         OnLevelInfoSet(_currentLevelInfo != null);
     }
@@ -113,6 +116,7 @@ public class GameManager : MonoBehaviour
 
 		_user.LevelStarted (level.levelID);
         level.OnLevelFinish += _user.LevelEnded;
+        soundManager.PlayMusic(level.levelID);
     }
 
     void SceneUnloaded(Scene scene)
