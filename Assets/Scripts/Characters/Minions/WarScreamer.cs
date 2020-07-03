@@ -114,4 +114,21 @@ public class WarScreamer : AirMinion
 		var currentPercent = m.hp / m.InitialHP;
         return result;// && currentPercent <= lifePercentThresholdToActivatePassive;
 	}
+
+    protected override void Walk()
+    {
+
+        var nextNodePos = new Vector3(pNextNode.transform.position.x, airYpos, pNextNode.transform.position.z);
+        var dir = (nextNodePos - transform.position).normalized;
+        transform.forward = dir;
+        transform.position += transform.forward * speed * Time.deltaTime;
+
+        if (Vector3.Distance(transform.position, nextNodePos) <= pDistanceToNextNode)
+        {
+            if (!pNextNode.isEnd)
+                pNextNode = pNextNode.GetNextWalkNode();
+            else
+                FinishWalk();
+        }
+    }
 }

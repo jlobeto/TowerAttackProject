@@ -114,7 +114,7 @@ public class LibraryTypeInfoCanvas : MonoBehaviour
 
 
         SetVideo(imageToRenderVideo_1, videoPlayer_1, _info.type);
-        SetVideo(imageToRenderVideo_2, videoPlayer_2, _info.type);
+        SetVideo(imageToRenderVideo_2, videoPlayer_2, _info.type + "_skill");
 
         SetStaticImage(_info.type);
 
