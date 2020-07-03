@@ -72,7 +72,7 @@ LightmapSettings:
     m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
-    m_BakeBackend: 0
+    m_BakeBackend: 1
     m_PVRSampling: 1
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 517aa033f496b8a45b68a4a752fef9b2,
+  m_LightingDataAsset: {fileID: 112000000, guid: bad2f57a0e4256a45b6a41c6ef42ee07,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -1297,7 +1297,7 @@ GameObject:
   - component: {fileID: 221221715}
   - component: {fileID: 221221714}
   m_Layer: 0
-  m_Name: Level11
+  m_Name: Level31
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1315,7 +1315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb00e12254d8f840910e2a24bc339b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelID: 0
+  levelID: 31
   initialWalkNodes:
   - {fileID: 268226826}
   initialLevelPoints: 150
@@ -10744,6 +10744,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 846607707928273601, guid: 419ae3d00f7e5684bbffc5cab7c73a45,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865060645499260662, guid: 419ae3d00f7e5684bbffc5cab7c73a45,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3080746740989984099, guid: 419ae3d00f7e5684bbffc5cab7c73a45,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054645453190571049, guid: 419ae3d00f7e5684bbffc5cab7c73a45,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5341125835866178155, guid: 419ae3d00f7e5684bbffc5cab7c73a45,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5848569434462667315, guid: 419ae3d00f7e5684bbffc5cab7c73a45,
         type: 3}
       propertyPath: m_Name
