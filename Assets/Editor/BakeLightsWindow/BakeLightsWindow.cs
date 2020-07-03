@@ -9,7 +9,7 @@ public class BakeLightsWindow : EditorWindow
 {
     string _pathToScenes = "Assets/Scenes/Levels";
     string[] _lightmapResolution = new string[] { "1024", "2048" };
-    int _lightMapResIndex;
+    int _lightMapResIndex = 1;
     bool _baking;
     string[] _realPaths;
     int _currentSceneBuildingIndex = 0;
@@ -34,11 +34,13 @@ public class BakeLightsWindow : EditorWindow
             EditorSceneManager.OpenScene(_realPaths[_currentSceneBuildingIndex]);
 
             LightmapEditorSettings.maxAtlasSize = int.Parse(_lightmapResolution[_lightMapResIndex]);
-            LightmapEditorSettings.lightmapper = LightmapEditorSettings.Lightmapper.ProgressiveCPU;
+            LightmapEditorSettings.lightmapper = LightmapEditorSettings.Lightmapper.Enlighten;
             LightmapEditorSettings.mixedBakeMode = MixedLightingMode.Shadowmask;
             LightmapEditorSettings.lightmapsMode = LightmapsMode.NonDirectional;
             LightmapEditorSettings.filteringMode = LightmapEditorSettings.FilterMode.Auto;
             Lightmapping.realtimeGI = false;
+            Lightmapping.bakedGI= true;
+
 
             Lightmapping.BakeAsync();
             _currentSceneBuildingIndex++;
