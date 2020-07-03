@@ -46,8 +46,6 @@ public class MainMapCanvasManager : MonoBehaviour
 
         _screenSelectorsUI.Add(selectedScreenUI);
         _worldsCreated.Add(world_0_container);
-
-        
     }
 
     private void Start()
