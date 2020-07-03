@@ -76,7 +76,7 @@ public class LibraryCanvasManager : MonoBehaviour
 
         typeInfoCanvas.SetInfo(data);
 
-        exitButtonText.text = "return";
+        exitButtonText.text = "back";
         categoryPanel.selectTypeText.text = typePressed;
     }
 

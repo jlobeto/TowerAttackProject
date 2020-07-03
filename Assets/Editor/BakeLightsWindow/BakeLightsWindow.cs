@@ -35,7 +35,7 @@ public class BakeLightsWindow : EditorWindow
 
             LightmapEditorSettings.maxAtlasSize = int.Parse(_lightmapResolution[_lightMapResIndex]);
             LightmapEditorSettings.lightmapper = LightmapEditorSettings.Lightmapper.ProgressiveCPU;
-            LightmapEditorSettings.mixedBakeMode = MixedLightingMode.Subtractive;
+            LightmapEditorSettings.mixedBakeMode = MixedLightingMode.Shadowmask;
             LightmapEditorSettings.lightmapsMode = LightmapsMode.NonDirectional;
             LightmapEditorSettings.filteringMode = LightmapEditorSettings.FilterMode.Auto;
             Lightmapping.realtimeGI = false;

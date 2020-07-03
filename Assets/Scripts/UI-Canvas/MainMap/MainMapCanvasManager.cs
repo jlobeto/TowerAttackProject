@@ -147,11 +147,18 @@ public class MainMapCanvasManager : MonoBehaviour
             CreateScreenPointUI(lvlInfo.worldId);
         }
 
+        if (lvlInfo.id == -1)
+        {
+            var currentLevelProgress = mainMap.GetGameManager().User.LevelProgressManager.GetProgress(lvlInfo.id);
+            if (currentLevelProgress != null && currentLevelProgress.won)
+                return;//don't want to display level-1 if it's already done
+        }
+
         var btn = Instantiate<Button>(levelNodeButton, _currentBuildingWorld.grid.transform);
         LevelInfo lazyLvlInfo = new LevelInfo();
         lazyLvlInfo = lvlInfo;
         btn.onClick.AddListener(() => onClick(lazyLvlInfo));
-        btn.name = "levelNodeButton_" + _lvlBtn_index;
+        btn.name = "levelNodeButton_" + _lvlBtn_index;   
 
         var node = btn.GetComponent<LevelNode> ();
 		node.Init (lazyLvlInfo , gm, btn);

@@ -35,8 +35,6 @@ public class LevelNode : MonoBehaviour
         RealInit ();
 	}
 
-    
-
 	void RealInit()
 	{
 
@@ -64,7 +62,7 @@ public class LevelNode : MonoBehaviour
 
             SetStars(true);
             //if has progress, block the button so it can never be touched again
-            /*if (_lvlInfo.mode == LevelMode.Tutorial.ToString())
+            if (_lvlInfo.mode == LevelMode.Tutorial.ToString())
             {
                 if(_lvlInfo.id == -1)//but if is level '-1', check if phase has been completed
                 {
@@ -73,7 +71,7 @@ public class LevelNode : MonoBehaviour
                 }
                 else
                     _btn.interactable = false;
-            }*/
+            }
 
         }
 
