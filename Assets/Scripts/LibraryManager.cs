@@ -19,6 +19,9 @@ public class LibraryManager
 
         data = GameUtils.LoadConfig<GenericListJsonLoader<LibraryCategoryTypeInfoDef>>("LibraryEventsConfig.json", GameUtils.LIBRARY_CONFIG_PATH);
         _dict.Add(LibraryCategory.Events, data);
+
+        data = GameUtils.LoadConfig<GenericListJsonLoader<LibraryCategoryTypeInfoDef>>("LibraryHelpConfig.json", GameUtils.LIBRARY_CONFIG_PATH);
+        _dict.Add(LibraryCategory.Help, data);
     }
 
 

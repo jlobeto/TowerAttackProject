@@ -108,7 +108,24 @@ public class LevelProgressManager
             return lastestSaved.levelId + 1;
     }
 
+    /// <summary>
+    /// Get Current World index
+    /// </summary>
+    public int GetCurrentUserWorldIndex()
+    {
+        var lastestSaved = _lvlProgressList.list.Count > 0 ? _lvlProgressList.list.Last() : null;
+        if (lastestSaved == null)
+            return 0;
 
+        if(lastestSaved.won)
+        {
+            var nextLevel = _gameManager.LevelInfoLoader.LevelInfoList.list.FirstOrDefault(i => i.id == (lastestSaved.levelId + 1));
+            if (nextLevel.worldId > lastestSaved.worldId)
+                return nextLevel.worldId;
+        }
+
+        return lastestSaved.worldId;
+    }
 
     /*
      * ////////////////////////////////////////////////

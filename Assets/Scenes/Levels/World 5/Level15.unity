@@ -1604,7 +1604,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90761cf8a7a4e1c45873fe882ede5aee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
 --- !u!4 &264524833
 Transform:
   m_ObjectHideFlags: 0
@@ -1823,8 +1822,9 @@ GameObject:
   - component: {fileID: 303554324}
   - component: {fileID: 303554323}
   - component: {fileID: 303554322}
+  - component: {fileID: 303554326}
   - component: {fileID: 303554321}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ElectroShock Event Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1930,6 +1930,19 @@ Transform:
   m_Father: {fileID: 1601175083}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &303554326
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303554320}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2360623, y: 1.1960942, z: 0.27825254}
+  m_Center: {x: -0.051758092, y: 0.024042236, z: 0.13912635}
 --- !u!1 &315820674
 GameObject:
   m_ObjectHideFlags: 0
@@ -8133,8 +8146,9 @@ GameObject:
   - component: {fileID: 1491310436}
   - component: {fileID: 1491310435}
   - component: {fileID: 1491310434}
+  - component: {fileID: 1491310438}
   - component: {fileID: 1491310433}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ElectroShock Event Button (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8240,6 +8254,19 @@ Transform:
   m_Father: {fileID: 440428797}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1491310438
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491310432}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1511514, y: 1.2089537, z: 0.28509644}
+  m_Center: {x: -0.021698503, y: 0.0017916195, z: 0.14254831}
 --- !u!1 &1514399941
 GameObject:
   m_ObjectHideFlags: 0

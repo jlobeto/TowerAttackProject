@@ -88,6 +88,7 @@ public class GameManager : MonoBehaviour
 		_towerJSONLoader = new TowerJSONLoaderManager ();
 
 		_user = new User (this);
+        _currentViewingWorld = _user.LevelProgressManager.GetCurrentUserWorldIndex();
 
         tutorialManager.Init(this);
 
@@ -100,11 +101,13 @@ public class GameManager : MonoBehaviour
     public void SetCurrentLevelInfo(LevelInfo lvlinfo)
     {
         _currentLevelInfo = lvlinfo;
+        _currentViewingWorld = _user.LevelProgressManager.GetCurrentUserWorldIndex();
 
-        if (lvlinfo != null)
-            _currentViewingWorld = lvlinfo.worldId;
-        else
-            soundManager.PlayMenuMusic();//when comming from a level to the world selector
+        if(lvlinfo == null)//when comming from a level to the world selector
+        {
+            soundManager.PlayMenuMusic();
+        }
+            
 
         OnLevelInfoSet(_currentLevelInfo != null);
     }

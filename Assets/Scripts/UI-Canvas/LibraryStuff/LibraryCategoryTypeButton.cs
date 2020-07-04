@@ -12,9 +12,9 @@ public class LibraryCategoryTypeButton : MonoBehaviour
     public Image typeImage;
     public Text typeText;
 
-    string _type;
-    LibraryCategory _fromCategory;
-    Button _btn;
+    protected string _type;
+    protected LibraryCategory _fromCategory;
+    protected Button _btn;
 
 
     void Awake()
@@ -28,7 +28,7 @@ public class LibraryCategoryTypeButton : MonoBehaviour
         
     }
 
-    public void Init(string type, LibraryCategory cat, Action<LibraryCategory, string> OnPressedCallback, GameManager gm)
+    public virtual void Init(string type, LibraryCategory cat, Action<LibraryCategory, string> OnPressedCallback, GameManager gm)
     {
         Sprite sprite = gm.LoadedAssets.GetSpriteByName(type);
 

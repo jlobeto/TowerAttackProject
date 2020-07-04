@@ -7914,5 +7914,53 @@ PrefabInstance:
       propertyPath: m_Name
       value: ElectroShock Combo
       objectReference: {fileID: 0}
+    - target: {fileID: 3798018171721885744, guid: 724c37e839e65774887dd2378b0c186a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7308780995526788965, guid: 724c37e839e65774887dd2378b0c186a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 724c37e839e65774887dd2378b0c186a, type: 3}
+--- !u!1 &512901137552783225 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7308780995526788965, guid: 724c37e839e65774887dd2378b0c186a,
+    type: 3}
+  m_PrefabInstance: {fileID: 512901137552783224}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &512901137552783226 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3798018171721885744, guid: 724c37e839e65774887dd2378b0c186a,
+    type: 3}
+  m_PrefabInstance: {fileID: 512901137552783224}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &512901137552783227
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512901137552783225}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9144001, y: 0.9144003, z: 0.17780006}
+  m_Center: {x: 0, y: 0, z: 0.08890009}
+--- !u!65 &512901137552783228
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512901137552783226}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9144001, y: 0.9144003, z: 0.17780006}
+  m_Center: {x: -0.00000047683716, y: 0, z: 0.08890012}

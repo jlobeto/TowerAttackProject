@@ -38,6 +38,7 @@ public class LibraryCategoryCanvas : MonoBehaviour
                 types = Enum.GetNames(typeof(EventTypes)).ToList();
                 break;
             case LibraryCategory.Help:
+                types = Enum.GetNames(typeof(LibraryHelpTypes)).ToList();
                 break;
             default:
                 break;
