@@ -74,7 +74,7 @@ public class MainMap : MonoBehaviour
             var starsLeft = _worldsManager.GetStarsLeftAmount(lvlInfo.worldId);
             var allLevelsWon = gm.User.LevelProgressManager.AreLevelsWonByWorld(lvlInfo.worldId-1);
 
-			_mainMapCanvas.AddLevelButton (lvlInfo, OnLevelNodeClick, gm, unlocked && allLevelsWon, starsLeft);	
+			_mainMapCanvas.AddLevelButton (lvlInfo, OnLevelNodeClick, gm, unlocked /*&& allLevelsWon*/, starsLeft);	
         }
     }
 
