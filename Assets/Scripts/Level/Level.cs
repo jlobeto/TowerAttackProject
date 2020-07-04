@@ -106,6 +106,7 @@ public class Level : MonoBehaviour
         Time.timeScale = 1;//TODO:: // SACAR ESTO A LA MIERDA
         _lvlCanvasManager.EnableMinionButtons(true);
         _lvlCanvasManager.EnableDisableMinionSkillButtons(true);
+        GameManager.popupManager.DisplayedPopupWasClosed();
     }
 
     void OnRunLevelTimer()
@@ -393,6 +394,7 @@ public class Level : MonoBehaviour
     {
         Time.timeScale = 1;//TODO:: // SACAR ESTO A LA MIERDA
         _gameManager.SetCurrentLevelInfo(null);
+        GameManager.popupManager.DisplayedPopupWasClosed();
         SceneManager.LoadScene("World Selector Screen");
     }
 }

@@ -28,7 +28,6 @@ public class SoundManager : MonoBehaviour
     {
         _musicSource = GetComponentInChildren<AudioSource>();
         var a = GetMusicAudioClip("menu");
-        Debug.Log("asdasdasd");
         _musicSource.clip = a;
         _musicSource.Play();
         _musicSource.loop = true;

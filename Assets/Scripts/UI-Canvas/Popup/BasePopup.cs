@@ -65,6 +65,7 @@ public class BasePopup : MonoBehaviour
 
     protected virtual void OnClosePopup()
     {
+
         ExecuteFunctions(FunctionTypes.close);
         Destroy(gameObject);
     }

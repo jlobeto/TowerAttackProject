@@ -21,11 +21,15 @@ public class TutorialFingerAnimation : MonoBehaviour
     void Update()
     {
         if (!_isAnimating) return;
+        var old = Time.timeScale; //when tutorial phase 3 is executing
+        Time.timeScale = 1;
 
         transform.localPosition = Vector3.MoveTowards(transform.localPosition, _finalPos.localPosition, Time.deltaTime * 390);
         transform.localRotation = Quaternion.Lerp(transform.localRotation, _finalPos.localRotation, Time.deltaTime * 2);
 
-        if(Vector3.Distance(transform.localPosition, _finalPos.localPosition) <= 10f)
+        Time.timeScale = old;
+
+        if (Vector3.Distance(transform.localPosition, _finalPos.localPosition) <= 10f)
         {
             transform.localPosition = _posInit;
             transform.localRotation = _rotInit;

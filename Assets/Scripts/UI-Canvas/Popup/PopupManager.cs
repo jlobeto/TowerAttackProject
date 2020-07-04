@@ -87,6 +87,8 @@ public class PopupManager : MonoBehaviour
     public void DisplayedPopupWasClosed(string p = "")
     {
         _popupStack--;
+        if (_popupStack < 0) _popupStack = 0;
+
         if (_isPauseActivated)
             _isPauseActivated = false;
 

@@ -82,7 +82,7 @@ public class LevelTutorial : Level
             if(_currentTutorial+1 >= _objectiveList.Count)
             {
                 _gameManager.tutorialManager.TutorialFinished(TutorialPhase.FirstTimeOnApp_INGAME_tuto_1_phase3);
-                popup = _gameManager.popupManager.BuildPopup(_lvlCanvasManager.transform, "TUTORIAL COMPLETED!", "Continue tu main map", "Continue");
+                popup = _gameManager.popupManager.BuildPopup(_lvlCanvasManager.transform, "TUTORIAL COMPLETED!", "Continue to main map", "Continue");
                 popup.AddFunction(BasePopup.FunctionTypes.ok, OnFinishLevelCallback);
                 popup.transform.localScale *= 2;
                 base.GoalCompletedHandler(false);
@@ -103,8 +103,6 @@ public class LevelTutorial : Level
 
                 _currentTutorial++;
             }
-
-            popup.transform.localScale = new Vector3(.7f, .7f, .7f);
         }
     }
 
