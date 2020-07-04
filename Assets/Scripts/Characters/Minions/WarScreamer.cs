@@ -43,6 +43,8 @@ public class WarScreamer : AirMinion
             skillPhase = true;
             return;
         }*/
+        OnMinionSkill(minionType);
+
         OnSkill(true);
     }
 

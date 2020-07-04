@@ -4,19 +4,45 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public AudioClip[] audioClips;
+    private const string FX_GO_NAME = "audioSource_fx_";
 
-    AudioSource _audioSource;
+    public AudioClip[] musicAudioClips;
+    public AudioClip[] soundFXAudioClips;
+    /// <summary>
+    /// number of audiosources to instantiate for sound fxs
+    /// </summary>
+    public int soundFXSourcesCount = 5;
+
+    AudioSource _musicSource;
+    List<AudioSource> _audioSourceList;
+    int _fxSourcesCount;
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
 
     void Start()
     {
-        DontDestroyOnLoad(this);
-        _audioSource = GetComponentInChildren<AudioSource>();
-        var a = GetAudioClip("menu");
-        _audioSource.clip = a;
-        _audioSource.Play();
-        _audioSource.loop = true;
-        
+        _musicSource = GetComponentInChildren<AudioSource>();
+        var a = GetMusicAudioClip("menu");
+        Debug.Log("asdasdasd");
+        _musicSource.clip = a;
+        _musicSource.Play();
+        _musicSource.loop = true;
+
+        _audioSourceList = new List<AudioSource>();
+        _fxSourcesCount = soundFXSourcesCount;
+
+        for (int i = 0; i < soundFXSourcesCount; i++)
+        {
+            var go = new GameObject(FX_GO_NAME + i);
+            go.transform.SetParent(transform);
+            var audio = go.AddComponent<AudioSource>();
+            _audioSourceList.Add(audio);
+        }
+            
+
     }
 
     
@@ -25,38 +51,101 @@ public class SoundManager : MonoBehaviour
         
     }
 
-    public void MuteEverything(bool value)
+    public void AdjustMusicVol(float value)
     {
-        _audioSource.mute = value;
+        var val = value;
+        /*if (value < 0.05f)
+            val = 0;*/
+
+        _musicSource.volume = val;
+        
     }
 
-    public void PlayMusic(int lvlid)
+    public void AdjustSoundFXVol(float value)
+    {
+        var val = value;
+        /*if (value < 0.05f)
+            val = 0;*/
+
+        foreach (var item in _audioSourceList)
+        {
+            item.volume = val;
+        }
+    }
+
+    public void PlaySound(SoundFxNames name)
+    {
+        if (name == SoundFxNames.none)
+            Debug.Log("none sound fx name");
+
+        var source = GetSoundFXSource();
+        var clip = GetSoundAudioClip(name.ToString());
+        source.clip = clip;
+        source.Play();
+    }
+
+    public void MuteEverything(bool value)
+    {
+        _musicSource.mute = value;
+    }
+
+    public void PlayLevelMusic(int lvlid)
     {
         if (lvlid <= 15)
-            _audioSource.clip = GetAudioClip("ingame_first");
+            _musicSource.clip = GetMusicAudioClip("ingame_first");
         else if(lvlid <= 30)
-            _audioSource.clip = GetAudioClip("ingame_second");
+            _musicSource.clip = GetMusicAudioClip("ingame_second");
         else
-            _audioSource.clip = GetAudioClip("ingame_third");
+            _musicSource.clip = GetMusicAudioClip("ingame_third");
 
-        _audioSource.Play();
+        _musicSource.Play();
     }
 
     public void PlayMenuMusic()
     {
-        _audioSource.clip = GetAudioClip("menu");
-        _audioSource.Play();
+        _musicSource.clip = GetMusicAudioClip("menu");
+        _musicSource.Play();
     }
 
 
-    AudioClip GetAudioClip(string name)
+    AudioClip GetSoundAudioClip(string name)
     {
-        foreach (var item in audioClips)
+        foreach (var item in soundFXAudioClips)
+        {
+            if (item.name == name)
+                return item;
+        }
+        Debug.Log("no sound founded - param name= " + name);
+        return null;
+    }
+
+    AudioClip GetMusicAudioClip(string name)
+    {
+        foreach (var item in musicAudioClips)
         {
             if (item.name == name)
                 return item;
         }
 
         return null;
+    }
+
+    AudioSource GetSoundFXSource()
+    {
+        foreach (var item in _audioSourceList)
+        {
+            if (item.clip == null || !item.isPlaying)
+                return item;
+        }
+
+        var go = new GameObject(FX_GO_NAME + _fxSourcesCount);
+        _fxSourcesCount++;
+        go.transform.SetParent(transform);
+        var audio = go.AddComponent<AudioSource>();
+        audio.volume = _audioSourceList[0].volume;
+        _audioSourceList.Add(audio);
+        
+
+        return audio;
     }
 }

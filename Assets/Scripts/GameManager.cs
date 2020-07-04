@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
 
 		_user.LevelStarted (level.levelID);
         level.OnLevelFinish += _user.LevelEnded;
-        soundManager.PlayMusic(level.levelID);
+        soundManager.PlayLevelMusic(level.levelID);
     }
 
     void SceneUnloaded(Scene scene)

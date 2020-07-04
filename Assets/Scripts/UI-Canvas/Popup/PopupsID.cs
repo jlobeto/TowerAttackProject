@@ -8,5 +8,6 @@ public enum PopupsID
     BasePopup,
     Shop,
     StatUpgradeShop,
-    LevelEndPopup
+    LevelEndPopup,
+    SettingsPopup
 }

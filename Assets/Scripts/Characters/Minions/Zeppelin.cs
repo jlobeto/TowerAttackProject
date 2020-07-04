@@ -70,6 +70,8 @@ public class Zeppelin : AirMinion
 
         if (!wasDisabled) return;
 
+        OnMinionSkill(minionType);
+
         _mySkill.ExecuteSkill();
     }
 

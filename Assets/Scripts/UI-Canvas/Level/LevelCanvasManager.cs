@@ -31,7 +31,8 @@ public class LevelCanvasManager : MonoBehaviour
     //DragAndDropSystem _dragAndDropSystem;
     List<CanvasSkillLvlButton> _skillButtons = new List<CanvasSkillLvlButton>();
 	CameraMovement _cameraMove;
-    
+    SettingsPopup _settingsPopup;
+
     Sprite _starOff_sprite;
     
     bool _isAnyButtonDisabled;
@@ -60,9 +61,9 @@ public class LevelCanvasManager : MonoBehaviour
         
         levelTimerFillBar.fillAmount = 1;
         //_levelLives = _levelLivesBG.GetComponentInChildren<Text>();
-        
 
-		_cameraMove = Camera.main.GetComponentInParent<CameraMovement> ();
+        _settingsPopup = FindObjectOfType<SettingsPopup>();
+        _cameraMove = Camera.main.GetComponentInParent<CameraMovement> ();
     }
 
     void Update()
@@ -426,6 +427,11 @@ public class LevelCanvasManager : MonoBehaviour
     public void SetLivesUI()
     {
         StartCoroutine(OnEndOfFrameForLives());
+    }
+
+    public void DisplaySettingsPopup()
+    {
+        _settingsPopup.DisplayPopup();
     }
 
     IEnumerator OnEndOfFrameForLives()

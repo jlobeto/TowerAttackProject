@@ -9,16 +9,15 @@ public class MainMenuManager : MonoBehaviour
     public GameLoadingScreen loadingScreen;
     public Canvas menuCanvas;
     public GameObject mainMenuButtons;
-    public GameObject settingsButtons;
-    public Text devToolsText;
 
     GameManager _gameManager;
+    SettingsPopup _settingsPopup;
 
 
     private void Awake()
     {
         loadingScreen.transform.parent.gameObject.SetActive(false);
-        settingsButtons.SetActive(false);
+        _settingsPopup = FindObjectOfType<SettingsPopup>();
     }
 
     void Start ()
@@ -30,7 +29,6 @@ public class MainMenuManager : MonoBehaviour
             return;
         }
 
-        devToolsText.text = "devtools=" + (_gameManager.showDevTools ? "ON" : "OFF");
     }
 	
 
@@ -47,8 +45,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void SettingsButtonPressed()
     {
-        settingsButtons.SetActive(true);
-        mainMenuButtons.SetActive(false);
+        _settingsPopup.DisplayPopup();
     }
 
     public void ExitApp()
@@ -56,11 +53,7 @@ public class MainMenuManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void SetDevTools()
-    {
-        _gameManager.showDevTools = !_gameManager.showDevTools;
-        devToolsText.text = "devtool=" + (_gameManager.showDevTools ? "ON" : "OFF");
-    }
+    
     
     public void DeleteProgress()
     {
@@ -79,7 +72,6 @@ public class MainMenuManager : MonoBehaviour
 
     public void GoBack()
     {
-        settingsButtons.SetActive(false);
         mainMenuButtons.SetActive(true);
     }
 }

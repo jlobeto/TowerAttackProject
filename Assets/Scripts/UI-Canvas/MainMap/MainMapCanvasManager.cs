@@ -21,6 +21,7 @@ public class MainMapCanvasManager : MonoBehaviour
 
     Canvas _canvas;
     WorldUI _currentBuildingWorld;
+    SettingsPopup _settingsPopup;
     
     List<WorldUI> _worldsCreated = new List<WorldUI>();
     List<Image> _screenSelectorsUI = new List<Image>();
@@ -55,6 +56,8 @@ public class MainMapCanvasManager : MonoBehaviour
         starsText.text =  STARS_TEXT + mainMap.GetGameManager().User.LevelProgressManager.GetStarsAccumulated();
         coinsText.text = COINS_TEXT + mainMap.GetGameManager().User.Currency;
         mainMap.GetGameManager().User.OnCurrencyChanged += CurrencyChangedHandler;
+
+        _settingsPopup = FindObjectOfType<SettingsPopup>();
     }
 
     void Update ()
@@ -220,7 +223,10 @@ public class MainMapCanvasManager : MonoBehaviour
     }
 
 
-
+    public void DisplaySettingsPopup()
+    {
+        _settingsPopup.DisplayPopup();
+    }
 
 
 

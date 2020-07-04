@@ -47,6 +47,8 @@ public class Healer : Minion
 
         if (_mySkill.IsLocked) return;//check this so we don't run GetMinions if we don't have to.
 
+        OnMinionSkill(minionType);
+
         var nearMinions = manager.GetMinions(GetMinionHandler);
         _mySkill.InitializeHealerSkill(nearMinions, skillCooldown, giveActiveHealth, skillHealPercent);
     }

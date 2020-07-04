@@ -18,6 +18,7 @@ public class MinionManager : MonoBehaviour
     int _deathCount;
     int _successCount;
     GameObject _allMinions;
+    SoundManager _soundManager;
 
 
     public void SpawnMinion(MinionType type, Vector3 spawnPos, Minion available)
@@ -117,6 +118,7 @@ public class MinionManager : MonoBehaviour
     void Init()
     {
         _allMinions = new GameObject("All Minions");
+        _soundManager = FindObjectOfType<SoundManager>();
     }
 
     public List<Minion> GetMinions(Func<Minion,bool> func)
@@ -175,6 +177,32 @@ public class MinionManager : MonoBehaviour
 
     void MinionSkillActivatedHandler(MinionType t)
     {
+        SoundFxNames sound = SoundFxNames.none;
+        switch (t)
+        {
+            case MinionType.Runner:
+                sound = SoundFxNames.skill_runner;
+                break;
+            case MinionType.Tank:
+                sound = SoundFxNames.skill_tank;
+                break;
+            case MinionType.Dove:
+                sound = SoundFxNames.skill_dove;
+                break;
+            case MinionType.Healer:
+                sound = SoundFxNames.skill_healer;
+                break;
+            case MinionType.Zeppelin:
+                sound = SoundFxNames.skill_zeppelin;
+                break;
+            case MinionType.WarScreamer:
+                sound = SoundFxNames.skill_warscreamer;
+                break;
+            default:
+                break;
+        }
+        _soundManager.PlaySound(sound);
+
         if (level.levelMode != LevelMode.Tutorial) return;
 
         OnMinionSkillSelected(t);

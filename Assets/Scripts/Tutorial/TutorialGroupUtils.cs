@@ -19,7 +19,7 @@ public class TutorialGroupUtils
             splittedParams = parameters.Split(',');
         }
 
-        Debug.Log(funcName + " " + splittedParams.Length);
+        //Debug.Log(funcName + " " + splittedParams.Length);
         if (funcName == "ShowDocUI")
         {
             foreach (var item in splittedParams)
