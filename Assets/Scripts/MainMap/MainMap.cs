@@ -11,6 +11,7 @@ public class MainMap : MonoBehaviour
     GameManager _gameManager;
     MainMapCanvasManager _mainMapCanvas;
     WorldsManager _worldsManager;
+
 	void Awake ()
     {
         _gameManager = FindObjectOfType<GameManager>();
@@ -80,6 +81,8 @@ public class MainMap : MonoBehaviour
     void OnLevelNodeClick(LevelInfo lvlInfo)
     {
 		GetGameManager().SetCurrentLevelInfo(lvlInfo);
+        SoundManager.instance.PlaySound(SoundFxNames.button_pressed);
+
         buildSquadManager.DisplayPopup();
         buildSquadManager.OnPlayPressed += OnAcceptSquad;
     }

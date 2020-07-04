@@ -28,7 +28,6 @@ public class MainMenuManager : MonoBehaviour
             SceneManager.LoadScene("GameLoadingScreen");
             return;
         }
-
     }
 	
 
@@ -39,17 +38,21 @@ public class MainMenuManager : MonoBehaviour
 
     public void GoToMainMap()
     {
+        SoundManager.instance.PlaySound(SoundFxNames.button_pressed);
         loadingScreen.ActivateLoadingAsyncProcess("World Selector Screen");
         menuCanvas.enabled = false;
     }
 
     public void SettingsButtonPressed()
     {
+
+        SoundManager.instance.PlaySound(SoundFxNames.button_pressed);
         _settingsPopup.DisplayPopup();
     }
 
     public void ExitApp()
     {
+        SoundManager.instance.PlaySound(SoundFxNames.back_button);
         Application.Quit();
     }
 

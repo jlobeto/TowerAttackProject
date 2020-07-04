@@ -18,7 +18,6 @@ public class MinionManager : MonoBehaviour
     int _deathCount;
     int _successCount;
     GameObject _allMinions;
-    SoundManager _soundManager;
 
 
     public void SpawnMinion(MinionType type, Vector3 spawnPos, Minion available)
@@ -118,7 +117,6 @@ public class MinionManager : MonoBehaviour
     void Init()
     {
         _allMinions = new GameObject("All Minions");
-        _soundManager = FindObjectOfType<SoundManager>();
     }
 
     public List<Minion> GetMinions(Func<Minion,bool> func)
@@ -201,7 +199,7 @@ public class MinionManager : MonoBehaviour
             default:
                 break;
         }
-        _soundManager.PlaySound(sound);
+        SoundManager.instance.PlaySound(sound);
 
         if (level.levelMode != LevelMode.Tutorial) return;
 

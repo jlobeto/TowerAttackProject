@@ -5,6 +5,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     private const string FX_GO_NAME = "audioSource_fx_";
+    public static SoundManager instance;
 
     public AudioClip[] musicAudioClips;
     public AudioClip[] soundFXAudioClips;
@@ -20,6 +21,7 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this);
+        instance = this;
     }
 
     void Start()
@@ -110,11 +112,20 @@ public class SoundManager : MonoBehaviour
 
     AudioClip GetSoundAudioClip(string name)
     {
-        foreach (var item in soundFXAudioClips)
+        foreach (var clip in soundFXAudioClips)
         {
-            if (item.name == name)
-                return item;
+            if (clip.name == name)
+            {
+                foreach (var source in _audioSourceList)
+                {
+                    if(source.clip != null && source.clip.name == clip.name)
+                        return source.isPlaying ? null : clip;
+                }
+                
+                return clip;
+            }
         }
+
         Debug.Log("no sound founded - param name= " + name);
         return null;
     }

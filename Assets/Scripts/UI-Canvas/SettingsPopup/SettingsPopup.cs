@@ -10,7 +10,6 @@ public class SettingsPopup : BasePopup
     public Text devToolsText;
 
     GameManager _gameManager;
-    SoundManager _soundManager;
     PopupManager _popupManager;
     Canvas _canvas;
 
@@ -26,7 +25,6 @@ public class SettingsPopup : BasePopup
 
     protected override void Start()
     {
-        _soundManager = FindObjectOfType<SoundManager>();
         _gameManager = FindObjectOfType<GameManager>();
         _popupManager = FindObjectOfType<PopupManager>();
 
@@ -52,12 +50,12 @@ public class SettingsPopup : BasePopup
     {
         _gameManager.showDevTools = !_gameManager.showDevTools;
         devToolsText.text = "devtool=" + (_gameManager.showDevTools ? "ON" : "OFF");
-        _soundManager.PlaySound(SoundFxNames.button_pressed);
+        SoundManager.instance.PlaySound(SoundFxNames.button_pressed);
     }
 
     protected override void OnClosePopup()
     {
-        _soundManager.PlaySound(SoundFxNames.back_button);
+        SoundManager.instance.PlaySound(SoundFxNames.back_button);
         Time.timeScale = 1;
         _canvas.enabled = false;
         _popupManager.DisplayedPopupWasClosed();
@@ -66,12 +64,12 @@ public class SettingsPopup : BasePopup
 
     public void MusicVolumeChangeHandler()
     {
-        _soundManager.AdjustMusicVol(musicSlider.value);
+        SoundManager.instance.AdjustMusicVol(musicSlider.value);
     }
 
     public void SoundFXVolumeChangeHandler()
     {
-        _soundManager.AdjustSoundFXVol(soundSlider.value);
+        SoundManager.instance.AdjustSoundFXVol(soundSlider.value);
     }
     
 }

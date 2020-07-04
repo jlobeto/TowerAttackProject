@@ -26,7 +26,7 @@ public class LibraryCanvasManager : MonoBehaviour
         _popupManager = FindObjectOfType<PopupManager>();
         if (_popupManager == null)
             return;
-
+        
         _gameManager = FindObjectOfType<GameManager>();
         _categoryPanel = GetComponentInChildren<CategoryPanel>();
 
@@ -94,6 +94,8 @@ public class LibraryCanvasManager : MonoBehaviour
         {
             HideCanvas();
         }
+
+        SoundManager.instance.PlaySound(SoundFxNames.back_button);
     }
 
     void OnCategoryPressed(LibraryCategory cat)

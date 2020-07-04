@@ -77,6 +77,7 @@ public class ShopPopup : BasePopup
     {
         if (!isShowing) return;
 
+        SoundManager.instance.PlaySound(SoundFxNames.back_button);
         ExecuteFunctions(FunctionTypes.ok);
         _popupManager.DisplayedPopupWasClosed();
         _thisCanvas.enabled = false;

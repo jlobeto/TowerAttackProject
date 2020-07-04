@@ -77,6 +77,7 @@ public class ShopManager : MonoBehaviour
             return;
         }
 
+        SoundManager.instance.PlaySound(SoundFxNames.upgrade_success);
         _gm.User.BuyMinion(_popup.selected, minionValue);
 
         //Call again to refresh data.

@@ -16,7 +16,6 @@ public class SkillsUpgradePanel : MonoBehaviour
     GenericListJsonLoader<BaseMinionStat> _minionStats;
     PopupManager _popManager;
     ShopManager _shopManager;
-    SoundManager _soundManager;
 
 
 
@@ -24,7 +23,6 @@ public class SkillsUpgradePanel : MonoBehaviour
     {
         _popManager = FindObjectOfType<PopupManager>();
         _shopManager = GetComponentInParent<ShopManager>();
-        _soundManager = FindObjectOfType<SoundManager>();
     }
 
 
@@ -61,11 +59,12 @@ public class SkillsUpgradePanel : MonoBehaviour
         var couldBuy = _shopManager.BuyStat(id);
         if (!couldBuy)
         {
-            _soundManager.PlaySound(SoundFxNames.fail_buy);
+
+            SoundManager.instance.PlaySound(SoundFxNames.fail_buy);
             item.NoCoinsAnimation();
         }
         else
-            _soundManager.PlaySound(SoundFxNames.upgrade_success);
+            SoundManager.instance.PlaySound(SoundFxNames.upgrade_success);
             
     }
     

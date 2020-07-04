@@ -61,12 +61,13 @@ public class BuildSquadManager : MonoBehaviour
             return;
         }
 
+        SoundManager.instance.PlaySound(SoundFxNames.button_pressed);
         OnPlayPressed();
-        OnExit();
     }
 
     public void OnExit()
     {
+        SoundManager.instance.PlaySound(SoundFxNames.back_button);
         gameObject.SetActive(false);
         _popupManager.DisplayedPopupWasClosed();
     }
