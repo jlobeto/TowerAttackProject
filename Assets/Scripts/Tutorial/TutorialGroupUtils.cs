@@ -24,7 +24,7 @@ public class TutorialGroupUtils
         {
             foreach (var item in splittedParams)
             {
-                Debug.Log(item);
+                //Debug.Log(item);
             }
         }
         

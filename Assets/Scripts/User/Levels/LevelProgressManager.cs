@@ -120,7 +120,7 @@ public class LevelProgressManager
         if(lastestSaved.won)
         {
             var nextLevel = _gameManager.LevelInfoLoader.LevelInfoList.list.FirstOrDefault(i => i.id == (lastestSaved.levelId + 1));
-            if (nextLevel.worldId > lastestSaved.worldId)
+            if (nextLevel != null && nextLevel.worldId > lastestSaved.worldId)
                 return nextLevel.worldId;
         }
 

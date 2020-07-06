@@ -727,6 +727,28 @@
 				"elementId=LibraryButton",
 				"listeners=type:pressed{RemovePointFinger,RemoveHighlightUIElement(LibraryButton),HideDocUI,OnPhaseCompleted,HideBlackOverlay}"
 			]
+		},
+
+
+
+
+		{
+			"tutorialPhase": "WorldSelectorSliderTutorial",
+			"tutorialGroupId":"world_selector_explain_world_slider",
+			"triggers": [
+				"IsSceneName(World Selector Screen)",
+				"IsInLevel(7)"
+			],
+			"actions": [
+				"ShowBlackOverlay(Canvas)",
+				"HighlightUIElement(world_selection_slider,Canvas)",
+				"CreatePointFinger(0,40,180,world_selection_slider)",
+				"ShowDocUI(middleLeft,You can navigate through the worlds by using this slider. Or just slide to left or right on the screen,normal,0.9)"
+			],
+			"outputs": [
+				"elementType=Touch",
+				"listeners=type:touched{RemovePointFinger,RemoveHighlightUIElement(world_selection_slider),HideDocUI,OnPhaseCompleted,HideBlackOverlay}"
+			]
 		}
 	]
 }

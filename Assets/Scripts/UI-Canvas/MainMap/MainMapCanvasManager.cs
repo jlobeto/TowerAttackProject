@@ -14,39 +14,37 @@ public class MainMapCanvasManager : MonoBehaviour
     public MainMap mainMap;
     public RectTransform worldsTransform;
     public WorldUI world_0_container;
-    public Image selectedScreenUI;
     public Sprite unselectedScreenUISprite;
     public Sprite selectedScreenUISprite;
     public Text coinsText, starsText;
+    [HideInInspector]
+    public List<WorldUI> worldsCreated = new List<WorldUI>();
 
     Canvas _canvas;
     WorldUI _currentBuildingWorld;
+    WorldScreenSwapSystem _swapSystem;
     SettingsPopup _settingsPopup;
     
-    List<WorldUI> _worldsCreated = new List<WorldUI>();
-    List<Image> _screenSelectorsUI = new List<Image>();
+    
 
-    Vector3 _toPosition;//for grids movements;
-    Vector3 _toLocksPosition;//for padlocks (UI) movements;
-    Vector3 _toNamesPosition;//for title movements;
-    bool _isMovingGrid;
+    
     bool _forceUnlockAll;
     int _lvlBtn_lastWorldId;//to know when it changes de worldId
     int _lvlBtn_index;
-    float _mouseOnPressXPos;
-    float _mouseOnReleaseXPos;
+    
     int _amountOfWorlds = 1;
-    int _currentWorldOnScreen;
 
 
 
     void Awake ()
     {
         _canvas = GetComponent<Canvas>();
-        _currentBuildingWorld = world_0_container;
+        _swapSystem = GetComponent<WorldScreenSwapSystem>();
+        _swapSystem.Init(this);
 
-        _screenSelectorsUI.Add(selectedScreenUI);
-        _worldsCreated.Add(world_0_container);
+        _currentBuildingWorld = world_0_container;
+        
+        worldsCreated.Add(world_0_container);
     }
 
     private void Start()
@@ -62,74 +60,11 @@ public class MainMapCanvasManager : MonoBehaviour
 
     void Update ()
     {
-        if(Input.GetMouseButtonDown(0))
-        {
-            _mouseOnPressXPos = Input.mousePosition.x;
-        }
-        else if(Input.GetMouseButtonUp(0))
-        {
-            _mouseOnReleaseXPos = Input.mousePosition.x;
-            if(! mainMap.GetGameManager().popupManager.IsAnyPopupDisplayed())
-                CheckMovement();
-        }
-
-        GridMovement();
-	}
-
-    /// <summary>
-    /// Always do it on the release funtion so we have onpress and onrelease.
-    /// </summary>
-    void CheckMovement()
-    {
-        if (_isMovingGrid) return;
-
-        var max = Mathf.Max(_mouseOnPressXPos, _mouseOnReleaseXPos);
-        var min = Mathf.Min(_mouseOnPressXPos, _mouseOnReleaseXPos);
-        var delta = max - min;
-
-        if (delta < 70)
-            return;
         
-        //right to left
-        if (_mouseOnPressXPos > _mouseOnReleaseXPos)
-        {
-            if (_currentWorldOnScreen == _amountOfWorlds-1) return;
 
-            _toPosition = worldsTransform.position - Vector3.right * GetCanvasWidth();
-            _currentWorldOnScreen++;
-        }
-        else //left to right
-        {
-            if (_currentWorldOnScreen == 0) return;
-
-            _toPosition = worldsTransform.position + Vector3.right * GetCanvasWidth();
-            _currentWorldOnScreen--;
-        }
-
-        _worldsCreated[_currentWorldOnScreen].gameObject.SetActive(true);
-
-        _isMovingGrid = true;
     }
 
-    void GridMovement()
-    {
-        if (!_isMovingGrid) return;
-
-        worldsTransform.position = Vector3.Lerp(worldsTransform.position, _toPosition, Time.deltaTime * 10);
-
-        if (Mathf.Abs(Vector3.Distance(worldsTransform.position, _toPosition)) < 1f)
-        {
-            worldsTransform.position = _toPosition;
-
-            foreach (var item in _screenSelectorsUI)
-                item.sprite = unselectedScreenUISprite;
-
-            _screenSelectorsUI[_currentWorldOnScreen].sprite = selectedScreenUISprite;
-            HideNonSelectedWorlds();
-
-            _isMovingGrid = false;
-        }
-    }
+    
 
     public void AddLevelButton(LevelInfo lvlInfo, Action<LevelInfo> onClick, GameManager gm, bool worldUnlocked, int neededToUnlock)
     {
@@ -138,14 +73,15 @@ public class MainMapCanvasManager : MonoBehaviour
             var newWorldUI = Instantiate<WorldUI>(world_0_container, worldsTransform);
             newWorldUI.transform.position += Vector3.right * _canvas.pixelRect.width * lvlInfo.worldId;
             newWorldUI.name = "world_" + lvlInfo.worldId;
-            _worldsCreated.Add(newWorldUI);
+            worldsCreated.Add(newWorldUI);
             newWorldUI.Init(lvlInfo.worldId, worldUnlocked, neededToUnlock);
             newWorldUI.gameObject.SetActive(false);
             _currentBuildingWorld = newWorldUI;
 
             _amountOfWorlds++;
+            _swapSystem.amountOfWorlds = _amountOfWorlds;
+
             _lvlBtn_index = 0;
-            CreateScreenPointUI(lvlInfo.worldId);
         }
 
         if (lvlInfo.id == -1)
@@ -168,50 +104,14 @@ public class MainMapCanvasManager : MonoBehaviour
         _lvlBtn_index++;
     }
     
-    public void ShowWorld(int id)
+    public void ShowWorldAtSceneInit(int id)
     {
-        if (id == 0) return;
+        //if (id == 0) return;
 
-        if(_worldsCreated.Count > id)
-        {
-            _currentWorldOnScreen = id;
-            _worldsCreated[_currentWorldOnScreen].gameObject.SetActive(true);
-            HideNonSelectedWorlds();
-
-            worldsTransform.position = worldsTransform.position - Vector3.right * GetCanvasWidth() * (id);
-        }
+        _swapSystem.ShowWorldAtSceneInit(id);
     }
 
-    void HideNonSelectedWorlds()
-    {
-        int i=0;
-        foreach (var item in _worldsCreated)
-        {
-            if (_currentWorldOnScreen != i && item.gameObject.activeSelf )
-                item.gameObject.SetActive(false);
 
-            i++;
-        }
-    }
-
-    /// <summary>
-    /// Build the bottom circle UI to know how many worlds are.
-    /// </summary>
-    void CreateScreenPointUI(int worldId)
-    {
-        if (_amountOfWorlds > _screenSelectorsUI.Count)
-        {
-            var screenPoint = Instantiate<Image>(selectedScreenUI, selectedScreenUI.transform.parent);
-            screenPoint.sprite = unselectedScreenUISprite;
-            screenPoint.name = "SelectedScreen_" + worldId;
-            _screenSelectorsUI.Add(screenPoint);
-        }
-    }
-
-    float GetCanvasWidth()
-    {
-        return _canvas.pixelRect.width;
-    }
     void CurrencyChangedHandler(int currency)
     {
         coinsText.text = COINS_TEXT + currency;
@@ -234,18 +134,18 @@ public class MainMapCanvasManager : MonoBehaviour
 
 
     /// <summary>
-    /// USed by the dev button at the upper left corner.
+    /// USed by the dev button
     /// </summary>
     public void ForceUnlockAllLevels()
     {
-        foreach (var item in _worldsCreated)
+        foreach (var item in worldsCreated)
         {
             if(item.GetInstanceID() != world_0_container.GetInstanceID())
                 Destroy(item.gameObject);
         }
 
-        _worldsCreated = new List<WorldUI>();
-        _worldsCreated.Add(world_0_container);
+        worldsCreated = new List<WorldUI>();
+        worldsCreated.Add(world_0_container);
 
         _lvlBtn_lastWorldId = 0;
         _currentBuildingWorld = world_0_container;
@@ -256,7 +156,7 @@ public class MainMapCanvasManager : MonoBehaviour
         mainMap.GetGameManager().User.LevelProgressManager.ForceWinAllLevels();
         mainMap.CreateLevelNodes();
 
-        _worldsCreated[_currentWorldOnScreen].gameObject.SetActive(true);
+        //_worldsCreated[_currentWorldOnScreen].gameObject.SetActive(true);
         
     }
 }

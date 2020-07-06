@@ -17,22 +17,17 @@ public class WorldSelectorDevTools : MonoBehaviour
     void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
-        if (!_gameManager.showDevTools)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        
             
 
         showToolsButton.GetComponentInChildren<Text>().text = (_showTools ? "Hide " : "Show ") + "Tools";
         saveButton.GetComponentInChildren<Text>().text = "Save: " + _isSaving;
-
     }
 
 
     void Update()
     {
-        
+        showToolsButton.gameObject.SetActive(_gameManager.showDevTools);
     }
 
     public void ShowTools()

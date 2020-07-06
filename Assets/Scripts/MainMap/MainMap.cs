@@ -21,7 +21,6 @@ public class MainMap : MonoBehaviour
             return;
         }
             
-
         loadingJob.transform.parent.gameObject.SetActive(false);
         
         //_mainMapCanvas = FindObjectOfType<MainMapCanvasManager>();
@@ -35,7 +34,7 @@ public class MainMap : MonoBehaviour
         _mainMapCanvas = FindObjectOfType<MainMapCanvasManager>();
         _worldsManager = new WorldsManager(GetGameManager().User);
         CreateLevelNodes();
-        _mainMapCanvas.ShowWorld(_gameManager.CurrentViewingWorld);
+        _mainMapCanvas.ShowWorldAtSceneInit(_gameManager.CurrentViewingWorld);
     }
 
     void Update ()

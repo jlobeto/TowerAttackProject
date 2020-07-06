@@ -5,5 +5,5 @@
     FirstTimeOnApp_INGAME_tuto_1_phase1,
     FirstTimeOnApp_INGAME_tuto_1_phase2,
     FirstTimeOnApp_INGAME_tuto_1_phase3,
-
+    WorldSelectorSliderTutorial
 }
