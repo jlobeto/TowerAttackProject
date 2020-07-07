@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public enum CurrentScene {
+    public enum GameScenes {
         MainMap,
         Gameplay
     }
@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     public List<TowerBase> allTowersPrefabs;
     public List<Minion> allMinionsPrefab;//"Add minions prefabs so can be accessed by Level.cs."
     public ParticleSystem swapParticleSystem;
+
+    GameScenes _currentScene;
 
     int _currentViewingWorld;
     string _lastSceneName;
@@ -58,6 +60,7 @@ public class GameManager : MonoBehaviour
     public int CurrentViewingWorld { get { return _currentViewingWorld; } }
     
     public string LastLoadedScene { get { return _lastSceneName; } }
+    public GameScenes CurrentScene{ get { return _currentScene; } }
 
     public Action<bool> OnLevelInfoSet = delegate { };
 
@@ -66,7 +69,7 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 500;
         Thread.CurrentThread.CurrentCulture = new CultureInfo("en-us");
 
-
+        _currentScene = GameScenes.MainMap;
         DontDestroyOnLoad(this);
         if (enableSwapSystem)
         {
@@ -102,9 +105,11 @@ public class GameManager : MonoBehaviour
     {
         _currentLevelInfo = lvlinfo;
         _currentViewingWorld = _user.LevelProgressManager.GetCurrentUserWorldIndex();
+        _currentScene = GameScenes.Gameplay;
 
-        if(lvlinfo == null)//when comming from a level to the world selector
+        if (lvlinfo == null)//when comming from a level to the world selector
         {
+            _currentScene = GameScenes.MainMap;
             soundManager.PlayMenuMusic();
         }
             

@@ -12,6 +12,7 @@ public class SettingsPopup : BasePopup
     GameManager _gameManager;
     PopupManager _popupManager;
     Canvas _canvas;
+    CameraMovement _gameplayCamera;
 
     protected override void Awake()
     {
@@ -43,6 +44,12 @@ public class SettingsPopup : BasePopup
         _canvas.enabled = true;
         _popupManager.PopupDisplayed();
         Time.timeScale = 0;
+        if(_gameManager.CurrentScene == GameManager.GameScenes.Gameplay)
+        {
+            if (_gameplayCamera == null)
+                _gameplayCamera = FindObjectOfType<CameraMovement>();
+            _gameplayCamera.SetCameraMovement(false);
+        }
         base.DisplayPopup();
     }
 
@@ -59,6 +66,14 @@ public class SettingsPopup : BasePopup
         Time.timeScale = 1;
         _canvas.enabled = false;
         _popupManager.DisplayedPopupWasClosed();
+
+        if (_gameManager.CurrentScene == GameManager.GameScenes.Gameplay)
+        {
+            if (_gameplayCamera == null)
+                _gameplayCamera = FindObjectOfType<CameraMovement>();
+            _gameplayCamera.SetCameraMovement(true);
+        }
+
         ExecuteFunctions(FunctionTypes.close);
     }
 

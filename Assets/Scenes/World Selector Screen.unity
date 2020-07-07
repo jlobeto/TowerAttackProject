@@ -474,7 +474,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 50
+  m_Text: 1
 --- !u!222 &240221958
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2591,7 +2591,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -18.480042, y: 58.639984}
+  m_AnchoredPosition: {x: -18.47998, y: 58.640015}
   m_SizeDelta: {x: -115.51999, y: 54.880047}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1155890888
@@ -4347,7 +4347,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -4416,7 +4416,6 @@ MonoBehaviour:
   mainMap: {fileID: 1302730882}
   worldsTransform: {fileID: 261355265}
   world_0_container: {fileID: 75592582}
-  selectedScreenUI: {fileID: 0}
   unselectedScreenUISprite: {fileID: 21300000, guid: 300f41922410306499e3ea8cabb5b01b,
     type: 3}
   selectedScreenUISprite: {fileID: 21300000, guid: b30b6d0fc3e63fb4583c8f06793360cd,
@@ -4424,7 +4423,6 @@ MonoBehaviour:
   coinsText: {fileID: 1608165097}
   starsText: {fileID: 299815093}
   worldsCreated: []
-  screenSelectorsUI: []
 --- !u!114 &1800386463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8224,6 +8222,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LibraryCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5848569434462667316, guid: 419ae3d00f7e5684bbffc5cab7c73a45,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5848569434462667319, guid: 419ae3d00f7e5684bbffc5cab7c73a45,
         type: 3}

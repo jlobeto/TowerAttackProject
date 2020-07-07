@@ -97,7 +97,7 @@ public class LevelTutorial : Level
                     , "Exit"
                     , PopupsID.AcceptOrDecline);
 
-                popup.transform.localScale *= 1.5f;
+                popup.transform.localScale *= 2f;
                 popup.AddFunction(BasePopup.FunctionTypes.ok, setNextTutorialIfPossible);
                 popup.AddFunction(BasePopup.FunctionTypes.cancel, cancelTutorial);
 

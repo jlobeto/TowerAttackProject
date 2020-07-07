@@ -31,7 +31,7 @@
 			"actions": [
 				"ShowBlackOverlay(Canvas)",
 				"HighlightUIElement(Shop Btn,Canvas)",
-				"CreatePointFinger(30,-40,0,Shop Btn)",
+				"CreatePointFinger(60,-70,0,Shop Btn)",
 				"ShowDocUI(topRight,Tap here to enter the shop,normal,0.7)"
 			],
 			"outputs": [
@@ -72,7 +72,7 @@
 			],
 			"actions": [
 				"HighlightUIElement(Description box,ShopCanvas)",
-				"CreatePointFinger(120,45,180,BuyMinionBtn)",
+				"CreatePointFinger(250,100,180,BuyMinionBtn)",
 				"ShowDocUI(topLeft,Buy it!,happy,0.9)"
 			],
 			"outputs": [
@@ -239,7 +239,7 @@
 			],
 			"actions": [
 				"HighlightUIElement(Description box,ShopCanvas)",
-				"CreatePointFinger(120,45,180,BuyMinionBtn)",
+				"CreatePointFinger(250,100,180,BuyMinionBtn)",
 				"ShowDocUI(topLeft,Buy it! \nAlways check how many chips you have,happy,0.8)"
 			],
 			"outputs": [
@@ -406,7 +406,7 @@
 			"outputs": [
 				"elementType=Button",
 				"elementId=MinionSaleButton_1",
-				"listeners=type:pressed{HideBlackOverlay,RemoveHighlightUIElement(MinionsPanel),SetUIElementListsTransparency(MinionsPanel/none/255),StartNextTutorialGroupOnTimer(6000),RemovePointFinger,HideDocUI}"
+				"listeners=type:pressed{HideBlackOverlay,RemoveHighlightUIElement(MinionsPanel),SetUIElementListsTransparency(MinionsPanel/none/255),StartNextTutorialGroupOnTimer(2500),RemovePointFinger,HideDocUI}"
 			]
 		},
 		{
@@ -417,14 +417,14 @@
 				"IsLastTimerFinished()"
 			],
 			"actions": [
+				"StopUpdate()",
 				"ShowBlackOverlay(LevelCanvas)",
 				"HighlightUIElement(new Lives,LevelCanvas)",
-				"ForceExecutingOutputAfterSeconds(4000)",
 				"ShowDocUI(middleRight,keep sending minions until the stars' bar is full!,normal,0.8)"
 			],
 			"outputs": [
-				"elementType=Timer",
-				"listeners=type:time{HideBlackOverlay,RemoveHighlightUIElement(new Lives),HideDocUI}"
+				"elementType=Touch",
+				"listeners=type:touched{HideBlackOverlay,RemoveHighlightUIElement(new Lives),HideDocUI,ContinueUpdating}"
 			]
 		},
 

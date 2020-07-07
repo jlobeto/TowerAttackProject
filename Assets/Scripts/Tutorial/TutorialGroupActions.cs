@@ -100,6 +100,8 @@ public class TutorialGroupActions : TutorialGroupUtils
             img.rectTransform.localScale = new Vector3(1, 1, 1);
             img.rectTransform.anchoredPosition3D = new Vector3(0, 0, 0);
         }
+
+        img.rectTransform.localScale *= 5;
     }
 
     public void ShowText(string text, string posX, string posY, string parent, string size)
