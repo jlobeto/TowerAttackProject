@@ -277,6 +277,7 @@ Transform:
   - {fileID: 4594233074520648}
   - {fileID: 4741614455995134}
   - {fileID: 4598131109113371450}
+  - {fileID: 5038314819785344835}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -330,7 +331,6 @@ MonoBehaviour:
   skillSelectorSprite: {fileID: 0}
   speed: 4
   pointsValue: 40
-  strength: 0
   spawnCooldown: 0.5
   coinValue: 0
   levelPointsToRecover: 0.75
@@ -341,14 +341,11 @@ MonoBehaviour:
   skillTime: 2
   skillCooldown: 5
   hasBeenFreed: 0
+  explotion: {fileID: 5038314819785344834}
   skillZoneEffect: {fileID: 1804044470348720}
   airYpos: 7
   areaOfEffect: 5
-  lifePercentThresholdToActivatePassive: 25
-  passiveSpeedDelta: 1.5
   activeSpeedDelta: 2
-  passiveSkillDurationOnAffectedMinion: 1.5
-  timeToPassive: 2
   manager: {fileID: 0}
 --- !u!1 &1364817983279836
 GameObject:
@@ -738,3 +735,84 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1001 &9208956579269394282
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4489313054737656}
+    m_Modifications:
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701866, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_Name
+      value: MinionDeathExplotion
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d487bd2149241ff4f80bedf08d6a9a3a, type: 3}
+--- !u!4 &5038314819785344835 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 9208956579269394282}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5038314819785344834 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4190451662650701864, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 9208956579269394282}
+  m_PrefabAsset: {fileID: 0}

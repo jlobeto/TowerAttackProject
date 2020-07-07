@@ -358,6 +358,7 @@ Transform:
   - {fileID: 4340288822198652}
   - {fileID: 4741021482418716}
   - {fileID: 869137210754071822}
+  - {fileID: 3067418507574693689}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -411,7 +412,6 @@ MonoBehaviour:
   skillSelectorSprite: {fileID: 0}
   speed: 3
   pointsValue: 25
-  strength: 0
   spawnCooldown: 1
   coinValue: 7
   levelPointsToRecover: 0.75
@@ -422,6 +422,7 @@ MonoBehaviour:
   skillTime: 4
   skillCooldown: 5
   hasBeenFreed: 0
+  explotion: {fileID: 3067418507574693688}
   skillZoneEffect: {fileID: 1779315487741988}
   shieldHits: 3
   skillArea: 10
@@ -733,3 +734,84 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1001 &1204380249363560208
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4550818725026188}
+    m_Modifications:
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190451662650701866, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+        type: 3}
+      propertyPath: m_Name
+      value: MinionDeathExplotion
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d487bd2149241ff4f80bedf08d6a9a3a, type: 3}
+--- !u!4 &3067418507574693689 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4190451662650701865, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1204380249363560208}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &3067418507574693688 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4190451662650701864, guid: d487bd2149241ff4f80bedf08d6a9a3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1204380249363560208}
+  m_PrefabAsset: {fileID: 0}

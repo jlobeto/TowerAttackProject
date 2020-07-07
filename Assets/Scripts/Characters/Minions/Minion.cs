@@ -30,7 +30,7 @@ public class Minion : MonoBehaviour
     public float skillTime = 2;
     public float skillCooldown = 5;
     public bool hasBeenFreed;
-    //public ParticleSystem explotion;
+    public ParticleSystem explotion;
     public GameObject skillZoneEffect;
 
     protected bool pDamageDebuff;
@@ -305,13 +305,12 @@ public class Minion : MonoBehaviour
                     ps.Stop();
             }
 
-            /*if (explotion != null)
+            if (explotion != null)
             {
                 explotion.Play(true);
-                explotion.GetComponentInChildren<Animation>().Play("test");
                 StartCoroutine(ExplotionStopped(explotion.main.duration));
-            }*/
-            OnDeath(this);
+            }
+            //OnDeath(this);
         }
     }
 
