@@ -110,8 +110,7 @@ public class SwapTowerSystem : MonoBehaviour
     {
 		yield return new WaitForSecondsRealtime(2.5f);
         var newTower = Instantiate<TowerBase>(newOne, transform.position, transform.rotation);
-        _towerManager.InitSingleTower(newTower);
-        _towerManager.DestroySingleTower(toSwap);
+        _towerManager.DoSwapTowerInitialization(toSwap, newTower);
     }
 
     TowerBase GetNewTowerPrefab(TargetType triggerType)

@@ -68,10 +68,24 @@ public class OverchargePilar : MonoBehaviour
 
     }
 
+    public void AddNewAffectedTower(TowerBase tower)
+    {
+        var aux = new List<TowerBase>(affected);
+        foreach (var item in affected)
+        {
+            if (item == null)
+                aux.RemoveAt(affected.IndexOf(item));
+        }
+        affected = aux;
+        affected.Add(tower);
+    }
+
     public void StunTowers()
     {
         foreach (var item in affected)
         {
+            if (item == null) continue;
+
             item.ReceiveStun(_effectTimeAux);
         }
 

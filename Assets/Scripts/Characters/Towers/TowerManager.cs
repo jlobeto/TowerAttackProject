@@ -12,10 +12,12 @@ public class TowerManager : MonoBehaviour
 
     List<TowerBase> _towers;
     TowerBase _previousClickedTower;
+    OverchargePilar[] _overchargePilars;
 
 	void Start () 
 	{
-	}
+        _overchargePilars = FindObjectsOfType<OverchargePilar>();
+    }
 	
 	void Update () 
 	{
@@ -85,19 +87,34 @@ public class TowerManager : MonoBehaviour
 			t.Initialize (stat);
 		}
     }
+    
 
-    public void InitSingleTower(TowerBase t)
+    public void DoSwapTowerInitialization(TowerBase toDestroy, TowerBase toAdd)
     {
-        var stat = level.GameManager.TowerLoader.GetStatByLevel(t.towerType, level.levelID);
-        t.Initialize(stat);
-        _towers.Add(t);
-    }
+        OverchargePilar selected = null;
+        if(_overchargePilars != null)
+        {
+            foreach (var pilar in _overchargePilars)
+            {
+                foreach (var affected in pilar.affected)
+                {
+                    if (affected.GetInstanceID() == toDestroy.GetInstanceID())
+                        selected = pilar;
+                }
+            }
+        }
 
-    public void DestroySingleTower(TowerBase t)
-    {
-        _towers.Remove(t);
-        Destroy(t.gameObject);
+        _towers.Remove(toDestroy);
+        Destroy(toDestroy.gameObject);
+
+        var stat = level.GameManager.TowerLoader.GetStatByLevel(toAdd.towerType, level.levelID);
+        toAdd.Initialize(stat);
+        _towers.Add(toAdd);
+
+        if (selected != null)
+            selected.AddNewAffectedTower(toAdd);
     }
+    
 
     public List<TowerBase> GetLevelTowersByType(List<TowerType> types)
     {
