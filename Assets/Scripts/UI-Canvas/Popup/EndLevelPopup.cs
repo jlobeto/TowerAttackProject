@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EndLevelPopup : AcceptPopup
@@ -56,6 +57,11 @@ public class EndLevelPopup : AcceptPopup
         }
 
         SetTexts();
+    }
+
+    public void OnRetry()
+    {
+        SceneManager.LoadScene("Level" + _levelID);
     }
 
     void SetTexts()
