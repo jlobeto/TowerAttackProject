@@ -3,37 +3,40 @@ using System.Collections;
 
 public class ElectroshockElectricity : MonoBehaviour
 {
-    private LineRenderer lRend;
     public Transform transformPointA;
     public Transform transformPointB;
-    private readonly int pointsCount = 5;
-    private readonly int half = 2;
-    private float randomness;
-    private Vector3[] points;
 
-    private readonly int pointIndexA = 0;
-    private readonly int pointIndexB = 1;
-    private readonly int pointIndexC = 2;
-    private readonly int pointIndexD = 3;
-    private readonly int pointIndexE = 4;
+    protected LineRenderer _lRend;
+    protected bool _enable;
 
-    private readonly string mainTexture = "_MainTex";
-    private Vector2 mainTextureScale = Vector2.one;
-    private Vector2 mainTextureOffset = Vector2.one;
+    protected int pointsCount = 5;
+    protected int half = 2;
+    protected float randomness;
+    protected Vector3[] points;
 
-    private float timer;
-    private float timerTimeOut = 0.05f;
+    protected readonly int pointIndexA = 0;
+    protected readonly int pointIndexB = 1;
+    protected readonly int pointIndexC = 2;
+    protected readonly int pointIndexD = 3;
+    protected readonly int pointIndexE = 4;
 
-    bool _enable;
+    protected readonly string mainTexture = "_MainTex";
+    protected Vector2 mainTextureScale = Vector2.one;
+    protected Vector2 mainTextureOffset = Vector2.one;
 
-    private void Start ()
+    protected float timer;
+    protected float timerTimeOut = 0.05f;
+
+    
+
+    protected virtual void Start ()
     {
-        lRend = GetComponent<LineRenderer>();
+        _lRend = GetComponent<LineRenderer>();
         points = new Vector3[pointsCount];
-        lRend.positionCount = pointsCount;
+        _lRend.positionCount = pointsCount;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if(_enable)
             CalculatePoints();
@@ -42,16 +45,16 @@ public class ElectroshockElectricity : MonoBehaviour
     public void DisableElectricity()
     {
         _enable = false;
-        lRend.enabled = false;
+        _lRend.enabled = false;
     }
 
     public void EnableElectricity()
     {
         _enable = true;
-        lRend.enabled = true;
+        _lRend.enabled = true;
     }
 
-    private void CalculatePoints()
+    protected virtual void CalculatePoints()
     {
         timer += Time.deltaTime;
 
@@ -68,18 +71,18 @@ public class ElectroshockElectricity : MonoBehaviour
             float distance = Vector3.Distance(transformPointA.position, transformPointB.position) / points.Length;
             mainTextureScale.x = distance;
             mainTextureOffset.x = Random.Range(-randomness, randomness);
-            lRend.sharedMaterial.SetTextureScale(mainTexture, mainTextureScale);
-            lRend.sharedMaterial.SetTextureOffset(mainTexture, mainTextureOffset);
+            _lRend.sharedMaterial.SetTextureScale(mainTexture, mainTextureScale);
+            _lRend.sharedMaterial.SetTextureOffset(mainTexture, mainTextureOffset);
 
             randomness = distance / (pointsCount * half);
 
             SetRandomness();
 
-            lRend.SetPositions(points);
+            _lRend.SetPositions(points);
         }
     }
 
-    private void SetRandomness()
+    protected virtual void SetRandomness()
     {
         for (int i = 0; i < points.Length; i++)
         {
@@ -92,7 +95,7 @@ public class ElectroshockElectricity : MonoBehaviour
         }
     }
 
-    private Vector3 GetCenter(Vector3 a, Vector3 b)
+    protected Vector3 GetCenter(Vector3 a, Vector3 b)
     {
         return (a + b) / half;
     }

@@ -23,6 +23,8 @@ public class Level : MonoBehaviour
     public LevelMode levelMode;
 	public Action<int, bool, int> OnLevelFinish = delegate {}; //<lvlid, win ?, stars> - User.LevelEnded();
     public LevelPortalEffect levelPortal;
+    public MinionInOutElectricity rayPathMinionIn;
+    public MinionInOutElectricity rayPathMinionOut;
 
     protected GameManager _gameManager;
     protected TowerManager _towerManager;
@@ -155,6 +157,9 @@ public class Level : MonoBehaviour
             , availableMinions.FirstOrDefault(m => m.minionType == t));
         _minionManager.SetNextMinionFree(GetInitWalkNode());
 
+        if (rayPathMinionIn != null)
+            rayPathMinionIn.InitElectricity();
+
         return true;
     }
 
@@ -205,7 +210,10 @@ public class Level : MonoBehaviour
         _gameManager.LevelInitFinished(this);
 		_minionSkillManager.Init (this);
 
+        InitRayPathMinionInOut();
     }
+
+    
 
     void BuildAvailableMinions()
     {
@@ -284,6 +292,9 @@ public class Level : MonoBehaviour
 
         if (levelPortal != null)
             levelPortal.UpdateGoal(LivesRemoved, objetives);
+
+        if(rayPathMinionOut != null)
+            rayPathMinionOut.InitElectricity();
 
         CheckLevelCompletion(false);
     }
@@ -385,6 +396,64 @@ public class Level : MonoBehaviour
         }
 
         return null;
+    }
+
+    WalkNode GetEndWalkNode()
+    {
+        var walkNodes = FindObjectsOfType<WalkNode>();
+
+        foreach (var item in walkNodes)
+        {
+            if (item.isEnd)
+                return item;
+        }
+        Debug.LogError("There is not a walk node set as END");
+        return null;
+    }
+
+    void InitRayPathMinionInOut()
+    {
+        var initWalkNode = GetInitWalkNode();
+        var endWalkNode = GetEndWalkNode();
+
+        if (rayPathMinionIn != null)
+        {
+            rayPathMinionIn.transform.position = initWalkNode.transform.position;
+            rayPathMinionIn.Init(initWalkNode);
+        }
+        else
+        {
+            var go = GameObject.FindWithTag("ray_path_minion_in");
+            if (go == null)
+                Debug.LogError("ray path minion in is null!!!");
+            else
+            {
+                rayPathMinionIn = go.GetComponent<MinionInOutElectricity>();
+                rayPathMinionIn.transform.position = initWalkNode.transform.position;
+                rayPathMinionIn.Init(initWalkNode);
+            }
+        }
+
+
+        if (rayPathMinionOut != null)
+        {
+            rayPathMinionOut.transform.position = endWalkNode.transform.position;
+            rayPathMinionOut.Init(endWalkNode);
+        }
+        else
+        {
+            var go = GameObject.FindWithTag("ray_path_minion_out");
+            if (go == null)
+                Debug.LogError("ray path minion out is null!!!");
+            else
+            {
+                rayPathMinionOut = go.GetComponent<MinionInOutElectricity>();
+                rayPathMinionOut.transform.position = endWalkNode.transform.position;
+                rayPathMinionOut.Init(endWalkNode);
+            }
+                
+        }
+
     }
 
     /// <summary>
