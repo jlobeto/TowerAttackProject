@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BridgeClock : MonoBehaviour
 {
     public string bridgePivot;
-    public MeshRenderer clockRenderer;
+    //public MeshRenderer clockRenderer;
+    public Text panelText;
     public ParticleSystem sparks_1;
     public ParticleSystem sparks_2;
 
@@ -17,16 +19,27 @@ public class BridgeClock : MonoBehaviour
     float _lerpCurrentTime;
 
     void Start () {
-        _emissionQtyStart = _emissionQty = clockRenderer.sharedMaterial.GetFloat("_EmissionQty");
+        //_emissionQtyStart = _emissionQty = clockRenderer.sharedMaterial.GetFloat("_EmissionQty");
+
     }
 
     public void StartCountdown(float time)
     {
         _startCountDown = true;
         _initTime = _timeAux = time;
+        panelText.text = _initTime+"";
         _lerpCurrentTime = 0;
+        StartCoroutine(PanelTextChange());
     }
 	
+    IEnumerator PanelTextChange()
+    {
+        yield return new WaitForSeconds(1);
+        panelText.text = _timeAux.ToString("0");
+
+        if(_startCountDown)
+            StartCoroutine(PanelTextChange());
+    }
 	
 	void Update ()
     {
@@ -46,16 +59,6 @@ public class BridgeClock : MonoBehaviour
                 sparks_1.Stop(true, ParticleSystemStopBehavior.StopEmitting);
                 sparks_2.Stop(true, ParticleSystemStopBehavior.StopEmitting);
                 _startCountDown = false;
-                _emissionQty = _emissionQtyStart;
-            }
-
-            if (_lerpCurrentTime <= _initTime)
-            {
-                
-                _emissionQty = Mathf.Lerp(_emissionQtyStart, 20, _lerpCurrentTime );//puse -18 xq a partir de ahi ya se empieza a ver muy brillante
-                clockRenderer.sharedMaterial.SetFloat("_EmissionQty",_emissionQty);
-                _lerpCurrentTime += Time.deltaTime / _initTime;
-                //Debug.Log(_emissionQty);
             }
             
         }

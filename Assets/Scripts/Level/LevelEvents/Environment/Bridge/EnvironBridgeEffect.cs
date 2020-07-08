@@ -7,7 +7,7 @@ public class EnvironBridgeEffect : MonoBehaviour
 {
     public string destination = "";
 
-    List<Animator> _paths = new List<Animator>();
+    Animator _pathAnimator;
     float _timerToPlayNext = 0.3f;
     float _timerToPlayNextAux;
     bool _activate;
@@ -15,7 +15,7 @@ public class EnvironBridgeEffect : MonoBehaviour
 
     void Start()
     {
-        _paths = GetComponentsInChildren<Animator>().ToList();
+        _pathAnimator = GetComponentInChildren<Animator>();
         //Debug.Log(destination + " ... paths count " + _paths.Count);
         _timerToPlayNextAux = _timerToPlayNext;
     }
@@ -23,22 +23,22 @@ public class EnvironBridgeEffect : MonoBehaviour
 
     void Update()
     {
-        if (!_activate) return;
+        //if (!_activate) return;
 
-        if (_pathIndexToAnimate < _paths.Count)
-        {
-            _timerToPlayNextAux -= Time.deltaTime;
-            if (_timerToPlayNextAux < 0)
-            {
-                _paths[_pathIndexToAnimate].SetBool("startFall", true);
-                _pathIndexToAnimate++;
-                _timerToPlayNextAux = _timerToPlayNext;
-            }
-        }
-        else
-        {
-            _activate = false;
-        }
+        //if (_pathIndexToAnimate < _paths.Count)
+        //{
+        //    _timerToPlayNextAux -= Time.deltaTime;
+        //    if (_timerToPlayNextAux < 0)
+        //    {
+        //        _paths[_pathIndexToAnimate].SetBool("startFall", true);
+        //        _pathIndexToAnimate++;
+        //        _timerToPlayNextAux = _timerToPlayNext;
+        //    }
+        //}
+        //else
+        //{
+        //    _activate = false;
+        //}
     }
 
     public void MakeAllWayDown()
@@ -46,16 +46,20 @@ public class EnvironBridgeEffect : MonoBehaviour
         _activate = true;
         _timerToPlayNextAux = _timerToPlayNext;
         _pathIndexToAnimate = 0;
-        _paths[_pathIndexToAnimate].SetBool("startFall", true);//first active current Index
-       // Debug.Log("MakeAllWayDown");
+        _pathAnimator.SetBool("open", true);
+        _pathAnimator.SetBool("close", false);
+        //_paths[_pathIndexToAnimate].SetBool("startFall", true);//first active current Index
+        // Debug.Log("MakeAllWayDown");
     }
 
     public void PushUpFloor()
     {
-        foreach (var item in _paths)
+        _pathAnimator.SetBool("open", false);
+        _pathAnimator.SetBool("close", true);
+        /*foreach (var item in _paths)
         {
             item.SetBool("startUp", true);//first active current Index
-        }
+        }*/
         //Debug.Log("PushUpFloor");
     }
 }

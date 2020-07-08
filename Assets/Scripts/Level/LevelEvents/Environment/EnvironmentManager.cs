@@ -44,7 +44,6 @@ public class EnvironmentManager : MonoBehaviour, IEvent
                 var splitted = destination.levelEventBridgeNodeName.Split('_');
                 if (int.Parse(splitted[1]) == pivotNum)
                 {
-                        
                     if (splitted[2] == "a")
                     {
                         //Debug.Log("A");
