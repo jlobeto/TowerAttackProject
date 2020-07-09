@@ -46,6 +46,12 @@ public class LevelCanvasManager : MonoBehaviour
 	bool _startTutorialHoldAnimation;
     int _currentStarsOn;
 
+    Color _initPointBarColor;
+    bool _initCantBuyBarAnimation;
+    bool _cantBuy_toRed;
+    float _cantBuyMinionBarDuration = 0.5f;
+    float _cantBuyMinionBarDurationAux;
+
     void Awake()
     {
 		_thisCanvas = GetComponent<Canvas> ();
@@ -64,12 +70,30 @@ public class LevelCanvasManager : MonoBehaviour
 
         _settingsPopup = FindObjectOfType<SettingsPopup>();
         _cameraMove = Camera.main.GetComponentInParent<CameraMovement> ();
+
+        _initPointBarColor = levelPointBar.color;
     }
 
     void Update()
     {
-        if(levelTimerFillBar.fillAmount < .1f)
+        if(_initCantBuyBarAnimation)
         {
+            _cantBuyMinionBarDurationAux += Time.deltaTime;
+            var time = _cantBuyMinionBarDurationAux / _cantBuyMinionBarDuration;
+
+            if(_cantBuy_toRed)
+                levelPointBar.color = Color.Lerp(levelPointBar.color, Color.red, time);
+            else
+                levelPointBar.color = Color.Lerp(levelPointBar.color, _initPointBarColor, time);
+
+            if (time >= 1)
+            {
+                if (!_cantBuy_toRed)
+                    _initCantBuyBarAnimation = false;
+
+                _cantBuyMinionBarDurationAux = 0;
+                _cantBuy_toRed = false;
+            }
 
         }
     }
@@ -298,7 +322,12 @@ public class LevelCanvasManager : MonoBehaviour
         if (!btn.interactable) return;
         
         var created = level.BuildMinion(t);
-        if (!created) return;
+        if (!created)
+        {
+            _initCantBuyBarAnimation = true;
+            _cantBuy_toRed = true;
+            return;
+        }
 
         btn.interactable = false;
 
