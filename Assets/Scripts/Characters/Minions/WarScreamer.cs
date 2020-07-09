@@ -7,9 +7,6 @@ public class WarScreamer : AirMinion
     [HideInInspector] public float areaOfEffect = 5;
     [HideInInspector] public float activeSpeedDelta = 2f;
 
-	[HideInInspector]
-	public MinionManager manager;
-
 	//float _timerAux = 1;
 	WarScreamSkill _mySkill;
     bool skillPhase;//phaseOne = user has clicked to know the skill range
@@ -78,7 +75,7 @@ public class WarScreamer : AirMinion
 
     void OnSkill(bool activeSkill = false)
     {
-        var nearMinions = manager.GetMinions(GetMinionHandler);
+        var nearMinions = minionManager.GetMinions(GetMinionHandler);
         foreach (var item in nearMinions)
         {
             SetSkillToMinion(item, activeSkill);

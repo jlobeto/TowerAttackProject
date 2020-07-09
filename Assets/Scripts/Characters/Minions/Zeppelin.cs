@@ -8,8 +8,6 @@ public class Zeppelin : AirMinion
 {
     public MiniZeppelin miniZeppelin;
 
-    [HideInInspector]
-    public MinionManager manager;
     /// <summary>
     /// When zep is dead, it will spawn this quantity of minizeps
     /// </summary>
@@ -55,8 +53,8 @@ public class Zeppelin : AirMinion
         int calc = 1;
         for (int i = 1; i <= miniZeppelinCount; i++)
         {
-            manager.SpawnMinion(MinionType.MiniZeppelin, transform.position, prefab);
-            manager.SetNextMinionFree(pNextNode, transform.position + plus);
+            minionManager.SpawnMinion(MinionType.MiniZeppelin, transform.position, prefab);
+            minionManager.SetNextMinionFree(pNextNode, transform.position + plus);
 
             plus = transform.forward * calc * (i+1);
             calc *= -1;

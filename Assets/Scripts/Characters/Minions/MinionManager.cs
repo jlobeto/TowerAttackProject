@@ -18,7 +18,7 @@ public class MinionManager : MonoBehaviour
     int _deathCount;
     int _successCount;
     GameObject _allMinions;
-
+    List<EnvironmentBridge> _levelBridges;
 
     public void SpawnMinion(MinionType type, Vector3 spawnPos, Minion available)
     {
@@ -26,20 +26,9 @@ public class MinionManager : MonoBehaviour
 
         minion = Instantiate(available, spawnPos, Quaternion.identity);
 
-        if(type == MinionType.Healer )
-            (minion as Healer).manager = this;
-        else if(type == MinionType.Zeppelin)
-            (minion as Zeppelin).manager = this;
-		else if(type == MinionType.WarScreamer)
-			(minion as WarScreamer).manager = this;
-
-        if (minion == null)
-        {
-            Debug.LogError("Error creating a Minion");
-            return;
-        }
-
         SetMinionStats(ref minion);
+
+        minion.minionManager = this;
         minion.transform.SetParent(_allMinions.transform);
         minion.OnWalkFinished += MinionWalkFinishedHandler;
         minion.OnDeath += MinionDeathHandler;
@@ -117,6 +106,36 @@ public class MinionManager : MonoBehaviour
     void Init()
     {
         _allMinions = new GameObject("All Minions");
+    }
+
+    public void OnBridgeEnable(List<EnvironmentBridge> bridges)
+    {
+        _levelBridges = bridges;
+    }
+
+    /// <summary>
+    /// For bridge event. 
+    /// </summary>
+    public bool MinionHasToFall(GroundMinion m, WalkNode nextWalkNode)
+    {
+        if (nextWalkNode.levelEventBridgeNodeName == "" || nextWalkNode.levelEventBridgeNodeName.Contains("pivot"))
+            return false;
+
+        foreach (var bridge in _levelBridges)
+        {
+            if(nextWalkNode.levelEventBridgeNodeName == bridge.destinationA.levelEventBridgeNodeName)
+            {
+                var isInsideBridge = bridge.bridge_B_GameObject.IsMinionInsideBridge(m);
+                return isInsideBridge && !bridge.isPointingA;
+            }
+            else if (nextWalkNode.levelEventBridgeNodeName == bridge.destinationB.levelEventBridgeNodeName)
+            {
+                var isInsideBridge = bridge.bridge_A_GameObject.IsMinionInsideBridge(m);
+                return isInsideBridge && bridge.isPointingA;
+            }
+        }
+
+        return false;
     }
 
     public List<Minion> GetMinions(Func<Minion,bool> func)

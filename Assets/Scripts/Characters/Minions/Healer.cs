@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Healer : Minion
+public class Healer : GroundMinion
 {
     public float areaOfEffect = 5;
     public float healPerSecond = 2;
@@ -11,9 +11,6 @@ public class Healer : Minion
     public bool showTestGizmo = true;
     public ProjectilePS givePassiveHealth;
     public ProjectilePS giveActiveHealth;
-
-    [HideInInspector]
-    public MinionManager manager;
 
     HealerSkill _mySkill;
     float _timerAux = 1;
@@ -49,7 +46,7 @@ public class Healer : Minion
 
         OnMinionSkill(minionType);
 
-        var nearMinions = manager.GetMinions(GetMinionHandler);
+        var nearMinions = minionManager.GetMinions(GetMinionHandler);
         _mySkill.InitializeHealerSkill(nearMinions, skillCooldown, giveActiveHealth, skillHealPercent);
     }
 
@@ -69,13 +66,13 @@ public class Healer : Minion
 
     void HealPerSecond()
     {
-        if (manager == null) return;
+        if (minionManager == null) return;
 
         _timerAux -= Time.deltaTime;
         if (_timerAux < 0)
         {
             _timerAux = 1;
-            var nearMinions = manager.GetMinions(GetMinionHandler);
+            var nearMinions = minionManager.GetMinions(GetMinionHandler);
             foreach (var item in nearMinions)
             {
                 item.GetHealth(healPerSecond);

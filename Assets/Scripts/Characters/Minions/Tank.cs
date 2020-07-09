@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Tank : Minion
+public class Tank : GroundMinion
 {
     public int shieldHits = 3;
     public float skillArea = 5;

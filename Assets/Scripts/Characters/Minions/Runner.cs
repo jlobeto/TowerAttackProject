@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Runner : Minion
+public class Runner : GroundMinion
 {
     public float skillDeltaSpeed = 2;
     RunnerSkill _mySkill;

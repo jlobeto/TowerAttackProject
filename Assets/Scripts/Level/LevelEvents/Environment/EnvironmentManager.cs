@@ -24,6 +24,7 @@ public class EnvironmentManager : MonoBehaviour, IEvent
 
         if (!item.bridgeEnabled) return;
         
+
         _bridges = new List<EnvironmentBridge>();
         _bridgeEnabled = true;
         _currentTimeToChange = 1f;
@@ -78,6 +79,8 @@ public class EnvironmentManager : MonoBehaviour, IEvent
             bridge.bridgeClock.StartCountdown(_currentTimeToChange);
             _bridges.Add(bridge);
         }
+
+        _lvl.MinionManager.OnBridgeEnable(_bridges);
         
     }
 
@@ -90,7 +93,7 @@ public class EnvironmentManager : MonoBehaviour, IEvent
     List<WalkNode> GetNodeList(WalkNode node, List<WalkNode> list)
     {
         if(node)
-        list.Add(node);
+            list.Add(node);
         if (node.isEnd)
             return list;
 

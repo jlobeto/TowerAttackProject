@@ -128,6 +128,7 @@ Transform:
   - {fileID: 4844349299086914}
   - {fileID: 8228697459659277070}
   - {fileID: 4855372046230537683}
+  - {fileID: 7844396828594051368}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -193,6 +194,7 @@ MonoBehaviour:
   hasBeenFreed: 0
   explotion: {fileID: 4855372046230537682}
   skillZoneEffect: {fileID: 1322030648293210}
+  minionManager: {fileID: 0}
   areaOfEffect: 3.68
   healPerSecond: 2
   skillHealPercent: 15
@@ -201,7 +203,6 @@ MonoBehaviour:
     type: 3}
   giveActiveHealth: {fileID: 114967527725751696, guid: 376a153c31f2b2e4781025a12d5bb2e4,
     type: 3}
-  manager: {fileID: 0}
 --- !u!1 &1322030648293210
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,6 +741,50 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &2724231372086470559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7844396828594051368}
+  - component: {fileID: 1431305929870279723}
+  m_Layer: 16
+  m_Name: bridgecol
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7844396828594051368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2724231372086470559}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4898523292516694}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1431305929870279723
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2724231372086470559}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &8738890600726904314
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -15,6 +15,8 @@ public class EnvironmentBridge
     public BridgeClock bridgeClock;//the battery charge clock in scene;
     public bool isPointingA;
 
+    
+
     public EnvironmentBridge(WalkNode p , WalkNode a=null, WalkNode b=null)
     {
         pivot = p;

@@ -32,6 +32,8 @@ public class Minion : MonoBehaviour
     public bool hasBeenFreed;
     public ParticleSystem explotion;
     public GameObject skillZoneEffect;
+    [HideInInspector]
+    public MinionManager minionManager;
 
     protected bool pDamageDebuff;
     protected float pDamageDebuffValue;
@@ -290,7 +292,7 @@ public class Minion : MonoBehaviour
             Destroy(infoCanvas.gameObject);
         OnWalkFinished(this);
     }
-    void DeathChecker()
+    protected void DeathChecker()
     {
         if (IsDead)
         {
@@ -305,12 +307,16 @@ public class Minion : MonoBehaviour
                     ps.Stop();
             }
 
-            if (explotion != null)
-            {
-                explotion.Play(true);
-                StartCoroutine(ExplotionStopped(explotion.main.duration));
-            }
-            //OnDeath(this);
+            DoExplotion();
+        }
+    }
+
+    protected virtual void DoExplotion()
+    {
+        if (explotion != null)
+        {
+            explotion.Play(true);
+            StartCoroutine(ExplotionStopped(explotion.main.duration));
         }
     }
 

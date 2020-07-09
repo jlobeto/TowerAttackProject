@@ -6,20 +6,64 @@ using UnityEngine;
 public class EnvironBridgeEffect : MonoBehaviour
 {
     public string destination = "";
+    public HitAreaCollider hitAreaColIn;
+    public HitAreaCollider hitAreaColOut;
 
     Animator _pathAnimator;
     float _timerToPlayNext = 0.3f;
     float _timerToPlayNextAux;
     bool _activate;
     int _pathIndexToAnimate;
+    
+    List<GroundMinion> _minionsOnBridge;
+
 
     void Start()
     {
         _pathAnimator = GetComponentInChildren<Animator>();
         //Debug.Log(destination + " ... paths count " + _paths.Count);
         _timerToPlayNextAux = _timerToPlayNext;
+
+        hitAreaColIn.OnTriggerEnterCallback += OnTriggerEnterCol;
+        hitAreaColOut.OnTriggerEnterCallback += OnTriggerExitCol;
+        _minionsOnBridge = new List<GroundMinion>();
     }
-    
+
+    void OnTriggerEnterCol(Collider col)
+    {
+        if(col.gameObject.layer == LayerMask.NameToLayer("MinionBridgeCol"))
+        {
+            _minionsOnBridge.Add(col.GetComponentInParent<GroundMinion>());
+            
+           //Debug.Log("Trigger Enter " + col.gameObject.GetInstanceID());
+        }
+    }
+
+    void OnTriggerExitCol(Collider col)
+    {
+        if (col.gameObject.layer == LayerMask.NameToLayer("MinionBridgeCol"))
+        {
+            var groundM = col.GetComponentInParent<GroundMinion>();
+            if(_minionsOnBridge.Contains(groundM))
+                _minionsOnBridge.Remove(groundM);
+
+            //Debug.Log("Trigger Exit " + col.gameObject.GetInstanceID());
+        }
+    }
+
+    public bool IsMinionInsideBridge(GroundMinion m)
+    {
+        foreach (var item in _minionsOnBridge)
+        {
+            if (item == null) continue;
+
+            if (item.gameObject.GetInstanceID() == m.gameObject.GetInstanceID())
+                return true;
+        }
+
+        return false;
+    }
+
 
     void Update()
     {
