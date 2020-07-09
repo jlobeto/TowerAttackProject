@@ -100,6 +100,7 @@ public class Level : MonoBehaviour
 
                 popup.AddFunction(BasePopup.FunctionTypes.ok, OnResumePause);
                 popup.AddFunction(BasePopup.FunctionTypes.cancel, OnFinishLevelCallback);
+                popup.transform.localScale *= 1.7f;
             }
         }
 	}
@@ -351,6 +352,7 @@ public class Level : MonoBehaviour
             var popup = _gameManager.popupManager.BuildPopup(_lvlCanvasManager.transform,"", "", "Continue", "Main Map", "Retry", PopupsID.LevelEndPopup);
             popup.AddFunction(BasePopup.FunctionTypes.ok, OnFinishLevelCallback);
             popup.InitPopup("true,"+ GetCurrentStarsWinning() + "," + levelID + ","+LivesRemoved+","+ _gameManager.User.GetCoinsGained(levelID, GetCurrentStarsWinning()));
+            popup.transform.localScale *= 1.8f;
         }
 
         _towerManager.StopOrInitTowers();
