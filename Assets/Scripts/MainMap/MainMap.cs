@@ -109,7 +109,7 @@ public class MainMap : MonoBehaviour
 
     void CheckBackButton()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(GetGameManager().canPressBackButton && Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene("MenuScreen");
         }

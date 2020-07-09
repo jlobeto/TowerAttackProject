@@ -116,6 +116,8 @@ public class TutorialManager : MonoBehaviour
     public void TutorialFinished(TutorialPhase phase)
     {
         _isTutorialGroupRunning = false;
+        _gameManager.canPressBackButton = true;
+
         var phaseS = phase.ToString();
         if (!_tutoSaveDef.tutorialPhasesCompleted.Contains(phaseS))
         {
@@ -155,7 +157,7 @@ public class TutorialManager : MonoBehaviour
 
     void ExecuteGroupActions(TutorialGroup g)
     {
-
+        _gameManager.canPressBackButton = false;
         g.ExecuteActions();
         tutorialGroupsDone.Add(g.tutorialGroupId);
     }

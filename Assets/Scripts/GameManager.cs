@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     public List<TowerBase> allTowersPrefabs;
     public List<Minion> allMinionsPrefab;//"Add minions prefabs so can be accessed by Level.cs."
     public ParticleSystem swapParticleSystem;
+    [HideInInspector]
+    public bool canPressBackButton = true;
 
     GameScenes _currentScene;
 
